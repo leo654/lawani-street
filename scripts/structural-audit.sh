@@ -72,6 +72,8 @@ mkdir -p "$(dirname "$OUT_CSV")"
     rg --files \
       -g '*.html' \
       -g '!_debug/**' \
+      -g '!_site/**' \
+      -g '!dist/**' \
       -g '!legacy/**' \
       -g '!assets/partials/**' \
       -g '!assets/fonts/**' \

@@ -240,7 +240,8 @@
     formData.set("projectTypes", projectTypes);
     formData.set("message", fallback.body);
 
-    if (window.location.protocol === "file:") {
+    var isGithubPages = /(^|\.)github\.io$/i.test(window.location.hostname);
+    if (window.location.protocol === "file:" || isGithubPages) {
       window.location.assign(fallback.url);
       return;
     }

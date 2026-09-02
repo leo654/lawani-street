@@ -305,7 +305,7 @@ var LAWANI_CREATE_ZONED_CLOCK = typeof LAWANI_SHARED.createZonedClock === 'funct
 		"          <!-- Editable social links -->",
 		"                  <h6 class=\"m-social-title\">Social</h6>",
 		"                  <a class=\"m-social-link\" href=\"https://www.instagram.com/estrela_digitalstudio/?hl=en\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"Instagram\">Instagram</a>",
-		"                  <a class=\"m-social-link\" href=\"https://www.linkedin.com/company/estrela-digital-studio\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"LinkedIn\">LinkedIn</a>",
+		"                  <a class=\"m-social-link\" href=\"https://www.linkedin.com/in/leonardlawani/\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"LinkedIn\">LinkedIn</a>",
 		"                  <a class=\"m-social-link\" href=\"https://www.awwwards.com/estrelastudio/\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"Awwwards\">Awwwards</a>",
 		"        </div>",
 		"      </div>",

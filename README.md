@@ -24,6 +24,15 @@ For a full-page/link validation run:
 ./scripts/file-manager.sh check-links all
 ```
 
+Run the complete production validation and prepare the same clean artifact used by GitHub Pages:
+
+```bash
+./scripts/production-check.sh
+./scripts/build-production.sh _site
+```
+
+The published site is `https://leo654.github.io/lawani-street/`. Its canonical URLs, social metadata, sitemap, and robots file use that production origin. The Pages build excludes development files, archived files, and the PHP endpoint.
+
 See `docs/FILE_MANAGEMENT.md` for conventions.
 
 ## Contact Form
@@ -34,4 +43,4 @@ The project intake at `vcard.html` is split into `assets/css/contact-page.css` a
 - `CONTACT_FROM_NAME` (optional)
 - `SMTP_HOST`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `SMTP_PORT`, `SMTP_ENCRYPTION` (optional SMTP delivery)
 
-Without `SMTP_*`, the endpoint falls back to local `mail()`.
+Without `SMTP_*`, the endpoint falls back to local `mail()`. GitHub Pages cannot run PHP, so the production contact form opens a prefilled email instead; PHP delivery remains available when the source is deployed to a PHP-capable server.

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://leo654.github.io/lawani-street/sitemap.xml
