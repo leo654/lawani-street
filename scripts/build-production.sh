@@ -25,6 +25,7 @@ rm -rf "$OUTPUT_DIR"
 mkdir -p "$OUTPUT_DIR"
 
 rsync -a \
+  --exclude-from "$ROOT_DIR/scripts/production-assets-ignore.txt" \
   --exclude '/.git/' \
   --exclude '/.github/' \
   --exclude '/.vscode/' \
@@ -41,5 +42,11 @@ rsync -a \
   --exclude '/STRUCTURE.md' \
   --exclude '*.scss' \
   ./ "$OUTPUT_DIR/"
+
+artifact_size_kib="$(du -sk "$OUTPUT_DIR" | awk '{print $1}')"
+if (( artifact_size_kib > 1048576 )); then
+  printf 'Production artifact exceeds 1 GiB: %s KiB\n' "$artifact_size_kib" >&2
+  exit 1
+fi
 
 printf 'Production site prepared at %s\n' "$OUTPUT_DIR"

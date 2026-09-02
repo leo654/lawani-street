@@ -31,7 +31,7 @@ Run the complete production validation and prepare the same clean artifact used 
 ./scripts/build-production.sh _site
 ```
 
-The published site is `https://leo654.github.io/lawani-street/`. Its canonical URLs, social metadata, sitemap, and robots file use that production origin. The Pages build excludes development files, archived files, and the PHP endpoint.
+The published site is `https://leo654.github.io/lawani-street/`. Its canonical URLs, social metadata, sitemap, and robots file use that production origin. The Pages build excludes development files, archived files, the PHP endpoint, and unused heavyweight source assets listed in `scripts/production-assets-ignore.txt`.
 
 See `docs/FILE_MANAGEMENT.md` for conventions.
 
