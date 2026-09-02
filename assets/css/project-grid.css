@@ -1,0 +1,87 @@
+/* Shared project case-study grid */
+body.project-page {
+  --project-grid-columns: 12;
+  --project-grid-gap: var(--hard-gap, 10px);
+}
+
+body.project-page .grid-container {
+  display: grid !important;
+  grid-template-columns: repeat(var(--project-grid-columns), minmax(0, 1fr));
+  grid-auto-flow: row;
+  align-items: stretch;
+  width: 100%;
+  gap: var(--project-grid-gap);
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body.project-page .grid-container + .grid-container {
+  margin-top: var(--project-grid-gap);
+}
+
+body.project-page .grid-container > * {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+body.project-page .grid-container > .grid-item,
+body.project-page .grid-container > .grid-item1,
+body.project-page .grid-container > .grid-item2,
+body.project-page .grid-container > .tyol-gallery__item {
+  padding: 0 !important;
+}
+
+body.project-page .grid-container .wrap,
+body.project-page .grid-container .wrap2,
+body.project-page .grid-container .feature-card__image {
+  width: 100%;
+  min-width: 0;
+  margin: 0 !important;
+}
+
+body.project-page .grid-container .feature-card__image img,
+body.project-page .grid-container .feature-card__image video,
+body.project-page .grid-container .video-container video,
+body.project-page .grid-container .video-wrapper video {
+  display: block !important;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0 !important;
+}
+
+body.project-page .grid-container > .grid-item--full,
+body.project-page .grid-container > .tyol-gallery__item--full,
+body.project-page .grid-container > :only-child {
+  grid-column: 1 / -1 !important;
+}
+
+@media (min-width: 768px) {
+  body.project-page .grid-container > .grid-item,
+  body.project-page .grid-container > .grid-item2,
+  body.project-page .grid-container > .tyol-gallery__item--half {
+    grid-column: span 6;
+  }
+
+  body.project-page .grid-container > .project-grid__item--wide {
+    grid-column: span 8;
+  }
+
+  body.project-page .grid-container > .project-grid__item--narrow {
+    grid-column: span 4;
+  }
+}
+
+@media (max-width: 767px) {
+  body.project-page .grid-container {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body.project-page .grid-container > * {
+    grid-column: 1;
+  }
+}

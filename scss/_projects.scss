@@ -1,0 +1,651 @@
+// Home One
+.project {
+    padding-top: 150px;
+    padding-bottom: 160px;
+    text-align: center;
+    position: relative;
+
+    .bg_btn {
+        margin-top: 30px;
+        display: inline-block;
+    }
+
+    .shape_img {
+        .one {
+            right: 200px;
+            top: 0;
+        }
+
+        .two {
+            left: 0;
+            top: 870px;
+        }
+
+        .three {
+            right: 0;
+            bottom: 220px;
+        }
+    }
+}
+
+.min_project_area {
+    column-count: 2;
+    gap: 120px;
+    margin-top: 60px;
+
+    .single_project {
+        margin-bottom: 80px;
+
+        .project_top {
+            position: relative;
+
+            .tags {
+                opacity: 0;
+                visibility: hidden;
+                display: flex;
+                align-items: center;
+                position: absolute;
+                left: 28px;
+                top: 28px;
+                transition: .3s;
+
+
+                li {
+                    margin: 0 10px;
+
+                    a {
+                        color: $pcolor;
+                        font-family: $inter;
+                        font-weight: 600;
+                        font-size: 14px;
+                        line-height: 22px;
+                        text-transform: uppercase;
+                        background: $white;
+                        border: 2px solid #131313;
+                        box-shadow: 4px 4px 0px #131313;
+                        padding: 8px 16px;
+                        transition: .3s;
+
+                        &:hover {
+                            color: $main-bg;
+                            box-shadow: none;
+                        }
+                    }
+
+                    &:first-child {
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+
+        .project_bottom {
+            padding-right: 250px;
+            text-align: left;
+
+            h4 {
+                margin-top: 40px;
+
+                a {
+                    color: $pcolor;
+                    font-family: $clash-display;
+                    font-weight: 600;
+                    font-size: 42px;
+                    line-height: 52px;
+                    transition: .3s;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            .project_top {
+                .tags {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+}
+
+// Home Two Project Slider
+.project_slider {
+    padding-top: 150px;
+    padding-bottom: 150px;
+    overflow: hidden;
+    position: relative;
+
+    .project_slider_btn {
+        text-align: right;
+    }
+
+    .shape_img {
+        .one {
+            left: 0;
+            bottom: 455px;
+        }
+
+        .two {
+            bottom: 0;
+            left: 560px;
+        }
+
+        .three {
+            top: 0;
+            right: 600px;
+        }
+    }
+}
+
+.min_project_slider_area {
+    margin-top: 60px;
+    width: 152%;
+
+    .single_project_slider {
+
+        .project_top {
+            position: relative;
+
+            .tags {
+                opacity: 0;
+                visibility: hidden;
+                display: flex;
+                align-items: center;
+                position: absolute;
+                left: 28px;
+                top: 28px;
+                transition: .3s;
+
+
+                li {
+                    margin: 0 10px;
+
+                    a {
+                        color: $pcolor;
+                        font-family: $inter;
+                        font-weight: 600;
+                        font-size: 14px;
+                        line-height: 22px;
+                        text-transform: uppercase;
+                        background: $white;
+                        border: 2px solid #131313;
+                        box-shadow: 4px 4px 0px #131313;
+                        padding: 8px 16px;
+                        transition: .3s;
+
+                        &:hover {
+                            color: $main-bg;
+                            box-shadow: none;
+                        }
+                    }
+
+                    &:first-child {
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+
+        .project_bottom {
+            padding-right: 250px;
+            text-align: left;
+
+            h4 {
+                margin-top: 40px;
+
+                a {
+                    color: $pcolor;
+                    font-family: $clash-display;
+                    font-weight: 600;
+                    font-size: 42px;
+                    line-height: 52px;
+                    transition: .3s;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            .project_top {
+                .tags {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+}
+
+// Home Three 
+// Project Style Two
+.project_two {
+    padding-top: 150px;
+    padding-bottom: 160px;
+    position: relative;
+
+    .shape_img {
+        .one {
+            left: 0;
+            bottom: 475px;
+        }
+
+        .two {
+            top: 0;
+            right: 270px;
+        }
+
+        .three {
+            bottom: 0;
+            left: 400px;
+        }
+    }
+}
+
+.min_project_two {
+    margin-top: 60px;
+
+    .project_two_items {
+        padding-left: 0;
+        position: relative;
+
+        .single_item {
+            border-bottom: 1px solid #000000;
+            padding-bottom: 40px;
+            padding-top: 35px;
+
+            &:hover {
+                img {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+
+            img {
+                position: absolute;
+                right: 75px;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 2;
+                transition: .3s;
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            &:first-child {
+                border-top: 1px solid #000000;
+            }
+
+            .all_content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .content {
+                    h3 {
+                        a {
+                            color: $pcolor;
+                            font-family: $clash-display;
+                            font-weight: 600;
+                            font-size: 42px;
+                            line-height: 52px;
+                            transition: .3s;
+
+                            &:hover {
+                                color: $main-bg;
+                            }
+                        }
+                    }
+
+                    .category {
+                        margin-top: 5px;
+
+                        span,
+                        a {
+                            color: $pcolor;
+                            font-family: $inter;
+                            font-weight: 600;
+                            font-size: 16px;
+                            line-height: 24px;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+
+                i {
+                    font-size: 40px;
+                    transform: rotate(-45deg);
+                    transition: .3s;
+                }
+            }
+
+            &:hover {
+                .all_content {
+                    i {
+                        transform: none;
+                        color: $main-bg;
+                    }
+                }
+            }
+        }
+    }
+
+    .bottom {
+        text-align: center;
+
+        .bg_btn {
+            display: inline-block;
+            margin-top: 40px;
+        }
+    }
+}
+
+// Home Five 
+// Project Style Three
+.project_slider_two {
+    padding-top: 150px;
+    padding-bottom: 170px;
+    position: relative;
+    overflow: hidden;
+
+    .project_slider_btn {
+        text-align: right;
+    }
+
+    .shape_img {
+        .one {
+            top: 0;
+            right: 650px;
+        }
+
+        .two {
+            bottom: 0;
+            left: 455px;
+        }
+    }
+}
+
+.min_project_slider_two_area {
+    margin-top: 60px;
+    width: 152%;
+
+    .slick-slide {
+        margin-left: 20px;
+        margin-right: 20px;
+        padding-top: 10px;
+    }
+
+    .slick-list {
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+
+    .single_project_slider_two {
+        .project_top {
+            position: relative;
+            text-align: center;
+
+            img {
+                width: 100%;
+            }
+
+            .tags {
+                opacity: 0;
+                visibility: hidden;
+                display: flex;
+                align-items: center;
+                position: absolute;
+                left: 28px;
+                top: 28px;
+                transition: .3s;
+
+
+                li {
+                    margin: 0 10px;
+
+                    a {
+                        color: $pcolor;
+                        font-family: $inter;
+                        font-weight: 600;
+                        font-size: 14px;
+                        line-height: 22px;
+                        text-transform: uppercase;
+                        background: $white;
+                        border: 2px solid #131313;
+                        box-shadow: 4px 4px 0px #131313;
+                        padding: 8px 16px;
+                        transition: .3s;
+
+                        &:hover {
+                            color: $main-bg;
+                            box-shadow: none;
+                        }
+                    }
+
+                    &:first-child {
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+
+        .project_bottom {
+            text-align: center;
+
+            h4 {
+                margin-top: 40px;
+
+                a {
+                    color: $pcolor;
+                    font-family: $clash-display;
+                    font-weight: 600;
+                    font-size: 42px;
+                    line-height: 52px;
+                    transition: .3s;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            .project_top {
+                .tags {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+}
+
+// Home Six
+.project.h_6 {
+    padding-top: 0;
+    margin-top: -170px;
+
+    .min_project_area {
+        margin-top: 0;
+    }
+
+    .bg_btn_color {
+        margin-top: 80px;
+    }
+
+}
+
+// Portfolio 2 Grid
+.portfolio_grid_two {
+    padding-top: 160px;
+    padding-bottom: 160px;
+}
+
+.min_project_area_grid_two {
+
+    .bg_btn_color {
+        width: auto;
+        margin: 0 auto;
+    }
+
+    .single_project {
+        margin: 0 20px;
+        margin-bottom: 80px;
+
+        .project_top {
+            position: relative;
+
+            img {
+                height: 540px;
+                width: 100%;
+            }
+
+            .tags {
+                opacity: 0;
+                visibility: hidden;
+                display: flex;
+                align-items: center;
+                position: absolute;
+                left: 28px;
+                top: 28px;
+                transition: .3s;
+
+
+                li {
+                    margin: 0 10px;
+
+                    a {
+                        color: $pcolor;
+                        font-family: $inter;
+                        font-weight: 600;
+                        font-size: 14px;
+                        line-height: 22px;
+                        text-transform: uppercase;
+                        background: $white;
+                        border: 2px solid #131313;
+                        box-shadow: 4px 4px 0px #131313;
+                        padding: 8px 16px;
+                        transition: .3s;
+
+                        &:hover {
+                            color: $main-bg;
+                            box-shadow: none;
+                        }
+                    }
+
+                    &:first-child {
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+
+        .project_bottom {
+            padding-right: 250px;
+            text-align: left;
+
+            h4 {
+                margin-top: 40px;
+
+                a {
+                    color: $pcolor;
+                    font-family: $clash-display;
+                    font-weight: 600;
+                    font-size: 42px;
+                    line-height: 52px;
+                    transition: .3s;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            .project_btn {
+                color: $main-bg;
+            }
+        }
+
+        &:hover {
+            .project_top {
+                .tags {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+}
+
+// Portfolio 3 Grid
+.min_project_area_grid_two.three {
+    .single_project {
+        margin: 0 10px;
+        margin-bottom: 80px;
+
+        .project_top {
+            img {
+                height: 420px;
+            }
+        }
+
+        .project_bottom {
+            padding-right: 100px;
+
+            h4 {
+                a {
+                    font-size: 30px;
+                    line-height: 40px;
+                }
+            }
+        }
+    }
+}
+
+//Portfolio interactive 
+.project_two.innar {
+    .min_project_two {
+        margin-top: 0;
+
+        .project_two_items {
+            .single_item {
+                &:first-child {
+                    border-top: 0;
+                }
+
+                .all_content {
+                    .content {
+                        .category {
+                            span {
+                                color: $main-bg;
+
+                                a {
+                                    color: $main-bg;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .bottom {
+            margin-top: 80px;
+        }
+    }
+}
+
+//Portfolio Single
+.min_project_area_grid_two.three.single {
+    .section_title {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+}

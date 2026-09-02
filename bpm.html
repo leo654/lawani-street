@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#e8e7e1">
+    <meta name="description" content="A music-led identity with a flexible visual rhythm for digital experiences, events and community touchpoints.">
+    <meta name="author" content="Lawani St">
+    <meta name="robots" content="index, follow">
+
+    <title>Beat Per Minute — Lawani St</title>
+    <link rel="canonical" href="https://lawanistreet.com/bpm.html">
+    <meta property="og:title" content="Beat Per Minute — Lawani St">
+    <meta property="og:description" content="A music-led identity with a flexible visual rhythm for digital experiences, events and community touchpoints.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://lawanistreet.com/bpm.html">
+    <meta property="og:image" content="https://lawanistreet.com/assets/img/bpm.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Beat Per Minute — Lawani St">
+    <meta name="twitter:description" content="A music-led identity with a flexible visual rhythm for digital experiences, events and community touchpoints.">
+    <meta name="twitter:image" content="https://lawanistreet.com/assets/img/bpm.png">
+
+    <link rel="shortcut icon" href="assets/img/fav.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
+    <link rel="preload" href="assets/fonts/GridlitePEVFWeb-All.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/AuxMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <script>
+      document.documentElement.classList.replace("no-js", "js");
+      (function () {
+        var mode = "light";
+        try {
+          var storedTheme = localStorage.getItem("ll-theme-mode");
+          if (storedTheme === "light" || storedTheme === "system" || storedTheme === "dark") mode = storedTheme;
+        } catch (error) {}
+        var theme = mode === "system"
+          ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+          : mode;
+        document.documentElement.setAttribute("data-theme-mode", mode);
+        document.documentElement.setAttribute("data-theme", theme);
+        var themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#181a19");
+      })();
+    </script>
+    <link rel="stylesheet" href="assets/css/lamalama-ui.css?v=20260901-global-arrow-svg-1">
+    <link rel="stylesheet" href="assets/css/case-study.css?v=20260901-global-arrow-svg-1">
+    <link rel="stylesheet" href="assets/css/benchmark-system.css?v=20260901-deck-contact-arrows-1">
+    <link rel="stylesheet" href="assets/css/motion-system.css?v=20260826-motion-ownership-2">
+    <link rel="stylesheet" href="assets/css/pitchdeck-overlay.css?v=20260826-overlay-3">
+    <link rel="stylesheet" href="assets/css/theme-system.css?v=20260901-mobile-hero-rail-1">
+  </head>
+
+  <body class="case-study case-study--bpm">
+    <a class="ll-skip-link" href="#main-content">Skip to project</a>
+
+    <header class="ll-floating-header" data-ll-header>
+      <div class="ll-nav-dock">
+        <a class="ll-nav-dock__brand ll-button ll-button--square" href="index.html" aria-label="Lawani St home">
+          <span aria-hidden="true">L:</span>
+        </a>
+        <p class="ll-nav-dock__note" data-ll-nav-note>Cases with teeth</p>
+        <button
+          class="ll-nav-toggle ll-button ll-button--square"
+          type="button"
+          aria-controls="ll-mobile-menu"
+          aria-expanded="false"
+          aria-label="Open navigation"
+          data-ll-menu-toggle
+        >
+          <svg class="ll-icon ll-nav-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path class="ll-icon__menu-line ll-icon__menu-line--top" d="M5 6.5h14"></path>
+            <path class="ll-icon__menu-line ll-icon__menu-line--middle" d="M5 12h14"></path>
+            <path class="ll-icon__menu-line ll-icon__menu-line--bottom" d="M5 17.5h14"></path>
+          </svg>
+          <span class="ll-visually-hidden" data-ll-menu-label>Menu</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="cs-scroll-progress" aria-hidden="true">
+      <span data-cs-scroll-progress></span>
+    </div>
+
+    <div class="ll-mobile-menu" id="ll-mobile-menu" aria-hidden="true" data-ll-mobile-menu>
+      <nav class="ll-mobile-menu__nav" aria-label="Site navigation">
+        <a class="ll-menu-row" href="work.html">
+          <span>Work</span>
+        </a>
+
+        <div class="ll-menu-group">
+          <button
+            class="ll-menu-row ll-menu-group__toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="ll-menu-services"
+            data-ll-submenu-toggle
+          >
+            <span>Expertise</span>
+            <span class="ll-menu-group__plus" aria-hidden="true"><i></i><i></i></span>
+          </button>
+          <div class="ll-menu-group__items" id="ll-menu-services" aria-hidden="true" data-ll-submenu>
+            <div>
+              <a href="index.html#service-branding"><span>Branding</span><span>01</span></a>
+              <a href="index.html#service-digital"><span>Digital</span><span>02</span></a>
+              <a href="index.html#service-marketing"><span>Marketing</span><span>03</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- <a class="ll-menu-row" href="mailto:accounts@lawani.st?subject=Careers%20at%20Lawani%20St">
+          <span>Careers</span>
+          <span class="ll-menu-group__plus" aria-hidden="true"><i></i><i></i></span>
+        </a> -->
+        <a class="ll-menu-row" href="vcard.html">
+          <span>Contact</span>
+        </a>
+      </nav>
+
+      <div class="ll-mobile-menu__actions">
+        <a class="ll-mobile-menu__pitch ll-button" href="pitchdeck.html">Resume</a>
+        <div>
+          <a class="ll-mobile-menu__cta ll-button" href="mailto:accounts@lawani.st?subject=Schedule%20a%20call">Schedule a call</a>
+          <a class="ll-mobile-menu__cta ll-button" href="vcard.html">Start a project</a>
+        </div>
+      </div>
+    </div>
+
+    <a class="ll-menu-reel" href="team.html" aria-label="Meet the Lawani St studio" data-ll-menu-reel>
+      <span class="ll-menu-reel__media" aria-hidden="true">
+        <video muted loop playsinline preload="none" data-ll-menu-reel-video>
+          <source src="assets/video/stuff.mp4" type="video/mp4">
+        </video>
+      </span>
+      <span class="ll-menu-reel__label">Lawani Street</span>
+    </a>
+
+    <main id="main-content">
+      <section class="cs-hero" aria-labelledby="cs-title" data-ll-section-note="Beat Per Minute / Case 07">
+        <h1 class="cs-title" id="cs-title">Beat Per Minute</h1>
+        <div class="cs-hero__meta">
+          <ul class="cs-tags" aria-label="Project disciplines"><li>Branding</li><li>Music</li></ul>
+          <a class="cs-jump ll-button" href="#gallery">
+            <span>View project</span>
+            <svg class="ll-icon ll-icon--sm ll-icon--arrow-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"></path><path d="m6 13 6 6 6-6"></path></svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="cs-story" aria-label="Project overview" data-ll-section-note="Project story">
+        <div class="cs-story__copy ll-reveal">
+          <p class="cs-story__lead">A music-led identity with a flexible visual rhythm for digital experiences, events and community touchpoints.</p>
+          <div class="cs-story__credits">
+            <p>[ Credits ]</p>
+            <dl><div><dt>Creative direction</dt><dd>Lawani St.</dd></div></dl>
+          </div>
+        </div>
+        <figure class="cs-story__media ll-reveal">
+          <video autoplay muted loop playsinline preload="metadata" poster="assets/img/bpm.png">
+            <source src="assets/video/bpm.mp4" type="video/mp4">
+          </video>
+        </figure>
+      </section>
+
+      <section class="cs-gallery" id="gallery" aria-label="Beat Per Minute project gallery" data-ll-section-note="Visual system">
+        <div class="cs-gallery__row cs-gallery__row--feature">
+          <figure>
+            <img src="assets/img/bpm2.png" alt="Beat Per Minute project visual 01" loading="eager" decoding="async">
+          </figure>
+        </div>
+
+        <div class="cs-gallery__row cs-gallery__row--pair">
+          <figure>
+            <img src="assets/img/dj1.png" alt="Beat Per Minute project visual 02" loading="lazy" decoding="async">
+          </figure>
+          <figure>
+            <img src="assets/img/dj2.png" alt="Beat Per Minute project visual 03" loading="lazy" decoding="async">
+          </figure>
+        </div>
+
+        <div class="cs-gallery__row cs-gallery__row--pair">
+          <figure>
+            <img src="assets/img/bpmjjj.png" alt="Beat Per Minute project visual 04" loading="lazy" decoding="async">
+          </figure>
+          <figure>
+            <img src="assets/img/bpm1.png" alt="Beat Per Minute project visual 05" loading="lazy" decoding="async">
+          </figure>
+        </div>
+
+        <div class="cs-gallery__row cs-gallery__row--feature">
+          <figure>
+            <img src="assets/img/bpm.png" alt="Beat Per Minute project visual 06" loading="lazy" decoding="async">
+          </figure>
+        </div>
+      </section>
+
+      <section class="cs-related" aria-labelledby="related-title" data-ll-section-note="Related work">
+        <div class="cs-related__head">
+          <p id="related-title">[ Related work ]</p>
+          <a href="work.html"><span>View all work</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>
+        </div>
+        <div class="cs-related-list">
+          <a class="cs-related-row" href="kicksjoint.html">
+            <h2>Kicksjoint</h2>
+            <ul class="cs-tags" aria-label="Kicksjoint disciplines"><li>Branding</li><li>Experience</li><li>Commerce</li></ul>
+            <span class="cs-related-row__view"><span>View</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>
+            <span class="cs-related-row__rail" aria-hidden="true">
+              <img src="assets/img/kj1.png" alt="" loading="lazy" decoding="async">
+              <img src="assets/img/kj5.png" alt="" loading="lazy" decoding="async">
+              <img src="assets/img/case2.png" alt="" loading="lazy" decoding="async">
+            </span>
+          </a>
+          <a class="cs-related-row" href="ademi.html">
+            <h2>Ademi</h2>
+            <ul class="cs-tags" aria-label="Ademi disciplines"><li>Branding</li><li>Art direction</li></ul>
+            <span class="cs-related-row__view"><span>View</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>
+            <span class="cs-related-row__rail" aria-hidden="true">
+              <img src="assets/img/ademi1.png" alt="" loading="lazy" decoding="async">
+              <img src="assets/img/ademi2.png" alt="" loading="lazy" decoding="async">
+              <img src="assets/img/ademi3.png" alt="" loading="lazy" decoding="async">
+            </span>
+          </a>
+          <a class="cs-related-row" href="enterscale.html">
+            <h2>EnterScale</h2>
+            <ul class="cs-tags" aria-label="EnterScale disciplines"><li>Strategy</li><li>Branding</li></ul>
+            <span class="cs-related-row__view"><span>View</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>
+            <span class="cs-related-row__rail" aria-hidden="true">
+              <img src="assets/img/picture/enterscale/1.png" alt="" loading="lazy" decoding="async">
+              <img src="assets/img/picture/enterscale/right.png" alt="" loading="lazy" decoding="async">
+              <img src="assets/img/picture/enterscale/3.png" alt="" loading="lazy" decoding="async">
+            </span>
+          </a>
+        </div>
+      </section>
+
+      <footer class="cs-footer" id="project-contact" data-ll-section-note="Slide into our inbox">
+        <div class="cs-footer__main">
+          <div class="cs-footer__lead">
+            <h2>Let's Talk.</h2>
+            <a class="cs-footer__contact-card ll-button ll-button--media" href="mailto:accounts@lawani.st">
+              <span class="cs-footer__portrait">
+                <img src="assets/img/me.gif" alt="" width="500" height="594">
+              </span>
+              <span>accounts@lawani.st</span>
+            </a>
+          </div>
+
+          <div class="cs-footer__contact">
+            <p class="cs-footer__label">[ Get in touch ]</p>
+            <p class="cs-footer__copy">Feel free to reach out and discuss your project.<br>We’ll make it sharper.</p>
+            <div class="cs-footer__actions">
+              <a class="ll-button ll-tactile-control" href="vcard.html">
+                <span>Start a project</span>
+                <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 17 17 7"></path>
+                  <path d="M7 7h10v10"></path>
+                </svg>
+              </a>
+              <a class="ll-button ll-tactile-control" href="mailto:accounts@lawani.st?subject=Schedule%20a%20call">
+                <span>Schedule a call</span>
+                <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 17 17 7"></path>
+                  <path d="M7 7h10v10"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-footer__bottom" id="project-footer-navigation">
+          <span>Independent studio</span>
+          <span>London / Everywhere</span>
+          <time datetime="" data-ll-clock>00 : 00 : 00</time>
+          <span class="cs-footer__socials">
+            <span>Follow us</span>
+            <a href="https://www.instagram.com/lawani.st" target="_blank" rel="noopener noreferrer">Instagram +</a>
+            <a href="https://www.linkedin.com/company/lawani-st" target="_blank" rel="noopener noreferrer">LinkedIn +</a>
+          </span>
+          <button
+            class="ll-theme-toggle ll-theme-toggle--footer ll-button"
+            type="button"
+            aria-label="Switch to light theme"
+            aria-pressed="false"
+            data-ll-theme-toggle
+          >
+            <span data-ll-theme-label>Dark</span>
+            <svg class="ll-theme-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <g class="ll-theme-toggle__sun">
+                <circle cx="12" cy="12" r="3.25"></circle>
+                <path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6 6l1.4 1.4M16.6 16.6 18 18M18 6l-1.4 1.4M7.4 16.6 6 18"></path>
+              </g>
+              <path class="ll-theme-toggle__moon" d="M18.5 15.2A7.2 7.2 0 0 1 8.8 5.5 7.2 7.2 0 1 0 18.5 15.2Z"></path>
+            </svg>
+          </button>
+          <span>EN</span>
+        </div>
+      </footer>
+    </main>
+
+    <script src="assets/js/elastic-cursor.js?v=20260826-overlay-pause-1" defer></script>
+    <script src="assets/js/modules/motion-system.js?v=20260825-motion-1" defer></script>
+    <script src="assets/js/modules/pitchdeck-overlay.js?v=20260901-global-arrow-svg-1" defer></script>
+    <script src="assets/js/pages/lamalama-ui.js?v=20260831-themed-cta-1" defer></script>
+    <script src="assets/js/pages/case-study-ui.js?v=20260826-motion-ownership-1" defer></script>
+  </body>
+</html>

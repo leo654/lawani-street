@@ -1,0 +1,9 @@
+/* Fox local fallback: original font binaries are not present in this codebase.
+   Keep the font-family name available without requesting missing files. */
+@font-face {
+  font-family: 'Fox';
+  src: local('Arial');
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+}

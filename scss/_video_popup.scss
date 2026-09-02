@@ -1,0 +1,38 @@
+// Home One
+.video_popup {
+    margin-top: -375px;
+    position: relative;
+    z-index: 2;
+
+    .popup_container {
+        width: 1740px;
+        height: 900px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        transition: .3s;
+
+        &:hover {
+
+            .popup_btn {
+                width: 120px;
+                height: 120px;
+
+                &:hover {
+                    width: 140px;
+                    height: 140px;
+                }
+            }
+        }
+    }
+}
+
+// Home Four
+.video_popup.h_4 {
+    margin-top: 0;
+
+    .popup_container {
+        width: 100%;
+    }
+}

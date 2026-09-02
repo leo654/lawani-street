@@ -1,0 +1,236 @@
+/* Loaded after the shared system so the hero film remains the clickable layer. */
+body.home-index .ll-home-hero > .ll-home-hero__media {
+  z-index: 0;
+  padding: 0;
+  border: 0;
+  pointer-events: auto;
+}
+
+body.home-index {
+  --ll-home-hero-height: 80vh;
+  --ll-hero-ink: #151917;
+  --ll-hero-paper: #f2f0e9;
+  --ll-hero-signal: #ff3838;
+}
+
+@supports (height: 100svh) {
+  body.home-index {
+    --ll-home-hero-height: 85svh;
+  }
+}
+
+body.home-index .ll-home-hero {
+  --ll-hero-scroll-y: 0px;
+  --ll-hero-dot-scale: 1;
+  background: var(--ll-hero-ink);
+  transition: background-color 360ms ease, color 360ms ease;
+}
+
+html[data-theme="light"] body.home-index {
+  --ll-hero-ink: #e8e7e1;
+  --ll-hero-paper: #171917;
+}
+
+/* 80%-viewport hero contract. Keep every visual and content layer in sync so
+   the Featured work marker enters the first viewport below the hero. */
+body.home-index .ll-home-hero,
+body.home-index .ll-home-hero > .ll-home-hero__media,
+body.home-index .ll-home-hero > .ll-home-hero__wash,
+body.home-index .ll-home-hero > .ll-home-hero__pulse,
+body.home-index .ll-home-hero > .ll-home-hero__halftone,
+body.home-index .ll-home-hero > .ll-home-hero__content {
+  height: var(--ll-home-hero-height);
+  min-height: var(--ll-home-hero-height);
+}
+
+body.home-index .ll-home-hero > .ll-home-hero__wash,
+body.home-index .ll-home-hero > .ll-home-hero__pulse,
+body.home-index .ll-home-hero > .ll-home-hero__halftone {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+}
+
+body.home-index .ll-home-hero > .ll-home-hero__halftone {
+  width: 100%;
+  color: var(--ll-hero-ink);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 240ms ease, color 360ms ease;
+}
+
+body.home-index .ll-home-hero.ll-halftone-ready > .ll-home-hero__halftone {
+  opacity: 0;
+}
+
+body.home-index .ll-home-hero.ll-halftone-ready > .ll-home-hero__pulse {
+  opacity: 0;
+}
+
+body.home-index .ll-home-hero > .ll-home-hero__media {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+/* Halftone gradient: a solid dark field rises from the bottom while a dot
+   screen creates the irregular transition into the moving image. */
+/* body.home-index .ll-home-hero > .ll-home-hero__wash {
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 43%,
+      color-mix(in srgb, var(--ll-hero-ink) 28%, transparent) 56%,
+      var(--ll-hero-ink) 76%,
+      var(--ll-hero-ink) 100%
+    );
+  transition: opacity 260ms ease;
+} */
+
+body.home-index .ll-home-hero > .ll-home-hero__pulse {
+  top: -22px;
+  right: -22px;
+  bottom: -22px;
+  left: -22px;
+  width: auto;
+  height: calc(100% + 44px);
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(circle, var(--ll-hero-ink) 0 0.35px, transparent 1.55px) 0 0 / 7px 7px;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 28%,
+    rgba(0, 0, 0, 0.12) 38%,
+    rgba(0, 0, 0, 0.72) 58%,
+    #000 76%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 28%,
+    rgba(0, 0, 0, 0.12) 38%,
+    rgba(0, 0, 0, 0.72) 58%,
+    #000 76%,
+    #000 100%
+  );
+  transform: translate3d(
+    calc(var(--ll-hero-x, 0px) * 0.65),
+    calc((var(--ll-hero-y, 0px) * 0.65) + var(--ll-hero-scroll-y)),
+    0
+  ) scale(var(--ll-hero-dot-scale));
+  transform-origin: var(--ll-hero-glow-x, 50%) var(--ll-hero-glow-y, 50%);
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1), opacity 240ms ease;
+  will-change: transform;
+}
+
+body.home-index .ll-home-hero > .ll-home-hero__content {
+  z-index: 2;
+  color: var(--ll-hero-paper);
+  pointer-events: none;
+}
+
+body.home-index .ll-home-hero #ll-hero-title,
+body.home-index .ll-home-hero .ll-home-hero__rail,
+body.home-index .ll-home-hero .ll-home-hero__content {
+  color: var(--ll-hero-paper);
+  text-shadow: 0 1px 16px rgba(7, 8, 7, 0.22);
+}
+
+html[data-theme="light"] body.home-index .ll-home-hero #ll-hero-title,
+html[data-theme="light"] body.home-index .ll-home-hero .ll-home-hero__rail,
+html[data-theme="light"] body.home-index .ll-home-hero .ll-home-hero__content {
+  color: var(--ll-hero-paper);
+  text-shadow: none;
+}
+
+body.home-index .ll-home-hero > .ll-home-hero__content :is(a, button) {
+  pointer-events: auto;
+}
+
+body.home-index .ll-home-hero__rail time {
+  background: radial-gradient(circle at 14px 50%, var(--ll-hero-signal) 0 3px, transparent 3.5px);
+}
+
+body.home-index .ll-home-hero__rail::before,
+body.home-index .ll-home-hero__rail-line {
+  background: currentColor;
+}
+
+body.home-index .ll-home-hero__media video {
+  filter: saturate(1) contrast(1) brightness(0.4);
+}
+
+/* The hero fade and the next section share one themed surface, so the
+   halftone reads as the page itself breaking into the fixed film. */
+body.home-index .ll-work-intro,
+body.home-index .ll-work .lwa-archive {
+  background: var(--ll-hero-ink);
+  color: var(--ll-hero-paper);
+  transition: background-color 360ms ease, border-color 360ms ease, color 360ms ease;
+}
+
+body.home-index .ll-work-intro {
+  border-color: color-mix(in srgb, var(--ll-hero-paper) 18%, transparent);
+}
+
+body.home-index .ll-work .lwa-archive {
+  --lwa-bg: var(--ll-hero-ink);
+  --lwa-fg: var(--ll-hero-paper);
+  --lwa-muted: color-mix(in srgb, var(--ll-hero-paper) 60%, transparent);
+  --lwa-line: color-mix(in srgb, var(--ll-hero-paper) 18%, transparent);
+  --lwa-panel: color-mix(in srgb, var(--ll-hero-ink) 88%, #000);
+}
+
+html[data-theme="light"] body.home-index .ll-work-intro,
+html[data-theme="light"] body.home-index .ll-work .lwa-archive {
+  background: #e8e7e1;
+  color: #171917;
+}
+
+html[data-theme="light"] body.home-index .ll-work .lwa-project__tags > span {
+  background: #171917;
+  color: #f2f0e9;
+}
+
+@media (max-width: 820px) {
+  body.home-index .ll-home-hero > .ll-home-hero__media {
+    position: fixed;
+  }
+
+  body.home-index .ll-home-hero > .ll-home-hero__wash,
+  body.home-index .ll-home-hero > .ll-home-hero__pulse,
+  body.home-index .ll-home-hero > .ll-home-hero__halftone {
+    position: absolute;
+  }
+
+  body.home-index .ll-home-hero > .ll-home-hero__wash {
+    background:
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 48%,
+        color-mix(in srgb, var(--ll-hero-ink) 32%, transparent) 60%,
+        var(--ll-hero-ink) 82%,
+        var(--ll-hero-ink) 100%
+      );
+  }
+
+  body.home-index .ll-home-hero > .ll-home-hero__pulse {
+    background-size: 6px 6px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 38%, rgba(0, 0, 0, 0.62) 64%, #000 84%);
+    mask-image: linear-gradient(to bottom, transparent 38%, rgba(0, 0, 0, 0.62) 64%, #000 84%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-index .ll-home-hero > .ll-home-hero__pulse {
+    transform: none;
+    transition: none;
+  }
+}

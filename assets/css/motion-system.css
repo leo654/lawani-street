@@ -1,0 +1,106 @@
+/*
+ * Lawani St. motion system
+ * One timing and easing contract for page, component and scroll choreography.
+ */
+
+:root {
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --motion-fast: 180ms;
+  --motion-control: 360ms;
+  --motion-reveal: 760ms;
+  --motion-page: 620ms;
+  --ll-ease: var(--motion-ease-out);
+  --ll-ease-out-expo: var(--motion-ease-out);
+  --ll-duration-micro: var(--motion-fast);
+  --ll-duration-control: var(--motion-control);
+  --ll-duration-component: var(--motion-reveal);
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+html.ll-page-leaving {
+  overflow: hidden;
+}
+
+.ll-page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  display: block;
+  overflow: hidden;
+  background: #f04b18;
+  pointer-events: none;
+  transform: translate3d(0, 101%, 0);
+  transition: transform var(--motion-page) var(--motion-ease-in-out);
+  will-change: transform;
+}
+
+.ll-page-transition::before {
+  position: absolute;
+  inset: 0;
+  background: #0b0d0c;
+  content: "";
+  transform: translate3d(0, 8%, 0);
+  transition: transform var(--motion-page) var(--motion-ease-out);
+}
+
+html.ll-page-leaving .ll-page-transition,
+.ll-page-transition.is-covering {
+  transform: translate3d(0, 0, 0);
+}
+
+html.ll-page-leaving .ll-page-transition::before,
+.ll-page-transition.is-covering::before {
+  transform: translate3d(0, 0, 0);
+}
+
+.ll-page-transition.is-covering {
+  transition: none;
+}
+
+.ll-page-transition.is-covering.is-revealing {
+  transform: translate3d(0, -101%, 0);
+  transition: transform var(--motion-page) var(--motion-ease-in-out);
+}
+
+.js .ll-reveal {
+  opacity: 0;
+  clip-path: none;
+  transform: translate3d(0, 26px, 0);
+  transition:
+    opacity 440ms ease,
+    transform var(--motion-reveal) var(--motion-ease-out);
+  transition-delay: var(--ll-reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.js .ll-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+:is(.ll-button, .ll-menu-row, .ll-action-link, .lwa-filter button) {
+  transition-timing-function: var(--motion-ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  .ll-page-transition {
+    display: none !important;
+  }
+
+  .js .ll-reveal {
+    opacity: 1 !important;
+    clip-path: none !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -1,0 +1,147 @@
+/*----------------------------------------*/
+/*  16. fanfact
+/*----------------------------------------*/
+.xb-fanfact {
+    .xb-item {
+        &--inner {
+            background-color: var(--color-white);
+            padding: 21px 30px;
+            @include border-radius(20px);
+            @include respond(lg) {
+                padding: 21px 25px;
+            }
+            @include respond(md) {
+                padding: 30px 35px;
+            }
+        }
+        &--icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 81, 0, 0.1);
+            @include center;
+            @include border-radius(50%);
+            margin-right: 15px;
+        }
+        &--holder {
+            width: calc(100% - 65px);
+            @include respond(lg){
+                margin-top: 20px;
+                width: 100%;
+            }
+        }
+        &--title {
+            text-transform: uppercase;
+            font-size: 14px;
+            color: var(--color-black);
+            font-weight: 700;
+        }
+        &--number {
+            font-size: 45px;
+            color: var(--color-black);
+            font-family: var(--font-body);
+            @include transform(translateX(-4px));
+            line-height: 1.1;
+            .xbo-digit {
+                display: inline-block;
+                padding-right: 4px;
+            }
+            .suffix {
+                padding-left: 3px;
+            }
+        }
+    }
+    &__inner {
+        background-color: var(--color-white);
+        position: absolute;
+        bottom: 8px;
+        padding: 69px 0;
+        width: 100%;
+        z-index: 2;
+        overflow: hidden;
+        @include respond(xs) {
+            position: relative;
+            padding-top: 49px;
+        }
+        &::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-white);
+            content: "";
+            z-index: -2;
+        }
+        &::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -15px;
+            width: 48%;
+            height: 219px;
+            background: #CBCFDA;
+            filter: blur(23px);
+            z-index: -3;
+        }
+    }
+    &__shape {
+        .shape {
+            position: absolute;
+            top: 50%;
+            @include transform(translateY(-50%));
+            z-index: -1;
+            @include respond(xs) {
+                display: none;
+            }
+            &--1 {
+                left: 0;
+            }
+            &--2 {
+                right: 0;
+            }
+        }
+    }
+}
+.fanfact-video {
+    width: 100%;
+    height: 900px;
+    object-fit: cover;
+    @include respond(lg) {
+        height: 700px;
+    }
+    @include respond(xs) {
+        height: 100%;
+    }
+
+}
+.xb-fanfact2 {
+    width: 25%;
+    text-align: center;
+    @include respond(xs) {
+        width: 50%;
+        margin-top: 30px;
+    }
+    &:not(:nth-child(4)) {
+        border-right: 1px dashed #888686;
+        @include respond(md) {
+            border: 0;
+        }
+    }
+    .number {
+        font-size: 45px;
+        margin-bottom: 12px;
+        letter-spacing: -0.9px;
+        @include respond(md) {
+            font-size: 35px;
+        }
+    }
+    & > span {
+        font-size: 18px;
+        color: #888686;
+        text-transform: capitalize;
+        @include respond(md) {
+            font-size: 16px;
+        }
+    }
+}

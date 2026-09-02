@@ -1,0 +1,87 @@
+.price {
+    padding-bottom: 165px;
+}
+
+.min_price_area {
+    margin-top: 60px;
+
+    .single_price_item {
+        border: 2px solid #131313;
+        box-shadow: 4px 4px 0px #131313;
+        padding-top: 62px;
+        padding-left: 48px;
+        padding-right: 52px;
+        padding-bottom: 48px;
+        transition: .3s;
+
+        .price_top {
+            h3 {
+                color: $pcolor;
+                font-family: $clash-display;
+                font-weight: 600;
+                font-size: 30px;
+                line-height: 40px;
+            }
+
+            h5 {
+                color: $main-bg;
+                font-family: $clash-display;
+                font-weight: 600;
+                font-size: 78px;
+                line-height: 88px;
+                margin-bottom: 0;
+
+                span {
+                    font-size: 20px;
+                    margin-left: -10px;
+                }
+            }
+
+            p {
+                color: $pcolor;
+                font-family: $inter;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 32px;
+            }
+        }
+
+        .price_list {
+            margin-top: 50px;
+
+            li {
+                color: $pcolor;
+                font-family: $inter;
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 28px;
+                margin: 10px 0;
+
+                i {
+                    color: $main-bg;
+                    margin-right: 8px;
+                }
+            }
+        }
+
+        .price_bottom {
+            margin-top: 75px;
+
+            .bg_btn_color {
+                width: 100%;
+                display: inline-block;
+                text-align: center;
+            }
+        }
+
+        &:hover {
+            box-shadow: none;
+            transform: translateY(-5px);
+        }
+    }
+}
+
+// Innar Page
+.price.innar {
+    padding-top: 160px;
+}

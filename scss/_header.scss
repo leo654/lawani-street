@@ -1,0 +1,147 @@
+// Header
+.header_aria {
+    .navbar {
+        padding-top: 0;
+        padding-bottom: 0;
+
+        .container {
+            border-bottom: 2px solid #131313;
+        }
+
+        .navbar-brand {
+            padding-top: 30px;
+            padding-bottom: 25px;
+        }
+
+        .navbar-collapse {
+            .navbar-nav {
+                padding-right: 20px;
+                margin-left: auto;
+
+                .nav-item {
+                    margin: 0 20px;
+
+                    .dropdown-menu {
+                        border: 0;
+                    }
+
+                    .nav-link {
+                        color: $pcolor;
+                        font-family: $inter;
+                        font-weight: 600;
+                        font-size: 16px;
+                        line-height: 24px;
+                        text-transform: uppercase;
+                        padding: 0;
+                        padding-top: 30px;
+                        padding-bottom: 25px;
+
+                        i {
+                            display: none;
+
+                            @media(max-width: 991px) {
+                                display: block;
+                                right: 0;
+                                top: 20px;
+                                position: absolute;
+                            }
+                        }
+                    }
+
+                    &.dropdown {
+                        .dropdown-menu {
+                            padding-right: 50px;
+                            padding-left: 10px;
+                            padding-top: 10px;
+                            padding-bottom: 10px;
+
+                            li {
+                                margin: 5px 0;
+
+                                a {
+                                    text-transform: uppercase;
+                                    color: $pcolor;
+                                    font-size: 14px;
+
+                                    &:hover {
+                                        background-color: transparent;
+                                        color: $main-bg;
+                                    }
+                                }
+                            }
+                        }
+
+                        &:hover {
+                            .dropdown-menu {
+                                display: block;
+                                transform: translateY(0);
+                                left: -25px;
+                                top: 75px;
+                            }
+                        }
+
+                        .nav-link {
+                            &::after {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .nav_buttons {
+                padding-left: 49px;
+                border-left: 2px solid #131313;
+                padding-top: 30px;
+                padding-bottom: 25px;
+
+                .cart {
+                    color: $pcolor;
+                    font-family: $inter;
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 24px;
+                    text-transform: uppercase;
+                }
+
+                .contact_btn {
+                    display: inline-block;
+                    color: $pcolor;
+                    font-family: $inter;
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 24px;
+                    text-transform: uppercase;
+                    background: $white;
+                    border: 2px solid #131313;
+                    box-shadow: 4px 4px 0px #131313;
+                    padding: 10px 25px;
+                    margin-left: 45px;
+                    transition: .3s;
+
+                    &:hover {
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Header Fixed
+.header_aria.navbar_fixed {
+    .navbar {
+        background: $white;
+        box-shadow: 0 4px 6px 0 rgba(12, 0, 46, 0.1);
+
+        .navbar-collapse {
+            .nav_buttons {
+                border: 0;
+            }
+        }
+
+        .container {
+            border: 0;
+        }
+    }
+}

@@ -1,0 +1,457 @@
+// Home One
+.hero_main {
+    padding-top: 250px;
+    padding-bottom: 550px;
+    position: relative;
+
+    .content {
+        position: relative;
+
+        .section_title {
+            h1 {
+                font-family: $clash-display;
+                color: #131313;
+                font-weight: 600;
+                font-size: 120px;
+                line-height: 124px;
+            }
+
+            p {
+                color: #131313;
+                font-family: $inter;
+                font-weight: 400;
+                font-size: 22px;
+                line-height: 38px;
+                margin-top: 30px;
+            }
+        }
+
+        .btn_area {
+            margin-top: 70px;
+
+            .bg_btn_color {
+                margin-left: 24px;
+            }
+        }
+
+        .shape {
+            position: absolute;
+            right: 100px;
+            bottom: -50px;
+        }
+    }
+
+    .shape_img {
+        .one {
+            right: 0;
+            top: 270px;
+        }
+
+        .two {
+            left: 0;
+            top: 370px;
+        }
+    }
+}
+
+// Home Two
+.hero_creative_agency {
+    padding-top: 250px;
+    padding-bottom: 160px;
+    position: relative;
+
+    .content {
+        position: relative;
+
+        .section_title {
+            .sub_title {
+                color: $pcolor;
+                font-family: $inter;
+                font-weight: 500;
+                font-size: 24px;
+                line-height: 34px;
+                text-transform: uppercase;
+                display: inline-block;
+                margin-bottom: 25px;
+            }
+
+            h1 {
+                color: $pcolor;
+                font-family: $clash-display;
+                font-weight: 600;
+                font-size: 100px;
+                line-height: 104px;
+                margin-bottom: 30px;
+            }
+
+            p {
+                color: $pcolor;
+                font-family: $inter;
+                font-weight: 400;
+                font-size: 22px;
+                line-height: 38px;
+            }
+        }
+
+        .reating_area {
+            .icons {
+                margin-bottom: 15px;
+                margin-top: 50px;
+
+                img {
+                    width: 40px;
+                    height: 40px;
+                    background: #219653;
+                    padding: 7px;
+                    margin: 0 2px;
+                }
+            }
+
+            p {
+                color: $pcolor;
+                font-family: $roboto;
+                font-weight: 300;
+                font-size: 18px;
+                line-height: 22px;
+
+                span {
+                    font-weight: 700;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .bg_overlay {
+        img {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 42%;
+        }
+    }
+
+    .shape_img {
+        .one {
+            top: -140px;
+            right: -335px;
+        }
+
+        .two {
+            bottom: 0;
+            left: 510px;
+        }
+
+        .three {
+            left: 0;
+            bottom: 470px;
+        }
+    }
+}
+
+// Home Three
+.hero_digital_studio {
+    padding-top: 200px;
+    position: relative;
+
+    .bg_ovarly {
+        img {
+            width: 100%;
+            position: relative;
+            z-index: 3;
+        }
+    }
+
+    .section_title {
+        h1 {
+            color: $pcolor;
+            font-family: $clash-display;
+            font-weight: 600;
+            font-size: 120px;
+            line-height: 124px;
+        }
+    }
+
+    .content {
+        padding-left: 110px;
+
+        p {
+            color: $pcolor;
+            font-family: $inter;
+            font-weight: 400;
+            font-size: 22px;
+            line-height: 38px;
+        }
+
+        .bg_btn {
+            display: inline-block;
+            margin-top: 30px;
+        }
+    }
+
+    .shape_img {
+        .one {
+            left: 0;
+            top: 275px;
+        }
+
+        .two {
+            bottom: 490px;
+            left: 895px;
+        }
+
+        .three {
+            right: 0;
+            top: 335px;
+        }
+    }
+}
+
+// Home Four 
+.hero_marketing_agency {
+    padding-top: 200px;
+    padding-bottom: 130px;
+    position: relative;
+
+    .content {
+        color: $pcolor;
+
+        .section_title {
+            span {
+                font-family: $inter;
+                font-weight: 500;
+                font-size: 24px;
+                line-height: 34px;
+                text-transform: uppercase;
+            }
+
+            h1 {
+                font-family: $clash-display;
+                font-weight: 600;
+                font-size: 100px;
+                line-height: 104px;
+                margin-top: 25px;
+            }
+
+            p {
+                font-family: $inter;
+                font-weight: 400;
+                font-size: 22px;
+                line-height: 38px;
+                margin-top: 30px;
+            }
+        }
+
+        .marketers {
+            display: flex;
+            align-items: center;
+            margin-top: 50px;
+
+            span {
+                display: block;
+                font-family: $inter;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 24px;
+                text-transform: uppercase;
+                margin-left: 24px;
+            }
+        }
+    }
+
+    .shape_img {
+        .one {
+            left: 0;
+            top: 310px;
+        }
+
+        .two {
+            bottom: 0;
+            right: 275px;
+        }
+
+        .three {
+            right: 0;
+            top: 230px;
+        }
+    }
+}
+
+// Hero Five 
+.hero_coporate_agency {
+    padding-top: 220px;
+    padding-bottom: 210px;
+    position: relative;
+
+    .content {
+        text-align: center;
+
+        .section_title {
+            color: $pcolor;
+
+            h1 {
+                font-family: $clash-display;
+                font-weight: 600;
+                font-size: 120px;
+                line-height: 124px;
+            }
+
+            p {
+                font-family: $inter;
+                font-weight: 400;
+                font-size: 22px;
+                line-height: 38px;
+                padding-top: 20px;
+            }
+        }
+
+        .bg_btn {
+            margin-top: 30px;
+        }
+    }
+
+    .shape_img {
+        .one {
+            left: 100px;
+            bottom: 300px;
+        }
+
+        .two {
+            bottom: 0;
+            right: 230px;
+        }
+
+        .three {
+            right: 0;
+            top: 155px;
+        }
+    }
+}
+
+// Home Six 
+.hero_agenct_portfolio {
+    padding-top: 250px;
+    padding-bottom: 300px;
+    position: relative;
+
+    .content {
+        color: $pcolor;
+
+        .section_title {
+            span {
+                font-family: $inter;
+                font-weight: 500;
+                font-size: 24px;
+                line-height: 34px;
+                text-transform: uppercase;
+            }
+
+            h1 {
+                font-family: $clash-display;
+                font-weight: 600;
+                font-size: 100px;
+                line-height: 104px;
+                margin-top: 25px;
+            }
+        }
+    }
+
+    .marketars {
+        display: flex;
+        align-items: center;
+        margin-top: 50px;
+
+        span {
+            display: block;
+            margin-left: 24px;
+            font-family: $inter;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+            text-transform: uppercase;
+        }
+    }
+
+    .shape_img {
+        .one {
+            left: 0;
+            top: 350px;
+        }
+
+        .two {
+            bottom: 115px;
+            right: 370px;
+        }
+
+        .three {
+            top: 100px;
+            right: 70px;
+        }
+    }
+}
+
+// Home Seven
+.hero_shop {
+    padding-top: 200px;
+    padding-bottom: 130px;
+    position: relative;
+
+    .section_img {
+        position: relative;
+
+        .min {
+            position: relative;
+            z-index: 2;
+        }
+    }
+
+    .content {
+        span {
+            color: $pcolor;
+            font-family: $clash-display;
+            font-weight: 600;
+            font-size: 42px;
+            line-height: 52px;
+        }
+
+        .section_title {
+            h1 {
+                color: $pcolor;
+                font-family: $clash-display;
+                font-weight: 600;
+                font-size: 90px;
+                line-height: 96px;
+                margin-top: 15px;
+            }
+
+            p {
+                color: $pcolor;
+                font-family: $inter;
+                font-weight: 400;
+                font-size: 22px;
+                line-height: 38px;
+                margin-top: 30px;
+            }
+        }
+
+        .bg_btn {
+            margin-top: 30px;
+        }
+    }
+
+    .one {
+        left: -120px;
+        top: -110px;
+    }
+
+    .two {
+        bottom: 0;
+        left: 615px;
+    }
+
+    .three {
+        right: 0;
+        bottom: 420px;
+    }
+}

@@ -1,0 +1,6 @@
+main {
+
+  background: 
+    radial-gradient(#dddddd 0 0.5px, rgba(113, 113, 113, 0) 0.3px 0.3px) 0 / .3em .3em,
+    linear-gradient(#ffffff, #2d2d2d)
+}

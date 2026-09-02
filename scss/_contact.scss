@@ -1,0 +1,200 @@
+// Home Three
+.contact {
+    padding-bottom: 165px;
+}
+
+.map_area {
+
+    padding-right: 150px;
+
+    .min_map {
+        position: relative;
+
+        .map_icon {
+            width: 80px;
+            height: 80px;
+            background: $white;
+            border: 2px solid #131313;
+            box-shadow: 4px 4px 0px #131313;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: 1s;
+
+            i {
+                color: $main_bg;
+                font-size: 25px;
+            }
+        }
+
+        .mapouter {
+            position: relative;
+            text-align: right;
+            height: 660px;
+            width: 100%;
+        }
+
+        .gmap_canvas {
+            overflow: hidden;
+            background: none !important;
+            height: 660px;
+            width: 100%;
+
+            iframe {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        &:hover {
+            .map_icon {
+                display: none;
+            }
+        }
+    }
+}
+
+.map_area {
+
+    padding-right: 150px;
+
+    .min_map {
+
+        .mapouter {
+            position: relative;
+            text-align: right;
+            height: 660px;
+            width: 100%;
+        }
+
+        .gmap_canvas {
+            overflow: hidden;
+            background: none !important;
+            height: 660px;
+            width: 100%;
+
+            iframe {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}
+
+.min_contact_area {
+    .contact_form {
+        margin-top: 20px;
+
+        .input {
+            border: none;
+            border-radius: 0;
+            border-bottom: 2px solid #131313;
+            padding-left: 0;
+            padding-top: 20px;
+            padding-bottom: 20px;
+
+            &:focus {
+                box-shadow: none;
+            }
+
+            &::placeholder {
+                color: $pcolor;
+                font-family: $inter;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 32px;
+            }
+        }
+
+        .textarea {
+            color: $pcolor;
+            font-family: $inter;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 32px;
+            height: 120px;
+            margin-top: 30px;
+        }
+
+        .bg_btn_color {
+            margin-top: 48px;
+        }
+    }
+}
+
+// Home Five 
+.contact.h_5 {
+    padding-top: 160px;
+}
+
+// Contact Us
+// Contact Box
+.contact_box {
+    padding-bottom: 160px;
+}
+
+.min_contact_box {
+    margin-top: 65px;
+
+    .single_contact_box {
+        background: $white;
+        border: 2px solid #131313;
+        box-shadow: 4px 4px 0px #131313;
+        margin: 0 10px;
+        padding-top: 52px;
+        padding-left: 48px;
+        padding-right: 48px;
+        padding-bottom: 52px;
+        transition: .3s;
+
+        h5 {
+            color: $pcolor;
+            font-family: $clash-display;
+            font-weight: 600;
+            font-size: 30px;
+            line-height: 40px;
+            margin-bottom: 20px;
+        }
+
+        .location {
+            color: $pcolor;
+            font-family: $clash-display;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 30px;
+        }
+
+        .contact_list {
+            margin-top: 15px;
+
+            li {
+                a {
+                    color: $pcolor;
+                    font-family: $inter;
+                    font-weight: 400;
+                    font-size: 18px;
+                    line-height: 32px;
+
+                    &.mail {
+                        font-weight: 600;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        .text_btn {
+            margin-top: 15px;
+        }
+
+        &:hover {
+            box-shadow: none;
+            transform: translateY(-5px);
+        }
+    }
+}

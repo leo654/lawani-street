@@ -1,0 +1,21 @@
+// Color
+$main-bg: #FC7942;
+$white: #fff;
+$pcolor: #131313;
+
+// Font
+$inter: 'Inter', sans-serif;
+$clash-display: 'ClashDisplay', sans-serif;
+$roboto: 'Roboto', sans-serif;
+
+
+//Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+//@import url('http://fonts.cdnfonts.com/css/clash-display');
+
+@font-face {
+    font-family: ClashDisplay;
+    // src: url(/assets/fonts/ClashDisplay-Semibold.ttf);
+    src: url(../fonts/ClashDisplay-Semibold.ttf);
+}

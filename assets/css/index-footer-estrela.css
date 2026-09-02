@@ -1,0 +1,49 @@
+/* Estrela footer lock-in for index page (menu is global in `estrela-menu.css`) */
+
+@font-face {
+  font-family: "PP Neue Montreal";
+  src: url("https://estrela.studio/fonts/PPNeueMontreal-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Migra";
+  src: url("https://estrela.studio/fonts/PPMigra-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --es-unit: clamp(8px, 0.694444vw, 10px);
+  --es-black: #020202;
+  --es-menu-black: #040404;
+  --es-panel: #0e0e0e;
+  --es-text: #fbfbf4;
+  --es-muted: rgba(251, 251, 244, 0.5);
+  --es-green: #8ddf78;
+}
+
+/* Scrollbar hiding */
+html,
+body,
+.animsition {
+  overflow-x: clip !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.animsition::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Background - let lamalama-ui.css handle it */
+
+/* Footer styles - overridden by lamalama-ui.css for simplified footer */
+/* These rules are kept for other pages that may use the full estrela footer */

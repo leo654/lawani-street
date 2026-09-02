@@ -1,0 +1,43 @@
+// Home Two
+.cta {
+    .min_cta_area {
+        padding-top: 115px;
+        padding-bottom: 120px;
+        text-align: center;
+        font-family: $clash-display;
+        color: $pcolor;
+
+        h3 {
+            font-weight: 600;
+            font-size: 66px;
+            line-height: 76px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-family: $inter;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 32px;
+            margin-bottom: 30px;
+        }
+
+        a {
+            color: $pcolor;
+            font-weight: 600;
+            font-size: 42px;
+            line-height: 52px;
+            text-decoration: underline;
+        }
+    }
+}
+
+// Home Four
+.cta.h_4 {
+    padding-bottom: 165px;
+}
+
+// About Us
+.cta.about_us {
+    padding-bottom: 165px;
+}

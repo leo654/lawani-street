@@ -1,0 +1,219 @@
+/* Global ambient blend-gradient atmosphere (all pages) */
+
+:root {
+  --blend-x: 50%;
+  --blend-y: 38%;
+  --blend-scroll: 0;
+  --blend-press: 0;
+  --blend-strength: 1;
+
+  --blend-base: #f4efe6;
+  --blend-ambient-a: rgba(255, 91, 46, 0.16);
+  --blend-ambient-b: rgba(88, 130, 210, 0.12);
+  --blend-ambient-c: rgba(255, 200, 120, 0.08);
+  --blend-pointer: rgba(255, 110, 55, 0.2);
+  --blend-pointer-size: 28rem;
+  --blend-texture-dot: rgba(17, 17, 17, 0.11);
+  --blend-grid-line: rgba(17, 17, 17, 0.035);
+  --blend-vignette: rgba(10, 10, 12, 0.22);
+  --blend-scroll-fade: rgba(244, 239, 230, 0.42);
+}
+
+body.blend-gradient--dark,
+body.home-index,
+body.work-archive {
+  --blend-base: #1a1c1c;
+  --blend-ambient-a: rgba(255, 91, 46, 0.22);
+  --blend-ambient-b: rgba(100, 145, 220, 0.16);
+  --blend-ambient-c: rgba(230, 57, 47, 0.08);
+  --blend-pointer: rgba(255, 120, 70, 0.24);
+  --blend-texture-dot: rgba(249, 244, 235, 0.13);
+  --blend-grid-line: rgba(249, 244, 235, 0.04);
+  --blend-vignette: rgba(0, 0, 0, 0.45);
+  --blend-scroll-fade: rgba(17, 17, 17, 0.55);
+}
+
+body.project-page {
+  --blend-base: #ececec;
+  --blend-ambient-a: rgba(255, 91, 46, 0.1);
+  --blend-ambient-b: rgba(70, 95, 160, 0.08);
+  --blend-pointer: rgba(255, 100, 50, 0.12);
+  --blend-texture-dot: rgba(17, 17, 17, 0.08);
+}
+
+body.redirect-page {
+  --blend-strength: 0.35;
+}
+
+.blend-gradient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.blend-gradient__layer {
+  position: absolute;
+  inset: 0;
+}
+
+.blend-gradient__base {
+  background: var(--blend-base);
+  opacity: calc(0.88 + (var(--blend-scroll) * 0.04));
+  transition: opacity 320ms ease;
+}
+
+.blend-gradient__ambient {
+  background:
+    radial-gradient(ellipse 80% 55% at 8% 12%, var(--blend-ambient-a), transparent 58%),
+    radial-gradient(ellipse 70% 50% at 92% 18%, var(--blend-ambient-b), transparent 54%),
+    radial-gradient(ellipse 60% 45% at 50% 100%, var(--blend-ambient-c), transparent 62%);
+  mix-blend-mode: soft-light;
+  opacity: calc(0.55 * var(--blend-strength));
+}
+
+.blend-gradient__pointer {
+  background: radial-gradient(
+    circle var(--blend-pointer-size) at var(--blend-x) var(--blend-y),
+    var(--blend-pointer),
+    transparent 68%
+  );
+  mix-blend-mode: soft-light;
+  opacity: calc((0.08 + (var(--blend-press) * 0.12)) * var(--blend-strength));
+  transition: opacity 220ms ease;
+  will-change: background;
+}
+
+body.is-blend-active .blend-gradient__pointer {
+  opacity: calc((0.28 + (var(--blend-press) * 0.14) + (var(--blend-scroll) * 0.08)) * var(--blend-strength));
+}
+
+.blend-gradient__texture {
+  background-image: radial-gradient(circle at center, var(--blend-texture-dot) 0.55px, transparent 0.55px);
+  background-size: 4px 4px;
+  opacity: calc(0.32 * var(--blend-strength));
+  mix-blend-mode: overlay;
+}
+
+.blend-gradient__grid {
+  background-image: linear-gradient(var(--blend-grid-line) 1px, transparent 1px);
+  background-size: 100% 42px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent 78%);
+  opacity: calc((0.03 + (var(--blend-scroll) * 0.1)) * var(--blend-strength));
+  mix-blend-mode: multiply;
+}
+
+body.blend-gradient--dark .blend-gradient__grid,
+body.home-index .blend-gradient__grid,
+body.work-archive .blend-gradient__grid {
+  mix-blend-mode: soft-light;
+}
+
+.blend-gradient__scroll {
+  background: linear-gradient(
+    180deg,
+    var(--blend-scroll-fade) 0%,
+    transparent calc(18% + (var(--blend-scroll) * 8%)),
+    transparent calc(72% - (var(--blend-scroll) * 6%)),
+    var(--blend-scroll-fade) 100%
+  );
+  opacity: calc(0.35 + (var(--blend-scroll) * 0.25));
+  mix-blend-mode: multiply;
+}
+
+body.blend-gradient--dark .blend-gradient__scroll,
+body.home-index .blend-gradient__scroll,
+body.work-archive .blend-gradient__scroll {
+  mix-blend-mode: soft-light;
+  opacity: calc(0.22 + (var(--blend-scroll) * 0.3));
+}
+
+.blend-gradient__vignette {
+  background:
+    radial-gradient(ellipse 120% 80% at 50% 50%, transparent 42%, var(--blend-vignette) 100%);
+  opacity: calc(0.65 * var(--blend-strength));
+  mix-blend-mode: multiply;
+}
+
+body.blend-gradient--dark .blend-gradient__vignette,
+body.home-index .blend-gradient__vignette,
+body.work-archive .blend-gradient__vignette {
+  mix-blend-mode: normal;
+  opacity: calc(0.85 * var(--blend-strength));
+}
+
+/* Keep page content above the atmosphere */
+body.webpage > .animsition,
+body.webpage > #main-content,
+body.webpage > main,
+body.webpage > .menu,
+body.webpage > header,
+body.webpage > footer,
+body.webpage > .blend-gradient ~ .animsition,
+body.webpage > .blend-gradient ~ #main-content,
+body.webpage > .blend-gradient ~ main {
+  position: relative;
+  z-index: 1;
+}
+
+body.webpage > .blend-gradient ~ .header,
+body.webpage .header.header--estrela,
+body.webpage .nav[data-estrela-nav] {
+  z-index: 2147483646;
+}
+
+body.webpage > .blend-gradient ~ #loader,
+body.webpage #loader {
+  z-index: 2147483647;
+}
+
+/* Media overlays: soft bottom blend on hero videos only */
+.blend-gradient-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    transparent 20%,
+    rgba(0, 0, 0, 0.15) 60%,
+    rgba(0, 0, 0, 0.55) 85%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  mix-blend-mode: normal;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* Ensure other videos have no gradient */
+.video-wrapper:not(.blend-gradient-media)::after,
+.video-container:not(.blend-gradient-media)::after {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blend-gradient__pointer,
+  .blend-gradient__base,
+  .blend-gradient__scroll {
+    transition: none;
+  }
+
+  body.is-blend-active .blend-gradient__pointer {
+    opacity: calc(0.18 * var(--blend-strength));
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .blend-gradient__pointer,
+  .blend-gradient__texture,
+  .blend-gradient__grid {
+    display: none;
+  }
+
+  .blend-gradient__ambient {
+    opacity: 0.25;
+  }
+}

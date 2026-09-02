@@ -1,0 +1,195 @@
+.footer {
+    padding-top: 160px;
+    padding-bottom: 50px;
+    position: relative;
+
+    .shape_img {
+        .one {
+            left: 0;
+            bottom: 200px;
+        }
+
+        .two {
+            bottom: 0;
+            right: 650px;
+        }
+
+        .three {
+            top: 0;
+            right: 0;
+        }
+    }
+}
+
+.main_footer {
+    .site_info {
+        img {
+            margin-bottom: 40px;
+        }
+
+        p {
+            color: $pcolor;
+            font-family: $inter;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 32px;
+        }
+
+        .social_icons {
+            display: flex;
+            margin-top: 30px;
+
+            a {
+                color: #010002;
+                background: $white;
+                border: 2px solid #131313;
+                box-shadow: 2px 2px 0px #131313;
+                border-radius: 50%;
+                height: 52px;
+                width: 52px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 6px;
+                transition: .3s;
+
+                i {
+                    font-size: 18px;
+                }
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &:hover {
+                    box-shadow: none;
+                    color: $main-bg;
+                    transform: translateY(-5px);
+                    border-color: $main-bg;
+                }
+            }
+        }
+
+        &.logo_area {
+            padding-right: 100px;
+        }
+
+        h5 {
+            color: $pcolor;
+            font-family: $clash-display;
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 34px;
+            margin-bottom: 30px;
+        }
+
+        .loc_list {
+            li {
+                color: $pcolor;
+                font-family: $inter;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 32px;
+            }
+        }
+
+        .contact_list {
+            li {
+                a {
+                    color: $pcolor;
+                    font-family: $inter;
+                    font-weight: 400;
+                    font-size: 18px;
+                    line-height: 32px;
+                }
+
+                &.mail {
+                    a {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+
+        .subscribe_form {
+            margin-top: 40px;
+
+            .form-control {
+                height: 64px;
+                background: $white;
+                border: 2px solid #131313;
+                box-shadow: 4px 4px 0px #131313;
+                padding-left: 30px;
+
+                &::placeholder {
+                    color: $pcolor;
+                    font-family: $inter;
+                    font-weight: 400;
+                    font-size: 18px;
+                    line-height: 32px;
+                }
+
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+
+            .bg_btn_color {
+                margin-left: 0;
+                margin-top: 25px;
+            }
+        }
+    }
+}
+
+.footer_bottom {
+    margin-top: 160px;
+
+    .footer_bottom_list {
+        border-bottom: 2px solid #131313;
+        padding-bottom: 15px;
+
+        .footer_nav {
+            display: flex;
+            align-items: center;
+
+            li {
+                margin: 0 20px;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                a {
+                    color: $pcolor;
+                    font-family: $inter;
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 24px;
+                    text-transform: uppercase;
+                    transition: .3s;
+
+                    &:hover {
+                        color: $main-bg;
+                    }
+                }
+            }
+
+            &.right {
+                justify-content: flex-end;
+            }
+        }
+    }
+
+    .footer_copyright {
+        padding-top: 30px;
+
+        p {
+            color: $pcolor;
+            font-family: $inter;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 32px;
+        }
+    }
+}

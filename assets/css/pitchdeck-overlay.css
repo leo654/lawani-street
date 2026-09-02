@@ -1,0 +1,58 @@
+/* Reference-aligned pitchdeck shell: one full-screen fade owns entry and exit. */
+.ll-pitch-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147482000;
+  overflow: hidden;
+  visibility: hidden;
+  background: #070807;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 850ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.ll-pitch-overlay.is-visible {
+  visibility: visible;
+}
+
+.ll-pitch-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ll-pitch-overlay.is-closing {
+  transition-duration: 650ms;
+}
+
+.ll-pitch-overlay__surface,
+.ll-pitch-overlay__deck {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ll-pitch-overlay__surface {
+  position: relative;
+  overflow: hidden;
+  background: #070807;
+}
+
+.ll-pitch-overlay__deck {
+  border: 0;
+  background: #070807;
+}
+
+body.ll-pitch-overlay-open {
+  overscroll-behavior: none;
+}
+
+body.ll-pitch-overlay-open :is(.elastic-cursor, .elastic-cursor-dot) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ll-pitch-overlay {
+    transition: none;
+  }
+}
