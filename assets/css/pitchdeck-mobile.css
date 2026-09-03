@@ -245,7 +245,7 @@
     top: 47%;
     left: 20px;
     z-index: 2;
-    font-family: "Campton", Arial, sans-serif !important;
+    font-family: var(--ll-sans) !important;
     font-size: clamp(40px, 12vw, 56px);
     font-weight: 800;
     letter-spacing: -0.055em;
@@ -294,12 +294,12 @@
   }
 
   body.ll-deck-page .ll-deck-services li {
-    font-family: "Campton", Arial, sans-serif;
+    font-family: var(--ll-sans);
     font-size: clamp(17px, 5vw, 22px);
     font-weight: 400;
     letter-spacing: -0.035em;
     line-height: 1.38;
-    text-transform: none;
+    text-transform: uppercase;
   }
 }
 

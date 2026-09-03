@@ -8307,6 +8307,11 @@ html[data-theme="light"] .ll-mobile-menu {
   transform: translate(-50%, 0);
 }
 
+/* All visible copy uses the same uppercase treatment across every page. */
+html body * {
+  text-transform: uppercase !important;
+}
+
 /* Footer copy is essential content and never depends on a reveal observer. */
 body.home-index .ll-footer,
 html[data-theme="light"] body.home-index .ll-footer {
