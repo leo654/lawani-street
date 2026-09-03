@@ -124,7 +124,7 @@ body.work-index {
   min-height: var(--lwa-row-head-height);
   align-items: center;
   font-family: var(--ll-sans);
-  font-size: var(--ll-type-project-title);
+  /*! font-size: var(--ll-type-project-title); */
   font-weight: 650;
   line-height: 1;
   letter-spacing: -0.035em;
