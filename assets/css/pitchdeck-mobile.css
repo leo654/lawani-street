@@ -453,3 +453,87 @@
     transition: none;
   }
 }
+
+@media (max-width: 760px) {
+  body.ll-deck-page .ll-deck__menu-toggle,
+  body.ll-deck-page .ll-deck__close {
+    width: 44px;
+    height: 44px;
+  }
+
+  body.ll-deck-page .ll-deck__menu-toggle { left: 14px; }
+  body.ll-deck-page .ll-deck__close { right: 14px; }
+
+  body.ll-deck-page .ll-deck__chapters button {
+    min-width: min(58vw, 220px);
+    flex-basis: min(58vw, 220px);
+    gap: 10px;
+    padding-inline: 10px;
+    font-size: 9px;
+  }
+
+  body.ll-deck-page .ll-deck__thumb {
+    width: 28px;
+    height: 28px;
+  }
+
+  body.ll-deck-page .ll-deck-slide,
+  body.ll-deck-page .ll-deck-slide:not(.ll-deck-slide--welcome) {
+    padding-inline: 16px;
+  }
+
+  body.ll-deck-page .ll-deck-slide--welcome h1,
+  body.ll-deck-page .ll-deck-slide__profile-copy h2,
+  body.ll-deck-page .ll-deck-slide__vibe-copy h2,
+  body.ll-deck-page .ll-deck-slide--belief h2,
+  body.ll-deck-page .ll-deck-slide--clients > div h2,
+  body.ll-deck-page .ll-deck-slide--work h2,
+  body.ll-deck-page .ll-deck-slide--awards h2,
+  body.ll-deck-page .ll-deck-slide--contact h2 {
+    font-size: clamp(36px, 10.5vw, 50px);
+  }
+
+  body.ll-deck-page .ll-deck-slide--services {
+    padding-top: clamp(130px, 36vh, 300px);
+  }
+
+  body.ll-deck-page .ll-deck-slide--services > h2 {
+    font-size: clamp(38px, 10.5vw, 50px);
+    margin-bottom: 24px;
+  }
+
+  body.ll-deck-page .ll-deck-slide__intro > p,
+  body.ll-deck-page .ll-deck-slide__profile-copy > p:last-child,
+  body.ll-deck-page .ll-deck-slide__vibe-copy > p:last-child,
+  body.ll-deck-page .ll-deck-slide--clients > div p,
+  body.ll-deck-page .ll-deck-contact > p {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  body.ll-deck-page .ll-deck-services section {
+    height: clamp(250px, 54vh, 380px);
+    padding: 24px 20px;
+  }
+
+  body.ll-deck-page .ll-deck-services h3 { margin-bottom: 22px; }
+
+  body.ll-deck-page .ll-deck-services li,
+  body.ll-deck-page .ll-deck-belief-list p {
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  body.ll-deck-page .ll-deck-slide--profile figure,
+  body.ll-deck-page .ll-deck-slide--clients figure {
+    height: 36vh;
+    margin-top: 26px;
+  }
+
+  body.ll-deck-page .ll-deck-vibe-grid figure,
+  body.ll-deck-page .ll-deck-vibe-grid figure:first-child {
+    height: 26vh;
+  }
+
+  body.ll-deck-page .ll-deck-contact { margin-top: 32px; }
+}
