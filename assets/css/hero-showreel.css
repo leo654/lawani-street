@@ -15,7 +15,7 @@ body.home-index {
 
 @supports (height: 100svh) {
   body.home-index {
-    --ll-home-hero-height: 85svh;
+    --ll-home-hero-height: 87svh;
   }
 }
 
@@ -211,14 +211,14 @@ html[data-theme="light"] body.home-index .ll-work .lwa-project__tags > span {
 
   body.home-index .ll-home-hero > .ll-home-hero__wash {
     background:
-      linear-gradient(
+      /* linear-gradient(
         to bottom,
         transparent 0%,
         transparent 48%,
         color-mix(in srgb, var(--ll-hero-ink) 32%, transparent) 60%,
         var(--ll-hero-ink) 82%,
         var(--ll-hero-ink) 100%
-      );
+      ); */
   }
 
   body.home-index .ll-home-hero > .ll-home-hero__pulse {

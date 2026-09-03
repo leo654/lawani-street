@@ -980,7 +980,7 @@ body.home-index .ll-home-hero > .ll-home-hero__content :is(a, button) {
 .home-index .ll-home-hero__play-cue {
   position: absolute;
   right: var(--ll-gutter);
-  bottom: 76px;
+  bottom: 90px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -990,7 +990,8 @@ body.home-index .ll-home-hero > .ll-home-hero__content :is(a, button) {
   opacity: 0;
   transform: translate3d(0, 8px, 0);
   transition: opacity 220ms ease, transform 420ms var(--ll-ease);
-  padding-right: 45px;
+  padding-right: 2%;
+  margin-top: 20%;
 }
 
 .home-index .ll-home-hero__play-cue i {
@@ -1140,7 +1141,7 @@ body.ll-showreel-open {
 @media (max-width: 820px) {
   .home-index .ll-home-hero__play-cue {
     right: var(--ll-gutter);
-    bottom: 70px;
+    bottom: 83px;
     opacity: 1;
     transform: none;
   }
@@ -8360,5 +8361,32 @@ body.home-index .ll-footer .ll-theme-toggle {
 
   .ll-mobile-menu.is-open {
     transform: translateY(0);
+  }
+}
+
+/* Keep footer actions inside their container at every viewport width. */
+.ll-footer__actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  min-width: 0;
+}
+
+.ll-footer__actions a {
+  min-width: 0;
+}
+
+.ll-footer__actions a > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 560px) {
+  .ll-footer__actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ll-footer__actions a {
+    white-space: normal;
   }
 }

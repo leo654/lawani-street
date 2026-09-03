@@ -627,6 +627,35 @@ html.cs-preloader-active body.case-study {
   transform: none;
 }
 
+@media (max-width: 1100px) {
+  .cs-footer__main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+
+  .cs-footer__lead,
+  .cs-footer__contact {
+    grid-column: auto;
+  }
+
+  .cs-footer__lead {
+    grid-row: 1 / -1;
+  }
+
+  .cs-footer__contact {
+    grid-row: 1 / -1;
+  }
+
+  .cs-footer__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cs-footer__actions a {
+    min-width: 0;
+  }
+}
+
 @media (min-width: 901px) {
   .cs-footer__lead {
     transform: translateY(5px);

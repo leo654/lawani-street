@@ -460,6 +460,25 @@ body.work-index {
 .js .lwa-hero.is-visible > :nth-child(2) { transition-delay: 80ms; }
 .js .lwa-hero.is-visible > :nth-child(3) { transition-delay: 150ms; }
 
+@media (max-width: 1100px) {
+  .lwa-footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lwa-footer h2,
+  .lwa-footer__contact {
+    grid-column: auto;
+  }
+
+  .lwa-footer__contact > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lwa-footer__contact .ll-button {
+    min-width: 0;
+  }
+}
+
 @media (max-width: 820px) {
   .lwa-hero {
     min-height: 44svh;
