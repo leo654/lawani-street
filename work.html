@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#e8e7e1">
+    <meta name="theme-color" content="#000000">
     <meta name="description" content="Lawani St is an independent creative studio building distinctive identities, digital products, and experiences.">
     <meta name="author" content="Lawani St">
     <meta name="robots" content="index, follow">
@@ -36,18 +36,17 @@
     <script>
       document.documentElement.classList.replace("no-js", "js");
       (function () {
-        var mode = "light";
+        var mode = "dark";
         try {
           var storedTheme = localStorage.getItem("ll-theme-mode");
-          if (storedTheme === "light" || storedTheme === "system" || storedTheme === "dark") mode = storedTheme;
+          if (storedTheme === "light" || storedTheme === "dark") mode = storedTheme;
+          else if (storedTheme === "system") mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         } catch (error) {}
-        var theme = mode === "system"
-          ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-          : mode;
+        var theme = mode;
         document.documentElement.setAttribute("data-theme-mode", mode);
         document.documentElement.setAttribute("data-theme", theme);
         var themeMeta = document.querySelector('meta[name="theme-color"]');
-        if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#181a19");
+        if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#000000");
       })();
     </script>
     <link rel="stylesheet" href="assets/css/lamalama-ui.min.css?v=20260903-uppercase-1">
@@ -56,11 +55,11 @@
     <link rel="stylesheet" href="assets/css/benchmark-system.css?v=20260901-deck-contact-arrows-1">
     <link rel="stylesheet" href="assets/css/motion-system.css?v=20260826-motion-ownership-2">
     <link rel="stylesheet" href="assets/css/pitchdeck-overlay.css?v=20260826-overlay-3">
-    <link rel="stylesheet" href="assets/css/theme-system.css?v=20260901-mobile-hero-rail-1">
+    <link rel="stylesheet" href="assets/css/theme-system.css?v=20260907-three-mode-1">
   </head>
 
   <body class="home-index">
-    <a class="ll-skip-link" href="#main-content">Skip to main content</a>
+    <a class="ll-skip-link" href="#work-main">Skip to main content</a>
 
     <header class="ll-floating-header" data-ll-header>
       <div class="ll-nav-dock">
@@ -86,7 +85,7 @@
       </div>
 
       <div class="ll-contact-dock">
-        <a class="ll-contact-dock__primary ll-button ll-button--media" target="_blank" href="https://calendly.com/leonardlawani/30min?month=2026-08">
+        <a class="ll-contact-dock__primary ll-button ll-button--media" target="_blank" rel="noopener noreferrer" href="https://calendly.com/leonardlawani/30min?month=2026-08">
           <span class="ll-contact-dock__portrait">
             <img src="assets/img/me.gif" alt="" width="500" height="594">
           </span>
@@ -99,7 +98,7 @@
 
     <div class="ll-mobile-menu" id="ll-mobile-menu" aria-hidden="true" data-ll-mobile-menu>
       <nav class="ll-mobile-menu__nav" aria-label="Site navigation">
-        <a class="ll-menu-row" href="#work">
+        <a class="ll-menu-row" href="#work-main">
           <span>Work</span>
         </a>
 
@@ -116,9 +115,9 @@
           </button>
           <div class="ll-menu-group__items" id="ll-menu-services" aria-hidden="true" data-ll-submenu>
             <div>
-              <a href="#service-branding"><span>Branding</span><span>01</span></a>
-              <a href="#service-digital"><span>Digital</span><span>02</span></a>
-              <a href="#service-marketing"><span>Marketing</span><span>03</span></a>
+              <a href="index.html#service-branding"><span>Branding</span><span>01</span></a>
+              <a href="index.html#service-digital"><span>Digital</span><span>02</span></a>
+              <a href="index.html#service-marketing"><span>Marketing</span><span>03</span></a>
             </div>
           </div>
         </div>
@@ -286,7 +285,7 @@
             </div>
           </div>
         </div>
-        <div class="lwa-footer__bottom"><span>Lawani St.</span><span>Independent creative studio</span><time datetime="" data-ll-clock>00 : 00 : 00</time><button class="ll-theme-toggle ll-theme-toggle--footer ll-button" type="button" aria-label="Switch to light theme" aria-pressed="false" data-ll-theme-toggle><span data-ll-theme-label>Dark</span><svg class="ll-theme-toggle__icon" viewBox="0 0 24 24" aria-hidden="true"><g class="ll-theme-toggle__sun"><circle cx="12" cy="12" r="3.25"></circle><path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6 6l1.4 1.4M16.6 16.6 18 18M18 6l-1.4 1.4M7.4 16.6 6 18"></path></g><path class="ll-theme-toggle__moon" d="M18.5 15.2A7.2 7.2 0 0 1 8.8 5.5 7.2 7.2 0 1 0 18.5 15.2Z"></path></svg></button></div>
+        <div class="lwa-footer__bottom"><span>Lawani St.</span><span>Independent creative studio</span><time datetime="" data-ll-clock>00 : 00 : 00</time><button class="ll-theme-toggle ll-theme-toggle--footer ll-button" type="button" aria-label="Change colour mode" aria-pressed="false" data-ll-theme-toggle><span class="ll-theme-toggle__choice ll-theme-toggle__choice--dark" aria-hidden="true">DK</span><span class="ll-theme-toggle__choice ll-theme-toggle__choice--light" aria-hidden="true">LT</span><span class="ll-theme-toggle__indicator" aria-hidden="true"></span><span class="ll-visually-hidden" data-ll-theme-label>Dark theme</span></button></div>
       </footer>
     </main>
 
@@ -304,7 +303,7 @@
     <script src="assets/js/elastic-cursor.js?v=20260826-overlay-pause-1" defer></script>
     <script src="assets/js/modules/motion-system.js?v=20260825-motion-1" defer></script>
     <script src="assets/js/modules/pitchdeck-overlay.js?v=20260901-global-arrow-svg-1" defer></script>
-    <script src="assets/js/pages/lamalama-ui.js?v=20260831-themed-cta-1" defer></script>
+    <script src="assets/js/pages/lamalama-ui.js?v=20260907-three-mode-1" defer></script>
     <script src="assets/js/pages/work-lama.js?v=20260811-work-archive" defer></script>
   </body>
 </html>

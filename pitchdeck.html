@@ -27,7 +27,7 @@
         document.documentElement.classList.add("ll-deck-embedded");
       }
     </script>
-    <link rel="stylesheet" href="assets/css/lamalama-ui.css?v=20260901-global-arrow-svg-1">
+    <link rel="stylesheet" href="assets/css/lamalama-ui.css?v=20260909-service-icons-1">
     <link rel="stylesheet" href="assets/css/benchmark-system.css?v=20260901-deck-contact-arrows-1">
     <link rel="stylesheet" href="assets/css/pitchdeck-mobile.css?v=20260827-mobile-2">
   </head>
@@ -93,7 +93,7 @@
               <source src="assets/video/hero-deck-720.m4v" type="video/mp4">
             </video>
             <div class="ll-deck-slide__veil" aria-hidden="true"></div>
-            <h1 id="deck-title-01">"Hello"<br> </h1>
+            <h1 id="deck-title-01">Brand & Digital<br> Designer<br> </h1>
             <div class="ll-deck-slide__intro">
               <p class="ll-deck-kicker">[ This is Lawani St. ]</p>
               <br>
@@ -108,14 +108,16 @@
           <article class="ll-deck-slide ll-deck-slide--profile" data-deck-slide id="who-i-am" aria-labelledby="deck-title-02" aria-hidden="true">
             <div class="ll-deck-slide__profile-copy">
               <p class="ll-deck-kicker">[ Who I am ]</p>
-              <h2 id="deck-title-02">Senior by default</h2>
-              <p>I’m a senior multidisciplinary designer crafting brands, products and digital experiences that feel clear, distinctive and built to perform.
-                <br><br> My work brings strategy, identity, interaction and visual craft together, shaping ideas from first thought through to final detail.</p>
+              <h2 id="deck-title-02">Mr. Lawani</h2>
+              <p class="ll-deck-profile-summary">
+                <span>I’m a senior brand and digital designer with close to ten years of experience across brand identity, digital experiences, campaigns, UI/UX and creative direction. A lot of my work has involved taking a brand system and working out how it behaves across different touchpoints, rather than treating identity as static. I’ve worked across startups and growing businesses, often moving between concept development, hands-on design, stakeholder presentations and production.</span>
+                <span>More recently, I’ve been developing the interactive and motion side of my work further, including animated brand identities, digital experiences and interface concepts. <br> 
+                
+                </span>
+              </p>
             </div>
             <div class="ll-deck-profile-media">
-              <figure><img src="assets/img/dano.png" alt="Leonard Lawani" width="500" height="594"></figure>
-              <figure><img src="assets/img/3.png" alt="Selected identity work" width="1000" height="1000"></figure>
-              <figure><img src="assets/img/tyol1.png" alt="Selected digital work" width="1834" height="1032"></figure>
+              <figure class="ll-deck-profile-portrait"><img src="assets/img/lion.png" alt="Leonard Lawani" width="500" height="594"></figure>
             </div>
             <dl>
               <div><dt>Based</dt><dd>London / Everywhere</dd></div>
@@ -124,22 +126,137 @@
             </dl>
           </article>
 
-          <article class="ll-deck-slide ll-deck-slide--services" data-deck-slide id="what-i-do" aria-labelledby="deck-title-03" aria-hidden="true">
-            <h2 id="deck-title-03">Expertise</h2>
-            <figure><img src="assets/img/ademi2.png" alt="Selected identity work" width="1000" height="1000"></figure>
-            <div class="ll-deck-services">
-              <section><h3>[ Branding ]</h3><ul><li>Brand identity</li><li>Logo design</li><li>Campaign</li><li>Motion design</li><li>Photo direction</li><li>Video direction</li><li>3D</li></ul></section>
-              <section><h3>[ Digital ]</h3><ul><li>Digital strategy</li><li>Content UI/UX</li><li>Design</li><li>Art direction</li><li>Digital products</li><li>Visual design</li><li>E-commerce</li></ul></section>
-              <section><h3>[ Marketing ]</h3><ul><li>Growth strategy</li><li>B2B lead generation</li><li>Paid media</li><li>Inbound marketing</li><li>Content activation</li><li>Email nurturing</li><li>AI optimisation</li></ul></section>
+          <article class="ll-deck-slide ll-deck-slide--services" data-deck-slide data-service-shop id="what-i-do" aria-labelledby="deck-title-03" aria-hidden="true">
+            <header class="ll-service-shop__header">
+              <nav class="ll-service-shop__tabs ll-deck-kicker" role="tablist" aria-label="Service categories" aria-orientation="vertical">
+                <span>Shop</span>
+                <button class="is-active" id="service-tab-branding" type="button" role="tab" aria-selected="true" aria-controls="service-branding" data-service-tab="0" data-service-name="Branding">Branding</button>
+                <button id="service-tab-digital" type="button" role="tab" aria-selected="false" aria-controls="service-digital" data-service-tab="1" data-service-name="Digital" tabindex="-1">Digital</button>
+                <button id="service-tab-marketing" type="button" role="tab" aria-selected="false" aria-controls="service-marketing" data-service-tab="2" data-service-name="Marketing" tabindex="-1">Marketing</button>
+              </nav>
+              <div class="ll-service-shop__brand">
+                <h2 id="deck-title-03">Expertise</h2>
+                <!-- <p>Services</p> -->
+              </div>
+              <div class="ll-service-shop__meta ll-deck-kicker">
+                <a href="contact.html">Start a brief</a>
+                <span>Selected service</span>
+                <output data-service-current aria-live="polite">01 / 03</output>
+              </div>
+            </header>
+
+            <p class="ll-service-shop__breadcrumb ll-deck-kicker">Home / Services / <span data-service-current-name>Branding</span></p>
+
+            <div class="ll-service-shop__panels">
+              <section class="ll-service-product is-active" id="service-branding" role="tabpanel" aria-labelledby="service-tab-branding" data-service-panel="0">
+                <div class="ll-service-product__copy">
+                  <p class="ll-deck-kicker">[ Brand identity ]</p>
+                  <h3>Branding</h3>
+                  <p class="ll-service-product__line">Strategy, identity and systems</p>
+                  <p class="ll-service-product__scope">Bespoke / Project</p>
+                  <p class="ll-service-product__description">Distinctive brand foundations made to clarify what you stand for, sharpen how you show up and keep every touchpoint working as one.</p>
+                </div>
+                <figure class="ll-service-product__visual"><img src="assets/img/markt.png" alt="Ademi brand identity product" width="2496" height="2496" loading="lazy" decoding="async"></figure>
+                <aside class="ll-service-product__buy">
+                  <div class="ll-service-product__stepper" aria-label="Browse services">
+                    <button type="button" data-service-previous aria-label="Previous service">−</button>
+                    <output data-service-position>01</output>
+                    <button type="button" data-service-next aria-label="Next service">+</button>
+                  </div>
+                  <label class="ll-service-product__select"><span>Engagement</span><span class="ll-service-product__select-control"><select aria-label="Branding engagement"><option>Brand launch</option><option>Identity refresh</option><option>Campaign system</option></select><svg class="ll-icon ll-icon--sm ll-service-product__select-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></span></label>
+                  <a class="ll-service-product__cta" href="contact.html">Add to brief <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>
+                  <div class="ll-service-product__details">
+                    <details><summary>What’s included</summary><p>Brand identity, logo design, campaign systems, motion, photo and video direction, and 3D.</p></details>
+                    <details><summary>How it works</summary><p>Discovery and strategy lead into a focused identity system, production toolkit and practical rollout guidance.</p></details>
+                    <details><summary>Best for</summary><p>New ventures, repositioning, launches and teams ready for a clearer, more consistent presence.</p></details>
+                  </div>
+                </aside>
+              </section>
+
+              <section class="ll-service-product" id="service-digital" role="tabpanel" aria-labelledby="service-tab-digital" data-service-panel="1" hidden>
+                <div class="ll-service-product__copy">
+                  <p class="ll-deck-kicker">[ Digital experience ]</p>
+                  <h3>Digital</h3>
+                  <p class="ll-service-product__line">Products, platforms and commerce</p>
+                  <p class="ll-service-product__scope">Bespoke / Product</p>
+                  <p class="ll-service-product__description">Clear digital experiences that turn complex journeys into useful, intuitive products people understand and want to use.</p>
+                </div>
+                <figure class="ll-service-product__visual"><img src="assets/img/brand.png" alt="The Yellow of Lagos mobile experience" width="2000" height="2666" loading="lazy" decoding="async"></figure>
+                <aside class="ll-service-product__buy">
+                  <div class="ll-service-product__stepper" aria-label="Browse services">
+                    <button type="button" data-service-previous aria-label="Previous service">−</button>
+                    <output data-service-position>02</output>
+                    <button type="button" data-service-next aria-label="Next service">+</button>
+                  </div>
+                  <label class="ll-service-product__select"><span>Engagement</span><span class="ll-service-product__select-control"><select aria-label="Digital engagement"><option>Website experience</option><option>Digital product</option><option>E-commerce platform</option></select><svg class="ll-icon ll-icon--sm ll-service-product__select-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></span></label>
+                  <a class="ll-service-product__cta" href="contact.html">Add to brief <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>
+                  <div class="ll-service-product__details">
+                    <details><summary>What’s included</summary><p>Digital strategy, content UI/UX, product design, art direction, visual design and e-commerce.</p></details>
+                    <details><summary>How it works</summary><p>Journeys and requirements are shaped into prototypes, a scalable interface system and production-ready design.</p></details>
+                    <details><summary>Best for</summary><p>Websites, platforms and products that need stronger usability, clearer hierarchy and a distinctive visual voice.</p></details>
+                  </div>
+                </aside>
+              </section>
+
+              <section class="ll-service-product" id="service-marketing" role="tabpanel" aria-labelledby="service-tab-marketing" data-service-panel="2" hidden>
+                <div class="ll-service-product__copy">
+                  <p class="ll-deck-kicker">[ Growth systems ]</p>
+                  <h3>Marketing</h3>
+                  <p class="ll-service-product__line">Campaigns, content and demand</p>
+                  <p class="ll-service-product__scope">Bespoke / Campaign</p>
+                  <p class="ll-service-product__description">Joined-up marketing systems that translate a strong proposition into campaigns, content and demand people can act on.</p>
+                </div>
+                <figure class="ll-service-product__visual"><img src="assets/img/bgu.png" alt="Chess queen representing focused marketing strategy" width="5367" height="2795" loading="lazy" decoding="async"></figure>
+                <aside class="ll-service-product__buy">
+                  <div class="ll-service-product__stepper" aria-label="Browse services">
+                    <button type="button" data-service-previous aria-label="Previous service">−</button>
+                    <output data-service-position>03</output>
+                    <button type="button" data-service-next aria-label="Next service">+</button>
+                  </div>
+                  <label class="ll-service-product__select"><span>Engagement</span><span class="ll-service-product__select-control"><select aria-label="Marketing engagement"><option>Growth campaign</option><option>B2B demand engine</option><option>Always-on content</option></select><svg class="ll-icon ll-icon--sm ll-service-product__select-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></span></label>
+                  <a class="ll-service-product__cta" href="contact.html">Add to brief <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>
+                  <div class="ll-service-product__details">
+                    <details><summary>What’s included</summary><p>Growth strategy, B2B lead generation, paid media, inbound marketing, content activation, email and AI optimisation.</p></details>
+                    <details><summary>How it works</summary><p>A clear audience and offer become a connected campaign system with focused creative, channels and measurement.</p></details>
+                    <details><summary>Best for</summary><p>Teams building awareness, launching an offer or creating a more consistent path from attention to action.</p></details>
+                  </div>
+                </aside>
+              </section>
+            </div>
+
+            <button class="ll-service-shop__arrow ll-service-shop__arrow--previous" type="button" data-service-previous aria-label="Previous service"><span aria-hidden="true">←</span></button>
+            <button class="ll-service-shop__arrow ll-service-shop__arrow--next" type="button" data-service-next aria-label="Next service"><span aria-hidden="true">→</span></button>
+            <div class="ll-service-shop__pagination" aria-label="Choose a service">
+              <button class="is-active" type="button" data-service-dot="0" aria-label="Show Branding" aria-current="true"></button>
+              <button type="button" data-service-dot="1" aria-label="Show Digital"></button>
+              <button type="button" data-service-dot="2" aria-label="Show Marketing"></button>
             </div>
           </article>
 
           <article class="ll-deck-slide ll-deck-slide--vibe" data-deck-slide id="my-vibe" aria-labelledby="deck-title-04" aria-hidden="true">
-            <div class="ll-deck-slide__vibe-copy"><p class="ll-deck-kicker">[ My vibe ]</p><h2 id="deck-title-04">move quickly</h2><p>Big ambition without the agency theatre. I stay close, move quickly and care about the details that make the whole thing click.</p></div>
-            <div class="ll-deck-vibe-grid">
-              <figure><img src="assets/img/ud.jpg" alt="Digital product detail" width="1834" height="1032"></figure>
-              <figure><img src="assets/img/strat.png" alt="Brand system detail" width="2925" height="1644"></figure>
-              <figure><img src="assets/img/1.png" alt="Digital experience detail" width="1920" height="1079"></figure>
+            <div class="ll-deck-vibe-subject ll-deck-kicker">
+              <span>Context:</span>
+              <span class="ll-deck-vibe-value">My vibe</span>
+            </div>
+            <div class="ll-deck-slide__vibe-copy">
+              <h2 id="deck-title-04">Why Not...</h2>
+              <p>Big ambition without the agency theatre. I stay close, move quickly and care about the details that make the whole thing click. The mix below captures that balance: bold ideas, disciplined systems and visual craft with a human edge.</p>
+            </div>
+            <div class="ll-deck-vibe-number ll-deck-kicker" aria-label="Slide 4">
+              <span>No.</span>
+              <span class="ll-deck-vibe-value">/04</span>
+            </div>
+            <div class="ll-deck-vibe-grid" aria-label="Visual moodboard">
+              <figure><figcaption>01</figcaption><img src="assets/img/dj1.png" alt="Monochrome crowd and Beat Per Minute identity" width="1400" height="1400" loading="lazy" decoding="async"></figure>
+              <figure><figcaption>02</figcaption><img src="assets/img/kj2.png" alt="Kicksjoint identity composition" width="1615" height="1615" loading="lazy" decoding="async"></figure>
+              <figure><figcaption>03</figcaption><img src="assets/img/car.jpg" alt="The Yellow of Lagos digital experience" width="2000" height="2666" loading="lazy" decoding="async"></figure>
+              <figure><figcaption>04</figcaption><img src="assets/img/strat.png" alt="Creative workspace detail" width="1240" height="1240" loading="lazy" decoding="async"></figure>
+              <figure><figcaption>05</figcaption><img src="assets/img/leo.png" alt="Ademi product identity" width="1036" height="1035" loading="lazy" decoding="async"></figure>
+              <figure><figcaption>06</figcaption>
+                <video autoplay muted loop playsinline preload="metadata" poster="assets/img/picture/ademi/bg1.png" >
+                  <source src="assets/video/lnd.mp4" type="video/mp4">
+                </video>
+              </figure>
             </div>
           </article>
 
@@ -148,10 +265,10 @@
             <h2 class="ll-visually-hidden" id="deck-title-05">Core values</h2>
             
             <div class="ll-deck-values">
-              <section><div><p>[ Core value 01 ]</p><h3>Think wild</h3></div><p>Creativity needs space to roam and sharp thinking to shape it. Go big, weird and bold—then bring the idea to life with precision.</p></section>
-              <section><div><p>[ Core value 02 ]</p><h3>Keep it<br>Original</h3></div><p>No drama, no ego. Just thoughtful people doing great work together with intention, trust and high standards.</p></section>
-              <section><div><p>[ Core value 03 ]</p><h3>Impact with<br>heart</h3></div><p>Focus on outcomes that matter: ideas that shift minds, grow brands and improve the experience around them.</p></section>
-              <section><div><p>[ Core value 04 ]</p><h3>Everything<br>I have</h3></div><p>If I say yes, I bring the brain, heart and pixels. That is how meaningful work happens and the bar stays high.</p></section>
+              <section><div><p>[ value 01 ]</p><h3>Think wild</h3></div><p>Creativity needs space to roam and sharp thinking to shape it. Go big, weird and bold—then bring the idea to life with precision.</p></section>
+              <section><div><p>[ value 02 ]</p><h3>be Original</h3></div><p>No drama, no ego. Just thoughtful people doing great work together with intention, trust and high standards.</p></section>
+              <section><div><p>[ value 03 ]</p><h3>Impact First</h3></div><p>Focus on outcomes that matter: ideas that shift minds, grow brands and improve the experience around them.</p></section>
+              <section><div><p>[ value 04 ]</p><h3>Give all</h3></div><p>If I say yes, I bring the brain, heart and pixels. That is how meaningful work happens and the bar stays high.</p></section>
             </div>
             <figure><img src="assets/img/picture/home/accordion-large.png" alt="Working at the studio" width="810" height="530"></figure>
           </article>
@@ -162,7 +279,7 @@
             <div class="ll-deck-belief-list">
               <p><span>01</span>Form and function can coexist..</p><p><span>02</span>Made to stand apart, not blend in.</p><p><span>03</span>Simple makes a stronger statement.</p><p><span>04</span>Make to adapt, built to last.</p>
             </div>
-            <figure><img src="assets/img/picture/kicksjoint/side.png" alt="Kicksjoint campaign image" width="1200" height="1600"></figure>
+            <figure><img src="assets/img/bgu.png" alt="Kicksjoint campaign image" width="1200" height="1600"></figure>
           </article>
 
           <article class="ll-deck-slide ll-deck-slide--work" data-deck-slide id="the-work" aria-labelledby="deck-title-07" aria-hidden="true">
@@ -177,14 +294,14 @@
               <!-- <li><span>Awwwards</span><span>Independent nominee</span><b>2026</b></li>
               <li><span>CSS Design Awards</span><span>Special kudos</span><b>2025</b></li>
               <li><span>Behance</span><span>Featured identity</span><b>2025</b></li> -->
-              <li><span>Happy Clients </span><span>The award that matters</span><b>Always</b></li>
+              <li><span>Happy Clients </span><span>The award that matters</span><span>Always<span></li>
             </ul>
             <figure><img src="assets/img/dj1.png" alt="Selected recognised work" width="1200" height="1200"></figure>
           </article>
 
           <article class="ll-deck-slide ll-deck-slide--clients" data-deck-slide id="clients" aria-labelledby="deck-title-09" aria-hidden="true">
-            <div><h2 id="deck-title-09">Clients<br>with ambition</h2><p>I partner with teams that want clarity, momentum and work people actually care about.</p></div>
-            <figure><img src="assets/img/ademi3.png" alt="Client work detail" width="1766" height="989"></figure>
+            <div><h2 id="deck-title-09">Clients<br>with apetite</h2><p>I partner with teams that want clarity, momentum and work people actually care about.</p></div>
+            <figure><img src="assets/img/sdsds.png" alt="Client work detail" width="1766" height="989"></figure>
             <div class="ll-deck-client-marquee" aria-label="Selected clients">
               <div class="ll-deck-client-marquee__track">
                 <ul>
@@ -237,6 +354,6 @@
     </main>
 
     <noscript><p class="ll-deck__noscript">Enable JavaScript to navigate the resume.</p></noscript>
-    <script src="assets/js/pages/pitchdeck.js?v=20260827-mobile-2" defer></script>
+    <script src="assets/js/pages/pitchdeck.js?v=20260909-service-shop-1" defer></script>
   </body>
 </html>

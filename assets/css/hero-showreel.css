@@ -138,14 +138,14 @@ body.home-index .ll-home-hero > .ll-home-hero__content {
 body.home-index .ll-home-hero #ll-hero-title,
 body.home-index .ll-home-hero .ll-home-hero__rail,
 body.home-index .ll-home-hero .ll-home-hero__content {
-  color: var(--ll-hero-paper);
-  text-shadow: 0 1px 16px rgba(7, 8, 7, 0.22);
+  color: var(--ll-orange);
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.22);
 }
 
 html[data-theme="light"] body.home-index .ll-home-hero #ll-hero-title,
 html[data-theme="light"] body.home-index .ll-home-hero .ll-home-hero__rail,
 html[data-theme="light"] body.home-index .ll-home-hero .ll-home-hero__content {
-  color: var(--ll-hero-paper);
+  color: var(--ll-white);
   text-shadow: none;
 }
 
@@ -209,17 +209,17 @@ html[data-theme="light"] body.home-index .ll-work .lwa-project__tags > span {
     position: absolute;
   }
 
-  body.home-index .ll-home-hero > .ll-home-hero__wash {
+  /* body.home-index .ll-home-hero > .ll-home-hero__wash {
     background:
-      /* linear-gradient(
+      linear-gradient(
         to bottom,
         transparent 0%,
         transparent 48%,
         color-mix(in srgb, var(--ll-hero-ink) 32%, transparent) 60%,
         var(--ll-hero-ink) 82%,
         var(--ll-hero-ink) 100%
-      ); */
-  }
+      );
+  } */
 
   body.home-index .ll-home-hero > .ll-home-hero__pulse {
     background-size: 6px 6px;

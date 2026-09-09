@@ -219,28 +219,22 @@
     var root = document.documentElement;
     var toggles = Array.prototype.slice.call(document.querySelectorAll("[data-ll-theme-toggle]"));
     var themeColor = document.querySelector('meta[name="theme-color"]');
-    var preference = window.matchMedia("(prefers-color-scheme: dark)");
-    var modes = ["light", "system", "dark"];
+    var modes = ["dark", "light"];
 
     toggles.forEach(function (toggle) {
       toggle.classList.remove("ll-button", "ll-button--compact");
       toggle.innerHTML =
-        '<span class="ll-theme-toggle__choice ll-theme-toggle__choice--light" aria-hidden="true">LT</span>' +
-        '<span class="ll-theme-toggle__choice ll-theme-toggle__choice--system" aria-hidden="true">SY</span>' +
         '<span class="ll-theme-toggle__choice ll-theme-toggle__choice--dark" aria-hidden="true">DK</span>' +
+        '<span class="ll-theme-toggle__choice ll-theme-toggle__choice--light" aria-hidden="true">LT</span>' +
         '<span class="ll-theme-toggle__indicator" aria-hidden="true"></span>' +
-        '<span class="ll-visually-hidden" data-ll-theme-label>Light</span>';
+        '<span class="ll-visually-hidden" data-ll-theme-label>Dark theme</span>';
     });
 
     var labels = Array.prototype.slice.call(document.querySelectorAll("[data-ll-theme-label]"));
 
-    function resolveTheme(mode) {
-      return mode === "system" ? (preference.matches ? "dark" : "light") : mode;
-    }
-
     function applyThemeMode(mode, persist) {
       if (modes.indexOf(mode) === -1) mode = "light";
-      var resolvedTheme = resolveTheme(mode);
+      var resolvedTheme = mode;
       var modeLabel = mode.charAt(0).toUpperCase() + mode.slice(1);
       var nextMode = modes[(modes.indexOf(mode) + 1) % modes.length];
       var nextLabel = nextMode.charAt(0).toUpperCase() + nextMode.slice(1);
@@ -252,13 +246,16 @@
         toggle.removeAttribute("aria-pressed");
         toggle.setAttribute(
           "aria-label",
-          "Theme: " + modeLabel + (mode === "system" ? " (" + resolvedTheme + ")" : "") + ". Switch to " + nextLabel + "."
+          "Theme: " + modeLabel + ". Switch to " + nextLabel + "."
         );
       });
       labels.forEach(function (label) {
-        label.textContent = modeLabel + (mode === "system" ? " theme, currently " + resolvedTheme : " theme");
+        label.textContent = modeLabel + " theme";
       });
-      if (themeColor) themeColor.setAttribute("content", resolvedTheme === "light" ? "#e8e7e1" : "#181a19");
+      if (themeColor) {
+        var themeColors = { light: "#e8e7e1", dark: "#000000" };
+        themeColor.setAttribute("content", themeColors[resolvedTheme]);
+      }
 
       if (!persist) return;
       try {
@@ -266,7 +263,7 @@
       } catch (error) {}
     }
 
-    var initialMode = root.getAttribute("data-theme-mode") || "light";
+    var initialMode = root.getAttribute("data-theme-mode") || "dark";
     applyThemeMode(initialMode, false);
 
     toggles.forEach(function (toggle) {
@@ -282,17 +279,6 @@
         }, reduceMotion ? 0 : 420);
       });
     });
-
-    if (typeof preference.addEventListener === "function") {
-      preference.addEventListener("change", function () {
-        if (root.getAttribute("data-theme-mode") !== "system") return;
-        root.classList.add("ll-theme-changing");
-        applyThemeMode("system", false);
-        window.setTimeout(function () {
-          root.classList.remove("ll-theme-changing");
-        }, reduceMotion ? 0 : 420);
-      });
-    }
 
     window.addEventListener("storage", function (event) {
       if (event.key !== "ll-theme-mode") return;

@@ -48,7 +48,16 @@ for (let index = 0; index < source.length; index += 1) {
     continue;
   }
 
-  if (pendingSpace && result && !/[(:;,{}]/.test(result.at(-1)) && !/[(:;,{}]/.test(character)) {
+  const previousCharacter = result.at(-1);
+  const followsMathOperator = previousCharacter === "+" || previousCharacter === "-";
+  if (
+    pendingSpace &&
+    result &&
+    (
+      followsMathOperator ||
+      (!/[(:,;{}]/.test(previousCharacter) && !/[(,;{}]/.test(character))
+    )
+  ) {
     result += " ";
   }
   pendingSpace = false;
@@ -64,7 +73,8 @@ const protectedResult = result.replace(quotedValuePattern, (quotedValue) => {
 });
 
 result = protectedResult
-  .replace(/\s*([{}:;,])\s*/g, "$1")
+  .replace(/\s*([{};,])\s*/g, "$1")
+  .replace(/:\s*/g, ":")
   .replace(/;}/g, "}")
   .replace(/___LLCSSSTRING(\d+)___/g, (_, index) => quotedValues[Number(index)])
   .trim();

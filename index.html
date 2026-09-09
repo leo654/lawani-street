@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#e8e7e1">
+    <meta name="theme-color" content="#000000">
     <meta name="description" content="Lawani St is an independent creative studio building distinctive identities, digital products, and experiences.">
     <meta name="author" content="Lawani St">
     <meta name="robots" content="index, follow">
@@ -36,18 +36,17 @@
     <script>
       document.documentElement.classList.replace("no-js", "js");
       (function () {
-        var mode = "light";
+        var mode = "dark";
         try {
           var storedTheme = localStorage.getItem("ll-theme-mode");
-          if (storedTheme === "light" || storedTheme === "system" || storedTheme === "dark") mode = storedTheme;
+          if (storedTheme === "light" || storedTheme === "dark") mode = storedTheme;
+          else if (storedTheme === "system") mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         } catch (error) {}
-        var theme = mode === "system"
-          ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-          : mode;
+        var theme = mode;
         document.documentElement.setAttribute("data-theme-mode", mode);
         document.documentElement.setAttribute("data-theme", theme);
         var themeMeta = document.querySelector('meta[name="theme-color"]');
-        if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#181a19");
+        if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#000000");
       })();
     </script>
     <link rel="stylesheet" href="assets/css/lamalama-ui.min.css?v=20260903-uppercase-1">
@@ -57,7 +56,7 @@
     <link rel="stylesheet" href="assets/css/motion-system.css?v=20260826-motion-ownership-2">
     <link rel="stylesheet" href="assets/css/pitchdeck-overlay.css?v=20260826-overlay-3">
     <link rel="stylesheet" href="assets/css/index-header-tray.css?v=20260828-tray-9">
-    <link rel="stylesheet" href="assets/css/theme-system.css?v=20260901-mobile-hero-rail-1">
+    <link rel="stylesheet" href="assets/css/theme-system.css?v=20260907-three-mode-1">
   </head>
 
   <body class="home-index">
@@ -87,7 +86,7 @@
       </div>
 
       <div class="ll-contact-dock is-preview-open">
-        <a class="ll-contact-dock__primary ll-button ll-button--media" target="_blank" href="pitchdeck.html">
+        <a class="ll-contact-dock__primary ll-button ll-button--media" href="pitchdeck.html">
           <span class="ll-contact-dock__portrait">
             <img src="assets/img/me.gif" alt="" width="500" height="594">
           </span>
@@ -196,14 +195,14 @@
             <button
               class="ll-theme-toggle ll-theme-toggle--footer ll-theme-toggle--hero"
               type="button"
-              aria-label="Switch to light theme"
+              aria-label="Change colour mode"
               aria-pressed="false"
               data-ll-theme-toggle
             >
               <span class="ll-theme-toggle__choice ll-theme-toggle__choice--dark" aria-hidden="true">DK</span>
-              <span class="ll-theme-toggle__track" aria-hidden="true"><i></i></span>
               <span class="ll-theme-toggle__choice ll-theme-toggle__choice--light" aria-hidden="true">LT</span>
-              <span class="ll-visually-hidden" data-ll-theme-label>Dark</span>
+              <span class="ll-theme-toggle__indicator" aria-hidden="true"></span>
+              <span class="ll-visually-hidden" data-ll-theme-label>Dark theme</span>
             </button>
           </div>
         </div>
@@ -478,14 +477,14 @@
         <button
           class="ll-theme-toggle ll-theme-toggle--footer"
           type="button"
-          aria-label="Switch to light theme"
+          aria-label="Change colour mode"
           aria-pressed="false"
           data-ll-theme-toggle
         >
           <span class="ll-theme-toggle__choice ll-theme-toggle__choice--dark" aria-hidden="true">DK</span>
-          <span class="ll-theme-toggle__track" aria-hidden="true"><i></i></span>
           <span class="ll-theme-toggle__choice ll-theme-toggle__choice--light" aria-hidden="true">LT</span>
-          <span class="ll-visually-hidden" data-ll-theme-label>Dark</span>
+          <span class="ll-theme-toggle__indicator" aria-hidden="true"></span>
+          <span class="ll-visually-hidden" data-ll-theme-label>Dark theme</span>
         </button>
         <p>&copy; 2026 Lawani St.</p>
       </div>
@@ -495,7 +494,7 @@
     <script src="assets/js/halftone-field.js?v=20260826-pitch-pause-1" defer></script>
     <script src="assets/js/modules/motion-system.js?v=20260825-motion-1" defer></script>
     <script src="assets/js/modules/pitchdeck-overlay.js?v=20260901-global-arrow-svg-1" defer></script>
-    <script src="assets/js/pages/lamalama-ui.js?v=20260831-themed-cta-1" defer></script>
+    <script src="assets/js/pages/lamalama-ui.js?v=20260907-three-mode-1" defer></script>
     <script src="assets/js/pages/home-ui.js?v=20260826-motion-ownership-1" defer></script>
     <script src="assets/js/pages/work-lama.js?v=20260811-shared-archive" defer></script>
   </body>

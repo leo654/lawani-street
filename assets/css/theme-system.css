@@ -1,19 +1,36 @@
-/* Reference light/dark appearance.
+/* Light and dark appearance.
    This layer owns colors only; component geometry and motion stay elsewhere. */
 
    :root {
     color-scheme: dark;
-    --ll-theme-bg: #151917;
+    --ll-theme-bg: #000000;
     --ll-theme-ink: #f2f0e9;
     --ll-theme-muted: rgba(242, 240, 233, 0.62);
     --ll-theme-line: rgba(242, 240, 233, 0.2);
-    --ll-theme-control: rgba(7, 8, 7, 0.18);
+    --ll-theme-control: rgba(0, 0, 0, 0.18);
     --ll-themed-action-surface: rgba(244, 242, 236, 0.035);
     --ll-themed-action-line: rgba(244, 242, 236, 0.34);
     --ll-themed-action-ink: #f4f2ec;
     --ll-themed-action-hover: #f4f2ec;
-    --ll-themed-action-hover-ink: #070807;
-    --ll-menu-surface: rgba(7, 8, 7, 0.94);
+    --ll-themed-action-hover-ink: #000000;
+    --ll-menu-surface: rgba(0, 0, 0, 0.94);
+    --ll-menu-ink: #f4f2ec;
+    --ll-menu-line: rgba(244, 242, 236, 0.06);
+  }
+
+  html[data-theme="dark"] {
+    color-scheme: dark;
+    --ll-theme-bg: #000000;
+    --ll-theme-ink: #f2f0e9;
+    --ll-theme-muted: rgba(242, 240, 233, 0.62);
+    --ll-theme-line: rgba(242, 240, 233, 0.2);
+    --ll-theme-control: rgba(0, 0, 0, 0.18);
+    --ll-themed-action-surface: rgba(244, 242, 236, 0.035);
+    --ll-themed-action-line: rgba(244, 242, 236, 0.34);
+    --ll-themed-action-ink: #f4f2ec;
+    --ll-themed-action-hover: #f4f2ec;
+    --ll-themed-action-hover-ink: #000000;
+    --ll-menu-surface: rgba(0, 0, 0, 0.94);
     --ll-menu-ink: #f4f2ec;
     --ll-menu-line: rgba(244, 242, 236, 0.06);
   }
@@ -34,6 +51,25 @@
     --ll-menu-ink: #171917;
     --ll-menu-line: rgba(23, 25, 23, 0.1);
   }
+
+  html[data-theme="dark"] {
+    color-scheme: dark;
+    --ll-theme-bg: #000000;
+    --ll-theme-ink: #f2f0e9;
+    --ll-theme-muted: rgba(242, 240, 233, 0.62);
+    --ll-theme-line: rgba(242, 240, 233, 0.2);
+    --ll-theme-control: rgba(0, 0, 0, 0.18);
+    --ll-themed-action-surface: rgba(244, 242, 236, 0.035);
+    --ll-themed-action-line: rgba(244, 242, 236, 0.34);
+    --ll-themed-action-ink: #f4f2ec;
+    --ll-themed-action-hover: #f4f2ec;
+    --ll-themed-action-hover-ink: #000000;
+    --ll-menu-surface: rgba(0, 0, 0, 0.94);
+    --ll-menu-ink: #f4f2ec;
+    --ll-menu-line: rgba(244, 242, 236, 0.06);
+  }
+
+
   
   html {
     background: var(--ll-theme-bg);
@@ -45,7 +81,7 @@
   
   ::selection {
     background: var(--ll-orange, #ff4d00);
-    color: #070807;
+    color: #000000;
   }
   
   /* Header and navigation */
@@ -58,7 +94,7 @@
   
   body.ll-menu-open .ll-floating-header .ll-nav-dock {
     border-color: rgba(244, 242, 236, 0.06);
-    background: rgba(7, 8, 7, 0.96);
+    background: rgba(0, 0, 0, 0.96);
     color: #f4f2ec;
   }
   
@@ -74,7 +110,7 @@
   html[data-theme="light"] body.home-index .ll-floating-header.is-scrolled .ll-nav-dock,
   html[data-theme="light"] body.home-index.ll-menu-open .ll-floating-header .ll-nav-dock {
     border-color: rgba(244, 242, 236, 0.06);
-    background: rgba(7, 8, 7, 0.94);
+    background: rgba(0, 0, 0, 0.94);
     color: #f4f2ec;
   }
   
@@ -87,20 +123,20 @@
   .ll-mobile-menu {
     border-color: rgba(244, 242, 236, 0.05);
     border-top-color: rgba(244, 242, 236, 0.18);
-    background: rgba(7, 8, 7, 0.96);
+    background: rgba(0, 0, 0, 0.96);
     color: #f4f2ec;
   }
   
   html[data-theme="light"] body.ll-menu-open .ll-floating-header .ll-nav-dock {
     border-color: rgba(244, 242, 236, 0.06);
-    background: rgba(7, 8, 7, 0.97);
+    background: rgba(0, 0, 0, 0.97);
     color: #f4f2ec;
   }
   
   html[data-theme="light"] .ll-mobile-menu {
     border-color: rgba(244, 242, 236, 0.05);
     border-top-color: rgba(244, 242, 236, 0.14);
-    background: rgba(7, 8, 7, 0.97);
+    background: rgba(0, 0, 0, 0.97);
     color: #f4f2ec;
   }
   
@@ -143,7 +179,7 @@
   
   html[data-theme="light"] .ll-mobile-menu .ll-mobile-menu__cta.ll-button {
     background: #f4f2ec;
-    color: #070807;
+    color: #000000;
   }
   
   html[data-theme="light"] .ll-mobile-menu :is(
@@ -151,12 +187,17 @@
     .ll-mobile-menu__cta.ll-button
   ):is(:hover, :focus-visible) {
     background: var(--ll-orange);
-    color: #070807;
+    color: #000000;
   }
   
   /* Homepage */
   body.home-index {
-    background: #151917;
+    background: #000000;
+    color: #f2f0e9;
+  }
+
+  html[data-theme="dark"] body.home-index {
+    background: #000000;
     color: #f2f0e9;
   }
   
@@ -172,7 +213,13 @@
   
   body.home-index .ll-work-intro,
   body.home-index .ll-work .lwa-archive {
-    background: #151917;
+    background: #000000;
+    color: #f2f0e9;
+  }
+
+  html[data-theme="dark"] body.home-index .ll-work-intro,
+  html[data-theme="dark"] body.home-index .ll-work .lwa-archive {
+    background: #000000;
     color: #f2f0e9;
   }
   
@@ -196,7 +243,12 @@
   }
   
   body.home-index .ll-capabilities {
-    background: #181b19;
+    background: #000000;
+    color: #f4f2ec;
+  }
+
+  html[data-theme="dark"] body.home-index .ll-capabilities {
+    background: #000000;
     color: #f4f2ec;
   }
   
@@ -224,21 +276,31 @@
   }
   
   html[data-theme="light"] body.home-index .ll-manifesto .ll-action-link.ll-button {
-    border-color: rgba(7, 8, 7, 0.64);
+    border-color: rgba(0, 0, 0, 0.64);
     background: transparent;
-    color: #070807;
+    color: #000000;
   }
   
   html[data-theme="light"] body.home-index .ll-manifesto .ll-action-link:is(:hover, :focus-visible) {
-    border-color: #070807;
+    border-color: #000000;
     background: transparent;
     color: var(--ll-orange);
   }
   
-  body.home-index .ll-footer,
-  html[data-theme="light"] body.home-index .ll-footer {
+  body.home-index .ll-footer {
     background: var(--ll-black);
     color: var(--ll-white);
+  }
+
+  html[data-theme="dark"] body.home-index .ll-footer {
+    background: var(--ll-black);
+    color: var(--ll-white);
+  }
+
+  html[data-theme="light"] body.home-index .ll-footer,
+  html[data-theme="light"] body.home-index .ll-pitchdeck-invite {
+    background: #e8e7e1;
+    color: #171917;
   }
   
   body.home-index .ll-footer :where(h2, p, a, nav, span),
@@ -414,8 +476,8 @@
   body.home-index .ll-contact-dock,
   html[data-theme="light"] body.home-index .ll-contact-dock {
     --ll-tray-primary: #d2d0ca;
-    --ll-tray-primary-ink: #070807;
-    --ll-tray-panel: rgba(7, 8, 7, 0.96);
+    --ll-tray-primary-ink: #000000;
+    --ll-tray-panel: rgba(0, 0, 0, 0.96);
     --ll-tray-panel-ink: #f4f2ec;
   }
   
@@ -429,18 +491,25 @@
   html[data-theme="light"] body.home-index .ll-contact-dock__pitch.ll-button:is(:hover, :focus-visible),
   html[data-theme="light"] body.home-index .ll-contact-dock__pitch.ll-button[aria-expanded="true"],
   html[data-theme="light"] body.home-index .ll-contact-dock__pitch-preview {
-    background: rgba(7, 8, 7, 0.96);
+    background: rgba(0, 0, 0, 0.96);
     color: #f4f2ec;
   }
   
   /* Case studies */
   body.case-study {
-    --cs-bg: #1a1d1b;
+    --cs-bg: #000000;
     --cs-ink: #f4f2ec;
     --cs-muted: rgba(244, 242, 236, 0.58);
     --cs-line: rgba(244, 242, 236, 0.18);
     background: var(--cs-bg);
     color: var(--cs-ink);
+  }
+
+  html[data-theme="dark"] body.case-study {
+    --cs-bg: #000000;
+    --cs-ink: #f4f2ec;
+    --cs-muted: rgba(244, 242, 236, 0.58);
+    --cs-line: rgba(244, 242, 236, 0.18);
   }
   
   html[data-theme="light"] body.case-study {
@@ -521,11 +590,13 @@ body.home-index .lwa-footer__contact .ll-button.ll-tactile-control > .ll-icon--a
   transform: translate3d(0, -50%, 0);
 }
 
-body.home-index .lwa-footer__contact .ll-button.ll-tactile-control:is(:hover, :focus-visible) > .ll-icon--arrow-up-right {
-  transform: translate3d(1px, calc(-50% - 1px), 0);
-}
+  body.home-index .lwa-footer__contact .ll-button.ll-tactile-control:is(:hover, :focus-visible) > .ll-icon--arrow-up-right {
+    transform: translate3d(1px, calc(-50% - 1px), 0);
+  }
 
-/* Compact three-state theme control: Light / System / Dark. */
+
+
+/* Compact two-state theme control: Light / Dark. */
   .ll-theme-toggle,
   .ll-theme-toggle--footer,
   .home-index .ll-home-hero__rail .ll-theme-toggle--hero,
@@ -533,11 +604,11 @@ body.home-index .lwa-footer__contact .ll-button.ll-tactile-control:is(:hover, :f
     position: relative;
     isolation: isolate;
     display: inline-grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     align-items: center;
     gap: 0;
-    width: 96px;
-    min-width: 96px;
+    width: 64px;
+    min-width: 64px;
     height: 24px;
     min-height: 24px;
     padding: 2px;
@@ -570,9 +641,8 @@ body.home-index .lwa-footer__contact .ll-button.ll-tactile-control:is(:hover, :f
     transition: color 180ms ease, opacity 180ms ease;
   }
   
-  .ll-theme-toggle[data-theme-mode="light"] .ll-theme-toggle__choice--light,
-  .ll-theme-toggle[data-theme-mode="system"] .ll-theme-toggle__choice--system,
-  .ll-theme-toggle[data-theme-mode="dark"] .ll-theme-toggle__choice--dark {
+  .ll-theme-toggle[data-theme-mode="dark"] .ll-theme-toggle__choice--dark,
+  .ll-theme-toggle[data-theme-mode="light"] .ll-theme-toggle__choice--light {
     opacity: 1;
   }
   
@@ -582,20 +652,16 @@ body.home-index .lwa-footer__contact .ll-button.ll-tactile-control:is(:hover, :f
     top: 2px;
     bottom: 2px;
     left: 2px;
-    width: calc((100% - 4px) / 3);
+    width: calc((100% - 4px) / 2);
     background: currentColor;
     opacity: 0.12;
     transform: translateX(0);
     transition: transform 360ms var(--ll-ease), opacity 180ms ease;
     pointer-events: none;
   }
-  
-  .ll-theme-toggle[data-theme-mode="system"] .ll-theme-toggle__indicator {
+
+  .ll-theme-toggle[data-theme-mode="light"] .ll-theme-toggle__indicator {
     transform: translateX(100%);
-  }
-  
-  .ll-theme-toggle[data-theme-mode="dark"] .ll-theme-toggle__indicator {
-    transform: translateX(200%);
   }
   
   .ll-theme-toggle:is(:hover, :focus-visible) {
@@ -622,8 +688,8 @@ body.home-index .lwa-footer__contact .ll-button.ll-tactile-control:is(:hover, :f
     .ll-theme-toggle,
     .ll-theme-toggle--footer,
     .home-index .ll-home-hero__rail .ll-theme-toggle--hero {
-      width: 90px;
-      min-width: 90px;
+      width: 60px;
+      min-width: 60px;
       height: 24px;
       min-height: 24px;
       padding: 2px;
@@ -723,8 +789,8 @@ body.home-index .lwa-footer__contact .ll-button.ll-tactile-control:is(:hover, :f
   }
 
   body.home-index .ll-home-hero__rail .ll-theme-toggle--hero {
-    width: 80px;
-    min-width: 80px;
+    width: 54px;
+    min-width: 54px;
     font-size: 8px;
   }
 }

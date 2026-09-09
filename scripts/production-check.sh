@@ -33,8 +33,7 @@ done
 
 while IFS= read -r ignored_asset; do
   [[ -z "$ignored_asset" || "$ignored_asset" == \#* ]] && continue
-  asset_name="${ignored_asset##*/}"
-  if rg -F -q --glob '*.html' --glob '*.css' --glob '*.js' -- "$asset_name" ./*.html assets/css assets/js assets/partials; then
+  if rg -F -q --glob '*.html' --glob '*.css' --glob '*.js' -- "$ignored_asset" ./*.html assets/css assets/js assets/partials; then
     printf 'Ignored production asset is referenced by active code: %s\n' "$ignored_asset" >&2
     exit 1
   fi

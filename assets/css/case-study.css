@@ -289,7 +289,7 @@ html.cs-preloader-active body.case-study {
 .cs-gallery {
   display: grid;
   gap: var(--cs-media-gap);
-  padding: 0 var(--ll-gutter) clamp(100px, 12vw, 190px);
+  padding: 0 var(--ll-page-gutter) clamp(100px, 12vw, 190px);
 }
 
 .cs-gallery__row {
@@ -336,7 +336,7 @@ html.cs-preloader-active body.case-study {
 
 .cs-related {
   --ll-type-h2: clamp(16px, 2.35vw, 20px);
-  padding: 86px var(--ll-gutter) 0;
+  padding: 86px var(--ll-page-gutter) 0;
   /*! border-top: 1px solid var(--cs-line); */
   content-visibility: auto;
   contain-intrinsic-size: 680px;
@@ -445,7 +445,7 @@ html.cs-preloader-active body.case-study {
 .cs-footer {
   display: flex;
   min-height: 80svh;
-  padding: clamp(80px, 10vh, 112px) var(--ll-gutter) 22px;
+  padding: clamp(80px, 10vh, 112px) var(--ll-page-gutter) 22px;
   flex-direction: column;
   background: var(--cs-bg);
   color: var(--cs-ink);
@@ -742,7 +742,7 @@ html.cs-preloader-active body.case-study {
 @media (max-width: 560px) {
   .cs-hero {
     min-height: 68svh;
-    padding: 112px var(--ll-gutter) 24px;
+    padding: 112px var(--ll-page-gutter) 24px;
   }
 
   .cs-hero__meta {
@@ -755,12 +755,12 @@ html.cs-preloader-active body.case-study {
 
   .cs-story {
     gap: 38px;
-    padding: 34px var(--ll-gutter) var(--cs-media-gap);
+    padding: 34px var(--ll-page-gutter) var(--cs-media-gap);
   }
 
   .cs-gallery {
     gap: var(--cs-media-gap);
-    padding-inline: var(--ll-gutter);
+    padding-inline: var(--ll-page-gutter);
   }
 
   .cs-gallery__row,
@@ -775,7 +775,7 @@ html.cs-preloader-active body.case-study {
   }
 
   .cs-related {
-    padding: 68px var(--ll-gutter) 0;
+    padding: 68px var(--ll-page-gutter) 0;
   }
 
   .cs-related__head {
@@ -811,7 +811,7 @@ html.cs-preloader-active body.case-study {
   }
 
   .cs-footer {
-    padding: 96px var(--ll-gutter) 26px;
+    padding: 96px var(--ll-page-gutter) 26px;
   }
 
   .cs-footer__main {

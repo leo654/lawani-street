@@ -252,7 +252,7 @@ html[data-theme="light"] .contact-background::after {
 
 .project-form__hint {
   max-width: 56ch;
-  margin: 66px 0 clamp(68px, 4vh, 42px);
+  margin: clamp(42px, 5vh, 66px) 0 clamp(42px, 5vh, 68px);
   color: var(--contact-muted);
   font-size: 13px;
   line-height: 1.5;

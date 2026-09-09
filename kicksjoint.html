@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#e8e7e1">
+    <meta name="theme-color" content="#000000">
     <meta name="description" content="Kicksjoint — a culture-led identity and digital experience by Lawani St.">
     <meta name="author" content="Lawani St">
     <meta name="robots" content="index, follow">
@@ -29,18 +29,17 @@
     <script>
       document.documentElement.classList.replace("no-js", "js");
       (function () {
-        var mode = "light";
+        var mode = "dark";
         try {
           var storedTheme = localStorage.getItem("ll-theme-mode");
-          if (storedTheme === "light" || storedTheme === "system" || storedTheme === "dark") mode = storedTheme;
+          if (storedTheme === "light" || storedTheme === "dark") mode = storedTheme;
+          else if (storedTheme === "system") mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         } catch (error) {}
-        var theme = mode === "system"
-          ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-          : mode;
+        var theme = mode;
         document.documentElement.setAttribute("data-theme-mode", mode);
         document.documentElement.setAttribute("data-theme", theme);
         var themeMeta = document.querySelector('meta[name="theme-color"]');
-        if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#181a19");
+        if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#000000");
       })();
     </script>
     <link rel="stylesheet" href="assets/css/lamalama-ui.min.css?v=20260903-uppercase-1">
@@ -48,7 +47,7 @@
     <link rel="stylesheet" href="assets/css/benchmark-system.css?v=20260901-deck-contact-arrows-1">
     <link rel="stylesheet" href="assets/css/motion-system.css?v=20260826-motion-ownership-2">
     <link rel="stylesheet" href="assets/css/pitchdeck-overlay.css?v=20260826-overlay-3">
-    <link rel="stylesheet" href="assets/css/theme-system.css?v=20260901-mobile-hero-rail-1">
+    <link rel="stylesheet" href="assets/css/theme-system.css?v=20260907-three-mode-1">
   </head>
 
   <body class="case-study case-study--kicksjoint">
@@ -295,7 +294,7 @@
 
           <div class="cs-footer__contact">
             <p class="cs-footer__label">[ Get in touch ]</p>
-            <p class="cs-footer__copy">Feel free to reach out and discuss your project.<br>We’ll make it sharper.</p>
+            <p class="cs-footer__copy">Feel free to reach out and discuss your project. We’ll make it sharper.</p>
             <div class="cs-footer__actions">
               <a class="ll-button ll-tactile-control" href="vcard.html">
                 <span>Start a project</span>
@@ -327,18 +326,14 @@
           <button
             class="ll-theme-toggle ll-theme-toggle--footer ll-button"
             type="button"
-            aria-label="Switch to light theme"
+            aria-label="Change colour mode"
             aria-pressed="false"
             data-ll-theme-toggle
           >
-            <span data-ll-theme-label>Dark</span>
-            <svg class="ll-theme-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
-              <g class="ll-theme-toggle__sun">
-                <circle cx="12" cy="12" r="3.25"></circle>
-                <path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6 6l1.4 1.4M16.6 16.6 18 18M18 6l-1.4 1.4M7.4 16.6 6 18"></path>
-              </g>
-              <path class="ll-theme-toggle__moon" d="M18.5 15.2A7.2 7.2 0 0 1 8.8 5.5 7.2 7.2 0 1 0 18.5 15.2Z"></path>
-            </svg>
+            <span class="ll-theme-toggle__choice ll-theme-toggle__choice--dark" aria-hidden="true">DK</span>
+            <span class="ll-theme-toggle__choice ll-theme-toggle__choice--light" aria-hidden="true">LT</span>
+            <span class="ll-theme-toggle__indicator" aria-hidden="true"></span>
+            <span class="ll-visually-hidden" data-ll-theme-label>Dark theme</span>
           </button>
           <span>EN</span>
         </div>
@@ -348,7 +343,7 @@
     <script src="assets/js/elastic-cursor.js?v=20260826-overlay-pause-1" defer></script>
     <script src="assets/js/modules/motion-system.js?v=20260825-motion-1" defer></script>
     <script src="assets/js/modules/pitchdeck-overlay.js?v=20260901-global-arrow-svg-1" defer></script>
-    <script src="assets/js/pages/lamalama-ui.js?v=20260831-themed-cta-1" defer></script>
+    <script src="assets/js/pages/lamalama-ui.js?v=20260907-three-mode-1" defer></script>
     <script src="assets/js/pages/case-study-ui.js?v=20260826-motion-ownership-1" defer></script>
   </body>
 </html>

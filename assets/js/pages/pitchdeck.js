@@ -174,7 +174,7 @@
       totalLabels.forEach(function (label) { label.textContent = String(slides.length).padStart(2, "0"); });
       if (previousButton) previousButton.disabled = index === 0;
       if (nextButton) nextButton.disabled = index === slides.length - 1;
-      deck.classList.toggle("is-dark-chapter", slides[index].matches(".ll-deck-slide--welcome"));
+      deck.classList.toggle("is-dark-chapter", slides[index].matches(".ll-deck-slide--welcome, .ll-deck-slide--vibe"));
     }
 
     function easeOutExpo(progress) {
@@ -252,6 +252,87 @@
       control.addEventListener("pointerleave", release);
     }
 
+    function setupServiceShop() {
+      var serviceShop = deck.querySelector("[data-service-shop]");
+      if (!serviceShop) return;
+
+      var serviceTabs = Array.prototype.slice.call(serviceShop.querySelectorAll("[data-service-tab]"));
+      var servicePanels = Array.prototype.slice.call(serviceShop.querySelectorAll("[data-service-panel]"));
+      var serviceDots = Array.prototype.slice.call(serviceShop.querySelectorAll("[data-service-dot]"));
+      var servicePrevious = Array.prototype.slice.call(serviceShop.querySelectorAll("[data-service-previous]"));
+      var serviceNext = Array.prototype.slice.call(serviceShop.querySelectorAll("[data-service-next]"));
+      var serviceCurrent = Array.prototype.slice.call(serviceShop.querySelectorAll("[data-service-current]"));
+      var servicePositions = Array.prototype.slice.call(serviceShop.querySelectorAll("[data-service-position]"));
+      var serviceNames = Array.prototype.slice.call(serviceShop.querySelectorAll("[data-service-current-name]"));
+      var selectedService = 0;
+
+      if (!serviceTabs.length || serviceTabs.length !== servicePanels.length) return;
+
+      function selectService(nextIndex, focusTab) {
+        selectedService = (nextIndex + servicePanels.length) % servicePanels.length;
+        var selectedName = serviceTabs[selectedService].getAttribute("data-service-name") || serviceTabs[selectedService].textContent.trim();
+        var selectedPosition = String(selectedService + 1).padStart(2, "0");
+
+        serviceTabs.forEach(function (tab, index) {
+          var active = index === selectedService;
+          tab.classList.toggle("is-active", active);
+          tab.setAttribute("aria-selected", String(active));
+          tab.tabIndex = active ? 0 : -1;
+        });
+
+        servicePanels.forEach(function (panel, index) {
+          var active = index === selectedService;
+          panel.classList.toggle("is-active", active);
+          panel.inert = !active;
+          if (active) panel.removeAttribute("hidden");
+          else panel.setAttribute("hidden", "");
+        });
+
+        serviceDots.forEach(function (dot, index) {
+          var active = index === selectedService;
+          dot.classList.toggle("is-active", active);
+          if (active) dot.setAttribute("aria-current", "true");
+          else dot.removeAttribute("aria-current");
+        });
+
+        serviceCurrent.forEach(function (output) {
+          output.textContent = selectedPosition + " / " + String(servicePanels.length).padStart(2, "0");
+        });
+        servicePositions.forEach(function (output) { output.textContent = selectedPosition; });
+        serviceNames.forEach(function (label) { label.textContent = selectedName; });
+
+        if (focusTab) serviceTabs[selectedService].focus();
+      }
+
+      serviceTabs.forEach(function (tab, index) {
+        tab.addEventListener("click", function () { selectService(index, false); });
+        tab.addEventListener("keydown", function (event) {
+          var nextIndex = null;
+          if (event.key === "ArrowDown" || event.key === "ArrowRight") nextIndex = selectedService + 1;
+          else if (event.key === "ArrowUp" || event.key === "ArrowLeft") nextIndex = selectedService - 1;
+          else if (event.key === "Home") nextIndex = 0;
+          else if (event.key === "End") nextIndex = serviceTabs.length - 1;
+          if (nextIndex === null) return;
+          event.preventDefault();
+          event.stopPropagation();
+          selectService(nextIndex, true);
+        });
+      });
+
+      serviceDots.forEach(function (dot, index) {
+        dot.addEventListener("click", function () { selectService(index, false); });
+      });
+      servicePrevious.forEach(function (button) {
+        button.addEventListener("click", function () { selectService(selectedService - 1, false); });
+      });
+      serviceNext.forEach(function (button) {
+        button.addEventListener("click", function () { selectService(selectedService + 1, false); });
+      });
+
+      serviceTabs.concat(serviceDots, servicePrevious, serviceNext).forEach(enhanceControl);
+      selectService(0, false);
+    }
+
     function closeDeck(event) {
       if (event) event.preventDefault();
       if (closing) return;
@@ -271,6 +352,8 @@
       if (reducedMotion()) window.location.href = destination;
       else window.setTimeout(function () { window.location.href = destination; }, 620);
     }
+
+    setupServiceShop();
 
     menuButton.addEventListener("click", function () {
       window.clearTimeout(previewTimer);
