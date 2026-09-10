@@ -26,3 +26,4 @@
 /assets/img/next.png
 /assets/img/ent1.png
 /assets/img/picture/dsl/Artboard 1-07.png
+# Note: lion.png is used in pitchdeck.html and should NOT be ignored
