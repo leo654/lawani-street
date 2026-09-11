@@ -1023,7 +1023,7 @@ body.home-index .ll-home-hero__media video {
 
 @media (hover: none), (pointer: coarse) {
   :where(a, button, input, textarea, select) {
-    min-height: 44px;
+    /*! min-height: 44px; */
   }
 }
 

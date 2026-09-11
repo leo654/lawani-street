@@ -6,10 +6,14 @@
 :root {
   --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --motion-ease-sweep-in: cubic-bezier(0.76, 0, 0.24, 1);
+  --motion-ease-sweep-out: cubic-bezier(0.16, 1, 0.3, 1);
   --motion-fast: 180ms;
   --motion-control: 360ms;
   --motion-reveal: 760ms;
-  --motion-page: 620ms;
+  --motion-page-cover: 680ms;
+  --motion-page-reveal: 760ms;
+  --motion-page: var(--motion-page-cover);
   --ll-ease: var(--motion-ease-out);
   --ll-ease-out-expo: var(--motion-ease-out);
   --ll-duration-micro: var(--motion-fast);
@@ -19,6 +23,7 @@
 
 html {
   scroll-behavior: auto;
+  scrollbar-gutter: stable both-edges;
 }
 
 html.ll-page-leaving {
@@ -33,8 +38,8 @@ html.ll-page-leaving {
   overflow: hidden;
   background: #f04b18;
   pointer-events: none;
-  transform: translate3d(0, 101%, 0);
-  transition: transform var(--motion-page) var(--motion-ease-in-out);
+  transform: translate3d(0, 103%, 0);
+  transition: transform var(--motion-page-cover) var(--motion-ease-sweep-in);
   will-change: transform;
 }
 
@@ -43,8 +48,8 @@ html.ll-page-leaving {
   inset: 0;
   background: #0b0d0c;
   content: "";
-  transform: translate3d(0, 8%, 0);
-  transition: transform var(--motion-page) var(--motion-ease-out);
+  transform: translate3d(0, 10%, 0);
+  transition: transform var(--motion-page-cover) var(--motion-ease-sweep-out);
 }
 
 html.ll-page-leaving .ll-page-transition,
@@ -62,8 +67,17 @@ html.ll-page-leaving .ll-page-transition::before,
 }
 
 .ll-page-transition.is-covering.is-revealing {
-  transform: translate3d(0, -101%, 0);
-  transition: transform var(--motion-page) var(--motion-ease-in-out);
+  transform: translate3d(0, -103%, 0);
+  transition: transform var(--motion-page-reveal) var(--motion-ease-sweep-out);
+}
+
+/* Keep the centered navigation rail pinned to the layout viewport, not 100vw. */
+@media (min-width: 821px) {
+  .ll-floating-header .ll-nav-dock,
+  .ll-mobile-menu,
+  html[data-theme="light"] .ll-mobile-menu {
+    width: min(var(--ll-menu-width), calc(100% - (var(--ll-gutter) * 2)));
+  }
 }
 
 .js .ll-reveal {

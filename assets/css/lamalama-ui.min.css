@@ -3363,7 +3363,7 @@ html[data-theme="light"] .ll-theme-toggle__track i {
     cursor: pointer;
     user-select: none;
     transform-style: flat;
-    transition: background-color 180ms ease,border-color 180ms ease,color 180ms ease,opacity 180ms ease
+    transition: background-color 180ms ease,border-color 180ms ease,color 180ms ease,opacity 180ms ease;
 }
 
 .ll-button.ll-button--square {
@@ -3375,7 +3375,8 @@ html[data-theme="light"] .ll-theme-toggle__track i {
 }
 
 .ll-button.ll-button--media {
-    padding: 6px var(--ll-control-padding-x) 6px 7px
+    padding: 6px var(--ll-control-padding-x) 6px 7px;
+    border: 1px solid rgba(244,242,236,0.22);
 }
 
 .ll-button.ll-button--compact {

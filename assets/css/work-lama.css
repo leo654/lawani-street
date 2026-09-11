@@ -152,6 +152,7 @@ body.work-index {
   font-size: var(--ll-type-compact-metadata);
   line-height: 1;
   font-weight: 700;
+  border: 1px solid rgba(244,242,236,0.22);
 }
 
 .lwa-project__state {

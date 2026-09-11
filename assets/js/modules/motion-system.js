@@ -127,8 +127,17 @@
         window.location.assign(target.href);
       }
 
-      overlay.addEventListener("transitionend", navigate, { once: true });
-      window.setTimeout(navigate, 720);
+      function onCoverEnd(transitionEvent) {
+        if (transitionEvent.target !== overlay || transitionEvent.propertyName !== "transform" || transitionEvent.pseudoElement) return;
+        overlay.removeEventListener("transitionend", onCoverEnd);
+        navigate();
+      }
+
+      overlay.addEventListener("transitionend", onCoverEnd);
+      window.setTimeout(function () {
+        overlay.removeEventListener("transitionend", onCoverEnd);
+        navigate();
+      }, 900);
     });
   }
 

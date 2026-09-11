@@ -145,7 +145,7 @@ body.home-index .ll-home-hero .ll-home-hero__content {
 html[data-theme="light"] body.home-index .ll-home-hero #ll-hero-title,
 html[data-theme="light"] body.home-index .ll-home-hero .ll-home-hero__rail,
 html[data-theme="light"] body.home-index .ll-home-hero .ll-home-hero__content {
-  color: var(--ll-white);
+  color: #fff;
   text-shadow: none;
 }
 

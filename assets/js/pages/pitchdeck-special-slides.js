@@ -32,13 +32,13 @@
           if (copy) copy.textContent = post.copy;
           if (image) image.src = post.image;
           if (count) count.textContent = String(postIndex + 1).padStart(2, "0") + " / " + String(posts.length).padStart(2, "0");
-        }, reduceMotion.matches ? 0 : 190);
-        window.setTimeout(function () { if (card) card.classList.remove("is-changing"); }, reduceMotion.matches ? 0 : 460);
+        }, reduceMotion.matches ? 0 : 230);
+        window.setTimeout(function () { if (card) card.classList.remove("is-changing"); }, reduceMotion.matches ? 0 : 560);
       }
       function cycle() {
         window.clearInterval(timer);
         if (reduceMotion.matches) return;
-        timer = window.setInterval(function () { if (active()) showPost(postIndex + 1); }, 3600);
+        timer = window.setInterval(function () { if (active()) showPost(postIndex + 1); }, 4100);
       }
       showPost(0);
       cycle();

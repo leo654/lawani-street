@@ -8,7 +8,8 @@
   background: #070807;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 850ms cubic-bezier(.16, 1, .3, 1);
+  will-change: opacity;
+  transition: opacity 600ms cubic-bezier(.76, 0, .24, 1);
 }
 
 .ll-pitch-overlay.is-visible {
@@ -21,7 +22,7 @@
 }
 
 .ll-pitch-overlay.is-closing {
-  transition-duration: 650ms;
+  transition-duration: 440ms;
 }
 
 .ll-pitch-overlay__surface,

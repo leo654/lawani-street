@@ -6984,7 +6984,7 @@ body.ll-deck-page .ll-deck-slide :is(p, li, dd, dt, a) {
   z-index: 2;
   width: min(70%, 1100px);
   max-width: none;
-  /*! font-size: clamp(50px, 4.7vw, 82px); */
+  font-size: clamp(20px, 2.7vw, 52px);
   line-height: 0.9;
 }
 
@@ -7392,7 +7392,7 @@ body.ll-deck-page .ll-deck-resume__expertise ul {
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
   .ll-deck-page.ll-pitch-page { min-height: 620px; }
   .ll-deck { --deck-rail-width: min(286px, calc(100vw - 40px)); --deck-gutter: 8px; }
   .ll-deck__rail { width: var(--deck-rail-width); }
@@ -9003,7 +9003,7 @@ body.ll-deck-page .ll-deck-slide--contact > figure img {
   filter: grayscale(1) contrast(1.08);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
   body.ll-deck-page .ll-deck__slides:has(.ll-deck-slide--services.is-active),
   body.ll-deck-page .ll-deck__slides:has(.ll-deck-slide--resume.is-active) {
     touch-action: pan-x pan-y;
@@ -9447,7 +9447,7 @@ body.ll-deck-page .ll-recognition__hero figcaption {
   line-height: 1;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
   body.ll-deck-page .ll-deck-slide.ll-deck-slide--recognition {
     overflow-x: hidden;
     overflow-y: auto;

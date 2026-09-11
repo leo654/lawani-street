@@ -6,9 +6,8 @@
   display: none;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
   .ll-deck-page.ll-pitch-page {
-    min-width: 320px;
     min-height: 560px;
     background: #151715;
   }

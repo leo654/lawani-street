@@ -5,12 +5,15 @@
   var DECK_FILE = "pitchdeck.html";
   var root = null;
   var frame = null;
+  var deckRequested = false;
   var activeTrigger = null;
   var previousUrl = "";
   var ready = false;
   var open = false;
   var closing = false;
   var closeTimer = 0;
+  var activationTimer = 0;
+  var focusTimer = 0;
   var scrollPosition = 0;
   var pageStyles = null;
   var inertNodes = [];
@@ -45,7 +48,7 @@
   function deckUrl() {
     var url = new URL(DECK_FILE, window.location.href);
     url.searchParams.set("embedded", "1");
-    url.searchParams.set("v", "20260901-global-arrow-svg-1");
+    url.searchParams.set("v", "20260911-production-1");
     return url.href;
   }
 
@@ -60,7 +63,7 @@
     root.setAttribute("aria-hidden", "true");
     root.innerHTML = [
       '<div class="ll-pitch-overlay__surface">',
-        '<iframe class="ll-pitch-overlay__deck" title="Lawani St resume" allow="autoplay" src="' + deckUrl() + '"></iframe>',
+        '<iframe class="ll-pitch-overlay__deck" title="Lawani St resume" allow="autoplay"></iframe>',
       '</div>'
     ].join("");
 
@@ -68,9 +71,33 @@
     document.body.appendChild(root);
   }
 
+  function loadDeck() {
+    if (!frame || deckRequested) return;
+    deckRequested = true;
+    ready = false;
+    root.classList.remove("is-ready");
+    frame.src = deckUrl();
+  }
+
   function postToDeck(type) {
     if (!ready || !frame || !frame.contentWindow) return;
     frame.contentWindow.postMessage({ type: type }, "*");
+  }
+
+  function scheduleDeckActivation() {
+    window.clearTimeout(activationTimer);
+    window.clearTimeout(focusTimer);
+    if (!open || !ready || !root || !root.classList.contains("is-open")) return;
+
+    activationTimer = window.setTimeout(function () {
+      activationTimer = 0;
+      if (!open || !ready || !root || !root.classList.contains("is-open")) return;
+      postToDeck("lawani:pitchdeck-activate");
+      focusTimer = window.setTimeout(function () {
+        focusTimer = 0;
+        if (open && frame && frame.isConnected) frame.focus({ preventScroll: true });
+      }, reducedMotion() ? 0 : 120);
+    }, reducedMotion() ? 0 : 400);
   }
 
   function lockPage() {
@@ -153,6 +180,7 @@
     open = true;
     closing = false;
     window.clearTimeout(closeTimer);
+    loadDeck();
 
     if (options.updateHistory !== false) setPitchHash();
     lockPage();
@@ -160,19 +188,19 @@
     root.classList.remove("is-closing");
     root.classList.add("is-visible");
     root.setAttribute("aria-hidden", "false");
-    postToDeck("lawani:pitchdeck-activate");
 
     window.requestAnimationFrame(function () {
       if (!root || !open) return;
       root.classList.add("is-open");
-      window.setTimeout(function () {
-        if (frame && frame.isConnected) frame.focus({ preventScroll: true });
-      }, reducedMotion() ? 0 : 260);
+      scheduleDeckActivation();
     });
   }
 
   function finishClose() {
     if (!root) return;
+
+    window.clearTimeout(activationTimer);
+    window.clearTimeout(focusTimer);
 
     root.classList.remove("is-visible", "is-closing");
     root.setAttribute("aria-hidden", "true");
@@ -197,6 +225,8 @@
     options = options || {};
     open = false;
     closing = true;
+    window.clearTimeout(activationTimer);
+    window.clearTimeout(focusTimer);
     postToDeck("lawani:pitchdeck-deactivate");
     root.classList.add("is-closing");
     root.classList.remove("is-open");
@@ -217,7 +247,7 @@
     }
 
     root.addEventListener("transitionend", finish);
-    closeTimer = window.setTimeout(finish, 720);
+    closeTimer = window.setTimeout(finish, 520);
   }
 
   document.addEventListener("click", function (event) {
@@ -240,7 +270,8 @@
     if (event.data.type === "lawani:pitchdeck-ready") {
       ready = true;
       root.classList.add("is-ready");
-      postToDeck(open ? "lawani:pitchdeck-activate" : "lawani:pitchdeck-deactivate");
+      if (open) scheduleDeckActivation();
+      else postToDeck("lawani:pitchdeck-deactivate");
     }
     if (event.data.type === "lawani:pitchdeck-close") hide({ updateHistory: true });
     if (event.data.type === "lawani:pitchdeck-navigate" && event.data.href) {

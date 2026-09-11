@@ -7,6 +7,7 @@
 
     var menuButton = deck.querySelector("[data-deck-menu]");
     var menuLabel = deck.querySelector("[data-deck-menu-label]");
+    var rail = deck.querySelector("[data-deck-rail]");
     var chapterNav = deck.querySelector(".ll-deck__chapters");
     var stage = deck.querySelector(".ll-deck__stage");
     var viewport = deck.querySelector(".ll-deck__slides");
@@ -18,8 +19,9 @@
     var previousButton = deck.querySelector("[data-deck-prev]");
     var nextButton = deck.querySelector("[data-deck-next]");
     var desktopRail = window.matchMedia("(min-width: 981px)");
-    var horizontalDeck = window.matchMedia("(max-width: 760px)");
-    var persistentMobileRail = window.matchMedia("(max-width: 760px)");
+    var mobileDeck = "(max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px)";
+    var horizontalDeck = window.matchMedia(mobileDeck);
+    var persistentMobileRail = window.matchMedia(mobileDeck);
     var motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
     var embedded = window.self !== window.top || new URLSearchParams(window.location.search).get("embedded") === "1";
     var overlayActive = !embedded;
@@ -31,14 +33,16 @@
     var previewTimer = 0;
     var navigationLocked = false;
     var closing = false;
-    var touchStart = null;
+    var scrollFrame = 0;
+    var scrollSettleTimer = 0;
     var contentAnimations = [];
+    var revealFrame = 0;
     var clientMarquee = deck.querySelector(".ll-deck-client-marquee");
     var marqueeGroups = clientMarquee
       ? Array.prototype.slice.call(clientMarquee.querySelectorAll("ul"))
       : [];
 
-    if (!menuButton || !menuLabel || !chapterNav || !stage || !viewport || !slides.length) return;
+    if (!menuButton || !menuLabel || !rail || !chapterNav || !stage || !viewport || !slides.length) return;
 
     function clamp(index) {
       return Math.max(0, Math.min(slides.length - 1, index));
@@ -69,6 +73,7 @@
           var clone = originals[cloneIndex % originals.length].cloneNode(true);
           var image = clone.querySelector("img");
           clone.setAttribute("data-marquee-clone", "");
+          clone.setAttribute("aria-hidden", "true");
           if (image) image.alt = "";
           group.appendChild(clone);
           cloneIndex += 1;
@@ -89,6 +94,21 @@
       else viewport.scrollTop = position;
     }
 
+    function nearestSlideIndex(position) {
+      var nearestIndex = 0;
+      var nearestDistance = Infinity;
+
+      slides.forEach(function (slide, index) {
+        var distance = Math.abs(slide.offsetLeft - position);
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestIndex = index;
+        }
+      });
+
+      return nearestIndex;
+    }
+
     function setMenu(open, focusActive) {
       var shouldOpen = Boolean(open);
       var keepChaptersAvailable = persistentMobileRail.matches;
@@ -104,28 +124,51 @@
     }
 
     function stopContentAnimations() {
+      if (revealFrame) window.cancelAnimationFrame(revealFrame);
+      revealFrame = 0;
       contentAnimations.forEach(function (animation) {
         try { animation.cancel(); } catch (error) {}
       });
       contentAnimations = [];
+      slides.forEach(function (slide) { slide.classList.remove("is-revealing"); });
     }
 
     function contentBlocks(slide) {
       return Array.prototype.slice.call(slide.querySelectorAll(".ll-deck-contact > *"));
     }
 
+    function revealGroups(slide) {
+      return Array.prototype.slice.call(slide.children).filter(function (element) {
+        return !element.classList.contains("ll-deck-slide__video") &&
+          !element.classList.contains("ll-deck-slide__veil") &&
+          !element.classList.contains("ll-linkedin-notice") &&
+          !element.classList.contains("ll-deck-client-marquee");
+      });
+    }
+
     function revealSlide(slide) {
-      if (reducedMotion() || typeof slide.animate !== "function") return;
       stopContentAnimations();
+      if (!slide || reducedMotion()) return;
+
+      revealGroups(slide).forEach(function (element, index) {
+        element.style.setProperty("--deck-reveal-delay", Math.min(index * 72, 216) + "ms");
+      });
+
+      revealFrame = window.requestAnimationFrame(function () {
+        revealFrame = 0;
+        slide.classList.add("is-revealing");
+      });
+
+      if (typeof slide.animate !== "function") return;
 
       contentBlocks(slide).forEach(function (element, index) {
         var animation = element.animate([
           { opacity: 0, transform: "translate3d(0,12px,0)" },
           { opacity: 1, transform: "translate3d(0,0,0)" }
         ], {
-          duration: 480,
-          delay: Math.min(index * 55, 165),
-          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          duration: 520,
+          delay: 110 + Math.min(index * 60, 180),
+          easing: "cubic-bezier(.76, 0, .24, 1)",
           fill: "both"
         });
         animation.onfinish = function () {
@@ -177,19 +220,50 @@
       deck.classList.toggle("is-dark-chapter", slides[index].matches(".ll-deck-slide--welcome, .ll-deck-slide--vibe"));
     }
 
-    function easeOutExpo(progress) {
-      return progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+    function easeDeckSweep(progress) {
+      return progress < 0.5
+        ? 16 * progress * progress * progress * progress * progress
+        : 1 - (Math.pow(-2 * progress + 2, 5) / 2);
     }
 
     function cancelNavigation() {
       if (navigationFrame) window.cancelAnimationFrame(navigationFrame);
+      if (scrollFrame) window.cancelAnimationFrame(scrollFrame);
+      window.clearTimeout(scrollSettleTimer);
       navigationFrame = 0;
+      scrollFrame = 0;
+      scrollSettleTimer = 0;
       navigationLocked = false;
       deck.classList.remove("is-navigating");
     }
 
+    function syncActiveFromScroll() {
+      scrollSettleTimer = 0;
+      if (!horizontalDeck.matches || navigationLocked || closing) return;
+
+      var index = nearestSlideIndex(viewport.scrollLeft);
+      if (index === activeIndex) return;
+
+      activeIndex = index;
+      setActiveVisuals(activeIndex);
+      syncMedia();
+      window.history.replaceState(null, "", "#" + slides[activeIndex].id);
+      revealSlide(slides[activeIndex]);
+    }
+
+    function queueScrollSync() {
+      if (!horizontalDeck.matches || navigationLocked || closing || scrollFrame) return;
+
+      scrollFrame = window.requestAnimationFrame(function () {
+        scrollFrame = 0;
+        window.clearTimeout(scrollSettleTimer);
+        scrollSettleTimer = window.setTimeout(syncActiveFromScroll, 110);
+      });
+    }
+
     function animateTo(index, focusSlide) {
       cancelNavigation();
+      stopContentAnimations();
       var start = currentPosition();
       var target = positionFor(slides[index]);
       var distance = target - start;
@@ -202,13 +276,13 @@
       }
 
       var startedAt = performance.now();
-      var duration = horizontalDeck.matches ? 460 : 430;
+      var duration = horizontalDeck.matches ? 560 : 620;
       navigationLocked = true;
       deck.classList.add("is-navigating");
 
       function tick(now) {
         var progress = Math.min(1, (now - startedAt) / duration);
-        setPosition(start + (distance * easeOutExpo(progress)));
+        setPosition(start + (distance * easeDeckSweep(progress)));
         if (progress < 1) {
           navigationFrame = window.requestAnimationFrame(tick);
           return;
@@ -227,6 +301,7 @@
     function goTo(nextIndex, options) {
       var settings = options || {};
       var index = clamp(nextIndex);
+      if (navigationLocked) return;
       if (index === activeIndex && !settings.force) return;
 
       activeIndex = index;
@@ -350,12 +425,13 @@
 
       var destination = closeButton ? closeButton.href.split("#")[0] : "index.html";
       if (reducedMotion()) window.location.href = destination;
-      else window.setTimeout(function () { window.location.href = destination; }, 620);
+      else window.setTimeout(function () { window.location.href = destination; }, 700);
     }
 
     setupServiceShop();
 
     menuButton.addEventListener("click", function () {
+      if (navigationLocked) return;
       window.clearTimeout(previewTimer);
       setMenu(!deck.classList.contains("is-rail-open"), false);
     });
@@ -366,7 +442,7 @@
       setMenu(true, false);
     });
 
-    chapterNav.addEventListener("mouseleave", function () {
+    rail.addEventListener("mouseleave", function () {
       if (desktopRail.matches) setMenu(false, false);
     });
 
@@ -419,26 +495,15 @@
       move(direction);
     }, { passive: false });
 
-    viewport.addEventListener("pointerdown", function (event) {
-      if (!horizontalDeck.matches || event.pointerType === "mouse") return;
-      touchStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
-      viewport.setPointerCapture(event.pointerId);
-    }, { passive: true });
-
-    viewport.addEventListener("pointerup", function (event) {
-      if (!touchStart || event.pointerId !== touchStart.id) return;
-      var deltaX = event.clientX - touchStart.x;
-      var deltaY = event.clientY - touchStart.y;
-      touchStart = null;
-      if (Math.abs(deltaX) >= 40 && Math.abs(deltaX) > Math.abs(deltaY)) move(deltaX < 0 ? 1 : -1);
-    }, { passive: true });
-
-    viewport.addEventListener("pointercancel", function () { touchStart = null; });
+    /* Mobile uses the browser's native horizontal snap. Settling from its
+       scroll position keeps chapter state, media and URL in sync after a
+       short swipe without capturing vertical gestures inside a slide. */
+    viewport.addEventListener("scroll", queueScrollSync, { passive: true });
     document.addEventListener("visibilitychange", syncMedia);
 
     document.addEventListener("keydown", function (event) {
       var tag = document.activeElement && document.activeElement.tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (document.activeElement && document.activeElement.isContentEditable)) return;
 
       if (event.key === "ArrowRight" || event.key === "ArrowDown" || event.key === "PageDown") {
         event.preventDefault();

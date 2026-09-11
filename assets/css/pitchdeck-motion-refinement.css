@@ -1,0 +1,170 @@
+/*
+ * Editorial motion pass for the pitch deck.
+ * A fixed outer frame and a measured rail expansion keep every chapter
+ * aligned while the content arrives after the physical page movement.
+ */
+
+body.ll-deck-page .ll-deck {
+  --deck-gutter: clamp(16px, 1.15vw, 22px);
+  --deck-rail-width: clamp(168px, 12vw, 230px);
+  --deck-control-size: clamp(48px, 3.35vw, 64px);
+  --deck-page-x: clamp(72px, 6.4vw, 126px);
+  --deck-page-top: clamp(84px, 8.6vh, 118px);
+  --deck-page-bottom: clamp(56px, 9.4vh, 88px);
+  --deck-motion: cubic-bezier(.76, 0, .24, 1);
+  inset: var(--deck-gutter);
+  border-radius: 4px;
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition: opacity 520ms var(--deck-motion), transform 680ms var(--deck-motion);
+}
+
+body.ll-deck-page.is-deck-ready .ll-deck {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+body.ll-deck-page .ll-deck.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, -8px, 0);
+  transition-duration: 520ms;
+}
+
+/* The parent overlay owns the embedded deck fade. */
+html.ll-deck-embedded body.ll-deck-page .ll-deck,
+html.ll-deck-embedded body.ll-deck-page .ll-deck.is-leaving {
+  inset: var(--deck-gutter);
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  transition: none;
+}
+
+body.ll-deck-page .ll-deck__stage,
+body.ll-deck-page .ll-deck-slide {
+  border-radius: 4px;
+}
+
+body.ll-deck-page .ll-deck__stage {
+  will-change: left;
+  transition: left 600ms var(--deck-motion);
+}
+
+@media (min-width: 761px) {
+  /* The opening and profile slides use the same editorial inset as every grid-based chapter. */
+  body.ll-deck-page .ll-deck-slide--welcome h1 {
+    top: var(--deck-page-top);
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-slide__intro {
+    right: var(--deck-page-x);
+    bottom: var(--deck-page-bottom);
+  }
+
+  body.ll-deck-page .ll-deck-slide--profile {
+    --profile-panel-x: var(--deck-page-x);
+    --profile-panel-top: var(--deck-page-top);
+    --profile-panel-bottom: var(--deck-page-bottom);
+  }
+
+  body.ll-deck-page .ll-deck__rail {
+    background: transparent;
+    transition: background-color 220ms ease, -webkit-backdrop-filter 220ms ease, backdrop-filter 220ms ease;
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__rail {
+    background: #070807;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__stage {
+    left: calc(var(--deck-rail-width) + var(--deck-rail-gap));
+  }
+
+  body.ll-deck-page .ll-deck__menu-toggle {
+    border-radius: 4px;
+    visibility: visible;
+    transition: visibility 0s linear, opacity 180ms ease, background-color 220ms ease, border-color 220ms ease, color 220ms ease, transform 280ms var(--deck-motion);
+  }
+
+  /* The reference removes the left trigger completely once the chapter rail takes over. */
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__menu-toggle {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(-18px, 0, 0);
+    transition: visibility 0s linear 280ms, opacity 180ms ease, background-color 220ms ease, border-color 220ms ease, color 220ms ease, transform 280ms var(--deck-motion);
+  }
+
+  body.ll-deck-page .ll-deck__chapters {
+    transition: opacity 170ms ease 70ms, transform 500ms var(--deck-motion);
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters {
+    inset: 0;
+  }
+
+  body.ll-deck-page .ll-deck__chapters button {
+    opacity: 0;
+    transform: translate3d(-10px, 0, 0);
+    transition: opacity 180ms ease, transform 460ms var(--deck-motion), background-color 220ms ease, color 220ms ease;
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(1) { transition-delay: 50ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(2) { transition-delay: 80ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(3) { transition-delay: 110ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(4) { transition-delay: 140ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(5) { transition-delay: 170ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(6) { transition-delay: 200ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(7) { transition-delay: 230ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(8) { transition-delay: 260ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(9) { transition-delay: 290ms; }
+
+  @media (hover: hover) {
+    body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:is(:hover, :focus-visible) {
+      transform: translate3d(2px, 0, 0);
+    }
+  }
+}
+
+/* Reveal high-level editorial groups only. Media and the static LinkedIn frame stay still. */
+body.ll-deck-page .ll-deck-slide.is-revealing > :not(.ll-deck-slide__video):not(.ll-deck-slide__veil):not(.ll-linkedin-notice):not(.ll-deck-client-marquee) {
+  animation: ll-deck-content-reveal 640ms var(--deck-motion) var(--deck-reveal-delay, 0ms) both;
+  will-change: opacity, translate;
+}
+
+@keyframes ll-deck-content-reveal {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.ll-deck-page .ll-deck,
+  body.ll-deck-page .ll-deck__stage,
+  body.ll-deck-page .ll-deck__rail,
+  body.ll-deck-page .ll-deck__menu-toggle,
+  body.ll-deck-page .ll-deck__chapters,
+  body.ll-deck-page .ll-deck__chapters button,
+  body.ll-deck-page .ll-deck__menu-icon path {
+    transition: none !important;
+  }
+
+  body.ll-deck-page .ll-deck-slide.is-revealing > :not(.ll-deck-slide__video):not(.ll-deck-slide__veil):not(.ll-linkedin-notice):not(.ll-deck-client-marquee) {
+    animation: none;
+  }
+}
