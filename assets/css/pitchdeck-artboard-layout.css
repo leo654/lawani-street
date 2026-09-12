@@ -431,3 +431,117 @@ body.ll-deck-page .ll-linkedin-notice__card.is-changing .ll-linkedin-notice__cop
     -webkit-line-clamp: 2;
   }
 }
+
+/* Shared horizontal safe area.
+   Slide 03 is the reference: every chapter's content now uses the same
+   left and right inset while full-bleed media remains full bleed. */
+body.ll-deck-page .ll-deck {
+  --deck-page-x: clamp(78px, 6.4vw, 128px);
+}
+
+@media (min-width: 761px) {
+  body.ll-deck-page .ll-service-shop__header,
+  body.ll-deck-page .ll-service-product {
+    right: var(--deck-page-x);
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--profile {
+    --profile-panel-x: 0px;
+  }
+
+  body.ll-deck-page .ll-deck-slide__profile-copy::after {
+    right: var(--deck-page-x);
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-slide__profile-copy > .ll-deck-kicker,
+  body.ll-deck-page .ll-deck-slide__profile-copy h2 {
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-profile-summary,
+  body.ll-deck-page .ll-deck-slide--profile dl {
+    right: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-resume {
+    right: var(--deck-page-x);
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-vibe-subject {
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-vibe-number {
+    right: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-vibe-grid {
+    right: var(--deck-page-x);
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-recognition__story,
+  body.ll-deck-page .ll-recognition__facts {
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-recognition__hero figcaption {
+    right: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-slide--clients {
+    padding-right: var(--deck-page-x);
+    padding-left: var(--deck-page-x);
+  }
+}
+
+@media (min-width: 761px) and (max-width: 980px) {
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--welcome h1 {
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--welcome .ll-deck-slide__intro {
+    right: auto;
+    left: var(--deck-page-x);
+  }
+}
+
+@media (min-width: 981px) {
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--welcome h1 {
+    right: var(--deck-page-x);
+    left: auto;
+    width: min(34%, 640px);
+  }
+
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--welcome .ll-deck-slide__intro {
+    right: var(--deck-page-x);
+    left: auto;
+    width: min(34%, 640px);
+  }
+}
+
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  body.ll-deck-page .ll-deck {
+    --deck-page-x: 18px;
+  }
+
+  body.ll-deck-page .ll-deck-slide:is(
+    .ll-deck-slide--profile,
+    .ll-deck-slide--services,
+    .ll-deck-slide--vibe,
+    .ll-deck-slide--resume,
+    .ll-deck-slide--clients,
+    .ll-deck-slide--contact
+  ) {
+    padding-right: var(--deck-page-x);
+    padding-left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-recognition__editorial {
+    padding-right: var(--deck-page-x);
+    padding-left: var(--deck-page-x);
+  }
+}
