@@ -794,4 +794,108 @@ body.home-index .lwa-footer__contact .ll-button.ll-tactile-control > .ll-icon--a
     font-size: 8px;
   }
 }
+
+/* Shared alignment and rhythm; colours and type remain owned by each page. */
+body .ll-floating-header .ll-nav-dock,
+body.home-index .ll-contact-dock,
+body.case-study .cs-back {
+  top: var(--ll-header-top);
+}
+
+body.home-index .ll-contact-dock {
+  right: var(--ll-page-gutter);
+}
+
+body .ll-mobile-menu,
+html[data-theme="light"] body .ll-mobile-menu {
+  top: calc(var(--ll-header-top) + var(--ll-control-height));
+  max-height: calc(100dvh - var(--ll-header-top) - var(--ll-control-height) - var(--space-4));
+}
+
+body.home-index :is(.ll-capabilities, .ll-manifesto) {
+  padding-inline: var(--ll-page-gutter);
+  padding-block: var(--ll-section-space);
+}
+
+body.home-index .ll-work-intro {
+  padding-block: var(--ll-section-space-compact) var(--space-5);
+}
+
+body.home-index .ll-footer,
+body.case-study .cs-footer {
+  padding-inline: var(--ll-page-gutter);
+  padding-top: var(--ll-section-space-compact);
+  padding-bottom: max(var(--space-5), env(safe-area-inset-bottom));
+}
+
+body :is(.ll-footer__top, .cs-footer__main, .ll-services-title, .ll-services-breakdown, .ll-services-columns) {
+  column-gap: var(--ll-grid-gap);
+}
+
+body :is(.ll-footer__actions, .cs-footer__actions, .lwa-project__actions) {
+  gap: var(--space-2);
+}
+
+body :is(.ll-footer__bottom, .cs-footer__bottom) {
+  padding-top: var(--space-4);
+  column-gap: var(--ll-grid-gap);
+  row-gap: var(--space-3);
+}
+
+body :is(.ll-footer__actions, .cs-footer__actions, .lwa-project__actions) a {
+  padding-left: var(--space-4);
+  line-height: 1.25;
+}
+
+body :is(.ll-button, .cs-jump, .cs-back, .cs-footer__actions a) > svg {
+  flex-shrink: 0;
+}
+
+body :is(.ll-footer__top, .cs-footer__main, .ll-services-columns, .lwa-project__summary) > * {
+  min-width: 0;
+}
+
+body.case-study {
+  --cs-media-gap: var(--ll-grid-gap);
+}
+
+body.case-study .cs-story {
+  padding-top: var(--space-5);
+}
+
+body.case-study .cs-gallery {
+  padding-bottom: var(--ll-section-space);
+}
+
+body.case-study .cs-related {
+  padding-top: var(--ll-section-space-compact);
+}
+
+@media (max-width: 900px) {
+  body.case-study .cs-story {
+    row-gap: var(--space-5);
+  }
+
+  body.case-study .cs-story__credits {
+    margin-top: var(--space-6);
+  }
+
+  body.case-study .cs-footer__main {
+    row-gap: var(--space-6);
+  }
+
+  body.case-study .cs-footer__bottom {
+    margin-top: var(--space-7);
+  }
+}
+
+@media (max-width: 560px) {
+  body.case-study .cs-footer__label {
+    margin-bottom: var(--space-5);
+  }
+
+  body :is(.ll-footer__actions, .cs-footer__actions) a {
+    min-height: var(--space-6);
+  }
+}
   

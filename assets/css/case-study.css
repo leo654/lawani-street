@@ -26,7 +26,7 @@ html.cs-preloader-active body.case-study {
   background: #070807;
   color: #f4f2ec;
   transform: translate3d(0, 0, 0);
-  transition: transform 720ms var(--ll-ease);
+  transition: transform var(--motion-control, 240ms) var(--ll-ease);
   will-change: transform;
 }
 
@@ -51,7 +51,7 @@ html.cs-preloader-active body.case-study {
   letter-spacing: -0.12em;
   opacity: 0;
   transform: translate3d(0, 18px, 0) scale(0.82);
-  transition: opacity 280ms ease, transform 540ms var(--ll-ease);
+  transition: opacity 180ms ease, transform 240ms var(--ll-ease);
 }
 
 .cs-page-loader.is-mark-visible .cs-page-loader__counter {
@@ -603,20 +603,20 @@ html.cs-preloader-active body.case-study {
 
 .case-study .ll-reveal {
   opacity: 0;
-  clip-path: inset(0 0 12% 0);
-  transform: translateY(30px);
+  clip-path: none;
+  transform: translateY(13px);
   transition:
-    clip-path 950ms var(--ll-ease),
-    opacity 620ms ease,
-    transform 950ms var(--ll-ease);
+    opacity var(--motion-control, 240ms) ease,
+    transform var(--motion-reveal, 420ms) var(--ll-ease);
   transition-delay: var(--ll-reveal-delay, 0ms);
-  will-change: clip-path, opacity, transform;
+  will-change: opacity, transform;
 }
 
 .case-study.cs-motion-ready .ll-reveal.is-visible {
   opacity: 1;
-  clip-path: inset(0 0 0 0);
+  clip-path: none;
   transform: translateY(0);
+  will-change: auto;
 }
 
 .case-study .cs-story__media.ll-reveal {

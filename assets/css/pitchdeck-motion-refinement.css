@@ -16,7 +16,7 @@ body.ll-deck-page .ll-deck {
   border-radius: 4px;
   opacity: 0;
   transform: translate3d(0, 10px, 0);
-  transition: opacity 520ms var(--deck-motion), transform 680ms var(--deck-motion);
+  transition: opacity var(--ll-duration-control) var(--deck-motion), transform var(--ll-duration-component) var(--deck-motion);
 }
 
 body.ll-deck-page.is-deck-ready .ll-deck {
@@ -28,7 +28,7 @@ body.ll-deck-page .ll-deck.is-leaving {
   opacity: 0;
   pointer-events: none;
   transform: translate3d(0, -8px, 0);
-  transition-duration: 520ms;
+  transition-duration: var(--ll-duration-control);
 }
 
 /* The parent overlay owns the embedded deck fade. */
@@ -48,7 +48,7 @@ body.ll-deck-page .ll-deck-slide {
 
 body.ll-deck-page .ll-deck__stage {
   will-change: left;
-  transition: left 600ms var(--deck-motion);
+  transition: left var(--ll-duration-component) var(--deck-motion);
 }
 
 @media (min-width: 761px) {
@@ -137,14 +137,14 @@ body.ll-deck-page .ll-deck__stage {
 
 /* Reveal high-level editorial groups only. Media and the static LinkedIn frame stay still. */
 body.ll-deck-page .ll-deck-slide.is-revealing > :not(.ll-deck-slide__video):not(.ll-deck-slide__veil):not(.ll-linkedin-notice):not(.ll-deck-client-marquee) {
-  animation: ll-deck-content-reveal 640ms var(--deck-motion) var(--deck-reveal-delay, 0ms) both;
+  animation: ll-deck-content-reveal var(--ll-duration-component) var(--deck-motion) var(--deck-reveal-delay, 0ms) both;
   will-change: opacity, translate;
 }
 
 @keyframes ll-deck-content-reveal {
   from {
     opacity: 0;
-    translate: 0 18px;
+    translate: 0 var(--space-3);
   }
 
   to {

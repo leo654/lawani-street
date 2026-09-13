@@ -15,7 +15,8 @@
       body.classList.add("cs-motion-ready", "cs-intro-complete");
     }
 
-    if (reduceMotion) {
+    // A page-to-page cover already owns entry; do not run a second loader.
+    if (reduceMotion || document.querySelector(".ll-page-transition.is-covering")) {
       revealImmediately();
       return;
     }
@@ -32,7 +33,7 @@
 
     var counter = loader.querySelector(".cs-page-loader__counter");
     var startedAt = performance.now();
-    var counterDuration = 620;
+    var counterDuration = 180;
     var finished = false;
 
     function finish() {
@@ -44,14 +45,14 @@
       window.setTimeout(function () {
         body.classList.add("cs-motion-ready");
         loader.classList.add("is-exiting");
-      }, 470);
+      }, 80);
 
       window.setTimeout(function () {
         loader.remove();
         document.documentElement.classList.remove("cs-preloader-active");
         body.classList.remove("cs-preloading");
         body.classList.add("cs-intro-complete");
-      }, 1220);
+      }, 340);
     }
 
     function updateCounter(now) {
@@ -66,7 +67,7 @@
     }
 
     window.requestAnimationFrame(updateCounter);
-    window.setTimeout(finish, 1800);
+    window.setTimeout(finish, 500);
   }
 
   function initCaseStudyEffects() {

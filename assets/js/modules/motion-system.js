@@ -103,7 +103,7 @@
     document.addEventListener("click", function (event) {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       var link = event.target.closest("a[href]");
-      if (!link || link.target === "_blank" || link.hasAttribute("download")) return;
+      if (!link || (link.target && link.target !== "_self") || link.hasAttribute("download")) return;
 
       var raw = link.getAttribute("href");
       if (!raw || raw.charAt(0) === "#" || /^(?:mailto|tel|javascript):/i.test(raw)) return;
@@ -137,7 +137,7 @@
       window.setTimeout(function () {
         overlay.removeEventListener("transitionend", onCoverEnd);
         navigate();
-      }, 900);
+      }, 500);
     });
   }
 

@@ -63,13 +63,25 @@ html body .custom-cursor-ring.active:not(#global-square-corners) {
   --ll-dark-line: rgba(0, 0, 0, 0.22);
 
   /* Spacing tokens */
-  --ll-gutter: clamp(20px, 2.8vw, 56px);
-  --ll-space-xs: 4px;
-  --ll-space-sm: 8px;
-  --ll-space-md: 16px;
-  --ll-space-lg: 24px;
-  --ll-space-xl: 32px;
-  --ll-space-2xl: 48px;
+  --space-1: 5px;
+  --space-2: 8px;
+  --space-3: 13px;
+  --space-4: 21px;
+  --space-5: 34px;
+  --space-6: 55px;
+  --space-7: 89px;
+  --ll-page-gutter: clamp(var(--space-4), 2.5vw, var(--space-6));
+  --ll-gutter: var(--ll-page-gutter);
+  --ll-grid-gap: clamp(var(--space-3), 1.65vw, var(--space-5));
+  --ll-section-space: clamp(var(--space-7), 10vw, 144px);
+  --ll-section-space-compact: clamp(var(--space-6), 6vw, var(--space-7));
+  --ll-header-top: max(var(--space-3), env(safe-area-inset-top));
+  --ll-space-xs: var(--space-1);
+  --ll-space-sm: var(--space-2);
+  --ll-space-md: var(--space-3);
+  --ll-space-lg: var(--space-4);
+  --ll-space-xl: var(--space-5);
+  --ll-space-2xl: var(--space-6);
 
   /* Typography tokens */
   --ll-sans: "Gridlite", "Inventing", sans-serif;
@@ -110,10 +122,10 @@ html body .custom-cursor-ring.active:not(#global-square-corners) {
   --ll-ease-smooth: cubic-bezier(0.65, 0, 0.35, 1);
   --ll-ease-press: cubic-bezier(0.22, 0.75, 0.28, 1);
   --ll-duration-micro: 180ms;
-  --ll-duration-label: 460ms;
-  --ll-duration-control: 380ms;
-  --ll-duration-component: 620ms;
-  --ll-duration-transform: 820ms;
+  --ll-duration-label: 240ms;
+  --ll-duration-control: 240ms;
+  --ll-duration-component: 420ms;
+  --ll-duration-transform: 500ms;
 
   /* Component tokens */
   --ll-control-height: 50px;
@@ -2696,7 +2708,10 @@ body.home-index:not(.is-past-home-hero) .ll-work-dock {
 
 @media (max-width: 820px) {
   :root {
-    --ll-gutter: clamp(16px, 3vw, 20px);
+    --ll-page-gutter: var(--space-4);
+    --ll-grid-gap: var(--space-3);
+    --ll-section-space: clamp(var(--space-6), 12vw, var(--space-7));
+    --ll-section-space-compact: clamp(var(--space-5), 7vw, var(--space-6));
   }
 
   .home-index .ll-home-hero,
@@ -2797,12 +2812,8 @@ body.home-index:not(.is-past-home-hero) .ll-work-dock {
   }
 }
 
-/* Precision shell alignment — keep the desktop composition on a shared 40px grid. */
+/* Precision shell alignment. Gutters are owned by the shared spacing tokens. */
 @media (min-width: 1025px) {
-  :root {
-    --ll-gutter: 40px;
-  }
-
   .ll-nav-dock {
     top: 16px;
     width: 438px;
@@ -2985,10 +2996,6 @@ body.home-index:not(.is-past-home-hero) .ll-work-dock {
 }
 
 @media (min-width: 821px) and (max-width: 1024px) {
-  :root {
-    --ll-gutter: clamp(28px, 3.2vw, 32px);
-  }
-
   .ll-contact-dock {
     right: var(--ll-gutter);
   }

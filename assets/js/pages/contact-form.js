@@ -120,6 +120,8 @@
     var finish = function () {
       outgoing.hidden = true;
       outgoing.setAttribute("aria-hidden", "true");
+      // Release the exit effect so revisiting this step cannot retain opacity: 0.
+      if (animation) animation.cancel();
       incoming.hidden = false;
       incoming.setAttribute("aria-hidden", "false");
       incoming.classList.remove("is-entering");
@@ -149,7 +151,7 @@
       ],
       { duration: 220, easing: "cubic-bezier(0.65,0,0.35,1)", fill: "forwards" }
     );
-    animation.finished.then(finish).catch(finish);
+    animation.finished.then(finish, finish);
   }
 
   function updateSummary() {

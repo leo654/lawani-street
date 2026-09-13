@@ -44,7 +44,8 @@
     });
 
     gallery.addEventListener("pointerdown", function (event) {
-      if (event.pointerType === "mouse" && event.button !== 0) return;
+      // Touch and trackpad scrolling stay native; drag-to-scroll is for a mouse.
+      if (event.pointerType !== "mouse" || event.button !== 0) return;
       active = true;
       moved = false;
       startX = event.clientX;
@@ -75,11 +76,6 @@
     gallery.addEventListener("pointerup", stop);
     gallery.addEventListener("pointercancel", stop);
     gallery.addEventListener("dragstart", function (event) { event.preventDefault(); });
-    gallery.addEventListener("wheel", function (event) {
-      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
-      gallery.scrollLeft += event.deltaY;
-      event.preventDefault();
-    }, { passive: false });
   }
 
   function initProjects() {

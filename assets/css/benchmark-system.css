@@ -3,11 +3,7 @@
  * Layout and interaction rules only: the existing font faces and type tokens stay intact.
  */
 
- :root {
-  --ll-page-gutter: clamp(20px, 2.5vw, 48px);
-  --ll-grid-gap: clamp(16px, 1.65vw, 28px);
-  --ll-section-space: clamp(88px, 10vw, 168px);
-  --ll-section-space-compact: clamp(56px, 6vw, 96px);
+:root {
   --ll-reading-width: 52rem;
   --ll-frame-line: color-mix(in srgb, currentColor 20%, transparent);
 }
@@ -339,12 +335,6 @@ body.ll-contact-page {
 }
 
 @media (max-width: 820px) {
-  :root {
-    --ll-page-gutter: clamp(16px, 4.2vw, 24px);
-    --ll-grid-gap: 16px;
-    --ll-section-space: clamp(72px, 18vw, 112px);
-  }
-
   .ll-mobile-menu {
     padding-bottom: max(14px, env(safe-area-inset-bottom));
   }
@@ -786,11 +776,12 @@ body.ll-deck-page .ll-deck-client-marquee {
 body.ll-deck-page .ll-deck-client-marquee__track {
   display: flex;
   width: max-content;
-  animation: ll-deck-client-marquee 24s linear infinite;
+  animation: ll-deck-client-marquee 32s linear infinite;
+  animation-play-state: paused;
   will-change: transform;
 }
 
-body.ll-deck-page .ll-deck-slide--clients.is-active .ll-deck-client-marquee__track {
+body.ll-deck-page .ll-deck-slide--clients.is-active .ll-deck-client-marquee.is-ready .ll-deck-client-marquee__track {
   animation-play-state: running;
 }
 
@@ -877,6 +868,10 @@ body.ll-deck-page .ll-deck-client-marquee img {
   body.ll-deck-page .ll-deck-client-marquee__track {
     animation: none;
     transform: none;
+  }
+
+  body.ll-deck-page .ll-deck-client-marquee [aria-hidden="true"] {
+    display: none;
   }
 }
 

@@ -263,7 +263,7 @@
       } catch (error) {}
     }
 
-    var initialMode = root.getAttribute("data-theme-mode") || "dark";
+    var initialMode = root.getAttribute("data-theme-mode") || "light";
     applyThemeMode(initialMode, false);
 
     toggles.forEach(function (toggle) {

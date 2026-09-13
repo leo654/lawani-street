@@ -374,6 +374,31 @@ body.ll-deck-page .ll-linkedin-notice__card.is-changing .ll-linkedin-notice__cop
     padding: 78px 18px 84px;
   }
 
+  /* The desktop contact column must not constrain the stacked phone layout. */
+  body.ll-deck-page .ll-deck-slide--contact > .ll-deck-kicker {
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+  }
+
+  body.ll-deck-page .ll-deck-slide--contact .ll-deck-contact {
+    width: 100%;
+    min-width: 0;
+    margin-top: var(--space-5);
+    gap: var(--space-2);
+  }
+
+  body.ll-deck-page .ll-deck-contact > p {
+    margin-bottom: var(--space-3);
+  }
+
+  body.ll-deck-page .ll-deck-contact a {
+    padding-inline: var(--space-4);
+  }
+
+  body.ll-deck-page .ll-deck-slide--contact > figure {
+    margin-top: var(--space-5);
+  }
+
   /* Reset a late legacy top padding rule that otherwise consumes the entire
      58px bottom chapter strip. */
   body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters {

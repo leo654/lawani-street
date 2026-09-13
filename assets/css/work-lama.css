@@ -99,9 +99,9 @@ body.work-index {
   min-height: 168px;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   align-items: start;
-  column-gap: 24px;
+  column-gap: var(--ll-grid-gap);
   row-gap: 0;
-  padding: 24px var(--ll-gutter);
+  padding: var(--space-4) var(--ll-gutter);
   overflow: hidden;
   border: 0;
   background: transparent;
@@ -189,7 +189,7 @@ body.work-index {
   object-fit: cover;
   filter: saturate(0.92) contrast(1.02);
   transform: translate3d(0, 0, 0);
-  transition: transform 650ms var(--ll-ease), filter 300ms ease;
+  transition: transform var(--motion-control) var(--ll-ease), filter var(--motion-fast) ease;
 }
 
 .lwa-project__rail img:first-child {
@@ -233,14 +233,14 @@ body.work-index {
   grid-template-rows: 0fr;
   visibility: hidden;
   opacity: 0;
-  transition: grid-template-rows 680ms var(--ll-ease), opacity 300ms ease, visibility 0s linear 680ms;
+  transition: grid-template-rows var(--motion-reveal) var(--ll-ease), opacity var(--motion-control) ease, visibility 0s linear var(--motion-reveal);
 }
 
 .lwa-project.is-expanded .lwa-project__detail {
   grid-template-rows: 1fr;
   visibility: visible;
   opacity: 1;
-  transition: grid-template-rows 760ms var(--ll-ease), opacity 360ms ease 80ms, visibility 0s;
+  transition: grid-template-rows var(--motion-reveal) var(--ll-ease), opacity var(--motion-control) ease, visibility 0s;
 }
 
 .lwa-project__detail-inner {
@@ -254,8 +254,8 @@ body.work-index {
 .lwa-project__summary {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 24px;
-  padding: 4px var(--ll-gutter) 46px;
+  gap: var(--ll-grid-gap);
+  padding: var(--space-1) var(--ll-gutter) var(--space-5);
 }
 
 @media (min-width: 821px) {
@@ -313,7 +313,7 @@ body.work-index {
   overscroll-behavior-inline: contain;
   cursor: grab;
   scrollbar-width: none;
-  touch-action: pan-y;
+  touch-action: pan-x pan-y;
 }
 
 .lwa-project__gallery::-webkit-scrollbar { display: none; }
@@ -500,8 +500,8 @@ body.work-index {
     min-height: 0;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-rows: auto auto 160px;
-    gap: 14px 10px;
-    padding: 20px var(--ll-gutter);
+    gap: var(--space-3);
+    padding: var(--space-4) var(--ll-gutter);
   }
 
   .lwa-project__title {
@@ -532,7 +532,7 @@ body.work-index {
     pointer-events: auto;
     overscroll-behavior-inline: contain;
     scrollbar-width: none;
-    touch-action: pan-x;
+    touch-action: pan-x pan-y;
   }
 
   .lwa-project__rail::-webkit-scrollbar { display: none; }
@@ -562,13 +562,11 @@ body.work-index {
 
   .lwa-project__summary {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 6px var(--ll-gutter) 30px;
+    gap: var(--space-4);
+    padding: var(--space-1) var(--ll-gutter) var(--space-5);
   }
 
-  .lwa-project__actions { grid-column: 1; }
-
-  .lwa-project__actions { flex-wrap: wrap; }
+  .lwa-project__actions { grid-column: 1; flex-wrap: wrap; }
 
   .lwa-project__actions .ll-button {
     flex: 0 1 auto;

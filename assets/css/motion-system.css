@@ -9,10 +9,10 @@
   --motion-ease-sweep-in: cubic-bezier(0.76, 0, 0.24, 1);
   --motion-ease-sweep-out: cubic-bezier(0.16, 1, 0.3, 1);
   --motion-fast: 180ms;
-  --motion-control: 360ms;
-  --motion-reveal: 760ms;
-  --motion-page-cover: 680ms;
-  --motion-page-reveal: 760ms;
+  --motion-control: 240ms;
+  --motion-reveal: 420ms;
+  --motion-page-cover: 320ms;
+  --motion-page-reveal: 420ms;
   --motion-page: var(--motion-page-cover);
   --ll-ease: var(--motion-ease-out);
   --ll-ease-out-expo: var(--motion-ease-out);
@@ -83,9 +83,9 @@ html.ll-page-leaving .ll-page-transition::before,
 .js .ll-reveal {
   opacity: 0;
   clip-path: none;
-  transform: translate3d(0, 26px, 0);
+  transform: translate3d(0, 13px, 0);
   transition:
-    opacity 440ms ease,
+    opacity var(--motion-control) ease,
     transform var(--motion-reveal) var(--motion-ease-out);
   transition-delay: var(--ll-reveal-delay, 0ms);
   will-change: opacity, transform;
@@ -116,5 +116,12 @@ html.ll-page-leaving .ll-page-transition::before,
     transform: none !important;
     transition: none !important;
     animation: none !important;
+  }
+
+  :is(.ll-button, .ll-action-link, .ll-menu-row, .ll-text-roll__line, .ll-nav-toggle__icon, .ll-theme-toggle, .ll-tactile-control),
+  :is(.ll-button, .ll-action-link, .ll-menu-row)::before,
+  :is(.ll-button, .ll-action-link, .ll-menu-row) > svg {
+    animation: none !important;
+    transition: none !important;
   }
 }
