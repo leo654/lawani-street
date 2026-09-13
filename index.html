@@ -38,6 +38,11 @@
         var mode = "light";
         try {
           var storedTheme = localStorage.getItem("ll-theme-mode");
+          if (localStorage.getItem("ll-theme-default-version") !== "light-20260913") {
+            storedTheme = "light";
+            localStorage.setItem("ll-theme-mode", storedTheme);
+            localStorage.setItem("ll-theme-default-version", "light-20260913");
+          }
           if (storedTheme === "light" || storedTheme === "dark") mode = storedTheme;
           else if (storedTheme === "system") mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         } catch (error) {}
@@ -48,14 +53,14 @@
         if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#000000");
       })();
     </script>
-    <link rel="stylesheet" href="assets/css/lamalama-ui.min.css?v=20260903-uppercase-1">
+    <link rel="stylesheet" href="assets/css/lamalama-ui.min.css?v=20260913-live-2">
     <link rel="stylesheet" href="assets/css/hero-showreel.css?v=20260902-production-1">
-    <link rel="stylesheet" href="assets/css/work-lama.css?v=20260901-global-arrow-svg-1">
-    <link rel="stylesheet" href="assets/css/benchmark-system.css?v=20260901-deck-contact-arrows-1">
-    <link rel="stylesheet" href="assets/css/motion-system.css?v=20260911-production-1">
+    <link rel="stylesheet" href="assets/css/work-lama.css?v=20260913-live-2">
+    <link rel="stylesheet" href="assets/css/benchmark-system.css?v=20260913-live-2">
+    <link rel="stylesheet" href="assets/css/motion-system.css?v=20260913-live-2">
     <link rel="stylesheet" href="assets/css/pitchdeck-overlay.css?v=20260911-production-1">
     <link rel="stylesheet" href="assets/css/index-header-tray.css?v=20260828-tray-9">
-    <link rel="stylesheet" href="assets/css/theme-system.css?v=20260907-three-mode-1">
+    <link rel="stylesheet" href="assets/css/theme-system.css?v=20260913-live-2">
   </head>
 
   <body class="home-index">
@@ -491,10 +496,10 @@
 
     <script src="assets/js/elastic-cursor.js?v=20260826-overlay-pause-1" defer></script>
     <script src="assets/js/halftone-field.js?v=20260826-pitch-pause-1" defer></script>
-    <script src="assets/js/modules/motion-system.js?v=20260911-production-1" defer></script>
+    <script src="assets/js/modules/motion-system.js?v=20260913-live-2" defer></script>
     <script src="assets/js/modules/pitchdeck-overlay.js?v=20260911-production-1" defer></script>
-    <script src="assets/js/pages/lamalama-ui.js?v=20260907-three-mode-1" defer></script>
+    <script src="assets/js/pages/lamalama-ui.js?v=20260913-live-2" defer></script>
     <script src="assets/js/pages/home-ui.js?v=20260826-motion-ownership-1" defer></script>
-    <script src="assets/js/pages/work-lama.js?v=20260811-shared-archive" defer></script>
+    <script src="assets/js/pages/work-lama.js?v=20260913-live-2" defer></script>
   </body>
 </html>
