@@ -924,7 +924,7 @@ body.home-index .ll-home-hero > .ll-home-hero__content :is(a,button) {
     opacity: 0;
     transform: translate3d(0,8px,0);
     transition: opacity 220ms ease,transform 420ms var(--ll-ease);
-    padding-right: 2.6%;
+    padding-right: 2.3%;
     margin-top: 20%
 }
 
@@ -1555,6 +1555,7 @@ body.home-index:not(.is-past-home-hero) .ll-work-dock {
     background-color: #181b19;
     color: var(--ll-white)
 }
+.ll-capabilities>:not(.ll-capabilities__video-background):not(.ll-capabilities__halftone-background){position:relative;z-index:2}
 
 .ll-capabilities::before {
     display: none
