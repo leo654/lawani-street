@@ -61,6 +61,8 @@
     <link rel="stylesheet" href="assets/css/pitchdeck-overlay.css?v=20260911-production-1">
     <link rel="stylesheet" href="assets/css/index-header-tray.css?v=20260828-tray-9">
     <link rel="stylesheet" href="assets/css/theme-system.css?v=20260913-live-2">
+    <link rel="stylesheet" href="assets/css/ascii-video.css?v=20260916-ascii-1">
+
   </head>
 
   <body class="home-index">
@@ -328,6 +330,11 @@
       </section>
 
       <section class="ll-capabilities" id="services" aria-labelledby="ll-services-title" data-ll-section-note="My expertise">
+        <div class="ll-capabilities__video-background" aria-hidden="true">
+          <video id="services-video" autoplay muted loop playsinline preload="metadata">
+            <source src="assets/video/lnd.mp4" type="video/mp4">
+          </video>
+        </div>
         <nav class="ll-service-links ll-reveal" aria-label="Service categories">
           <a class="is-active ll-button" href="#service-branding">
             <span>Branding</span>
@@ -416,6 +423,9 @@
       </section>
 
       <section class="ll-manifesto" id="about" aria-labelledby="ll-manifesto-title" data-ll-section-note="How I get work done">
+        <div class="ll-video-direction-tab">
+          <span class="ll-video-direction-tab__label">Keep Scrolling <br></span>
+        </div>
         <p class="ll-label ll-reveal">[ How I work ]</p>
         <div class="ll-manifesto__grid">
           <h2 class="ll-reveal" id="ll-manifesto-title">Intentional design. Measurable momentum.</h2>
@@ -501,5 +511,6 @@
     <script src="assets/js/pages/lamalama-ui.js?v=20260913-live-2" defer></script>
     <script src="assets/js/pages/home-ui.js?v=20260826-motion-ownership-1" defer></script>
     <script src="assets/js/pages/work-lama.js?v=20260913-live-2" defer></script>
+
   </body>
 </html>

@@ -1657,6 +1657,11 @@ body.home-index:not(.is-past-home-hero) .ll-work-dock {
   color: var(--ll-white);
 }
 
+.ll-capabilities > *:not(.ll-capabilities__video-background):not(.ll-capabilities__halftone-background) {
+  position: relative;
+  z-index: 2;
+}
+
 .ll-capabilities::before {
   display: none;
 }
@@ -1708,13 +1713,14 @@ body.home-index:not(.is-past-home-hero) .ll-work-dock {
   display: grid;
   grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.55fr);
   gap: clamp(56px, 8vw, 150px);
+  align-items: start;
   padding-top: clamp(42px, 5vw, 72px);
   border-top: 1px solid var(--ll-light-line);
 }
 
 .ll-services-contact {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   align-self: start;
   flex-wrap: wrap;
   gap: 20px 28px;
@@ -1740,6 +1746,7 @@ body.home-index:not(.is-past-home-hero) .ll-work-dock {
   margin-top: 0;
   text-transform: uppercase;
   transition: background-color 180ms ease, color 180ms ease;
+  align-self: flex-start;
 }
 
 .ll-services-contact-card:hover,
@@ -8282,7 +8289,7 @@ body.ll-deck-page .ll-deck-profile-portrait {
 }
 
 body.ll-deck-page .ll-deck-profile-portrait img {
-  width: 100%;
+  width: auto;
   height: 100%;
   object-fit: cover;
   object-position: 50% 24%;
@@ -8831,21 +8838,21 @@ body.ll-deck-page .ll-deck-vibe-grid img {
 body.ll-deck-page .ll-deck-vibe-grid figure:nth-child(1) {
   top: 0;
   left: 0;
-  width: 12.4%;
-  height: 42%;
+  width: 12.3%;
+  height: 50%;
 }
 
 body.ll-deck-page .ll-deck-vibe-grid figure:nth-child(2) {
   top: 0;
-  left: 12.7%;
+  left: 12.8%;
   width: 12.4%;
-  height: 42%;
+  height: 50%;
 }
 
 body.ll-deck-page .ll-deck-vibe-grid figure:nth-child(3) {
   top: 0;
-  left: 25.4%;
-  width: 24.6%;
+  left: 25.7%;
+  width: 25%;
   height: 100%;
 }
 
@@ -8855,23 +8862,23 @@ body.ll-deck-page .ll-deck-vibe-grid figure:nth-child(3) img {
 
 body.ll-deck-page .ll-deck-vibe-grid figure:nth-child(4) {
   bottom: 0;
-  left: 50.8%;
+  left: 51.2%;
   width: 11.9%;
-  height: 49%;
+  height: 50%;
 }
 
 body.ll-deck-page .ll-deck-vibe-grid figure:nth-child(5) {
   bottom: 0;
-  left: 63.1%;
+  left: 63.6%;
   width: 11.9%;
-  height: 49%;
+  height: 50%;
 }
 
 body.ll-deck-page .ll-deck-vibe-grid figure:nth-child(6) {
   top: 0;
   right: 0;
-  width: 16%;
-  height: 44%;
+  width: 24%;
+  height: 50%;
 }
 
 body.ll-deck-page .ll-deck-slide--belief {
@@ -9004,9 +9011,9 @@ body.ll-deck-page .ll-deck-slide--contact > figure {
 }
 
 body.ll-deck-page .ll-deck-slide--contact > figure img {
-  width: 100%;
+  width: auto;
   height: 100%;
-  object-fit: cover;
+  /*! object-fit: cover; */
   filter: grayscale(1) contrast(1.08);
 }
 
