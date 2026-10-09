@@ -223,7 +223,8 @@ html.cs-preloader-active body.case-study {
   position: static;
   max-width: 50ch;
   margin: 0;
-  font-size: var(--ll-type-body);
+/*   font-size: var(--ll-type-body); */
+  font-size: 14px;
   font-weight: 600;
   line-height: var(--ll-leading-body);
   letter-spacing: var(--ll-ls-normal);
@@ -332,6 +333,30 @@ html.cs-preloader-active body.case-study {
   filter: none;
   transform: none;
   transition: none;
+}
+
+.cs-gallery__row--logo-animation figure {
+  aspect-ratio: 5 / 3;
+  background: #0b0b0c;
+}
+
+.cs-gallery__row--logo-animation iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.cs-gallery__row--bpm-animation figure {
+  aspect-ratio: 4 / 3;
+  background: #f4f1ea;
+}
+
+.cs-gallery__row--bpm-animation iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .cs-related {
