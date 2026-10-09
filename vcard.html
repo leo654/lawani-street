@@ -23,21 +23,14 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
     <link rel="preload" href="assets/fonts/GridlitePEVFWeb-All.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="assets/fonts/AuxMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
     <script>
       document.documentElement.classList.replace("no-js", "js");
       (function () {
         var mode = "light";
         try {
-          var saved = localStorage.getItem("ll-theme-mode");
-          if (localStorage.getItem("ll-theme-default-version") !== "light-20260913") {
-            saved = "light";
-            localStorage.setItem("ll-theme-mode", saved);
-            localStorage.setItem("ll-theme-default-version", "light-20260913");
-          }
-          if (saved === "light" || saved === "dark") mode = saved;
-          else if (saved === "system") mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          localStorage.setItem("ll-theme-mode", "light");
+          localStorage.setItem("ll-theme-default-version", "light-20261008");
         } catch (error) {}
         var theme = mode;
         document.documentElement.setAttribute("data-theme-mode", mode);
@@ -50,7 +43,9 @@
     <link rel="stylesheet" href="assets/css/motion-system.css?v=20260913-live-2">
     <link rel="stylesheet" href="assets/css/pitchdeck-overlay.css?v=20260911-production-1">
     <link rel="stylesheet" href="assets/css/contact-page.css?v=20260913-live-2">
-    <link rel="stylesheet" href="assets/css/theme-system.css?v=20260913-live-2">
+    <link rel="stylesheet" href="assets/css/theme-system.css?v=20261009-lamalama-menu-8">
+    <link rel="stylesheet" href="assets/css/site-font.css?v=20261008-lamalama-button-system-5">
+    <script src="assets/js/modules/gridlite-arrow-glyphs.js?v=20261008-gridlite-arrow-1" defer></script>
   </head>
 
   <body class="ll-contact-page">
@@ -279,7 +274,7 @@
     <script src="assets/js/modules/motion-system.js?v=20260913-live-2" defer></script>
     <script src="assets/js/modules/pitchdeck-overlay.js?v=20260911-production-1" defer></script>
     <script src="assets/js/elastic-cursor.js?v=20260826-overlay-pause-1" defer></script>
-    <script src="assets/js/pages/lamalama-ui.js?v=20260913-live-2" defer></script>
+    <script src="assets/js/pages/lamalama-ui.js?v=20261009-interaction-refactor-1" defer></script>
     <script src="assets/js/pages/contact-form.js?v=20260913-live-2" defer></script>
   </body>
 </html>

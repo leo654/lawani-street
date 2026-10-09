@@ -136,7 +136,12 @@ body.ll-deck-page .ll-deck__stage {
 }
 
 /* Reveal high-level editorial groups only. Media and the static LinkedIn frame stay still. */
-body.ll-deck-page .ll-deck-slide.is-revealing > :not(.ll-deck-slide__video):not(.ll-deck-slide__veil):not(.ll-linkedin-notice):not(.ll-deck-client-marquee) {
+body.ll-deck-page .ll-deck-slide.is-revealing > :not(.ll-deck-slide__video):not(.ll-deck-slide__veil):not(.ll-linkedin-notice):not(.ll-deck-client-marquee):not(.ll-culture-board) {
+  animation: ll-deck-content-reveal var(--ll-duration-component) var(--deck-motion) var(--deck-reveal-delay, 0ms) both;
+  will-change: opacity, translate;
+}
+
+body.ll-deck-page .ll-culture-board.is-revealing > * {
   animation: ll-deck-content-reveal var(--ll-duration-component) var(--deck-motion) var(--deck-reveal-delay, 0ms) both;
   will-change: opacity, translate;
 }
@@ -164,7 +169,8 @@ body.ll-deck-page .ll-deck-slide.is-revealing > :not(.ll-deck-slide__video):not(
     transition: none !important;
   }
 
-  body.ll-deck-page .ll-deck-slide.is-revealing > :not(.ll-deck-slide__video):not(.ll-deck-slide__veil):not(.ll-linkedin-notice):not(.ll-deck-client-marquee) {
+  body.ll-deck-page .ll-deck-slide.is-revealing > :not(.ll-deck-slide__video):not(.ll-deck-slide__veil):not(.ll-linkedin-notice):not(.ll-deck-client-marquee):not(.ll-culture-board),
+  body.ll-deck-page .ll-culture-board.is-revealing > * {
     animation: none;
   }
 }

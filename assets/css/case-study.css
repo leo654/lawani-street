@@ -314,7 +314,7 @@ html.cs-preloader-active body.case-study {
   position: relative;
   margin: 0;
   overflow: hidden;
-  background: #0b0c0b;
+  /*! background: #0b0c0b; */
   contain: layout paint;
   isolation: isolate;
 }
@@ -976,6 +976,47 @@ html.cs-preloader-active body.case-study {
 .js .case-study .cs-hero__meta {
   opacity: 0;
   transform: translate3d(0, 18px, 0);
+}
+
+html body.case-study :is(
+  .cs-back,
+  .cs-jump,
+  .cs-footer__contact-card,
+  .cs-footer__actions a
+) {
+  font-family: "Gridlite", sans-serif !important;
+}
+
+html body.case-study :is(
+  .cs-back,
+  .cs-jump,
+  .cs-footer__contact-card,
+  .cs-footer__actions a
+) *:not(svg):not(path) {
+  font-family: "Gridlite", sans-serif !important;
+}
+
+html[data-theme="dark"] body.case-study .cs-footer__contact-card,
+html[data-theme="light"] body.case-study .cs-footer__contact-card {
+  border-color: var(--ll-theme-line);
+  background: var(--ll-theme-raised);
+  color: var(--ll-theme-ink);
+  transition:
+    background-color 420ms var(--ll-ease),
+    border-color 420ms var(--ll-ease),
+    color 320ms ease,
+    transform 240ms var(--ll-ease);
+}
+
+html[data-theme="dark"] body.case-study .cs-footer__contact-card:is(:hover, :focus-visible),
+html[data-theme="light"] body.case-study .cs-footer__contact-card:is(:hover, :focus-visible) {
+  border-color: var(--ll-orange);
+  background: var(--ll-orange);
+  color: #111312;
+}
+
+html body.case-study .cs-footer__actions .ll-button:is(:hover, :focus-visible) > .ll-icon--arrow-up-right {
+  transform: translate3d(1px, -1px, 0);
 }
 
 .js .case-study.cs-motion-ready .cs-hero__meta {

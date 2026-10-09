@@ -7,7 +7,7 @@ body.home-index .ll-home-hero > .ll-home-hero__media {
 }
 
 body.home-index {
-  --ll-home-hero-height: 80vh;
+  --ll-home-hero-height: 100vh;
   --ll-hero-ink: #151917;
   --ll-hero-paper: #f2f0e9;
   --ll-hero-signal: #ff3838;
@@ -15,13 +15,13 @@ body.home-index {
 
 @supports (height: 100svh) {
   body.home-index {
-    --ll-home-hero-height: 87svh;
+    --ll-home-hero-height: 100svh;
   }
 }
 
 body.home-index .ll-home-hero {
-  --ll-hero-scroll-y: 0px;
-  --ll-hero-dot-scale: 1;
+  --ll-hero-x: 0px;
+  --ll-hero-y: 0px;
   background: var(--ll-hero-ink);
   transition: background-color 360ms ease, color 360ms ease;
 }
@@ -31,21 +31,16 @@ html[data-theme="light"] body.home-index {
   --ll-hero-paper: #171917;
 }
 
-/* 80%-viewport hero contract. Keep every visual and content layer in sync so
-   the Featured work marker enters the first viewport below the hero. */
+/* Keep the hero and its fixed media layers at the same full-viewport height. */
 body.home-index .ll-home-hero,
 body.home-index .ll-home-hero > .ll-home-hero__media,
 body.home-index .ll-home-hero > .ll-home-hero__wash,
-body.home-index .ll-home-hero > .ll-home-hero__pulse,
-body.home-index .ll-home-hero > .ll-home-hero__halftone,
 body.home-index .ll-home-hero > .ll-home-hero__content {
   height: var(--ll-home-hero-height);
   min-height: var(--ll-home-hero-height);
 }
 
-body.home-index .ll-home-hero > .ll-home-hero__wash,
-body.home-index .ll-home-hero > .ll-home-hero__pulse,
-body.home-index .ll-home-hero > .ll-home-hero__halftone {
+body.home-index .ll-home-hero > .ll-home-hero__wash {
   position: absolute;
   top: 0;
   right: 0;
@@ -53,20 +48,8 @@ body.home-index .ll-home-hero > .ll-home-hero__halftone {
   z-index: 1;
 }
 
-body.home-index .ll-home-hero > .ll-home-hero__halftone {
-  width: 100%;
-  color: var(--ll-hero-ink);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 240ms ease, color 360ms ease;
-}
-
-body.home-index .ll-home-hero.ll-halftone-ready > .ll-home-hero__halftone {
-  opacity: 0;
-}
-
-body.home-index .ll-home-hero.ll-halftone-ready > .ll-home-hero__pulse {
-  opacity: 0;
+body.home-index .ll-home-hero > .ll-home-hero__media {
+  z-index: 2;
 }
 
 body.home-index .ll-home-hero > .ll-home-hero__media {
@@ -76,57 +59,19 @@ body.home-index .ll-home-hero > .ll-home-hero__media {
   left: 0;
 }
 
-/* Halftone gradient: a solid dark field rises from the bottom while a dot
-   screen creates the irregular transition into the moving image. */
-/* body.home-index .ll-home-hero > .ll-home-hero__wash {
+/* Keep the lower hero fade legible over the moving video. */
+body.home-index .ll-home-hero > .ll-home-hero__wash {
   pointer-events: none;
   background:
     linear-gradient(
       to bottom,
       transparent 0%,
-      transparent 43%,
-      color-mix(in srgb, var(--ll-hero-ink) 28%, transparent) 56%,
-      var(--ll-hero-ink) 76%,
-      var(--ll-hero-ink) 100%
+      transparent 40%,
+      rgba(0, 0, 0, 0.35) 60%,
+      #000 85%,
+      #000 100%
     );
   transition: opacity 260ms ease;
-} */
-
-body.home-index .ll-home-hero > .ll-home-hero__pulse {
-  top: -22px;
-  right: -22px;
-  bottom: -22px;
-  left: -22px;
-  width: auto;
-  height: calc(100% + 44px);
-  pointer-events: none;
-  opacity: 0;
-  background:
-    radial-gradient(circle, var(--ll-hero-ink) 0 0.35px, transparent 1.55px) 0 0 / 7px 7px;
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 28%,
-    rgba(0, 0, 0, 0.12) 38%,
-    rgba(0, 0, 0, 0.72) 58%,
-    #000 76%,
-    #000 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 28%,
-    rgba(0, 0, 0, 0.12) 38%,
-    rgba(0, 0, 0, 0.72) 58%,
-    #000 76%,
-    #000 100%
-  );
-  transform: translate3d(
-    calc(var(--ll-hero-x, 0px) * 0.65),
-    calc((var(--ll-hero-y, 0px) * 0.65) + var(--ll-hero-scroll-y)),
-    0
-  ) scale(var(--ll-hero-dot-scale));
-  transform-origin: var(--ll-hero-glow-x, 50%) var(--ll-hero-glow-y, 50%);
-  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1), opacity 240ms ease;
-  will-change: transform;
 }
 
 body.home-index .ll-home-hero > .ll-home-hero__content {
@@ -166,8 +111,7 @@ body.home-index .ll-home-hero__media video {
   filter: saturate(1) contrast(1) brightness(0.4);
 }
 
-/* The hero fade and the next section share one themed surface, so the
-   halftone reads as the page itself breaking into the fixed film. */
+/* The hero fade and the next section share one themed surface. */
 body.home-index .ll-work-intro,
 body.home-index .ll-work .lwa-archive {
   background: var(--ll-hero-ink);
@@ -204,8 +148,7 @@ html[data-theme="light"] body.home-index .ll-work .lwa-project__tags > span {
   }
 
   body.home-index .ll-home-hero > .ll-home-hero__wash,
-  body.home-index .ll-home-hero > .ll-home-hero__pulse,
-  body.home-index .ll-home-hero > .ll-home-hero__halftone {
+  body.home-index .ll-home-hero > .ll-home-hero__wash {
     position: absolute;
   }
 
@@ -220,17 +163,4 @@ html[data-theme="light"] body.home-index .ll-work .lwa-project__tags > span {
         var(--ll-hero-ink) 100%
       );
   } */
-
-  body.home-index .ll-home-hero > .ll-home-hero__pulse {
-    background-size: 6px 6px;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 38%, rgba(0, 0, 0, 0.62) 64%, #000 84%);
-    mask-image: linear-gradient(to bottom, transparent 38%, rgba(0, 0, 0, 0.62) 64%, #000 84%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body.home-index .ll-home-hero > .ll-home-hero__pulse {
-    transform: none;
-    transition: none;
-  }
 }

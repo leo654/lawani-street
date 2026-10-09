@@ -1,10 +1,34 @@
-/* Lawani design system: shared tokens and type - aligned with lamalama-ui.css */
+/* Lawani design system: shared tokens and type - aligned with lamalama-ui.css
+   ========================================
+   Design System Architecture
+   ========================================
+   This file establishes the foundational design tokens and conventions
+   used across the Lawani St. brand. All components should reference
+   these tokens rather than hardcoding values.
+
+   Token Naming Convention:
+   - ll-: Brand prefix (Lawani) - defined in lamalama-ui.css
+   - ds-: Design system alias (for semantic abstraction)
+   - space-: Spacing scale (Fibonacci-based)
+   - type-: Typography scale
+   - leading-: Line height
+   - ls-: Letter spacing
+   - ease-: Animation easing functions
+   - duration-: Animation timing
+*/
 
 :root {
-  /* Type system - unified with lamalama-ui */
+  /* Type system - unified with lamalama-ui
+     ========================================
+     Font families mapped to semantic roles */
   --ds-font-display: var(--ll-sans);
-  --ds-font-body: var(--ll-mono);
+  --ds-font-body: var(--ll-sans);
 
+  /* Typography scale - mapped to semantic use cases
+     ========================================
+     fs: font size
+     lh: line height
+     ls: letter spacing */
   --ds-fs-body: var(--ll-type-body);
   --ds-fs-meta: var(--ll-type-compact-metadata);
   --ds-fs-display: var(--ll-type-display);
@@ -13,12 +37,24 @@
   --ds-ls-meta: var(--ll-ls-wide);
   --ds-ls-display: var(--ll-ls-tight);
 
-  /* Spacing rhythm - unified with lamalama-ui */
+  /* Spacing rhythm - Fibonacci-based scale
+     ========================================
+     Based on golden ratio (1.618) for harmonious proportions
+     space-1 (5px) → space-9 (233px)
+     Use clamp() for responsive values between breakpoints */
   --ds-space-1: var(--ll-space-xs);
   --ds-space-2: var(--ll-space-sm);
   --ds-space-3: var(--ll-space-md);
   --ds-space-4: var(--ll-space-lg);
   --ds-space-5: var(--ll-space-xl);
+
+  /* Accessibility tokens
+     ========================================
+     WCAG 2.1 AA compliant color contrasts and focus states */
+  --ds-focus-ring: 2px solid var(--ll-orange);
+  --ds-focus-offset: 4px;
+  --ds-min-touch-target: 44px;
+  --ds-min-contrast-ratio: 4.5;
 }
 
 /* Base type consistency between home + work */
@@ -271,4 +307,3 @@ body.work-archive .work-hero__archive-meta {
     transition: none;
   }
 }
-

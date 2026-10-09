@@ -29,7 +29,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
     <link rel="manifest" href="assets/favicons/site.webmanifest">
     <link rel="preload" href="assets/fonts/GridlitePEVFWeb-All.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="assets/fonts/AuxMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
      <!-- <link rel="preload" href="assets/img/me.gif" as="image" type="image/png" fetchpriority="high"> -->
 
 
@@ -38,14 +37,8 @@
       (function () {
         var mode = "light";
         try {
-          var storedTheme = localStorage.getItem("ll-theme-mode");
-          if (localStorage.getItem("ll-theme-default-version") !== "light-20260913") {
-            storedTheme = "light";
-            localStorage.setItem("ll-theme-mode", storedTheme);
-            localStorage.setItem("ll-theme-default-version", "light-20260913");
-          }
-          if (storedTheme === "light" || storedTheme === "dark") mode = storedTheme;
-          else if (storedTheme === "system") mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          localStorage.setItem("ll-theme-mode", "light");
+          localStorage.setItem("ll-theme-default-version", "light-20261008");
         } catch (error) {}
         var theme = mode;
         document.documentElement.setAttribute("data-theme-mode", mode);
@@ -55,15 +48,18 @@
       })();
     </script>
     <link rel="stylesheet" href="assets/css/lamalama-ui.min.css?v=20260913-live-2">
+    <link rel="stylesheet" href="assets/css/sound-toggle.css?v=20260610-3">
     <link rel="stylesheet" href="assets/css/hero-showreel.css?v=20260814-stable-hero-video-1">
-    <link rel="stylesheet" href="assets/css/work-lama.css?v=20260913-live-2">
+    <link rel="stylesheet" href="assets/css/work-lama.css?v=20261009-gallery-alignment-1">
     <link rel="stylesheet" href="assets/css/benchmark-system.css?v=20260913-live-2">
     <link rel="stylesheet" href="assets/css/motion-system.css?v=20260913-live-2">
     <link rel="stylesheet" href="assets/css/pitchdeck-overlay.css?v=20260911-production-1">
-    <link rel="stylesheet" href="assets/css/theme-system.css?v=20260913-live-2">
+    <link rel="stylesheet" href="assets/css/theme-system.css?v=20261009-lamalama-menu-8">
+    <link rel="stylesheet" href="assets/css/site-font.css?v=20261008-lamalama-button-system-5">
+    <script src="assets/js/modules/gridlite-arrow-glyphs.js?v=20261008-gridlite-arrow-1" defer></script>
   </head>
 
-  <body class="home-index">
+  <body class="work-index">
     <a class="ll-skip-link" href="#work-main">Skip to main content</a>
 
     <header class="ll-floating-header" data-ll-header>
@@ -158,7 +154,7 @@
     <main id="work-main">
       <section class="lwa-hero" aria-labelledby="lwa-title" data-ll-section-note="Selected work">
         <p class="lwa-kicker">[ Nothing more, nothing less ]</p>
-        <!-- <h1 id="lwa-title"><span>Work that just</span><span>works</span></h1> -->
+        <h1 class="ll-visually-hidden" id="lwa-title">Selected work</h1>
         <!-- <p class="lwa-hero__meta"><span>07 cases</span><span>2019—2026</span></p> -->
       </section>
 
@@ -290,7 +286,7 @@
             </div>
           </div>
         </div>
-        <div class="lwa-footer__bottom"><span>Lawani St.</span><span>Independent creative studio</span><time datetime="" data-ll-clock>00 : 00 : 00</time><button class="ll-theme-toggle ll-theme-toggle--footer ll-button" type="button" aria-label="Change colour mode" aria-pressed="false" data-ll-theme-toggle><span class="ll-theme-toggle__choice ll-theme-toggle__choice--dark" aria-hidden="true">DK</span><span class="ll-theme-toggle__choice ll-theme-toggle__choice--light" aria-hidden="true">LT</span><span class="ll-theme-toggle__indicator" aria-hidden="true"></span><span class="ll-visually-hidden" data-ll-theme-label>Dark theme</span></button></div>
+        <div class="lwa-footer__bottom"><span>Lawani St.</span><span>Independent creative studio</span><time datetime="" data-ll-clock>00 : 00 : 00</time><button class="ll-theme-toggle ll-sound-toggle ll-theme-toggle--footer ll-button" type="button" aria-label="Sound Off. Turn sound on." aria-pressed="false" data-ll-sound-toggle><span class="ll-sound-toggle__choice ll-sound-toggle__choice--off" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="m17 9 5 6m0-6-5 6"></path></svg></span><span class="ll-sound-toggle__choice ll-sound-toggle__choice--on" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg></span><span class="ll-sound-toggle__indicator" aria-hidden="true"></span></button></div>
       </footer>
     </main>
 
@@ -305,10 +301,10 @@
       <span class="lwa-filter__count" aria-live="polite">[ 07 ]</span>
     </nav>
 
-    <script src="assets/js/elastic-cursor.js?v=20260826-overlay-pause-1" defer></script>
+    <script src="assets/js/elastic-cursor.js?v=20260610-sound-toggle-1" defer></script>
     <script src="assets/js/modules/motion-system.js?v=20260913-live-2" defer></script>
     <script src="assets/js/modules/pitchdeck-overlay.js?v=20260911-production-1" defer></script>
-    <script src="assets/js/pages/lamalama-ui.js?v=20260913-live-2" defer></script>
-    <script src="assets/js/pages/work-lama.js?v=20260913-live-2" defer></script>
+    <script src="assets/js/pages/lamalama-ui.js?v=20261009-interaction-refactor-1" defer></script>
+    <script src="assets/js/pages/work-lama.js?v=20261009-motion-coordination-1" defer></script>
   </body>
 </html>

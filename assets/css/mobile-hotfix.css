@@ -59,16 +59,12 @@ html body *:not(#global-square-corners)::after {
 }
 
 html body .elastic-cursor:not(#global-square-corners),
-html body .elastic-cursor-dot:not(#global-square-corners),
-html body .custom-cursor-ring:not(#global-square-corners),
-html body .custom-cursor-dot:not(#global-square-corners) {
+html body .elastic-cursor-dot:not(#global-square-corners) {
   border-radius: 50% !important;
 }
 
 html body .elastic-cursor:not(#global-square-corners),
-html body.cursor-hover .elastic-cursor:not(#global-square-corners),
-html body .custom-cursor-ring:not(#global-square-corners),
-html body .custom-cursor-ring.active:not(#global-square-corners) {
+html body.cursor-hover .elastic-cursor:not(#global-square-corners) {
   background: transparent !important;
   box-shadow: none !important;
   filter: none !important;

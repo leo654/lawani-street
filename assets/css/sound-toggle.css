@@ -1,0 +1,105 @@
+.ll-sound-toggle,
+.ll-sound-toggle.ll-theme-toggle {
+  position: relative;
+  isolation: isolate;
+  display: inline-grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 0;
+  width: 64px !important;
+  min-width: 64px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  margin: 0;
+  padding: 2px !important;
+  overflow: hidden;
+  border: 1px solid var(--ll-theme-line, currentColor);
+  border-radius: 0;
+  background: var(--ll-theme-control, transparent);
+  color: inherit;
+  font-family: var(--ll-mono, monospace);
+  font-size: 7px;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: none;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.ll-sound-toggle__choice {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  min-width: 0;
+  height: 18px;
+  place-items: center;
+  color: inherit;
+  opacity: 0.42;
+  transition: opacity 180ms ease;
+}
+
+.ll-sound-toggle__choice svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.ll-sound-toggle[data-sound-mode="off"] .ll-sound-toggle__choice--off,
+.ll-sound-toggle[data-sound-mode="on"] .ll-sound-toggle__choice--on {
+  opacity: 1;
+  color: var(--ll-black, #111312);
+}
+
+.ll-sound-toggle__indicator {
+  position: absolute;
+  z-index: 1;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  width: calc((100% - 4px) / 2);
+  background: var(--ll-theme-ink, #f2f0e9);
+  opacity: 0.78;
+  transform: translateX(0);
+  transition: transform 360ms var(--ll-ease, ease), opacity 180ms ease;
+  pointer-events: none;
+}
+
+.ll-sound-toggle[data-sound-mode="on"] .ll-sound-toggle__indicator {
+  transform: translateX(100%);
+}
+
+.ll-sound-toggle:is(:hover, :focus-visible) {
+  border-color: currentColor;
+}
+
+.ll-sound-toggle:is(:hover, :focus-visible) .ll-sound-toggle__indicator {
+  opacity: 0.9;
+}
+
+.ll-sound-toggle:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 3px;
+}
+
+.ll-home-hero__rail .ll-sound-toggle,
+.ll-home-hero__rail .ll-sound-toggle.ll-theme-toggle {
+  width: 64px !important;
+  min-width: 64px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ll-sound-toggle__choice,
+  .ll-sound-toggle__indicator {
+    transition-duration: 0.01ms !important;
+  }
+}

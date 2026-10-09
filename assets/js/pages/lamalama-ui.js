@@ -5,6 +5,45 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  function scheduleMotionFrame(key, callback) {
+    if (window.LawaniMotion && typeof window.LawaniMotion.frame === "function") {
+      window.LawaniMotion.frame(key, callback);
+      return;
+    }
+    window.requestAnimationFrame(callback);
+  }
+
+  function getFocusableElements(container, extras) {
+    var selector = 'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    var elements = Array.prototype.slice.call(container.querySelectorAll(selector));
+
+    (extras || []).forEach(function (element) {
+      if (element && elements.indexOf(element) === -1) elements.push(element);
+    });
+
+    return elements.filter(function (element) {
+      return !element.matches(":disabled") &&
+        !element.closest("[aria-hidden='true'], [inert]") &&
+        element.getClientRects().length > 0;
+    });
+  }
+
+  function trapFocus(event, elements) {
+    if (event.key !== "Tab" || !elements.length) return;
+
+    var first = elements[0];
+    var last = elements[elements.length - 1];
+    var activeIndex = elements.indexOf(document.activeElement);
+
+    if (event.shiftKey && activeIndex <= 0) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && (activeIndex === elements.length - 1 || activeIndex === -1)) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
   function pad(value) {
     return String(value).padStart(2, "0");
   }
@@ -51,8 +90,6 @@
     var sections = Array.prototype.slice.call(document.querySelectorAll("[data-ll-section-note]"));
     if (!header && (!note || !sections.length)) return;
 
-    var ticking = false;
-
     function updateNote() {
       if (!note || !sections.length) return;
 
@@ -81,17 +118,10 @@
     function update() {
       if (header) header.classList.toggle("is-scrolled", window.scrollY > 24);
       updateNote();
-      ticking = false;
     }
 
     function requestUpdate() {
-      if (window.LawaniMotion) {
-        window.LawaniMotion.frame("viewport-state", update);
-        return;
-      }
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(update);
+      scheduleMotionFrame("viewport-state", update);
     }
 
     update();
@@ -154,6 +184,11 @@
       if (!open && restoreFocus && lastFocused && typeof lastFocused.focus === "function") {
         lastFocused.focus();
       }
+
+      if (open) {
+        var firstMenuItem = menu.querySelector('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+        if (firstMenuItem) firstMenuItem.focus({ preventScroll: true });
+      }
     }
 
     toggle.addEventListener("click", function () {
@@ -180,25 +215,8 @@
         return;
       }
 
-      if (event.key !== "Tab" || toggle.getAttribute("aria-expanded") !== "true") return;
-      var focusable = Array.prototype.slice.call(
-        menu.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')
-      );
-      if (menuReel && window.getComputedStyle(menuReel).display !== "none") focusable.push(menuReel);
-      focusable = focusable.filter(function (item) {
-        return !item.closest("[aria-hidden='true']");
-      });
-      if (!focusable.length) return;
-
-      var first = focusable[0];
-      var last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
+      if (toggle.getAttribute("aria-expanded") !== "true") return;
+      trapFocus(event, getFocusableElements(menu, [menuReel]));
     });
 
     window.addEventListener(
@@ -215,74 +233,100 @@
     setSubmenu(false);
   }
 
-  function initTheme() {
+  function initSoundToggle() {
     var root = document.documentElement;
-    var toggles = Array.prototype.slice.call(document.querySelectorAll("[data-ll-theme-toggle]"));
+    var toggles = Array.prototype.slice.call(document.querySelectorAll("[data-ll-sound-toggle]"));
     var themeColor = document.querySelector('meta[name="theme-color"]');
-    var modes = ["dark", "light"];
+    var soundEnabled = false;
+    var audioContext = null;
 
     toggles.forEach(function (toggle) {
       toggle.classList.remove("ll-button", "ll-button--compact");
-      toggle.innerHTML =
-        '<span class="ll-theme-toggle__choice ll-theme-toggle__choice--dark" aria-hidden="true">DK</span>' +
-        '<span class="ll-theme-toggle__choice ll-theme-toggle__choice--light" aria-hidden="true">LT</span>' +
-        '<span class="ll-theme-toggle__indicator" aria-hidden="true"></span>' +
-        '<span class="ll-visually-hidden" data-ll-theme-label>Dark theme</span>';
     });
 
-    var labels = Array.prototype.slice.call(document.querySelectorAll("[data-ll-theme-label]"));
+    root.setAttribute("data-theme-mode", "light");
+    root.setAttribute("data-theme", "light");
+    if (themeColor) themeColor.setAttribute("content", "#efeee8");
 
-    function applyThemeMode(mode, persist) {
-      if (modes.indexOf(mode) === -1) mode = "light";
-      var resolvedTheme = mode;
-      var modeLabel = mode.charAt(0).toUpperCase() + mode.slice(1);
-      var nextMode = modes[(modes.indexOf(mode) + 1) % modes.length];
-      var nextLabel = nextMode.charAt(0).toUpperCase() + nextMode.slice(1);
-
-      root.setAttribute("data-theme-mode", mode);
-      root.setAttribute("data-theme", resolvedTheme);
-      toggles.forEach(function (toggle) {
-        toggle.setAttribute("data-theme-mode", mode);
-        toggle.removeAttribute("aria-pressed");
-        toggle.setAttribute(
-          "aria-label",
-          "Theme: " + modeLabel + ". Switch to " + nextLabel + "."
-        );
-      });
-      labels.forEach(function (label) {
-        label.textContent = modeLabel + " theme";
-      });
-      if (themeColor) {
-        var themeColors = { light: "#e8e7e1", dark: "#000000" };
-        themeColor.setAttribute("content", themeColors[resolvedTheme]);
-      }
-
-      if (!persist) return;
-      try {
-        localStorage.setItem("ll-theme-mode", mode);
-      } catch (error) {}
+    try {
+      soundEnabled = localStorage.getItem("ll-sound-effects") === "on";
+    } catch (error) {
+      console.warn("Sound preference could not be read from local storage.", error);
     }
 
-    var initialMode = root.getAttribute("data-theme-mode") || "light";
-    applyThemeMode(initialMode, false);
+    function updateSoundToggle() {
+      toggles.forEach(function (toggle) {
+        var stateLabel = soundEnabled ? "Sound On" : "Sound Off";
+        var nextLabel = soundEnabled ? "off" : "on";
+        toggle.classList.add("ll-sound-toggle");
+        toggle.setAttribute("data-sound-mode", soundEnabled ? "on" : "off");
+        toggle.setAttribute("aria-pressed", String(soundEnabled));
+        toggle.setAttribute("aria-label", stateLabel + ". Turn sound " + nextLabel + ".");
+        toggle.innerHTML =
+          '<span class="ll-sound-toggle__choice ll-sound-toggle__choice--off" aria-hidden="true">' +
+            '<svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="m17 9 5 6m0-6-5 6"></path></svg>' +
+          '</span>' +
+          '<span class="ll-sound-toggle__choice ll-sound-toggle__choice--on" aria-hidden="true">' +
+            '<svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg>' +
+          '</span>' +
+          '<span class="ll-sound-toggle__indicator" aria-hidden="true"></span>';
+      });
+    }
+
+    function playUiSound() {
+      var AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+      if (!soundEnabled) return;
+      if (!AudioContextConstructor) {
+        console.warn("Sound effects are unavailable because Web Audio is not supported.");
+        return;
+      }
+
+      if (!audioContext) audioContext = new AudioContextConstructor();
+      if (audioContext.state === "suspended") {
+        audioContext.resume().catch(function (error) {
+          console.warn("Sound effects could not resume the audio context.", error);
+        });
+      }
+
+      var oscillator = audioContext.createOscillator();
+      var gain = audioContext.createGain();
+      var now = audioContext.currentTime;
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(660, now);
+      oscillator.frequency.exponentialRampToValueAtTime(440, now + 0.045);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.035, now + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
+      oscillator.connect(gain);
+      gain.connect(audioContext.destination);
+      oscillator.start(now);
+      oscillator.stop(now + 0.065);
+    }
+
+    updateSoundToggle();
 
     toggles.forEach(function (toggle) {
       toggle.addEventListener("click", function () {
-        var currentMode = root.getAttribute("data-theme-mode") || "light";
-        var nextMode = modes[(modes.indexOf(currentMode) + 1) % modes.length];
-
-        root.classList.add("ll-theme-changing");
-        applyThemeMode(nextMode, true);
-
-        window.setTimeout(function () {
-          root.classList.remove("ll-theme-changing");
-        }, reduceMotion ? 0 : 420);
+        soundEnabled = !soundEnabled;
+        updateSoundToggle();
+        try {
+          localStorage.setItem("ll-sound-effects", soundEnabled ? "on" : "off");
+        } catch (error) {
+          console.warn("Sound preference could not be saved to local storage.", error);
+        }
       });
     });
 
+    document.addEventListener("click", function (event) {
+      var target = event.target.closest("a[href], button, [role='button']");
+      if (!target || target.matches("[data-ll-sound-toggle]")) return;
+      playUiSound();
+    }, true);
+
     window.addEventListener("storage", function (event) {
-      if (event.key !== "ll-theme-mode") return;
-      applyThemeMode(modes.indexOf(event.newValue) === -1 ? "light" : event.newValue, false);
+      if (event.key !== "ll-sound-effects") return;
+      soundEnabled = event.newValue === "on";
+      updateSoundToggle();
     });
   }
 
@@ -469,6 +513,7 @@
 
     function getControl(event) {
       var control = event.target.closest(".ll-button, .ll-menu-row, .ll-footer__bottom nav a");
+      if (control && document.body.classList.contains("home-index") && control.classList.contains("ll-button")) return null;
       return control && document.documentElement.contains(control) ? control : null;
     }
 
@@ -505,81 +550,17 @@
     document.querySelectorAll(".home-index .ll-footer .ll-reveal").forEach(function (node) {
       node.classList.add("is-visible");
     });
-
-    var nodes = document.querySelectorAll(".ll-reveal");
-    if (!nodes.length) return;
-
-    if (reduceMotion || !("IntersectionObserver" in window)) {
-      nodes.forEach(function (node) {
-        node.classList.add("is-visible");
-      });
-      return;
-    }
-
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.08, rootMargin: "0px 0px -8% 0px" }
-    );
-
-    nodes.forEach(function (node) {
-      observer.observe(node);
-    });
   }
 
-  function initHeroAtmosphere() {
-    var hero = document.querySelector("[data-ll-home-hero]");
-    if (!hero || reduceMotion) return;
+  function loadSectionReveals() {
+    if (window.__sectionRevealsInjected) return;
+    window.__sectionRevealsInjected = true;
 
-    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-      hero.addEventListener("pointermove", function (event) {
-        var bounds = hero.getBoundingClientRect();
-        var x = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
-        var y = Math.max(0, Math.min(1, (event.clientY - bounds.top) / bounds.height));
-
-        hero.style.setProperty("--ll-hero-x", ((x - 0.5) * -14).toFixed(2) + "px");
-        hero.style.setProperty("--ll-hero-y", ((y - 0.5) * -9).toFixed(2) + "px");
-        hero.style.setProperty("--ll-hero-glow-x", (x * 100).toFixed(1) + "%");
-        hero.style.setProperty("--ll-hero-glow-y", (y * 100).toFixed(1) + "%");
-      });
-
-      hero.addEventListener("pointerleave", function () {
-        hero.style.setProperty("--ll-hero-x", "0px");
-        hero.style.setProperty("--ll-hero-y", "0px");
-        hero.style.setProperty("--ll-hero-glow-x", "50%");
-        hero.style.setProperty("--ll-hero-glow-y", "40%");
-      });
-    }
-
-    var heroScrollTicking = false;
-
-    function updateHeroScrollMotion() {
-      var bounds = hero.getBoundingClientRect();
-      var height = Math.max(1, bounds.height);
-      var progress = Math.max(0, Math.min(1, -bounds.top / height));
-      hero.style.setProperty("--ll-hero-scroll-y", (progress * -26).toFixed(2) + "px");
-      hero.style.setProperty("--ll-hero-dot-scale", (1 + progress * 0.035).toFixed(4));
-      heroScrollTicking = false;
-    }
-
-    function requestHeroScrollMotion() {
-      if (window.LawaniMotion) {
-        window.LawaniMotion.frame("hero-atmosphere", updateHeroScrollMotion);
-        return;
-      }
-      if (heroScrollTicking) return;
-      heroScrollTicking = true;
-      window.requestAnimationFrame(updateHeroScrollMotion);
-    }
-
-    updateHeroScrollMotion();
-    window.addEventListener("scroll", requestHeroScrollMotion, { passive: true });
-    window.addEventListener("resize", requestHeroScrollMotion, { passive: true });
+    var script = document.createElement("script");
+    script.src = "assets/js/modules/section-reveals.js?v=20261008-smoother-scroll-reveals-2";
+    script.async = true;
+    script.setAttribute("data-section-reveals", "1");
+    document.head.appendChild(script);
   }
 
   function initHeroShowreel() {
@@ -597,6 +578,7 @@
     var duration = modal.querySelector("[data-ll-hero-duration]");
     var backgroundVideo = opener.querySelector("[data-ll-hero-video]");
     var lastFocused = null;
+    var backgroundInertState = [];
 
     function formatTime(value) {
       if (!Number.isFinite(value)) return "0:00";
@@ -617,6 +599,13 @@
 
     function open() {
       lastFocused = document.activeElement;
+      backgroundInertState = Array.prototype.slice.call(
+        document.querySelectorAll("header, .ll-contact-dock, main > :not([data-ll-hero-showreel])")
+      ).map(function (element) {
+        var wasInert = element.inert;
+        element.inert = true;
+        return { element: element, wasInert: wasInert };
+      });
       modal.classList.add("is-open");
       modal.setAttribute("aria-hidden", "false");
       modal.inert = false;
@@ -638,6 +627,10 @@
       modal.inert = true;
       document.body.classList.remove("ll-showreel-open");
       video.pause();
+      backgroundInertState.forEach(function (state) {
+        state.element.inert = state.wasInert;
+      });
+      backgroundInertState = [];
       if (backgroundVideo) backgroundVideo.play().catch(function () {});
       if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus({ preventScroll: true });
     }
@@ -669,7 +662,15 @@
     video.addEventListener("ended", sync);
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape" && modal.classList.contains("is-open")) close();
-      if (event.code === "Space" && modal.classList.contains("is-open") && document.activeElement !== seek) {
+      if (event.key === "Tab" && modal.classList.contains("is-open")) {
+        trapFocus(event, getFocusableElements(modal));
+      }
+      if (
+        event.code === "Space" &&
+        modal.classList.contains("is-open") &&
+        document.activeElement !== seek &&
+        !(event.target && event.target.closest("button, input, select, textarea, a, [contenteditable='true']"))
+      ) {
         event.preventDefault();
         if (video.paused) video.play().catch(function () {});
         else video.pause();
@@ -679,7 +680,7 @@
 
   function ready() {
     initMotionReady();
-    initTheme();
+    initSoundToggle();
     initClock();
     initViewportState();
     initMenu();
@@ -687,7 +688,7 @@
     initControlFeedback();
     initButtonScramble();
     initReveals();
-    initHeroAtmosphere();
+    loadSectionReveals();
     initHeroShowreel();
   }
 

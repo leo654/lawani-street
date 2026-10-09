@@ -18,9 +18,9 @@
     var totalLabels = Array.prototype.slice.call(deck.querySelectorAll("[data-deck-total]"));
     var previousButton = deck.querySelector("[data-deck-prev]");
     var nextButton = deck.querySelector("[data-deck-next]");
-    var desktopRail = window.matchMedia("(min-width: 981px)");
+    var desktopRail = window.matchMedia("(min-width: 761px) and (hover: hover) and (pointer: fine)");
     var mobileDeck = "(max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px)";
-    var horizontalDeck = window.matchMedia(mobileDeck);
+    var horizontalDeck = window.matchMedia("(max-width: 980px), (hover: none) and (pointer: coarse) and (max-height: 560px)");
     var persistentMobileRail = window.matchMedia(mobileDeck);
     var motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
     var embedded = window.self !== window.top || new URLSearchParams(window.location.search).get("embedded") === "1";
@@ -35,7 +35,7 @@
     var closing = false;
     var scrollFrame = 0;
     var scrollSettleTimer = 0;
-    var contentAnimations = [];
+    var revealedSlides = new WeakSet();
     var revealFrame = 0;
     var clientMarquee = deck.querySelector(".ll-deck-client-marquee");
     var marqueeGroups = clientMarquee
@@ -146,29 +146,29 @@
     function stopContentAnimations() {
       if (revealFrame) window.cancelAnimationFrame(revealFrame);
       revealFrame = 0;
-      contentAnimations.forEach(function (animation) {
-        try { animation.cancel(); } catch (error) {}
+      slides.forEach(function (slide) {
+        slide.classList.remove("is-revealing");
+        var cultureBoard = slide.querySelector(".ll-culture-board.is-revealing");
+        if (cultureBoard) cultureBoard.classList.remove("is-revealing");
       });
-      contentAnimations = [];
-      slides.forEach(function (slide) { slide.classList.remove("is-revealing"); });
-    }
-
-    function contentBlocks(slide) {
-      return Array.prototype.slice.call(slide.querySelectorAll(".ll-deck-contact > *"));
     }
 
     function revealGroups(slide) {
-      return Array.prototype.slice.call(slide.children).filter(function (element) {
+      var cultureBoard = slide.querySelector(".ll-culture-board");
+      var container = cultureBoard || slide;
+      return Array.prototype.slice.call(container.children).filter(function (element) {
         return !element.classList.contains("ll-deck-slide__video") &&
           !element.classList.contains("ll-deck-slide__veil") &&
           !element.classList.contains("ll-linkedin-notice") &&
-          !element.classList.contains("ll-deck-client-marquee");
+          !element.classList.contains("ll-deck-client-marquee") &&
+          !element.classList.contains("ll-visually-hidden");
       });
     }
 
     function revealSlide(slide) {
       stopContentAnimations();
-      if (!slide || reducedMotion()) return;
+      if (!slide || revealedSlides.has(slide) || reducedMotion()) return;
+      revealedSlides.add(slide);
 
       revealGroups(slide).forEach(function (element, index) {
         element.style.setProperty("--deck-reveal-delay", Math.min(index * 40, 120) + "ms");
@@ -177,24 +177,8 @@
       revealFrame = window.requestAnimationFrame(function () {
         revealFrame = 0;
         slide.classList.add("is-revealing");
-      });
-
-      if (typeof slide.animate !== "function") return;
-
-      contentBlocks(slide).forEach(function (element, index) {
-        var animation = element.animate([
-          { opacity: 0, transform: "translate3d(0,12px,0)" },
-          { opacity: 1, transform: "translate3d(0,0,0)" }
-        ], {
-          duration: 420,
-          delay: 80 + Math.min(index * 40, 120),
-          easing: "cubic-bezier(.76, 0, .24, 1)",
-          fill: "both"
-        });
-        animation.onfinish = function () {
-          try { animation.cancel(); } catch (error) {}
-        };
-        contentAnimations.push(animation);
+        var cultureBoard = slide.querySelector(".ll-culture-board");
+        if (cultureBoard) cultureBoard.classList.add("is-revealing");
       });
     }
 
@@ -218,6 +202,11 @@
         slide.setAttribute("aria-hidden", String(!active));
         slide.setAttribute("tabindex", "-1");
         slide.inert = !active;
+        if (active) {
+          Array.prototype.forEach.call(slide.querySelectorAll("[data-deck-load-images] img[loading='lazy']"), function (image) {
+            image.loading = "eager";
+          });
+        }
       });
 
       chapterButtons.forEach(function (button, buttonIndex) {
@@ -237,7 +226,8 @@
       totalLabels.forEach(function (label) { label.textContent = String(slides.length).padStart(2, "0"); });
       if (previousButton) previousButton.disabled = index === 0;
       if (nextButton) nextButton.disabled = index === slides.length - 1;
-      deck.classList.toggle("is-dark-chapter", slides[index].matches(".ll-deck-slide--welcome, .ll-deck-slide--vibe"));
+      deck.classList.toggle("is-dark-chapter", slides[index].matches(".ll-deck-slide--vibe"));
+      deck.classList.toggle("is-culture-fullscreen", slides[index].matches(".ll-deck-slide--work"));
     }
 
     function easeDeckSweep(progress) {
@@ -379,8 +369,19 @@
           var active = index === selectedService;
           panel.classList.toggle("is-active", active);
           panel.inert = !active;
-          if (active) panel.removeAttribute("hidden");
-          else panel.setAttribute("hidden", "");
+          if (active) {
+            panel.removeAttribute("hidden");
+            if (!reducedMotion() && typeof panel.animate === "function") {
+              var entrance = panel.animate([
+                { opacity: 0, transform: "translate3d(0, 10px, 0)" },
+                { opacity: 1, transform: "translate3d(0, 0, 0)" }
+              ], {
+                duration: 440,
+                easing: "cubic-bezier(.22, 1, .36, 1)"
+              });
+              entrance.onfinish = function () { entrance.cancel(); };
+            }
+          } else panel.setAttribute("hidden", "");
         });
 
         serviceDots.forEach(function (dot, index) {
@@ -428,6 +429,110 @@
       selectService(0, false);
     }
 
+    function setupCultureSharing() {
+      var board = deck.querySelector(".ll-culture-board");
+      if (!board) return;
+
+      var status = board.querySelector("[data-culture-share-status]");
+      var shareButtons = Array.prototype.slice.call(board.querySelectorAll("[data-culture-share]"));
+
+      shareButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          var projectUrl = new URL(button.getAttribute("data-culture-share"), window.location.href).href;
+          var projectName = button.getAttribute("aria-label").replace(/^Share\s+/, "");
+
+          if (typeof navigator.share === "function") {
+            navigator.share({ title: projectName + " — Lawani St", url: projectUrl }).catch(function (error) {
+              if (error.name !== "AbortError" && status) status.textContent = "Could not share this project.";
+            });
+            return;
+          }
+
+          if (!navigator.clipboard || typeof navigator.clipboard.writeText !== "function") {
+            if (status) status.textContent = "Sharing is unavailable. Open the project link instead.";
+            return;
+          }
+
+          navigator.clipboard.writeText(projectUrl).then(function () {
+            if (status) status.textContent = projectName + " link copied.";
+          }).catch(function () {
+            if (status) status.textContent = "Could not copy the project link.";
+          });
+        });
+      });
+    }
+
+    function setupWorldClock() {
+      var clock = deck.querySelector("[data-world-clock]");
+      if (!clock) return;
+
+      var formatButtons = Array.prototype.slice.call(clock.querySelectorAll("[data-clock-format]"));
+      var mainTime = clock.querySelector("[data-clock-main]");
+      var dateOutput = clock.querySelector("[data-clock-date]");
+      var cities = Array.prototype.slice.call(clock.querySelectorAll("[data-clock-city]"));
+      var timeFormat = "24";
+      var londonDate = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Europe/London",
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+
+      function formatFor(zone) {
+        return new Intl.DateTimeFormat("en-GB", {
+          timeZone: zone,
+          hour: "2-digit",
+          minute: "2-digit",
+          hourCycle: timeFormat === "24" ? "h23" : "h12"
+        });
+      }
+
+      function update(now) {
+        var currentLondonTime = formatFor("Europe/London").format(now);
+        mainTime.textContent = currentLondonTime;
+        mainTime.setAttribute("aria-label", "Current time in London: " + currentLondonTime);
+        dateOutput.textContent = londonDate.format(now);
+
+        cities.forEach(function (city) {
+          var zone = city.getAttribute("data-time-zone");
+          var parts = new Intl.DateTimeFormat("en-GB", {
+            timeZone: zone,
+            hour: "2-digit",
+            hourCycle: "h23"
+          }).formatToParts(now);
+          var hourPart = parts.find(function (part) { return part.type === "hour"; });
+          var hour = hourPart ? Number(hourPart.value) : 12;
+          var daytime = hour >= 6 && hour < 18;
+          var offsetParts = new Intl.DateTimeFormat("en", {
+            timeZone: zone,
+            timeZoneName: "shortOffset"
+          }).formatToParts(now);
+          var offsetPart = offsetParts.find(function (part) { return part.type === "timeZoneName"; });
+          var offset = offsetPart ? offsetPart.value.replace(/^GMT/, "UTC") : "Local time";
+          if (offset === "UTC") offset = "UTC+0";
+
+          city.querySelector("[data-clock-time]").textContent = formatFor(zone).format(now);
+          city.querySelector("[data-clock-offset]").textContent = offset;
+          city.querySelector("[data-clock-icon]").textContent = daytime ? "☀" : "☾";
+          city.querySelector("[data-clock-period]").textContent = daytime ? "Day" : "Night";
+        });
+      }
+
+      formatButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          timeFormat = button.getAttribute("data-clock-format");
+          formatButtons.forEach(function (option) {
+            option.setAttribute("aria-pressed", String(option === button));
+          });
+          update(new Date());
+        });
+      });
+
+      update(new Date());
+      window.setInterval(function () { update(new Date()); }, 1000);
+    }
+
     function closeDeck(event) {
       if (event) event.preventDefault();
       if (closing) return;
@@ -449,6 +554,8 @@
     }
 
     setupServiceShop();
+    setupCultureSharing();
+    setupWorldClock();
 
     menuButton.addEventListener("click", function () {
       if (navigationLocked) return;

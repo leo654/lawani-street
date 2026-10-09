@@ -1,0 +1,4 @@
+# Standalone demos and font specimen are kept in source, not shipped as site pages.
+KICKSJOINT Animated Logo.html
+cookie-test.html
+# Keep the final entry newline-terminated for the shell reader.

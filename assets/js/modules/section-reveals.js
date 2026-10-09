@@ -57,15 +57,117 @@
 		return node.getClientRects && node.getClientRects().length > 0;
 	}
 
+	function addRevealGroups() {
+		var revealGroups = [
+			'.ll-services-columns',
+			'.cs-related__head',
+			'.cs-related-list',
+			'.cs-footer__main',
+			'.cs-footer__bottom'
+		];
+
+		revealGroups.forEach(function(selector) {
+			Array.prototype.slice.call(document.querySelectorAll(selector)).forEach(function(group) {
+				Array.prototype.slice.call(group.children).forEach(function(node, index) {
+					node.classList.add('ll-reveal');
+					node.style.setProperty('--ll-reveal-delay', Math.min(index * 70, 280) + 'ms');
+				});
+			});
+		});
+	}
+
+	function getRevealTargets() {
+		var targets = Array.prototype.slice.call(document.querySelectorAll('.ll-reveal'))
+			.filter(function(node) {
+				return !node.closest('.home-index .ll-footer') && isVisibleNode(node);
+			});
+		var sections = Array.prototype.slice.call(document.querySelectorAll(
+			'main > section:not([aria-hidden="true"]):not([inert]):not([data-ll-home-hero]):not([data-ll-hero-showreel]):not(.ll-work)'
+		));
+
+		sections.forEach(function(section) {
+			if (!section.querySelector('.ll-reveal') && isVisibleNode(section)) targets.push(section);
+		});
+
+		return targets;
+	}
+
+	function revealWithoutGsap(targets) {
+		if (reduceMotion || !('IntersectionObserver' in window)) {
+			targets.forEach(function(node) { node.classList.add('is-visible'); });
+			return;
+		}
+
+		var observer = new IntersectionObserver(function(entries) {
+			entries.forEach(function(entry) {
+				if (!entry.isIntersecting) return;
+				entry.target.classList.add('is-visible');
+				observer.unobserve(entry.target);
+			});
+		}, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+
+		targets.forEach(function(node) { observer.observe(node); });
+	}
+
+	function initScrollReveals(gsap) {
+		var targets = getRevealTargets();
+
+		targets.forEach(function(node) {
+			if (node.getAttribute('data-scroll-reveal-ready') === '1') return;
+			node.setAttribute('data-scroll-reveal-ready', '1');
+			var originalTransition = node.style.transition;
+			var originalWillChange = node.style.willChange;
+			node.style.transition = 'none';
+			node.style.willChange = 'opacity, transform';
+
+			var delay = parseFloat(window.getComputedStyle(node).getPropertyValue('--ll-reveal-delay')) || 0;
+			var isSection = node.tagName === 'SECTION';
+
+			gsap.fromTo(node, {
+				autoAlpha: 0,
+				y: isSection ? 14 : 8
+			}, {
+				autoAlpha: 1,
+				y: 0,
+				duration: isSection ? 1.05 : 0.95,
+				delay: delay / 1000,
+				ease: 'power2.out',
+				overwrite: 'auto',
+				onComplete: function() {
+					node.classList.add('is-visible');
+					node.style.transition = originalTransition;
+					node.style.willChange = originalWillChange;
+				},
+				scrollTrigger: {
+					trigger: node,
+					start: 'top 90%',
+					toggleActions: 'play none none none',
+					once: true,
+					invalidateOnRefresh: true
+				}
+			});
+		});
+
+	}
+
 	function init() {
-		if (reduceMotion) return;
+		addRevealGroups();
+		var revealTargets = getRevealTargets();
+		if (reduceMotion) {
+			revealTargets.forEach(function(node) { node.classList.add('is-visible'); });
+			return;
+		}
 
 		ensureGsapStack().then(function() {
-			if (!window.gsap || !window.ScrollTrigger) return;
+			if (!window.gsap || !window.ScrollTrigger) {
+				revealWithoutGsap(revealTargets);
+				return;
+			}
 			var gsap = window.gsap;
 			var ScrollTrigger = window.ScrollTrigger;
 			var isHomeIndex = !!(document.body && document.body.classList.contains('home-index'));
 			gsap.registerPlugin(ScrollTrigger);
+			initScrollReveals(gsap);
 
 			var cards = Array.prototype.slice.call(document.querySelectorAll('.grid-item2 .wrap'));
 			cards.filter(isVisibleNode).forEach(function(card) {
@@ -112,8 +214,6 @@
 					}
 				});
 			});
-
-			// Note: Video scroll control is handled by index-project-slides.js for unified system
 
 			ScrollTrigger.refresh();
 		});

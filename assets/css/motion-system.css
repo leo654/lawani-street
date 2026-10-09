@@ -1,19 +1,42 @@
 /*
  * Lawani St. motion system
+ * ========================================
  * One timing and easing contract for page, component and scroll choreography.
+ *
+ * Usage Guidelines:
+ * - Use semantic duration tokens based on interaction type
+ * - Avoid arbitrary values - use the defined scale
+ * - Respect prefers-reduced-motion for accessibility
+ *
+ * Duration Scale:
+ * - fast (180ms): Micro-interactions, hover states
+ * - control (240ms): Button clicks, menu toggles
+ * - reveal (420ms): Section reveals, component entrances
+ * - page (320ms): Page transitions
+ *
+ * Easing Functions:
+ * - ease-out: Standard exit (cubic-bezier(0.16, 1, 0.3, 1))
+ * - ease-in-out: Bidirectional (cubic-bezier(0.65, 0, 0.35, 1))
+ * - ease-sweep-in: Entry transitions (cubic-bezier(0.76, 0, 0.24, 1))
+ * - ease-sweep-out: Exit transitions (cubic-bezier(0.16, 1, 0.3, 1))
  */
 
 :root {
+  /* Animation easing functions */
   --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --motion-ease-sweep-in: cubic-bezier(0.76, 0, 0.24, 1);
   --motion-ease-sweep-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Animation durations */
   --motion-fast: 180ms;
   --motion-control: 240ms;
   --motion-reveal: 420ms;
   --motion-page-cover: 320ms;
   --motion-page-reveal: 420ms;
   --motion-page: var(--motion-page-cover);
+
+  /* Legacy aliases (for backward compatibility) */
   --ll-ease: var(--motion-ease-out);
   --ll-ease-out-expo: var(--motion-ease-out);
   --ll-duration-micro: var(--motion-fast);

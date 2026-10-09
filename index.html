@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#111312">
     <meta name="description" content="Lawani St is an independent creative studio building distinctive identities, digital products, and experiences.">
     <meta name="author" content="Lawani St">
     <meta name="robots" content="index, follow">
@@ -14,54 +14,48 @@
     <meta property="og:description" content="Distinctive identities, digital products, and experiences for ambitious brands.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://leo654.github.io/lawani-street/">
-    <!-- <meta property="og:image" content="https://leo654.github.io/lawani-street/assets/img/picture/kicksjoint/kjbg.png"> -->
     <meta property="og:image:width" content="5367">
     <meta property="og:image:height" content="2795">
     <meta property="og:site_name" content="Lawani St">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Lawani St | Independent Creative Studio">
     <meta name="twitter:description" content="Distinctive identities, digital products, and experiences for ambitious brands.">
-    <!-- <meta name="twitter:image" content="https://leo654.github.io/lawani-street/assets/img/picture/kicksjoint/kjbg.png"> -->
     <link rel="shortcut icon" href="assets/img/fav.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="60x60" href="assets/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
     <link rel="manifest" href="assets/favicons/site.webmanifest">
     <link rel="preload" href="assets/fonts/GridlitePEVFWeb-All.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="assets/fonts/AuxMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
-     <!-- <link rel="preload" href="assets/img/me.gif" as="image" type="image/png" fetchpriority="high"> -->
-
 
     <script>
       document.documentElement.classList.replace("no-js", "js");
       (function () {
         var mode = "light";
         try {
-          var storedTheme = localStorage.getItem("ll-theme-mode");
-          if (localStorage.getItem("ll-theme-default-version") !== "light-20260913") {
-            storedTheme = "light";
-            localStorage.setItem("ll-theme-mode", storedTheme);
-            localStorage.setItem("ll-theme-default-version", "light-20260913");
-          }
-          if (storedTheme === "light" || storedTheme === "dark") mode = storedTheme;
-          else if (storedTheme === "system") mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          localStorage.setItem("ll-theme-mode", "light");
+          localStorage.setItem("ll-theme-default-version", "light-20261008");
         } catch (error) {}
         var theme = mode;
         document.documentElement.setAttribute("data-theme-mode", mode);
         document.documentElement.setAttribute("data-theme", theme);
         var themeMeta = document.querySelector('meta[name="theme-color"]');
-        if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#000000");
+        if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#efeee8" : "#111312");
       })();
     </script>
-    <link rel="stylesheet" href="assets/css/lamalama-ui.min.css?v=20260913-live-2">
-    <link rel="stylesheet" href="assets/css/hero-showreel.css?v=20260902-production-1">
-    <link rel="stylesheet" href="assets/css/work-lama.css?v=20260913-live-2">
+    <link rel="stylesheet" href="assets/css/lamalama-ui.min.css?v=20260919-cleanup-2">
+    <link rel="stylesheet" href="assets/css/sound-toggle.css?v=20260610-3">
+    <link rel="stylesheet" href="assets/css/hero-showreel.css?v=20261008-hero-100vh-1">
+    <link rel="stylesheet" href="assets/css/work-lama.css?v=20261009-gallery-alignment-1">
     <link rel="stylesheet" href="assets/css/benchmark-system.css?v=20260913-live-2">
     <link rel="stylesheet" href="assets/css/motion-system.css?v=20260913-live-2">
     <link rel="stylesheet" href="assets/css/pitchdeck-overlay.css?v=20260911-production-1">
-    <link rel="stylesheet" href="assets/css/index-header-tray.css?v=20260828-tray-9">
-    <link rel="stylesheet" href="assets/css/theme-system.css?v=20260913-live-2">
+    <link rel="stylesheet" href="assets/css/index-header-tray.css?v=20261008-lamalama-button-system-4">
+    <link rel="stylesheet" href="assets/css/theme-system.css?v=20261009-lamalama-menu-8">
     <link rel="stylesheet" href="assets/css/ascii-video.css?v=20260916-ascii-1">
+    <link rel="stylesheet" href="assets/css/index-about-clients.css?v=20261008-standalone-client-strip-1">
+    <link rel="stylesheet" href="assets/css/index-polish.css?v=20261009-menu-motion-1">
+    <link rel="stylesheet" href="assets/css/site-font.css?v=20261008-lamalama-button-system-5">
+    <script src="assets/js/modules/gridlite-arrow-glyphs.js?v=20261008-gridlite-arrow-1" defer></script>
 
   </head>
 
@@ -92,7 +86,7 @@
       </div>
 
       <div class="ll-contact-dock is-preview-open">
-        <a class="ll-contact-dock__primary ll-button ll-button--media" href="pitchdeck.html">
+        <a class="ll-contact-dock__primary ll-button ll-button--media" href="pitchdeck.html" data-ll-pitchdeck-open>
           <span class="ll-contact-dock__portrait">
             <img src="assets/img/me.gif" alt="" width="500" height="594">
           </span>
@@ -142,7 +136,7 @@
       <div class="ll-mobile-menu__actions">
 
         
-        <a class="ll-mobile-menu__pitch ll-button" href="pitchdeck.html">About Me</a>
+        <a class="ll-mobile-menu__pitch ll-button" href="#how-i-work">About Me</a>
         <div>
           <a class="ll-mobile-menu__cta ll-button" href="mailto:accounts@lawani.st?subject=Schedule%20a%20call">Schedule a call</a>
           <a class="ll-mobile-menu__cta ll-button" href="vcard.html">Start a project</a>
@@ -169,22 +163,20 @@
             muted
             loop
             playsinline
-            poster="assets/img/picture/kicksjoint/kjbg.png"
           >
-            <source src="assets/video/hero.mp4" type="video/mp4">
+            <source src="assets/video/hero.m4v" type="video/mp4">
           </video>
           <span class="ll-home-hero__play-cue" aria-hidden="true"><i></i><b>Play reel</b></span>
         </button>
         <div class="ll-home-hero__wash" aria-hidden="true"></div>
-        <div class="ll-home-hero__pulse" aria-hidden="true"></div>
-        <canvas class="ll-home-hero__halftone" aria-hidden="true" data-ll-halftone data-ll-halftone-mode="hero"></canvas>
 
         <div class="ll-home-hero__content">
           <!-- <p class="ll-hero__eyebrow">[ This is Lawani St. ]</p> -->
 
           <div class="ll-home-hero__message">
             <h1 id="ll-hero-title">
-              <span>L: </span>
+              <span aria-hidden="true">L: </span>
+              <span class="ll-visually-hidden">Lawani St — independent creative studio</span>
               <!-- <span>brands get it.</span> -->
             </h1>
              <!-- <p>Leonard lawani</p> -->
@@ -199,22 +191,21 @@
             <a class="ll-home-hero__social-link ll-home-hero__social-link--instagram" href="https://www.instagram.com/lawani.st" target="_blank" rel="noopener noreferrer">Instagram +</a>
             <a class="ll-home-hero__social-link ll-home-hero__social-link--linkedin" href="https://www.linkedin.com/in/leonardlawani/" target="_blank" rel="noopener noreferrer">LinkedIn +</a>
             <button
-              class="ll-theme-toggle ll-theme-toggle--footer ll-theme-toggle--hero"
+              class="ll-theme-toggle ll-sound-toggle ll-theme-toggle--footer ll-theme-toggle--hero"
               type="button"
-              aria-label="Change colour mode"
+              aria-label="Sound Off. Turn sound on."
               aria-pressed="false"
-              data-ll-theme-toggle
+              data-ll-sound-toggle
             >
-              <span class="ll-theme-toggle__choice ll-theme-toggle__choice--dark" aria-hidden="true">DK</span>
-              <span class="ll-theme-toggle__choice ll-theme-toggle__choice--light" aria-hidden="true">LT</span>
-              <span class="ll-theme-toggle__indicator" aria-hidden="true"></span>
-              <span class="ll-visually-hidden" data-ll-theme-label>Dark theme</span>
+              <span class="ll-sound-toggle__choice ll-sound-toggle__choice--off" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="m17 9 5 6m0-6-5 6"></path></svg></span>
+              <span class="ll-sound-toggle__choice ll-sound-toggle__choice--on" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg></span>
+              <span class="ll-sound-toggle__indicator" aria-hidden="true"></span>
             </button>
           </div>
         </div>
       </section>
 
-      <section class="ll-hero-showreel" aria-label="Hero showreel" aria-hidden="true" data-ll-hero-showreel inert>
+      <section class="ll-hero-showreel" role="dialog" aria-modal="true" aria-label="Hero showreel" aria-hidden="true" data-ll-hero-showreel inert>
         <video class="ll-hero-showreel__video" playsinline preload="metadata" data-ll-hero-showreel-video>
           <source src="assets/video/hero.mp4" type="video/mp4">
         </video>
@@ -234,6 +225,7 @@
           </div>
         </div>
       </section>
+
       <section class="ll-work" id="work" aria-label="Featured work" data-ll-section-note="Cases with teeth" >
         <div class="ll-work-intro">
           <p class="ll-label">[ Featured work ]</p>
@@ -329,38 +321,11 @@
         </div>
       </section>
 
-      <section class="ll-capabilities" id="services" aria-labelledby="ll-services-title" data-ll-section-note="My expertise">
-        <div class="ll-capabilities__video-background" aria-hidden="true">
-          <video id="services-video" autoplay muted loop playsinline preload="metadata">
-            <source src="assets/video/lnd.mp4" type="video/mp4">
-          </video>
-        </div>
-        <nav class="ll-service-links ll-reveal" aria-label="Service categories">
-          <a class="is-active ll-button" href="#service-branding">
-            <span>Branding</span>
-            <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M7 17 17 7"></path>
-              <path d="M7 7h10v10"></path>
-            </svg>
-          </a>
-          <a class="ll-button" href="#service-digital">
-            <span>Digital</span>
-            <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M7 17 17 7"></path>
-              <path d="M7 7h10v10"></path>
-            </svg>
-          </a>
-          <a class="ll-button" href="#service-marketing">
-            <span>Marketing</span>
-            <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M7 17 17 7"></path>
-              <path d="M7 7h10v10"></path>
-            </svg>
-          </a>
-        </nav>
 
-        <h2 class="ll-services-statement ll-reveal" id="ll-services-title">
-         Blending business acumen with refined digital craftsmanship, I design meaningful brands and scalable products engineered to convert. I lead projects from foundational strategy to final execution bringing clarity, emotional resonance, and rigorous craft to every touchpoint. </h2>
+      <section class="ll-capabilities" id="services" aria-labelledby="ll-services-title" data-ll-section-note="My expertise">
+        <h2 class="ll-visually-hidden" id="ll-services-title">Services and expertise</h2>
+        <!-- <h2 class="ll-services-statement ll-reveal">
+         Blending business acumen with refined digital craftsmanship, I design meaningful brands and scalable products engineered to convert. I lead projects from foundational strategy to final execution bringing clarity, emotional resonance, and rigorous craft to every touchpoint. </h2> -->
 
         <div class="ll-services-breakdown ll-reveal">
           <div class="ll-services-contact">
@@ -421,23 +386,72 @@
           </div>
         </div>
       </section>
-
-      <section class="ll-manifesto" id="about" aria-labelledby="ll-manifesto-title" data-ll-section-note="How I get work done">
-        <div class="ll-video-direction-tab">
-          <span class="ll-video-direction-tab__label">Keep Scrolling <br></span>
+  <section class="ll-client-strip" aria-label="Selected client brands">
+        <div class="ll-client-strip__marquee ll-reveal">
+          <div class="ll-client-strip__track">
+            <ul class="ll-client-strip__logos">
+              <li><img src="assets/img/mtn.svg" alt="MTN" width="1000" height="1000" loading="lazy" decoding="async"></li>
+              <li><img src="assets/img/flutterwave.svg" alt="Flutterwave" width="1834" height="1032" loading="lazy" decoding="async"></li>
+              <li><img src="assets/img/ican.svg" alt="icanopi.com" width="2925" height="1644" loading="lazy" decoding="async"></li>
+              <li><img src="assets/img/kicksj.svg" alt="Kicksjoint" width="1920" height="1079" loading="lazy" decoding="async"></li>
+              <li><img src="assets/img/pae.svg" alt="PAE" width="1000" height="1000" loading="lazy" decoding="async"></li>
+              <li><img src="assets/img/tyol1.svg" alt="The Yellow of Lagos" width="1834" height="1032" loading="lazy" decoding="async"></li>
+              <li><img src="assets/img/vat.svg" alt="VatuG" width="2925" height="1644" loading="lazy" decoding="async"></li>
+            </ul>
+            <ul class="ll-client-strip__logos" aria-hidden="true">
+              <li><img src="assets/img/mtn.svg" alt="" width="1000" height="1000" loading="lazy" decoding="async"></li>
+              <li><img src="assets/img/flutterwave.svg" alt="" width="1834" height="1032" loading="lazy" decoding="async"></li>
+              <li><img src="assets/img/ican.svg" alt="" width="2925" height="1644" loading="lazy" decoding="async"></li>
+              <li><img src="assets/img/kicksj.svg" alt="" width="1920" height="1079" loading="lazy" decoding="async"></li>
+              <li><img src="assets/img/pae.svg" alt="" width="1000" height="1000" loading="lazy" decoding="async"></li>
+              <li><img src="assets/img/tyol1.svg" alt="" width="1834" height="1032" loading="lazy" decoding="async"></li>
+              <li><img src="assets/img/vat.svg" alt="" width="2925" height="1644" loading="lazy" decoding="async"></li>
+            </ul>
+          </div>
         </div>
-        <p class="ll-label ll-reveal">[ How I work ]</p>
+      </section>
+      <section class="ll-manifesto" id="how-i-work" aria-labelledby="ll-manifesto-title" data-ll-section-note="How I get work done">
+        <p class="ll-label ll-reveal">[ Who I am ]</p>
         <div class="ll-manifesto__grid">
-          <h2 class="ll-reveal" id="ll-manifesto-title">Intentional design. Measurable momentum.</h2>
-          <div class="ll-manifesto__copy ll-reveal">
-            <p>it's about proximity to the problem, the people, and the data. That means fewer layers & clearer decisions.</p>
-            <a class="ll-action-link ll-button" href="pitchdeck.html">
-              <span>Meet the Designer</span>
-              <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 17 17 7"></path>
-                <path d="M7 7h10v10"></path>
-              </svg>
-            </a>
+          <div class="ll-manifesto__visual ll-reveal">
+            <div class="ll-manifesto__studio">
+              <div class="ll-manifesto__gallery">
+                <figure>
+                  <img src="assets/img/1.jpg" alt="A creative studio workspace filled with plants and design materials" width="1024" height="1024" loading="lazy" decoding="async">
+                </figure>
+                <figure>
+                  <img src="assets/img/2.png" alt="Hands at work on a laptop" width="1240" height="1240" loading="lazy" decoding="async">
+                </figure>
+              </div>
+              <p class="ll-manifesto__caption">London based <span aria-hidden="true">/</span> Working everywhere</p>
+            </div>
+            <figure class="ll-manifesto__portrait">
+              <video
+                src="assets/video/hero.mp4"
+                width="1122"
+                height="1395"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+                aria-label="Leonard Lawani"
+              ></video>
+            </figure>
+          </div>
+          <div class="ll-manifesto__content">
+            <h2 class="ll-reveal" id="ll-manifesto-title">Intentional designer</h2>
+            <div class="ll-manifesto__copy ll-reveal">
+              <p>I’m a senior brand and digital designer with close to ten years of experience across brand identity, digital experiences, campaigns, UI/UX and creative direction. A lot of my work has involved taking a brand system and working out how it behaves across different touchpoints, rather than treating identity as static. I’ve worked across startups and growing businesses, often moving between concept development, hands-on design, stakeholder presentations and production.</p>
+              <p>More recently, I’ve been developing the interactive and motion side of my work further, including animated brand identities, digital experiences and interface concepts.</p>
+              <a class="ll-action-link ll-button" href="pitchdeck.html">
+                <span>See full résumé</span>
+                <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 17 17 7"></path>
+                  <path d="M7 7h10v10"></path>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -482,35 +496,33 @@
           <a href="#work">Work</a>
           <a href="#services">Services</a>
           <a href="team.html">Studio</a>
-          <a href="pitchdeck.html">About me</a>
+          <a href="#how-i-work">About me</a>
         </nav>
         <nav aria-label="Social media">
           <a href="https://www.instagram.com/lawani.st" target="_blank" rel="noopener noreferrer">Instagram</a>
           <a href="https://www.linkedin.com/in/leonardlawani/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </nav>
         <button
-          class="ll-theme-toggle ll-theme-toggle--footer"
+          class="ll-theme-toggle ll-sound-toggle ll-theme-toggle--footer"
           type="button"
-          aria-label="Change colour mode"
+          aria-label="Sound Off. Turn sound on."
           aria-pressed="false"
-          data-ll-theme-toggle
+          data-ll-sound-toggle
         >
-          <span class="ll-theme-toggle__choice ll-theme-toggle__choice--dark" aria-hidden="true">DK</span>
-          <span class="ll-theme-toggle__choice ll-theme-toggle__choice--light" aria-hidden="true">LT</span>
-          <span class="ll-theme-toggle__indicator" aria-hidden="true"></span>
-          <span class="ll-visually-hidden" data-ll-theme-label>Dark theme</span>
+          <span class="ll-sound-toggle__choice ll-sound-toggle__choice--off" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="m17 9 5 6m0-6-5 6"></path></svg></span>
+          <span class="ll-sound-toggle__choice ll-sound-toggle__choice--on" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg></span>
+          <span class="ll-sound-toggle__indicator" aria-hidden="true"></span>
         </button>
         <p>&copy; 2026 Lawani St.</p>
       </div>
     </footer>
 
-    <script src="assets/js/elastic-cursor.js?v=20260826-overlay-pause-1" defer></script>
-    <script src="assets/js/halftone-field.js?v=20260826-pitch-pause-1" defer></script>
+    <script src="assets/js/elastic-cursor.js?v=20260610-sound-toggle-1" defer></script>
     <script src="assets/js/modules/motion-system.js?v=20260913-live-2" defer></script>
     <script src="assets/js/modules/pitchdeck-overlay.js?v=20260911-production-1" defer></script>
-    <script src="assets/js/pages/lamalama-ui.js?v=20260913-live-2" defer></script>
-    <script src="assets/js/pages/home-ui.js?v=20260826-motion-ownership-1" defer></script>
-    <script src="assets/js/pages/work-lama.js?v=20260913-live-2" defer></script>
+    <script src="assets/js/pages/lamalama-ui.js?v=20261009-interaction-refactor-1" defer></script>
+    <script src="assets/js/pages/home-ui.js?v=20261009-motion-coordination-1" defer></script>
+    <script src="assets/js/pages/work-lama.js?v=20261009-motion-coordination-1" defer></script>
 
   </body>
 </html>

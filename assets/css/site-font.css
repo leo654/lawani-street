@@ -1,0 +1,434 @@
+@font-face {
+  font-family: "Gridlite";
+  src: url("../fonts/GridlitePEVFWeb-All.woff2") format("woff2-variations");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --ll-sans: "Gridlite", sans-serif;
+  --ll-mono: var(--ll-sans);
+
+  --ll-type-display: clamp(3.5rem, 7vw, 6rem);
+  --ll-type-h1: clamp(3rem, 6.25vw, 6rem);
+  --ll-type-h2: clamp(2rem, 4.2vw, 3.75rem);
+  --ll-type-h3: clamp(1.5rem, 2vw, 2rem);
+  --ll-type-h4: clamp(1.25rem, 1.8vw, 1.5rem);
+  --ll-type-body: clamp(1rem, 0.15vw + 0.95rem, 1.125rem);
+  --ll-type-body-small: 0.875rem;
+  --ll-type-body-large: clamp(1.125rem, 1.4vw, 1.375rem);
+  --ll-type-button: 0.875rem;
+  --ll-type-project-title: clamp(1.75rem, 2.125vw, 2.125rem);
+  --ll-type-compact-metadata: 0.75rem;
+  --ll-type-pitch-heading: clamp(3rem, 8vw, 6rem);
+
+  --ll-leading-display: 0.98;
+  --ll-leading-h1: 1.04;
+  --ll-leading-h2: 1.1;
+  --ll-leading-h3: 1.18;
+  --ll-leading-h4: 1.25;
+  --ll-leading-body: 1.55;
+  --ll-leading-small: 1.45;
+  --ll-leading-label: 1.25;
+  --ll-leading-button: 1.1;
+
+  --ll-ls-tight: -0.035em;
+  --ll-ls-normal: 0;
+  --ll-ls-wide: 0.08em;
+  --ll-ls-wider: 0.12em;
+}
+
+html body,
+html body :is(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  label,
+  li,
+  dt,
+  dd,
+  blockquote,
+  figcaption,
+  legend,
+  summary,
+  time,
+  small,
+  strong,
+  em,
+  cite,
+  th,
+  td,
+  [role="button"],
+  [class*="__title"],
+  [class*="__heading"],
+  [class*="__label"],
+  [class*="__text"],
+  [class*="__meta"],
+  [class*="__kicker"],
+  .H1,
+  .H2,
+  .hero-title,
+  .work-title,
+  .work-title-text,
+  .work-hero__masthead,
+  .ll-label
+),
+html body :is(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  a,
+  button,
+  label,
+  li,
+  blockquote,
+  figcaption,
+  [role="button"],
+  [class*="__title"],
+  [class*="__heading"],
+  [class*="__label"],
+  [class*="__text"],
+  [class*="__meta"],
+  [class*="__kicker"],
+  .H1,
+  .H2,
+  .hero-title,
+  .work-title,
+  .work-title-text,
+  .work-hero__masthead,
+  .ll-label
+) :not(svg):not(path):not(.fa):not(.fas):not(.far):not(.fab) {
+  font-family: "Gridlite", sans-serif !important;
+}
+
+html body {
+  font-size: var(--ll-type-body);
+  line-height: var(--ll-leading-body);
+  font-weight: 400;
+}
+
+html body :is(h1, h2, h3, h4, h5, h6) {
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+html body:not(.ll-deck-page) h1 {
+  font-size: var(--ll-type-h1) !important;
+  line-height: var(--ll-leading-h1);
+  letter-spacing: var(--ll-ls-tight);
+}
+
+html body:not(.ll-deck-page) h2 {
+  font-size: var(--ll-type-h2) !important;
+  line-height: var(--ll-leading-h2);
+  letter-spacing: var(--ll-ls-tight);
+}
+
+html body:not(.ll-deck-page) h3 {
+  font-size: var(--ll-type-h3) !important;
+  line-height: var(--ll-leading-h3);
+  letter-spacing: -0.02em;
+}
+
+html body:not(.ll-deck-page) h4 {
+  font-size: var(--ll-type-h4) !important;
+  line-height: var(--ll-leading-h4);
+  letter-spacing: -0.01em;
+}
+
+html body:not(.ll-deck-page) :is(h5, h6) {
+  font-size: var(--ll-type-body) !important;
+  line-height: var(--ll-leading-h4);
+  letter-spacing: 0;
+}
+
+html body.case-study h1.cs-title {
+  font-size: var(--ll-type-project-title) !important;
+}
+
+html body.case-study .cs-related-row h2 {
+  font-size: var(--ll-type-h4) !important;
+}
+
+html body :is(p, li, dd, dt, blockquote, figcaption) {
+  font-weight: 700;
+}
+
+html body :is(.ll-label, [class*="__eyebrow"], [class*="__meta"], [class*="__kicker"]) {
+  font-size: var(--ll-type-compact-metadata);
+  line-height: var(--ll-leading-label);
+  letter-spacing: var(--ll-ls-wide);
+}
+
+html body :is(button, input[type="button"], input[type="submit"], input[type="reset"], [role="button"], .ll-button) {
+  font-size: var(--ll-type-button);
+  line-height: var(--ll-leading-button);
+}
+
+.ll-arrow-glyph {
+  display: inline-grid;
+  place-items: center;
+  font-family: "Gridlite", sans-serif !important;
+  letter-spacing: 0;
+  line-height: 1;
+  text-align: center;
+  fill: currentColor;
+  stroke: none;
+}
+
+.ll-arrow-glyph__character {
+  display: block;
+}
+
+.ll-arrow-glyph--left .ll-arrow-glyph__character {
+  transform: rotate(180deg);
+}
+
+.ll-arrow-glyph--down .ll-arrow-glyph__character {
+  transform: rotate(90deg);
+}
+
+.ll-arrow-glyph--up .ll-arrow-glyph__character {
+  transform: rotate(-90deg);
+}
+
+.ll-arrow-glyph--up-right .ll-arrow-glyph__character {
+  transform: rotate(-45deg);
+}
+
+:root {
+  --ll-button-height: 50px;
+  --ll-button-padding-inline: 16px;
+  --ll-button-content-gap: 10px;
+  --ll-button-icon-size: 16px;
+  --ll-button-radius: 0px;
+  --ll-button-outline: color-mix(in srgb, currentColor 20%, transparent);
+  --ll-button-hover-surface: var(--ll-orange);
+  --ll-button-hover-ink: #111312;
+}
+
+html body:not(#global-square-corners) .ll-button:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle) {
+  position: relative;
+  display: inline-flex;
+  height: var(--ll-button-height);
+  min-height: var(--ll-button-height);
+  align-items: center;
+  justify-content: center;
+  gap: var(--ll-button-content-gap);
+  padding: 0 var(--ll-button-padding-inline);
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--ll-button-outline);
+  border-radius: var(--ll-button-radius) !important;
+  background: #;
+  box-shadow: none;
+  font-family: var(--ll-sans);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+  transition:
+    color 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+html body:not(#global-square-corners) .ll-button:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle)::after,
+html body:not(#global-square-corners) .cs-footer__actions a::after,
+html body:not(#global-square-corners) .ll-deck-contact a::after,
+html body:not(#global-square-corners) .ll-service-product__cta::after,
+html body:not(#global-square-corners) .project-form__button::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--ll-button-hover-surface);
+  content: "";
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html body:not(#global-square-corners) .ll-button:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle):is(:hover, :focus-visible),
+html body:not(#global-square-corners) .cs-footer__actions a:is(:hover, :focus-visible),
+html body:not(#global-square-corners) .ll-deck-contact a:is(:hover, :focus-visible),
+html body:not(#global-square-corners) .ll-service-product__cta:is(:hover, :focus-visible),
+html body:not(#global-square-corners) .project-form__button:is(:hover, :focus-visible) {
+  border-color: var(--ll-button-hover-surface);
+  background-color: transparent;
+  color: var(--ll-button-hover-ink);
+}
+
+html body:not(#global-square-corners) .ll-button:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle):is(:hover, :focus-visible)::after,
+html body:not(#global-square-corners) .cs-footer__actions a:is(:hover, :focus-visible)::after,
+html body:not(#global-square-corners) .ll-deck-contact a:is(:hover, :focus-visible)::after,
+html body:not(#global-square-corners) .ll-service-product__cta:is(:hover, :focus-visible)::after,
+html body:not(#global-square-corners) .project-form__button:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+}
+
+html body:not(#global-square-corners) .ll-button:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle) > :is(svg, .ll-icon, .ll-arrow-glyph) {
+  z-index: 0;
+  width: var(--ll-button-icon-size);
+  height: var(--ll-button-icon-size);
+  flex: 0 0 var(--ll-button-icon-size);
+  margin: 0;
+}
+
+html body:not(#global-square-corners) .ll-button.ll-button--media:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle) {
+  justify-content: flex-start;
+  gap: var(--ll-button-content-gap);
+  padding: 8px var(--ll-button-padding-inline) 8px 8px;
+}
+
+html body:not(#global-square-corners) .ll-button.ll-button--media:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle) > :is(img, span:has(> img), .ll-contact-dock__portrait) {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  overflow: hidden;
+}
+
+html body:not(#global-square-corners) .ll-button.ll-button--media:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle) > :is(img, span:has(> img), .ll-contact-dock__portrait) img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+html body:not(#global-square-corners) .cs-footer__actions a,
+html body:not(#global-square-corners) .ll-deck-contact a,
+html body:not(#global-square-corners) .ll-service-product__cta,
+html body:not(#global-square-corners) .project-form__button {
+  position: relative;
+  display: inline-flex;
+  min-height: var(--ll-button-height);
+  height: var(--ll-button-height);
+  align-items: center;
+  justify-content: center;
+  gap: var(--ll-button-content-gap);
+  padding: 0 var(--ll-button-padding-inline);
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--ll-button-outline);
+  border-radius: var(--ll-button-radius) !important;
+  background: transparent;
+  color: inherit;
+  font-family: var(--ll-sans);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+  transition:
+    color 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+html body:not(#global-square-corners) .project-form__button {
+  width: 100%;
+}
+
+html body:not(#global-square-corners) .project-form__button:not(.project-form__button--secondary) {
+  border-color: var(--ll-button-outline);
+  background: transparent;
+  color: inherit;
+}
+
+html body:not(#global-square-corners) .project-form__button:disabled {
+  cursor: wait;
+  opacity: 0.58;
+}
+
+html body:not(#global-square-corners) .ll-contact-dock .ll-button {
+  border-radius: var(--ll-button-radius) !important;
+}
+
+html body:not(#global-square-corners) .ll-contact-dock__primary.ll-button {
+  background: var(--ll-tray-primary);
+}
+
+html body:not(#global-square-corners) .ll-contact-dock__primary.ll-button:is(:hover, :focus-visible) {
+  background-color: transparent;
+}
+
+html body:not(#global-square-corners) .ll-manifesto .ll-action-link.ll-button::before {
+  background: var(--ll-button-hover-surface);
+}
+
+html body:not(#global-square-corners) .ll-manifesto .ll-action-link.ll-button:is(:hover, :focus-visible) {
+  background-color: transparent;
+  color: var(--ll-button-hover-ink);
+}
+
+html body:not(#global-square-corners) .project-form__option {
+  min-height: 50px;
+  padding: 0 16px;
+  border-radius: var(--ll-button-radius) !important;
+  background: transparent;
+  color: var(--contact-paper);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition:
+    background-color 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+html body:not(#global-square-corners) .project-form__option:is(:hover, :focus-visible),
+html body:not(#global-square-corners) .project-form__option.selected {
+  border-color: var(--ll-button-hover-surface);
+  background: var(--ll-button-hover-surface);
+  color: var(--ll-button-hover-ink);
+}
+
+html body:not(#global-square-corners) .lwa-filter button {
+  min-height: 36px;
+  padding-inline: 16px;
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  border-radius: var(--ll-button-radius) !important;
+  background: transparent;
+  font-size: 10px;
+  font-weight: 700;
+  transition:
+    color 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 180ms ease;
+}
+
+html body:not(#global-square-corners) .lwa-filter button:is(:hover, :focus-visible),
+html body:not(#global-square-corners) .lwa-filter button.is-active {
+  border-color: var(--ll-button-hover-surface);
+  background: var(--ll-button-hover-surface);
+  color: var(--ll-button-hover-ink);
+}
+
+html body .ll-nav-dock__brand.ll-button.ll-button--square,
+html body .ll-nav-toggle.ll-button.ll-button--square {
+  justify-content: center;
+  padding: 0;
+}
+
+html body .ll-nav-toggle.ll-button.ll-button--square > :is(svg, .ll-icon) {
+  width: 20px;
+  height: 20px;
+}

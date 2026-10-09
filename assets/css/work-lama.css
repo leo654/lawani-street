@@ -76,6 +76,8 @@ body.work-index {
   --lwa-muted: var(--ll-light-muted);
   --lwa-line: var(--ll-light-line);
   --lwa-panel: var(--ll-black);
+  --lwa-expand-duration: 640ms;
+  --lwa-expand-ease: cubic-bezier(0.22, 1, 0.36, 1);
   border-top: 0;
   background: var(--lwa-bg);
   color: var(--lwa-fg);
@@ -188,33 +190,48 @@ body.work-index {
   flex: 0 0 auto;
   object-fit: cover;
   filter: saturate(0.92) contrast(1.02);
-  transform: translate3d(0, 0, 0);
-  transition: transform var(--motion-control) var(--ll-ease), filter var(--motion-fast) ease;
-}
-
-.lwa-project__rail img:first-child {
-  width: clamp(132px, 13vw, 214px);
+  transition: none;
 }
 
 .lwa-project__summary-copy {
-  display: none;
   grid-column: 9 / -1;
   grid-row: 1;
-  max-width: 46ch;
+  max-width: 55ch;
   margin: 0;
+  text-align: justify;
   font-family: var(--ll-sans);
-  font-size: var(--ll-type-body);
+/*   font-size: var(--ll-type-body); */
+  font-size: 14px;
   font-weight: 500;
   line-height: var(--ll-leading-body);
+  visibility: hidden;
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+  transition:
+    opacity 260ms ease,
+    transform 420ms var(--lwa-expand-ease),
+    visibility 0s linear 420ms;
 }
 
-.lwa-project.is-expanded .lwa-project__rail { display: none; }
-.lwa-project.is-expanded .lwa-project__summary-copy { display: block; }
+.lwa-project.is-expanded .lwa-project__rail {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 260ms ease, visibility 0s linear 260ms;
+}
 
-.lwa-project__toggle:hover .lwa-project__rail img,
-.lwa-project__toggle:focus-visible .lwa-project__rail img {
-  filter: saturate(1.08) contrast(1.02);
-  transform: translate3d(-10px, 0, 0);
+.lwa-project.is-expanded .lwa-project__summary-copy {
+  visibility: visible;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition:
+    opacity 320ms ease 100ms,
+    transform 520ms var(--lwa-expand-ease) 80ms,
+    visibility 0s;
+}
+
+.js .ll-work .lwa-project:first-child {
+  opacity: 1;
+  transform: none;
 }
 
 .lwa-project:not(.is-expanded) .lwa-project__toggle:hover .lwa-project__state,
@@ -233,14 +250,20 @@ body.work-index {
   grid-template-rows: 0fr;
   visibility: hidden;
   opacity: 0;
-  transition: grid-template-rows var(--motion-reveal) var(--ll-ease), opacity var(--motion-control) ease, visibility 0s linear var(--motion-reveal);
+  transition:
+    grid-template-rows var(--lwa-expand-duration) var(--lwa-expand-ease),
+    opacity 320ms ease,
+    visibility 0s linear var(--lwa-expand-duration);
 }
 
 .lwa-project.is-expanded .lwa-project__detail {
   grid-template-rows: 1fr;
   visibility: visible;
   opacity: 1;
-  transition: grid-template-rows var(--motion-reveal) var(--ll-ease), opacity var(--motion-control) ease, visibility 0s;
+  transition:
+    grid-template-rows var(--lwa-expand-duration) var(--lwa-expand-ease),
+    opacity 420ms ease 80ms,
+    visibility 0s;
 }
 
 .lwa-project__detail-inner {
@@ -249,6 +272,17 @@ body.work-index {
   min-width: 0;
   min-height: 0;
   overflow: hidden;
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition:
+    opacity 320ms ease,
+    transform 560ms var(--lwa-expand-ease);
+}
+
+.lwa-project.is-expanded .lwa-project__detail-inner {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 80ms;
 }
 
 .lwa-project__summary {
@@ -290,7 +324,7 @@ body.work-index {
 
 .lwa-project__actions .ll-button > .ll-icon--arrow-up-right,
 .lwa-footer__contact .ll-button > .ll-icon--arrow-up-right {
-  margin-left: auto;
+  margin: 0;
 }
 
 .lwa-project__actions .ll-button:is(:hover, :focus-visible),
@@ -313,6 +347,8 @@ body.work-index {
   overscroll-behavior-inline: contain;
   cursor: grab;
   scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--ll-gutter);
   touch-action: pan-x pan-y;
 }
 
@@ -324,6 +360,46 @@ body.work-index {
   flex: 0 0 auto;
   margin: 0;
   background: var(--lwa-panel);
+  scroll-snap-align: start;
+  transition: opacity 360ms ease, transform 420ms var(--ll-ease);
+}
+
+.lwa-project__gallery figure:hover {
+  opacity: 0.94;
+}
+
+.lwa-gallery-progress {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 var(--ll-gutter) 24px;
+  color: var(--lwa-muted);
+  font-family: var(--ll-mono);
+  font-size: var(--ll-type-compact-metadata);
+  line-height: 1;
+}
+
+.lwa-gallery-progress__count {
+  min-width: 5ch;
+  font-variant-numeric: tabular-nums;
+}
+
+.lwa-gallery-progress__track {
+  position: relative;
+  display: block;
+  width: min(160px, 28vw);
+  height: 1px;
+  overflow: hidden;
+  background: var(--lwa-line);
+}
+
+.lwa-gallery-progress__track > span {
+  position: absolute;
+  inset: 0;
+  background: var(--lwa-fg);
+  transform: scaleX(0.25);
+  transform-origin: left center;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .lwa-project__gallery img {
@@ -458,6 +534,15 @@ body.work-index {
   transition: opacity 720ms var(--ll-ease), transform 820ms var(--ll-ease);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .lwa-project__summary-copy,
+  .lwa-project__detail,
+  .lwa-project__detail-inner {
+    transition-duration: 0.01ms;
+    transition-delay: 0s;
+  }
+}
+
 .js .lwa-hero.is-visible > :nth-child(2) { transition-delay: 80ms; }
 .js .lwa-hero.is-visible > :nth-child(3) { transition-delay: 150ms; }
 
@@ -579,6 +664,10 @@ body.work-index {
 
   .lwa-project__gallery figure { height: 210px; }
 
+  .lwa-gallery-progress {
+    padding-bottom: 20px;
+  }
+
   .lwa-filter {
     right: 8px;
     bottom: 8px;
@@ -613,8 +702,16 @@ body.work-index {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .lwa-project__gallery {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
+
   .lwa-hero h1,
   .lwa-project__rail img,
+  .lwa-project__gallery,
+  .lwa-project__gallery figure,
+  .lwa-gallery-progress__track > span,
   .lwa-project__detail,
   .js .lwa-hero > *,
   .js .lwa-project {

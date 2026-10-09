@@ -8,15 +8,16 @@
 
 @media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
   .ll-deck-page.ll-pitch-page {
-    min-height: 560px;
+    min-height: 100vh;
+    min-height: 100dvh;
     background: #151715;
   }
 
   body.ll-deck-page .ll-deck {
-    --deck-gutter: 8px;
-    --deck-control-size: 48px;
-    --deck-mobile-nav-height: 58px;
-    inset: 8px;
+    --deck-gutter: 12px;
+    --deck-control-size: 44px;
+    --deck-mobile-nav-height: 64px;
+    inset: 12px;
     background: #070807;
   }
 
@@ -25,8 +26,8 @@
   }
 
   body.ll-deck-page .ll-deck__stage {
-    inset: 8px 8px calc(var(--deck-mobile-nav-height) + 8px);
-    border-radius: 4px;
+    inset: 12px 12px calc(var(--deck-mobile-nav-height) + 32px);
+    border-radius: 8px;
     transform: none;
     filter: none;
     transition: filter 320ms ease;
@@ -57,17 +58,19 @@
     min-height: 100%;
     height: 100%;
     flex: 0 0 100%;
-    border-radius: 4px;
+    border-radius: 8px;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    padding: 16px;
+    overflow: hidden;
   }
 
   body.ll-deck-page .ll-deck__menu-toggle,
   body.ll-deck-page .ll-deck.is-rail-open .ll-deck__menu-toggle {
-    top: 16px;
+    top: 20px;
     right: auto;
     bottom: auto;
-    left: 16px;
+    left: 20px;
     width: var(--deck-control-size);
     height: var(--deck-control-size);
     border-color: rgba(7, 8, 7, 0.2);
@@ -95,8 +98,8 @@
   }
 
   body.ll-deck-page .ll-deck__close {
-    top: 16px;
-    right: 16px;
+    top: 20px;
+    right: 20px;
     width: var(--deck-control-size);
     height: var(--deck-control-size);
     border-color: rgba(7, 8, 7, 0.2);
@@ -126,8 +129,8 @@
     height: var(--deck-mobile-nav-height);
     min-height: var(--deck-mobile-nav-height);
     flex-direction: row;
-    gap: 4px;
-    padding: 4px 0 0;
+    gap: 6px;
+    padding: 6px 0 0;
     overflow-x: auto;
     overflow-y: hidden;
     border-top: 1px solid rgba(244, 242, 236, 0.14);
@@ -135,7 +138,7 @@
     opacity: 1;
     pointer-events: auto;
     transform: none;
-    scroll-padding-inline: 8px;
+    scroll-padding-inline: 12px;
     scrollbar-width: none;
   }
 
@@ -144,27 +147,27 @@
   }
 
   body.ll-deck-page .ll-deck__chapters button {
-    min-width: min(68vw, 280px);
-    min-height: 50px;
-    height: 50px;
-    flex: 0 0 min(68vw, 280px);
-    grid-template-columns: 32px minmax(0, 1fr);
-    gap: 12px;
-    padding: 5px 13px;
+    min-width: min(72vw, 320px);
+    min-height: 52px;
+    height: 52px;
+    flex: 0 0 min(72vw, 320px);
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 14px;
+    padding: 6px 16px;
     border: 0;
-    border-radius: 4px;
+    border-radius: 6px;
     background: #202220;
     color: #f4f2ec;
-    font-size: 10px;
+    font-size: 11px;
     transform: none;
   }
 
   body.ll-deck-page .ll-deck__chapters button:first-child {
-    margin-left: 8px;
+    margin-left: 12px;
   }
 
   body.ll-deck-page .ll-deck__chapters button:last-child {
-    margin-right: 8px;
+    margin-right: 12px;
   }
 
   body.ll-deck-page .ll-deck__chapters button::before {
@@ -181,8 +184,8 @@
   }
 
   body.ll-deck-page .ll-deck__thumb {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
   }
 
   body.ll-deck-page .ll-deck.is-rail-open .ll-deck__rail {
@@ -192,41 +195,42 @@
   }
 
   body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters {
-    inset: 76px 8px 8px;
+    inset: 80px 12px 12px;
     width: auto;
     height: auto;
     min-height: 0;
     flex-direction: column;
-    gap: 4px;
-    padding: 8px;
+    gap: 6px;
+    padding: 12px;
     overflow-x: hidden;
     overflow-y: auto;
     border: 0;
-    border-radius: 4px;
+    border-radius: 8px;
     background: #070807;
   }
 
   body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button {
     width: 100%;
     min-width: 0;
-    min-height: 56px;
-    flex: 0 0 56px;
+    min-height: 60px;
+    flex: 0 0 60px;
     margin-inline: 0;
   }
 
   body.ll-deck-page .ll-deck__mobile-meta {
     position: absolute;
-    right: 16px;
-    bottom: 7px;
-    left: 16px;
+    right: calc(var(--deck-gutter) + 20px);
+    bottom: calc(var(--deck-mobile-nav-height) + 5px);
+    left: calc(var(--deck-gutter) + 20px);
     z-index: 6;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    gap: 18px;
-    overflow: hidden;
-    color: rgba(7, 8, 7, 0.62);
+    gap: 2px 12px;
+    overflow: visible;
+    color: rgba(244, 242, 236, 0.62);
     font-family: var(--ll-mono);
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1;
     text-transform: uppercase;
     white-space: nowrap;
@@ -241,11 +245,11 @@
 
   body.ll-deck-page .ll-deck-slide--services > h2 {
     position: absolute;
-    top: 47%;
+    top: 12%;
     left: 20px;
     z-index: 2;
     font-family: var(--ll-sans) !important;
-    /*! font-size: clamp(40px, 12vw, 56px); */
+    font-size: clamp(28px, 8vw, 42px);
     font-weight: 800;
     letter-spacing: -0.055em;
     line-height: 0.92;
@@ -257,9 +261,9 @@
 
   body.ll-deck-page .ll-deck-services {
     position: absolute;
-    top: 56%;
+    top: 32%;
     right: 0;
-    bottom: 30px;
+    bottom: 80px;
     left: 20px;
     display: flex;
     gap: 16px;
@@ -281,43 +285,256 @@
     min-width: calc(100% - 42px);
     height: 100%;
     flex: 0 0 calc(100% - 42px);
-    padding: 28px 25px;
+    padding: 24px 20px;
     border: 1px solid var(--deck-line);
-    border-radius: 6px;
+    border-radius: 8px;
     scroll-snap-align: start;
   }
 
   body.ll-deck-page .ll-deck-services h3 {
-    margin-bottom: 30px;
-    font-size: 11px;
+    margin-bottom: 24px;
+    font-size: 12px;
   }
 
   body.ll-deck-page .ll-deck-services li {
     font-family: var(--ll-sans);
-    font-size: clamp(17px, 5vw, 22px);
+    font-size: clamp(16px, 4.5vw, 20px);
     font-weight: 400;
     letter-spacing: -0.035em;
     line-height: 1.38;
     text-transform: none;
   }
+
+  /* LinkedIn slide mobile improvements */
+  body.ll-deck-page .ll-linkedin-notice__card {
+    width: min(90vw, 360px);
+    min-height: auto;
+    aspect-ratio: auto;
+    grid-template-columns: 80px minmax(0, 1fr);
+    gap: 16px;
+    padding: 24px 20px;
+    border-radius: 12px;
+  }
+
+  body.ll-deck-page .ll-linkedin-notice__card::after {
+    bottom: -16px;
+    left: calc(50% - 14px);
+    width: 28px;
+    height: 28px;
+  }
+
+  body.ll-deck-page .ll-linkedin-notice__copy {
+    gap: 8px;
+    padding-right: 0;
+  }
+
+  body.ll-deck-page .ll-linkedin-notice__copy strong {
+    font-size: clamp(20px, 6vw, 32px);
+    line-height: 0.95;
+  }
+
+  body.ll-deck-page .ll-linkedin-notice__copy > span {
+    font-size: clamp(11px, 3vw, 14px);
+    line-height: 1.15;
+  }
+
+  body.ll-deck-page .ll-linkedin-notice__preview {
+    border-radius: 8px;
+  }
+
+  body.ll-deck-page .ll-linkedin-notice__close {
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+  }
+
+  /* General slide content mobile fixes */
+  body.ll-deck-page .ll-deck-slide h1 {
+    font-size: clamp(24px, 7vw, 36px);
+    line-height: 0.95;
+  }
+
+  body.ll-deck-page .ll-deck-slide h2 {
+    font-size: clamp(20px, 6vw, 28px);
+    line-height: 1.1;
+  }
+
+  body.ll-deck-page .ll-deck-slide p {
+    font-size: clamp(14px, 4vw, 16px);
+    line-height: 1.5;
+  }
+
+  body.ll-deck-page .ll-deck-kicker {
+    font-size: clamp(10px, 3vw, 12px);
+  }
 }
 
 @media (max-width: 380px), (max-height: 680px) {
   body.ll-deck-page .ll-deck-slide--services > h2 {
-    top: 39%;
+    top: 10%;
+    font-size: clamp(24px, 7vw, 32px);
   }
 
   body.ll-deck-page .ll-deck-services {
-    top: 51%;
-    bottom: 24px;
+    top: 28%;
+    bottom: 70px;
   }
 
   body.ll-deck-page .ll-deck-services section {
-    padding: 22px 20px;
+    padding: 20px 16px;
   }
 
   body.ll-deck-page .ll-deck-services h3 {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+    font-size: 11px;
+  }
+
+  body.ll-deck-page .ll-linkedin-notice__card {
+    width: min(95vw, 320px);
+    padding: 20px 16px;
+    gap: 12px;
+  }
+
+  body.ll-deck-page .ll-linkedin-notice__copy strong {
+    font-size: clamp(18px, 5.5vw, 28px);
+  }
+
+  body.ll-deck-page .ll-deck__chapters button {
+    min-width: min(78vw, 300px);
+    font-size: 10px;
+  }
+}
+
+/* Landscape mobile improvements */
+@media (max-width: 760px) and (orientation: landscape) {
+  body.ll-deck-page .ll-deck {
+    --deck-mobile-nav-height: 56px;
+    inset: 8px;
+  }
+
+  body.ll-deck-page .ll-deck__stage {
+    inset: 8px 8px calc(var(--deck-mobile-nav-height) + 32px);
+  }
+
+  body.ll-deck-page .ll-deck-slide {
+    padding: 12px;
+  }
+
+  body.ll-deck-page .ll-deck-slide--services > h2 {
+    top: 8%;
+    font-size: clamp(20px, 4vw, 28px);
+  }
+
+  body.ll-deck-page .ll-deck-services {
+    top: 24%;
+    bottom: 60px;
+  }
+
+  body.ll-deck-page .ll-deck-services section {
+    padding: 16px 18px;
+  }
+
+  body.ll-deck-page .ll-linkedin-notice__card {
+    width: min(70vw, 400px);
+    padding: 20px 24px;
+  }
+}
+
+/* Safe area support for notched devices */
+@media (max-width: 760px) {
+  body.ll-deck-page .ll-deck {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  body.ll-deck-page .ll-deck__menu-toggle {
+    top: calc(20px + env(safe-area-inset-top));
+    left: calc(20px + env(safe-area-inset-left));
+  }
+
+  body.ll-deck-page .ll-deck__close {
+    top: calc(20px + env(safe-area-inset-top));
+    right: calc(20px + env(safe-area-inset-right));
+  }
+
+  body.ll-deck-page .ll-deck__mobile-meta {
+    bottom: calc(var(--deck-mobile-nav-height) + 5px + env(safe-area-inset-bottom));
+  }
+
+  /* Improve touch targets */
+  body.ll-deck-page .ll-deck__chapters button {
+    min-height: 52px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body.ll-deck-page .ll-deck__menu-toggle,
+  body.ll-deck-page .ll-deck__close {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent zoom on form inputs */
+  body.ll-deck-page input,
+  body.ll-deck-page textarea,
+  body.ll-deck-page select {
+    font-size: 16px;
+  }
+
+  /* Typography improvements for mobile */
+  body.ll-deck-page .ll-deck-slide h1 {
+    font-size: clamp(28px, 8vw, 48px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+
+  body.ll-deck-page .ll-deck-slide h2 {
+    font-size: clamp(22px, 6vw, 36px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  body.ll-deck-page .ll-deck-slide h3 {
+    font-size: clamp(16px, 4.5vw, 24px);
+    line-height: 1.2;
+  }
+
+  body.ll-deck-page .ll-deck-slide p,
+  body.ll-deck-page .ll-deck-slide li {
+    font-size: clamp(14px, 4vw, 17px);
+    line-height: 1.5;
+  }
+
+  body.ll-deck-page .ll-deck-kicker {
+    font-size: clamp(10px, 3vw, 13px);
+    letter-spacing: 0.08em;
+  }
+
+  /* Grid layout improvements */
+  body.ll-deck-page .ll-deck-slide > * {
+    max-width: 100%;
+  }
+
+  /* Image responsiveness */
+  body.ll-deck-page .ll-deck-slide img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Button improvements */
+  body.ll-deck-page .ll-button {
+    min-height: 44px;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  /* Smooth scrolling for better mobile experience */
+  body.ll-deck-page .ll-deck__slides {
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent horizontal overflow */
+  body.ll-deck-page .ll-deck-slide {
+    overflow-x: hidden;
   }
 }
 

@@ -720,10 +720,6 @@ body.ll-deck-page .ll-deck.is-rail-open .ll-deck__menu-toggle {
   transform: none;
 }
 
-body.ll-deck-page :is(.elastic-cursor, .elastic-cursor-dot) {
-  display: none !important;
-}
-
 body.ll-deck-page .ll-deck {
   opacity: 0;
   transition: opacity 850ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -829,7 +825,7 @@ body.ll-deck-page .ll-deck-client-marquee img {
     flex-direction: row;
     gap: 0;
     overflow: hidden;
-    touch-action: pan-y;
+    touch-action: pan-x pan-y;
   }
 
   body.ll-deck-page .ll-deck-slide {

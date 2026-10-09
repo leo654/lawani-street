@@ -190,19 +190,6 @@ var LAWANI_CREATE_ZONED_CLOCK = typeof LAWANI_SHARED.createZonedClock === 'funct
 	};
 })();
 
-// Global micro-interactions (hover preview, magnetic) as progressive enhancement.
-(function() {
-	if (window.__miLoaded) return;
-	window.__miLoaded = true;
-
-	var script = document.createElement('script');
-	script.src = 'assets/js/modules/micro-interactions.js?v=20260401-globalmenu9';
-	script.defer = true;
-	script.async = true;
-	script.setAttribute('data-mi', '1');
-	document.head.appendChild(script);
-})();
-
 /* Global menu source of truth: render shared HTML menu on every page. */
 (function() {
 	var root = document.querySelector('.animsition');

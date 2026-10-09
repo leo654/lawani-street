@@ -5,6 +5,14 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  function scheduleMotionFrame(key, callback) {
+    if (window.LawaniMotion && typeof window.LawaniMotion.frame === "function") {
+      window.LawaniMotion.frame(key, callback);
+      return;
+    }
+    window.requestAnimationFrame(callback);
+  }
+
   function initServiceLinkState() {
     var nav = document.querySelector(".ll-service-links");
     if (!nav) return;
@@ -58,7 +66,10 @@
     if (!hero) return;
 
     var video = hero.querySelector("[data-ll-hero-video]");
-    var scrollTicking = false;
+    var heroVideoSuppressed = function () {
+      return document.body.classList.contains("ll-pitch-overlay-open") ||
+        document.body.classList.contains("ll-showreel-open");
+    };
 
     function updateHeroState() {
       document.body.classList.toggle("is-past-home-hero", window.scrollY > hero.offsetHeight * 0.55);
@@ -72,43 +83,25 @@
       }
 
       hero.style.setProperty("--ll-hero-line-scale", Math.max(0.18, 1 - progress * 0.82).toFixed(4));
-      scrollTicking = false;
     }
 
     function requestHeroUpdate() {
-      if (window.LawaniMotion) {
-        window.LawaniMotion.frame("home-hero", updateHeroState);
-        return;
-      }
-      if (scrollTicking) return;
-      scrollTicking = true;
-      window.requestAnimationFrame(updateHeroState);
+      scheduleMotionFrame("home-hero", updateHeroState);
     }
 
     updateHeroState();
     window.addEventListener("scroll", requestHeroUpdate, { passive: true });
     window.addEventListener("resize", requestHeroUpdate, { passive: true });
 
-
     if (!video) return;
-
-    if ("IntersectionObserver" in window) {
-      var videoObserver = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting && !document.hidden && !document.body.classList.contains("ll-pitch-overlay-open")) video.play().catch(function () {});
-            else video.pause();
-          });
-        },
-        { threshold: 0.05 }
-      );
-      videoObserver.observe(hero);
-    }
 
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) video.pause();
-      else if (hero.getBoundingClientRect().bottom > 0 && !document.body.classList.contains("ll-pitch-overlay-open")) video.play().catch(function () {});
+      else if (!heroVideoSuppressed()) video.play().catch(function () {});
     });
+
+    // The hero film plays independently of page scrolling.
+    video.play().catch(function() {});
   }
 
   function ready() {
