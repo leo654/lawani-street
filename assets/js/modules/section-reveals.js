@@ -116,9 +116,7 @@
 			if (node.getAttribute('data-scroll-reveal-ready') === '1') return;
 			node.setAttribute('data-scroll-reveal-ready', '1');
 			var originalTransition = node.style.transition;
-			var originalWillChange = node.style.willChange;
 			node.style.transition = 'none';
-			node.style.willChange = 'opacity, transform';
 
 			var delay = parseFloat(window.getComputedStyle(node).getPropertyValue('--ll-reveal-delay')) || 0;
 			var isSection = node.tagName === 'SECTION';
@@ -136,7 +134,6 @@
 				onComplete: function() {
 					node.classList.add('is-visible');
 					node.style.transition = originalTransition;
-					node.style.willChange = originalWillChange;
 				},
 				scrollTrigger: {
 					trigger: node,

@@ -24,13 +24,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
     <link rel="preload" href="assets/fonts/GridlitePEVFWeb-All.woff2" as="font" type="font/woff2" crossorigin>
     <script>
-      document.documentElement.classList.replace("no-js", "js");
       (function () {
         var mode = "light";
-        try {
-          localStorage.setItem("ll-theme-mode", "light");
-          localStorage.setItem("ll-theme-default-version", "light-20261008");
-        } catch (error) {}
         var theme = mode;
         document.documentElement.setAttribute("data-theme-mode", mode);
         document.documentElement.setAttribute("data-theme", theme);
@@ -38,15 +33,7 @@
         if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#000000");
       })();
     </script>
-    <link rel="stylesheet" href="assets/css/lamalama-ui.min.css?v=20260913-live-2">
-    <link rel="stylesheet" href="assets/css/sound-toggle.css?v=20260610-3">
-    <link rel="stylesheet" href="assets/css/case-study.css?v=20261008-home-button-system-1">
-    <link rel="stylesheet" href="assets/css/benchmark-system.css?v=20260913-live-2">
-    <link rel="stylesheet" href="assets/css/motion-system.css?v=20260913-live-2">
-    <link rel="stylesheet" href="assets/css/pitchdeck-overlay.css?v=20260911-production-1">
-    <link rel="stylesheet" href="assets/css/theme-system.css?v=20261009-lamalama-menu-8">
-    <link rel="stylesheet" href="assets/css/site-font.css?v=20261008-lamalama-button-system-5">
-    <script src="assets/js/modules/gridlite-arrow-glyphs.js?v=20261008-gridlite-arrow-1" defer></script>
+    <link rel="stylesheet" href="assets/css/entries/case-study.css">
   </head>
 
   <body class="case-study case-study--tyol">
@@ -80,7 +67,7 @@
       <span data-cs-scroll-progress></span>
     </div>
 
-    <div class="ll-mobile-menu" id="ll-mobile-menu" aria-hidden="true" data-ll-mobile-menu>
+    <div class="ll-mobile-menu" id="ll-mobile-menu" aria-hidden="true" inert data-ll-mobile-menu>
       <nav class="ll-mobile-menu__nav" aria-label="Site navigation">
         <a class="ll-menu-row" href="work.html">
           <span>Work</span>
@@ -97,7 +84,7 @@
             <span>Expertise</span>
             <span class="ll-menu-group__plus" aria-hidden="true"><i></i><i></i></span>
           </button>
-          <div class="ll-menu-group__items" id="ll-menu-services" aria-hidden="true" data-ll-submenu>
+          <div class="ll-menu-group__items" id="ll-menu-services" aria-hidden="true" inert data-ll-submenu>
             <div>
               <a href="index.html#service-branding"><span>Branding</span><span>01</span></a>
               <a href="index.html#service-digital"><span>Digital</span><span>02</span></a>
@@ -163,74 +150,126 @@
       <section class="cs-gallery" id="gallery" aria-label="TYOL project gallery" data-ll-section-note="Visual system">
         <div class="cs-gallery__row cs-gallery__row--feature">
           <figure>
-            <img src="assets/img/picture/tyol/bg2.png" alt="TYOL project visual 01" loading="eager" decoding="async">
+            <img src="assets/img/picture/tyol/bg2.png" alt="TYOL project visual 01" loading="eager" decoding="async" width="5368" height="3020">
           </figure>
         </div>
 
         <div class="cs-gallery__row cs-gallery__row--pair">
           <figure>
-            <img src="assets/img/picture/tyol/side1.png" alt="TYOL project visual 02" loading="lazy" decoding="async">
+            <style>
+              .tyol-logo-stage{cursor:pointer;-webkit-tap-highlight-color:transparent}
+              .tyol-logo-stage:focus-visible{outline:2px solid var(--ll-orange);outline-offset:4px}
+              .tyol-logo-animation{display:block;width:100%;height:auto;overflow:visible}
+              .tyol-logo-animation .bg{fill:#0550fd}
+              .tyol-logo-animation .g{display:none;fill:none;stroke:#010101;stroke-width:.7}
+              .tyol-logo-animation .logo{fill:#f3b724;stroke:#f3b724;stroke-width:1;stroke-linejoin:miter}
+              .tyol-logo-stage.is-armed .g{display:block;stroke-dasharray:1;stroke-dashoffset:1}
+              .tyol-logo-stage.is-armed .logo{fill:rgba(1,1,1,0);stroke:#010101;stroke-dasharray:1;stroke-dashoffset:1}
+              .tyol-logo-stage.is-playing .g{animation:tyol-draw 1.05s cubic-bezier(.16,1,.3,1) var(--d) forwards,tyol-gfade .55s ease 2.5s forwards}
+              .tyol-logo-stage.is-playing .logo{animation:tyol-draw 1.45s cubic-bezier(.16,1,.3,1) .65s forwards,tyol-paint 3.65s cubic-bezier(.22,1,.36,1) forwards}
+              @keyframes tyol-draw{to{stroke-dashoffset:0}}
+              @keyframes tyol-gfade{to{opacity:0}}
+              @keyframes tyol-paint{0%{fill:rgba(1,1,1,0);stroke:#010101}38%{fill:rgba(1,1,1,0);stroke:#010101;animation-timing-function:cubic-bezier(.4,0,1,1)}58%{fill:#010101;stroke:#010101}66%{fill:#010101;stroke:#010101;animation-timing-function:cubic-bezier(.4,0,.2,1)}100%{fill:#f3b724;stroke:#f3b724}}
+              @media (prefers-reduced-motion:reduce){.tyol-logo-stage .g{display:none}.tyol-logo-stage .logo{animation:none;stroke-dashoffset:0;fill:#f3b724;stroke:#f3b724}}
+            </style>
+            <div class="tyol-logo-stage" role="button" tabindex="0" aria-label="Replay TYOL logo animation">
+              <svg class="tyol-logo-animation" xmlns="http://www.w3.org/2000/svg" viewBox="1.2 -135.35 840 840" role="img" aria-label="TYOL logo">
+                <rect class="bg" x="-200" y="-300" width="1300" height="1300"/>
+                <line class="g" pathLength="1" x1="186" y1="63.7" x2="656" y2="63.7" style="--d:0.22s"/>
+                <line class="g" pathLength="1" x1="186" y1="245.1" x2="656" y2="245.1" style="--d:0.32s"/>
+                <line class="g" pathLength="1" x1="186" y1="355.5" x2="656" y2="355.5" style="--d:0.42s"/>
+                <line class="g" pathLength="1" x1="186" y1="505.6" x2="656" y2="505.6" style="--d:0.52s"/>
+                <line class="g" pathLength="1" x1="234" y1="28.7" x2="234" y2="533.6" style="--d:0.27s"/>
+                <line class="g" pathLength="1" x1="608.4" y1="28.7" x2="608.4" y2="533.6" style="--d:0.37s"/>
+                <line class="g" pathLength="1" x1="421.2" y1="-8.3" x2="421.2" y2="300" style="--d:0.47s"/>
+                <line class="g" pathLength="1" x1="366" y1="370" x2="366" y2="505.6" style="--d:0.57s"/>
+                <line class="g" pathLength="1" x1="476.4" y1="355.5" x2="476.4" y2="505.6" style="--d:0.62s"/>
+                <line class="g" pathLength="1" x1="332.7" y1="30" x2="466.3" y2="300" style="--d:0.67s"/>
+                <line class="g" pathLength="1" x1="509.7" y1="30" x2="376.1" y2="300" style="--d:0.72s"/>
+                <polygon class="logo" pathLength="1" points="493,63.7 421.2,208.8 349.4,63.7 226.3,63.7 316.1,245.1 234,245.1 234,355.5 403.3,355.5 366,385.3 366,505.6 476.4,505.6 476.4,355.5 608.4,355.5 608.4,245.1 526.3,245.1 616.1,63.7"/>
+              </svg>
+            </div>
+            <script>
+              (function(){
+                var stage=document.currentScript.previousElementSibling,played=false;
+                if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+                function play(){
+                  stage.classList.remove("is-playing");
+                  stage.classList.add("is-armed");
+                  void stage.offsetWidth;
+                  stage.classList.add("is-playing");
+                }
+                stage.addEventListener("click",play);
+                stage.addEventListener("keydown",function(event){
+                  if(event.key==="Enter"||event.key===" "){event.preventDefault();play();}
+                });
+                if(!("IntersectionObserver" in window)){play();return;}
+                new IntersectionObserver(function(entries,observer){
+                  if(entries[0].isIntersecting&&!played){played=true;play();observer.disconnect();}
+                },{threshold:.5}).observe(stage);
+              })();
+            </script>
           </figure>
           <figure>
-            <img src="assets/img/picture/tyol/1a.png" alt="TYOL project visual 03" loading="lazy" decoding="async">
+            <img src="assets/img/picture/tyol/1a.png" alt="TYOL project visual 03" loading="lazy" decoding="async" width="2270" height="2270">
           </figure>
         </div>
 
         <div class="cs-gallery__row cs-gallery__row--pair">
           <figure>
-            <img src="assets/img/picture/tyol/3.png" alt="TYOL project visual 04" loading="lazy" decoding="async">
+            <img src="assets/img/picture/tyol/3.png" alt="TYOL project visual 04" loading="lazy" decoding="async" width="1888" height="1032">
           </figure>
           <figure>
-            <img src="assets/img/picture/tyol/13.png" alt="TYOL project visual 05" loading="lazy" decoding="async">
+            <img src="assets/img/picture/tyol/13.png" alt="TYOL project visual 05" loading="lazy" decoding="async" width="1888" height="1032">
           </figure>
         </div>
  <div class="cs-gallery__row cs-gallery__row--feature">
           <figure>
-            <img src="assets/img/picture/tyol/bg33.png" alt="TYOL project visual 01" loading="eager" decoding="async">
+            <img src="assets/img/picture/tyol/bg33.png" alt="TYOL project visual 01" loading="eager" decoding="async" width="4469" height="2526">
           </figure>
         </div>
         <div class="cs-gallery__row cs-gallery__row--pair">
           <figure>
-            <img src="assets/img/picture/tyol/1.png" alt="TYOL project visual 06" loading="lazy" decoding="async">
+            <img src="assets/img/picture/tyol/1.png" alt="TYOL project visual 06" loading="lazy" decoding="async" width="2684" height="1509">
           </figure>
           <figure>
-            <img src="assets/img/picture/tyol/9.png" alt="TYOL project visual 07" loading="lazy" decoding="async">
-          </figure>
-        </div>
-
-        <div class="cs-gallery__row cs-gallery__row--pair">
-          <figure>
-            <img src="assets/img/picture/tyol/2a.png" alt="TYOL project visual 08" loading="lazy" decoding="async">
-          </figure>
-          <figure>
-            <img src="assets/img/picture/tyol/1bd.png" alt="TYOL project visual 09" loading="lazy" decoding="async">
+            <img src="assets/img/picture/tyol/9.png" alt="TYOL project visual 07" loading="lazy" decoding="async" width="1834" height="1032">
           </figure>
         </div>
 
         <div class="cs-gallery__row cs-gallery__row--pair">
           <figure>
-            <img src="assets/img/picture/tyol/10a.png" alt="TYOL project visual 10" loading="lazy" decoding="async">
+            <img src="assets/img/picture/tyol/2a.png" alt="TYOL project visual 08" loading="lazy" decoding="async" width="1032" height="1032">
           </figure>
           <figure>
-            <img src="assets/img/picture/tyol/2b.png" alt="TYOL project visual 11" loading="lazy" decoding="async">
-          </figure>
-        </div>
-
-        <div class="cs-gallery__row cs-gallery__row--pair">
-          <figure>
-            <img src="assets/img/picture/tyol/side2.png" alt="TYOL project visual 12" loading="lazy" decoding="async">
-          </figure>
-          <figure>
-            <img src="assets/img/picture/tyol/2f.png" alt="TYOL project visual 13" loading="lazy" decoding="async">
+            <img src="assets/img/picture/tyol/1bd.png" alt="TYOL project visual 09" loading="lazy" decoding="async" width="2496" height="2496">
           </figure>
         </div>
 
         <div class="cs-gallery__row cs-gallery__row--pair">
           <figure>
-            <img src="assets/img/picture/tyol/2c.png" alt="TYOL project visual 14" loading="lazy" decoding="async">
+            <img src="assets/img/picture/tyol/10a.png" alt="TYOL project visual 10" loading="lazy" decoding="async" width="1509" height="1509">
           </figure>
           <figure>
-            <img src="assets/img/picture/tyol/7.png" alt="TYOL project visual 15" loading="lazy" decoding="async">
+            <img src="assets/img/picture/tyol/2b.png" alt="TYOL project visual 11" loading="lazy" decoding="async" width="1032" height="1032">
+          </figure>
+        </div>
+
+        <div class="cs-gallery__row cs-gallery__row--pair">
+          <figure>
+            <img src="assets/img/picture/tyol/side2.png" alt="TYOL project visual 12" loading="lazy" decoding="async" width="1138" height="1138">
+          </figure>
+          <figure>
+            <img src="assets/img/picture/tyol/2f.png" alt="TYOL project visual 13" loading="lazy" decoding="async" width="2496" height="2496">
+          </figure>
+        </div>
+
+        <div class="cs-gallery__row cs-gallery__row--pair">
+          <figure>
+            <img src="assets/img/picture/tyol/2c.png" alt="TYOL project visual 14" loading="lazy" decoding="async" width="2684" height="1510">
+          </figure>
+          <figure>
+            <img src="assets/img/picture/tyol/7.png" alt="TYOL project visual 15" loading="lazy" decoding="async" width="2684" height="1510">
           </figure>
         </div>
       </section>
@@ -246,9 +285,9 @@
             <ul class="cs-tags" aria-label="Beat Per Minute disciplines"><li>Branding</li><li>Music</li></ul>
             <span class="cs-related-row__view"><span>View</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>
             <span class="cs-related-row__rail" aria-hidden="true">
-              <img src="assets/img/bpm2.png" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/dj1.png" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/dj2.png" alt="" loading="lazy" decoding="async">
+              <img src="assets/img/bpm2.png" alt="" loading="lazy" decoding="async" width="1400" height="1400">
+              <img src="assets/img/dj1.png" alt="" loading="lazy" decoding="async" width="1834" height="1037">
+              <img src="assets/img/dj2.png" alt="" loading="lazy" decoding="async" width="1400" height="1400">
             </span>
           </a>
           <a class="cs-related-row" href="kicksjoint.html">
@@ -256,9 +295,9 @@
             <ul class="cs-tags" aria-label="Kicksjoint disciplines"><li>Branding</li><li>Experience</li><li>Commerce</li></ul>
             <span class="cs-related-row__view"><span>View</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>
             <span class="cs-related-row__rail" aria-hidden="true">
-              <img src="assets/img/kj1.png" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/kj5.png" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/case2.png" alt="" loading="lazy" decoding="async">
+              <img src="assets/img/kj1.png" alt="" loading="lazy" decoding="async" width="1615" height="1615">
+              <img src="assets/img/kj5.png" alt="" loading="lazy" decoding="async" width="1138" height="1138">
+              <img src="assets/img/case2.png" alt="" loading="lazy" decoding="async" width="2684" height="1509">
             </span>
           </a>
           <a class="cs-related-row" href="ademi.html">
@@ -266,9 +305,9 @@
             <ul class="cs-tags" aria-label="Ademi disciplines"><li>Branding</li><li>Art direction</li></ul>
             <span class="cs-related-row__view"><span>View</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>
             <span class="cs-related-row__rail" aria-hidden="true">
-              <img src="assets/img/ademi1.png" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/ademi2.png" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/ademi3.png" alt="" loading="lazy" decoding="async">
+              <img src="assets/img/ademi1.png" alt="" loading="lazy" decoding="async" width="866" height="866">
+              <img src="assets/img/ademi2.png" alt="" loading="lazy" decoding="async" width="1036" height="1035">
+              <img src="assets/img/ademi3.png" alt="" loading="lazy" decoding="async" width="1766" height="989">
             </span>
           </a>
         </div>
@@ -280,7 +319,7 @@
             <h2>Let's Talk.</h2>
             <a class="cs-footer__contact-card ll-button ll-button--media" href="mailto:accounts@lawani.st">
               <span class="cs-footer__portrait">
-                <img src="assets/img/me.gif" alt="" width="500" height="594">
+                <img src="assets/img/me.gif" alt="" width="500" height="594" loading="lazy" decoding="async">
               </span>
               <span>accounts@lawani.st</span>
             </a>
@@ -333,10 +372,6 @@
       </footer>
     </main>
 
-    <script src="assets/js/elastic-cursor.js?v=20260610-sound-toggle-1" defer></script>
-    <script src="assets/js/modules/motion-system.js?v=20260913-live-2" defer></script>
-    <script src="assets/js/modules/pitchdeck-overlay.js?v=20260911-production-1" defer></script>
-    <script src="assets/js/pages/lamalama-ui.js?v=20261009-interaction-refactor-1" defer></script>
-    <script src="assets/js/pages/case-study-ui.js?v=20260913-live-2" defer></script>
+    <script type="module" src="assets/js/site-entry.js"></script>
   </body>
 </html>

@@ -27,6 +27,8 @@ mkdir -p "$OUTPUT_DIR"
 rsync -a \
   --exclude-from "$ROOT_DIR/scripts/production-assets-ignore.txt" \
   --exclude '/.git/' \
+  --exclude '/.devin/' \
+  --exclude '/node_modules/' \
   --exclude '/.github/' \
   --exclude '/.vscode/' \
   --exclude '/docs/' \
@@ -42,6 +44,8 @@ rsync -a \
   --exclude '/STRUCTURE.md' \
   --exclude '*.scss' \
   ./ "$OUTPUT_DIR/"
+
+LAWANI_OUTPUT_DIR="$OUTPUT_DIR" npm run build
 
 artifact_size_kib="$(du -sk "$OUTPUT_DIR" | awk '{print $1}')"
 if (( artifact_size_kib > 1048576 )); then

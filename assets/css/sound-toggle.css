@@ -68,12 +68,24 @@
   background: var(--ll-theme-ink, #f2f0e9);
   opacity: 0.78;
   transform: translateX(0);
-  transition: transform 360ms var(--ll-ease, ease), opacity 180ms ease;
+  transition: transform 360ms var(--ll-ease, ease), opacity 180ms ease, background-color 180ms ease;
   pointer-events: none;
 }
 
 .ll-sound-toggle[data-sound-mode="on"] .ll-sound-toggle__indicator {
   transform: translateX(100%);
+}
+
+.ll-sound-toggle[data-sound-mode="on"] .ll-sound-toggle__choice--on {
+  color: var(--ll-orange, #ff4f12);
+}
+
+.ll-sound-toggle[data-sound-mode="off"] .ll-sound-toggle__choice--off {
+  color: #ff4f12;
+}
+
+.ll-sound-toggle.ll-theme-toggle--footer[data-sound-mode="off"] .ll-sound-toggle__choice--off {
+  color: #ff4f12;
 }
 
 .ll-sound-toggle:is(:hover, :focus-visible) {

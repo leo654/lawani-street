@@ -234,19 +234,13 @@
   }
 
   function initSoundToggle() {
-    var root = document.documentElement;
     var toggles = Array.prototype.slice.call(document.querySelectorAll("[data-ll-sound-toggle]"));
-    var themeColor = document.querySelector('meta[name="theme-color"]');
     var soundEnabled = false;
     var audioContext = null;
 
     toggles.forEach(function (toggle) {
       toggle.classList.remove("ll-button", "ll-button--compact");
     });
-
-    root.setAttribute("data-theme-mode", "light");
-    root.setAttribute("data-theme", "light");
-    if (themeColor) themeColor.setAttribute("content", "#efeee8");
 
     try {
       soundEnabled = localStorage.getItem("ll-sound-effects") === "on";
@@ -557,7 +551,7 @@
     window.__sectionRevealsInjected = true;
 
     var script = document.createElement("script");
-    script.src = "assets/js/modules/section-reveals.js?v=20261008-smoother-scroll-reveals-2";
+    script.src = "assets/js/modules/section-reveals.js?v=20261011-reveal-layer-optimization-1";
     script.async = true;
     script.setAttribute("data-section-reveals", "1");
     document.head.appendChild(script);
@@ -613,10 +607,16 @@
       if (backgroundVideo) backgroundVideo.pause();
       video.currentTime = 0;
       video.muted = false;
-      video.play().catch(function () {
-        video.muted = true;
-        video.play().catch(function () {});
-      });
+      if (!reduceMotion) {
+        video.play().catch(function (error) {
+          if (error.name === "AbortError") return;
+          console.warn("The showreel could not be played.", error);
+          video.muted = true;
+          video.play().catch(function (fallbackError) {
+            console.warn("The muted showreel could not be played.", fallbackError);
+          });
+        });
+      }
       if (closeButton) closeButton.focus({ preventScroll: true });
       sync();
     }
@@ -631,7 +631,12 @@
         state.element.inert = state.wasInert;
       });
       backgroundInertState = [];
-      if (backgroundVideo) backgroundVideo.play().catch(function () {});
+      if (
+        backgroundVideo &&
+        !reduceMotion &&
+        backgroundVideo.dataset.userPaused !== "true" &&
+        !document.hidden
+      ) backgroundVideo.play().catch(function () {});
       if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus({ preventScroll: true });
     }
 
@@ -688,7 +693,7 @@
     initControlFeedback();
     initButtonScramble();
     initReveals();
-    loadSectionReveals();
+    if (!document.body.classList.contains("case-study")) loadSectionReveals();
     initHeroShowreel();
   }
 

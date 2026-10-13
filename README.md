@@ -27,11 +27,18 @@ For a full-page/link validation run:
 Run the complete production validation and prepare the same clean artifact used by GitHub Pages:
 
 ```bash
+npm ci
 ./scripts/production-check.sh
 ./scripts/build-production.sh _site
 ```
 
-The published site is `https://leo654.github.io/lawani-street/`. Its canonical URLs, social metadata, sitemap, and robots file use that production origin. The Pages build excludes development files, archived files, the PHP endpoint, and unused heavyweight source assets listed in `scripts/production-assets-ignore.txt`.
+The production build uses Vite to process linked CSS and emit content-hashed assets while preserving the static HTML routes. The published site is `https://leo654.github.io/lawani-street/`. Its canonical URLs, social metadata, sitemap, and robots file use that production origin. The Pages build excludes development files, archived files, the PHP endpoint, and unused heavyweight source assets listed in `scripts/production-assets-ignore.txt`.
+
+## Local Preview
+
+On macOS, double-click `Open Website.command` to start the local server and open the site in your browser. Keep the Terminal window open while browsing; close it to stop the server. If dependencies are not installed, run `npm ci` in Terminal in this folder first.
+
+Opening an individual HTML file directly with `file://` may show an incomplete page because browsers restrict the JavaScript modules used by the site. Use the launcher or run `npm run dev` and open the local URL it prints instead.
 
 See `docs/FILE_MANAGEMENT.md` for conventions.
 

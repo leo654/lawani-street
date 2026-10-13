@@ -24,13 +24,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
     <link rel="preload" href="assets/fonts/GridlitePEVFWeb-All.woff2" as="font" type="font/woff2" crossorigin>
     <script>
-      document.documentElement.classList.replace("no-js", "js");
       (function () {
         var mode = "light";
-        try {
-          localStorage.setItem("ll-theme-mode", "light");
-          localStorage.setItem("ll-theme-default-version", "light-20261008");
-        } catch (error) {}
         var theme = mode;
         document.documentElement.setAttribute("data-theme-mode", mode);
         document.documentElement.setAttribute("data-theme", theme);
@@ -38,15 +33,7 @@
         if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#000000");
       })();
     </script>
-    <link rel="stylesheet" href="assets/css/lamalama-ui.min.css?v=20260913-live-2">
-    <link rel="stylesheet" href="assets/css/sound-toggle.css?v=20260610-3">
-    <link rel="stylesheet" href="assets/css/case-study.css?v=20261008-home-button-system-1">
-    <link rel="stylesheet" href="assets/css/benchmark-system.css?v=20260913-live-2">
-    <link rel="stylesheet" href="assets/css/motion-system.css?v=20260913-live-2">
-    <link rel="stylesheet" href="assets/css/pitchdeck-overlay.css?v=20260911-production-1">
-    <link rel="stylesheet" href="assets/css/theme-system.css?v=20261009-lamalama-menu-8">
-    <link rel="stylesheet" href="assets/css/site-font.css?v=20261008-lamalama-button-system-5">
-    <script src="assets/js/modules/gridlite-arrow-glyphs.js?v=20261008-gridlite-arrow-1" defer></script>
+    <link rel="stylesheet" href="assets/css/entries/case-study.css">
   </head>
 
   <body class="case-study case-study--bpm">
@@ -80,7 +67,7 @@
       <span data-cs-scroll-progress></span>
     </div>
 
-    <div class="ll-mobile-menu" id="ll-mobile-menu" aria-hidden="true" data-ll-mobile-menu>
+    <div class="ll-mobile-menu" id="ll-mobile-menu" aria-hidden="true" inert data-ll-mobile-menu>
       <nav class="ll-mobile-menu__nav" aria-label="Site navigation">
         <a class="ll-menu-row" href="work.html">
           <span>Work</span>
@@ -97,7 +84,7 @@
             <span>Expertise</span>
             <span class="ll-menu-group__plus" aria-hidden="true"><i></i><i></i></span>
           </button>
-          <div class="ll-menu-group__items" id="ll-menu-services" aria-hidden="true" data-ll-submenu>
+          <div class="ll-menu-group__items" id="ll-menu-services" aria-hidden="true" inert data-ll-submenu>
             <div>
               <a href="index.html#service-branding"><span>Branding</span><span>01</span></a>
               <a href="index.html#service-digital"><span>Digital</span><span>02</span></a>
@@ -163,31 +150,37 @@
       <section class="cs-gallery" id="gallery" aria-label="Beat Per Minute project gallery" data-ll-section-note="Visual system">
         <div class="cs-gallery__row cs-gallery__row--feature">
           <figure>
-            <img src="assets/img/bpm2.png" alt="Beat Per Minute project visual 01" loading="eager" decoding="async">
+            <img src="assets/img/bpm2.png" alt="Beat Per Minute project visual 01" loading="eager" decoding="async" width="1400" height="1400">
+          </figure>
+        </div>
+
+        <div class="cs-gallery__row cs-gallery__row--feature cs-gallery__row--bpm-animation">
+          <figure>
+            <iframe src="bpm3.html?embed=1" title="Animated Beat Per Minute logo" loading="lazy" scrolling="no"></iframe>
           </figure>
         </div>
 
         <div class="cs-gallery__row cs-gallery__row--pair">
           <figure>
-            <img src="assets/img/dj1.png" alt="Beat Per Minute project visual 02" loading="lazy" decoding="async">
+            <img src="assets/img/dj1.png" alt="Beat Per Minute project visual 02" loading="lazy" decoding="async" width="1834" height="1037">
           </figure>
           <figure>
-            <img src="assets/img/dj2.png" alt="Beat Per Minute project visual 03" loading="lazy" decoding="async">
+            <img src="assets/img/dj2.png" alt="Beat Per Minute project visual 03" loading="lazy" decoding="async" width="1400" height="1400">
           </figure>
         </div>
 
         <div class="cs-gallery__row cs-gallery__row--pair">
           <figure>
-            <img src="assets/img/bpmjjj.png" alt="Beat Per Minute project visual 04" loading="lazy" decoding="async">
+            <img src="assets/img/bpmjjj.png" alt="Beat Per Minute project visual 04" loading="lazy" decoding="async" width="2000" height="1124">
           </figure>
           <figure>
-            <img src="assets/img/bpm1.png" alt="Beat Per Minute project visual 05" loading="lazy" decoding="async">
+            <img src="assets/img/bpm1.png" alt="Beat Per Minute project visual 05" loading="lazy" decoding="async" width="1400" height="1400">
           </figure>
         </div>
 
         <div class="cs-gallery__row cs-gallery__row--feature">
           <figure>
-            <img src="assets/img/bpm.png" alt="Beat Per Minute project visual 06" loading="lazy" decoding="async">
+            <img src="assets/img/bpm.png" alt="Beat Per Minute project visual 06" loading="lazy" decoding="async" width="1400" height="1400">
           </figure>
         </div>
       </section>
@@ -203,9 +196,9 @@
             <ul class="cs-tags" aria-label="Kicksjoint disciplines"><li>Branding</li><li>Experience</li><li>Commerce</li></ul>
             <span class="cs-related-row__view"><span>View</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>
             <span class="cs-related-row__rail" aria-hidden="true">
-              <img src="assets/img/kj1.png" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/kj5.png" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/case2.png" alt="" loading="lazy" decoding="async">
+              <img src="assets/img/kj1.png" alt="" loading="lazy" decoding="async" width="1615" height="1615">
+              <img src="assets/img/kj5.png" alt="" loading="lazy" decoding="async" width="1138" height="1138">
+              <img src="assets/img/case2.png" alt="" loading="lazy" decoding="async" width="2684" height="1509">
             </span>
           </a>
           <a class="cs-related-row" href="ademi.html">
@@ -213,9 +206,9 @@
             <ul class="cs-tags" aria-label="Ademi disciplines"><li>Branding</li><li>Art direction</li></ul>
             <span class="cs-related-row__view"><span>View</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>
             <span class="cs-related-row__rail" aria-hidden="true">
-              <img src="assets/img/ademi1.png" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/ademi2.png" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/ademi3.png" alt="" loading="lazy" decoding="async">
+              <img src="assets/img/ademi1.png" alt="" loading="lazy" decoding="async" width="866" height="866">
+              <img src="assets/img/ademi2.png" alt="" loading="lazy" decoding="async" width="1036" height="1035">
+              <img src="assets/img/ademi3.png" alt="" loading="lazy" decoding="async" width="1766" height="989">
             </span>
           </a>
           <a class="cs-related-row" href="enterscale.html">
@@ -223,9 +216,9 @@
             <ul class="cs-tags" aria-label="EnterScale disciplines"><li>Strategy</li><li>Branding</li></ul>
             <span class="cs-related-row__view"><span>View</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>
             <span class="cs-related-row__rail" aria-hidden="true">
-              <img src="assets/img/picture/enterscale/1.png" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/picture/enterscale/right.png" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/picture/enterscale/3.png" alt="" loading="lazy" decoding="async">
+              <img src="assets/img/picture/enterscale/1.png" alt="" loading="lazy" decoding="async" width="2925" height="1644">
+              <img src="assets/img/picture/enterscale/right.png" alt="" loading="lazy" decoding="async" width="1644" height="1644">
+              <img src="assets/img/picture/enterscale/3.png" alt="" loading="lazy" decoding="async" width="2925" height="1644">
             </span>
           </a>
         </div>
@@ -237,7 +230,7 @@
             <h2>Let's Talk.</h2>
             <a class="cs-footer__contact-card ll-button ll-button--media" href="mailto:accounts@lawani.st">
               <span class="cs-footer__portrait">
-                <img src="assets/img/me.gif" alt="" width="500" height="594">
+                <img src="assets/img/me.gif" alt="" width="500" height="594" loading="lazy" decoding="async">
               </span>
               <span>accounts@lawani.st</span>
             </a>
@@ -290,10 +283,6 @@
       </footer>
     </main>
 
-    <script src="assets/js/elastic-cursor.js?v=20260610-sound-toggle-1" defer></script>
-    <script src="assets/js/modules/motion-system.js?v=20260913-live-2" defer></script>
-    <script src="assets/js/modules/pitchdeck-overlay.js?v=20260911-production-1" defer></script>
-    <script src="assets/js/pages/lamalama-ui.js?v=20261009-interaction-refactor-1" defer></script>
-    <script src="assets/js/pages/case-study-ui.js?v=20260913-live-2" defer></script>
+    <script type="module" src="assets/js/site-entry.js"></script>
   </body>
 </html>

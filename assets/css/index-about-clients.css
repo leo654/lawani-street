@@ -332,7 +332,7 @@ html[data-theme] body.home-index .ll-manifesto .ll-action-link.ll-button {
 html[data-theme] body.home-index .ll-manifesto .ll-action-link.ll-button:is(:hover, :focus-visible) {
   border-color: var(--ll-orange);
   background: var(--ll-orange);
-  color: #111312;
+  color: var(--ll-brand-charcoal);
 }
 
 @keyframes ll-client-strip-scroll {

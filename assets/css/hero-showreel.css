@@ -59,18 +59,9 @@ body.home-index .ll-home-hero > .ll-home-hero__media {
   left: 0;
 }
 
-/* Keep the lower hero fade legible over the moving video. */
 body.home-index .ll-home-hero > .ll-home-hero__wash {
   pointer-events: none;
-  background:
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      transparent 40%,
-      rgba(0, 0, 0, 0.35) 60%,
-      #000 85%,
-      #000 100%
-    );
+  background: none;
   transition: opacity 260ms ease;
 }
 
@@ -98,6 +89,25 @@ body.home-index .ll-home-hero > .ll-home-hero__content :is(a, button) {
   pointer-events: auto;
 }
 
+body.home-index .ll-home-hero__video-toggle {
+  position: fixed;
+  right: var(--ll-gutter);
+  bottom: 54px;
+  z-index: 3;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: var(--ll-white);
+  font: 10px/1 var(--ll-mono);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+body.home-index .ll-home-hero__video-toggle:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 5px;
+}
+
 body.home-index .ll-home-hero__rail time {
   background: radial-gradient(circle at 14px 50%, var(--ll-hero-signal) 0 3px, transparent 3.5px);
 }
@@ -108,7 +118,7 @@ body.home-index .ll-home-hero__rail-line {
 }
 
 body.home-index .ll-home-hero__media video {
-  filter: saturate(1) contrast(1) brightness(0.4);
+  filter: none;
 }
 
 /* The hero fade and the next section share one themed surface. */
@@ -163,4 +173,8 @@ html[data-theme="light"] body.home-index .ll-work .lwa-project__tags > span {
         var(--ll-hero-ink) 100%
       );
   } */
+}
+
+body.home-index .ll-home-hero__play-cue {
+  display: none;
 }

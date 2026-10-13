@@ -293,7 +293,16 @@ body.work-index {
 }
 
 @media (min-width: 821px) {
+  .lwa-project.is-expanded .lwa-project__detail {
+    position: relative;
+    z-index: 1;
+    margin-top: -72px;
+    padding-top: 72px;
+  }
+
   .lwa-project.is-expanded .lwa-project__detail-inner {
+    margin-top: -72px;
+    padding-top: 72px;
     overflow-x: clip;
     overflow-y: visible;
   }

@@ -1,3 +1,4 @@
+/* Shared shell and component styles; design values live in design-tokens.css. */
 @font-face {
   font-family: "AuxMono-Regular";
   src:
@@ -8,24 +9,7 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Gridlite";
-  src: url("../fonts/GridlitePEVFWeb-All.woff2") format("woff2-variations");
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-}
-
 /* Global geometry: square corners across every current-page component. */
-html:root {
-  --ll-radius: 0px;
-  --ll-control-radius: 0px;
-  --ll-dock-radius: 0px;
-  --lawani-grid-radius: 0px;
-  --work-bar-radius: 0px;
-  --liquid-btn-radius: 0px;
-}
-
 html,
 html body,
 html body *:not(#global-square-corners),
@@ -44,113 +28,6 @@ html body.cursor-hover .elastic-cursor:not(#global-square-corners) {
   background: transparent !important;
   box-shadow: none !important;
   filter: none !important;
-}
-
-:root {
-  /* Color tokens - unified palette (single source of truth) */
-  --ll-ink: #191d1b;
-  --ll-black: #000000;
-  --ll-paper: #d2d0ca;
-  --ll-white: #f4f2ec;
-  --ll-orange: #ff4f12;
-  --ll-light-muted: rgba(244, 242, 236, 0.62);
-  --ll-dark-muted: rgba(0, 0, 0, 0.58);
-  --ll-light-line: rgba(244, 242, 236, 0.18);
-  --ll-dark-line: rgba(0, 0, 0, 0.22);
-
-  /* Theme-specific colors (light/dark mode) */
-  --ll-theme-bg: #000000;
-  --ll-theme-ink: #f2f0e9;
-  --ll-theme-muted: rgba(242, 240, 233, 0.62);
-  --ll-theme-line: rgba(242, 240, 233, 0.2);
-
-  /* Action colors */
-  --ll-action-surface: rgba(244, 242, 236, 0.035);
-  --ll-action-line: rgba(244, 242, 236, 0.34);
-  --ll-action-ink: #f4f2ec;
-  --ll-action-hover: #f4f2ec;
-  --ll-action-hover-ink: #000000;
-
-  /* Navigation colors */
-  --ll-menu-surface: rgba(0, 0, 0, 0.94);
-  --ll-menu-ink: #f4f2ec;
-  --ll-menu-line: rgba(244, 242, 236, 0.06);
-
-  /* Fibonacci spacing scale approximates the golden ratio between steps. */
-  --ll-golden-ratio: 1.618;
-  --ll-golden-ratio-inverse: 0.618;
-  --space-1: 5px;
-  --space-2: 8px;
-  --space-3: 13px;
-  --space-4: 21px;
-  --space-5: 34px;
-  --space-6: 55px;
-  --space-7: 89px;
-  --space-8: 144px;
-  --space-9: 233px;
-  --ll-page-gutter: clamp(var(--space-4), 2.5vw, var(--space-6));
-  --ll-gutter: var(--ll-page-gutter);
-  --ll-grid-gap: clamp(var(--space-3), 1.65vw, var(--space-5));
-  --ll-section-space: clamp(var(--space-7), 10vw, var(--space-8));
-  --ll-section-space-compact: clamp(var(--space-6), 6vw, var(--space-7));
-  --ll-header-top: max(var(--space-3), env(safe-area-inset-top));
-  --ll-space-xs: var(--space-1);
-  --ll-space-sm: var(--space-2);
-  --ll-space-md: var(--space-3);
-  --ll-space-lg: var(--space-4);
-  --ll-space-xl: var(--space-5);
-  --ll-space-2xl: var(--space-6);
-
-  /* Typography tokens */
-  --ll-sans: "Gridlite", "Inventing", sans-serif;
-  /*! --ll-mono: "AuxMono-Regular", monospace; */
-  --ll-type-display: clamp(64px, 5.5vw, 80px);
-  --ll-type-h1: clamp(48px, 4.45vw, 64px);
-  --ll-type-h2: clamp(36px, 3.35vw, 48px);
-  --ll-type-h3: clamp(28px, 2.25vw, 32px);
-  --ll-type-h4: clamp(22px, 1.7vw, 24px);
-  --ll-type-body: 16px;
-  --ll-type-body-small: 14px;
-  --ll-type-button: 14px;
-  --ll-type-project-title: clamp(18px, 2.25vw, 20px);
-  --ll-type-service-statement: clamp(16px, 3.35vw, 18px);
-  --ll-type-pitch-heading: 96px;
-  --ll-type-compact-metadata: 12px;
-
-  /* Typography metrics */
-  --ll-leading-display: 1.05;
-  --ll-leading-h1: 1.1;
-  --ll-leading-h2: 1.15;
-  --ll-leading-h3: 1.25;
-  --ll-leading-h4: 1.3;
-  --ll-leading-body: 1.6;
-  --ll-leading-small: 1.5;
-  --ll-leading-label: 1.4;
-  --ll-leading-button: 1.1;
-
-  /* Letter spacing */
-  --ll-ls-tight: -0.02em;
-  --ll-ls-normal: 0.01em;
-  --ll-ls-wide: 0.1em;
-  --ll-ls-wider: 0.16em;
-
-  /* Animation tokens */
-  --ll-ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --ll-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ll-ease-smooth: cubic-bezier(0.65, 0, 0.35, 1);
-  --ll-ease-press: cubic-bezier(0.22, 0.75, 0.28, 1);
-  --ll-duration-micro: 180ms;
-  --ll-duration-label: 240ms;
-  --ll-duration-control: 240ms;
-  --ll-duration-component: 420ms;
-  --ll-duration-transform: 500ms;
-
-  /* Component tokens */
-  --ll-control-height: 50px;
-  --ll-radius: 0px;
-  --ll-control-radius: var(--ll-radius);
-  --ll-control-padding-x: 16px;
-  --ll-icon-size: 16px;
 }
 
 *,
@@ -257,7 +134,7 @@ ul {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2147483646;
+  z-index: 2147483647;
   opacity: 0;
   pointer-events: none;
   will-change: transform;
@@ -284,7 +161,7 @@ ul {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2147483646;
+  z-index: 2147483647;
   width: 54px;
   height: 54px;
   margin: -27px 0 0 -27px;
@@ -1712,7 +1589,7 @@ body.home-index:not(.is-past-home-hero) .ll-work-dock {
   isolation: isolate;
   overflow: hidden;
   padding: clamp(80px, 8vw, 140px) var(--ll-gutter) clamp(90px, 9vw, 150px);
-  background-color: #181b19;
+  background-color: var(--ll-brand-charcoal);
   color: var(--ll-white);
 }
 
@@ -9847,6 +9724,11 @@ body.ll-error-page {
 }
 
 .ll-error-page__content a:is(:hover, :focus-visible) {
-  border-color: var(--ll-orange);
-  background: var(--ll-orange);
+  border-color:var(--ll-orange);
+  background:var(--ll-orange)
+}
+
+.elastic-cursor-dot,
+.elastic-cursor-webgl {
+  display: none !important;
 }

@@ -325,6 +325,7 @@
       function getCursorIcon(target) {
         if (!target) return "dot";
         var explicit = target.getAttribute("data-cursor");
+        if (explicit === "none") return "dot";
         if (explicit && cursorIcons[explicit]) return explicit;
         if (target.matches("[data-ll-sound-toggle]")) {
           return target.getAttribute("aria-pressed") === "true" ? "sound-off" : "sound-on";
@@ -367,7 +368,17 @@
 
       function getInteractiveTarget(node) {
         if (!node || typeof node.closest !== "function") return null;
-        return node.closest(interactiveSelector);
+        var candidate = node.closest(interactiveSelector);
+        if (!candidate) return null;
+        if (candidate.closest("[data-cursor='none'], [data-disable-cursor='true']")) {
+          return null;
+        }
+        return candidate;
+      }
+
+      function isCursorDisabledTarget(node) {
+        return !!(node && typeof node.closest === "function" &&
+          node.closest("[data-disable-cursor='true']"));
       }
 
       function setHoverState(isHover) {
@@ -383,6 +394,7 @@
 
       function isTightTarget(target) {
         if (!target || typeof target.getAttribute !== "function") return false;
+        if (target.getAttribute("data-cursor") === "none") return false;
         return target.getAttribute("data-cursor") === "tight";
       }
 
@@ -401,7 +413,26 @@
         setCursorIcon("dot");
       }
 
+      function setCursorDisabled(disabled) {
+        if (disabled) {
+          if (!body.classList.contains("cursor-disabled")) {
+            body.classList.add("cursor-disabled");
+            body.classList.remove("has-elastic-cursor");
+            onLeaveWindow();
+          }
+          return;
+        }
+
+        if (body.classList.contains("cursor-disabled")) {
+          body.classList.remove("cursor-disabled");
+          body.classList.add("has-elastic-cursor");
+        }
+      }
+
       function onOut(e) {
+        var disabledTarget = isCursorDisabledTarget(e.relatedTarget);
+        setCursorDisabled(disabledTarget);
+        if (disabledTarget || isCursorDisabledTarget(e.target)) return;
         if (isMenuTransitioning()) return;
         var fromInteractive = getInteractiveTarget(e.target);
         if (!fromInteractive) return;
@@ -503,6 +534,11 @@
 
       function onMove(e) {
         if (suspended) return;
+        if (isCursorDisabledTarget(e.target)) {
+          setCursorDisabled(true);
+          return;
+        }
+        setCursorDisabled(false);
         state.tx = e.clientX;
         state.ty = e.clientY;
         if (webglCursor) webglCursor.move(e.clientX, e.clientY);
@@ -515,6 +551,11 @@
 
       function onOver(e) {
         if (suspended) return;
+        if (isCursorDisabledTarget(e.target)) {
+          setCursorDisabled(true);
+          return;
+        }
+        setCursorDisabled(false);
         if (isMenuTransitioning()) return;
         var interactive = getInteractiveTarget(e.target);
         if (!interactive) return;
@@ -525,7 +566,8 @@
         startAnimation();
       }
 
-      function onPointerDown() {
+      function onPointerDown(e) {
+        if (isCursorDisabledTarget(e.target)) return;
         if (!state.activeTarget) return;
         body.classList.add("cursor-click");
         setCursorIcon("click");

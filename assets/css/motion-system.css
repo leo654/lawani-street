@@ -111,7 +111,6 @@ html.ll-page-leaving .ll-page-transition::before,
     opacity var(--motion-control) ease,
     transform var(--motion-reveal) var(--motion-ease-out);
   transition-delay: var(--ll-reveal-delay, 0ms);
-  will-change: opacity, transform;
 }
 
 .js .ll-reveal.is-visible {

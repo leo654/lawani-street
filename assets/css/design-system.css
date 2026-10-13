@@ -1,4 +1,4 @@
-/* Lawani design system: shared tokens and type - aligned with lamalama-ui.css
+/* Lawani design system: shared tokens and type - aligned with design-tokens.css
    ========================================
    Design System Architecture
    ========================================
@@ -7,7 +7,7 @@
    these tokens rather than hardcoding values.
 
    Token Naming Convention:
-   - ll-: Brand prefix (Lawani) - defined in lamalama-ui.css
+   - ll-: Brand prefix (Lawani) - defined in design-tokens.css
    - ds-: Design system alias (for semantic abstraction)
    - space-: Spacing scale (Fibonacci-based)
    - type-: Typography scale

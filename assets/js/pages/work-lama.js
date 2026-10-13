@@ -157,6 +157,10 @@
       }
 
       if (expanded) {
+        detail.querySelectorAll('img[loading="lazy"]').forEach(function (image) {
+          image.loading = "eager";
+        });
+
         projects.forEach(function (other) {
           if (other !== project && other.classList.contains("is-expanded")) setExpanded(other, false, false);
         });

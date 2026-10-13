@@ -26,13 +26,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
     <link rel="preload" href="assets/fonts/GridlitePEVFWeb-All.woff2" as="font" type="font/woff2" crossorigin>
     <script>
-      document.documentElement.classList.replace("no-js", "js");
       (function () {
         var mode = "light";
-        try {
-          localStorage.setItem("ll-theme-mode", "light");
-          localStorage.setItem("ll-theme-default-version", "light-20261008");
-        } catch (error) {}
         var theme = mode;
         document.documentElement.setAttribute("data-theme-mode", mode);
         document.documentElement.setAttribute("data-theme", theme);
@@ -40,15 +35,7 @@
         if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#000000");
       })();
     </script>
-    <link rel="stylesheet" href="assets/css/lamalama-ui.min.css?v=20260913-live-2">
-    <link rel="stylesheet" href="assets/css/sound-toggle.css?v=20260610-3">
-    <link rel="stylesheet" href="assets/css/case-study.css?v=20261008-home-button-system-1">
-    <link rel="stylesheet" href="assets/css/benchmark-system.css?v=20260913-live-2">
-    <link rel="stylesheet" href="assets/css/motion-system.css?v=20260913-live-2">
-    <link rel="stylesheet" href="assets/css/pitchdeck-overlay.css?v=20260911-production-1">
-    <link rel="stylesheet" href="assets/css/theme-system.css?v=20261009-lamalama-menu-8">
-    <link rel="stylesheet" href="assets/css/site-font.css?v=20261008-lamalama-button-system-5">
-    <script src="assets/js/modules/gridlite-arrow-glyphs.js?v=20261008-gridlite-arrow-1" defer></script>
+    <link rel="stylesheet" href="assets/css/entries/case-study.css">
   </head>
 
   <body class="case-study case-study--kicksjoint">
@@ -82,7 +69,7 @@
       <span data-cs-scroll-progress></span>
     </div>
 
-    <div class="ll-mobile-menu" id="ll-mobile-menu" aria-hidden="true" data-ll-mobile-menu>
+    <div class="ll-mobile-menu" id="ll-mobile-menu" aria-hidden="true" inert data-ll-mobile-menu>
       <nav class="ll-mobile-menu__nav" aria-label="Site navigation">
         <a class="ll-menu-row" href="work.html">
           <span>Work</span>
@@ -99,7 +86,7 @@
             <span>Expertise</span>
             <span class="ll-menu-group__plus" aria-hidden="true"><i></i><i></i></span>
           </button>
-          <div class="ll-menu-group__items" id="ll-menu-services" aria-hidden="true" data-ll-submenu>
+          <div class="ll-menu-group__items" id="ll-menu-services" aria-hidden="true" inert data-ll-submenu>
             <div>
               <a href="index.html#service-branding"><span>Branding</span><span>01</span></a>
               <a href="index.html#service-digital"><span>Digital</span><span>02</span></a>
@@ -156,8 +143,19 @@
 
       <section class="cs-story" aria-label="Project overview" data-ll-section-note="Project story">
         <div class="cs-story__copy ll-reveal">
-          <p class="cs-story__lead">Kicksjoint is a culture-led sneaker marketplace built around movement, community and the energy of the court. We shaped a confident identity and flexible digital world designed to move across campaigns, commerce and everyday culture.</p>
+          <p class="cs-story__lead">Kicksjoint is a culture-led sneaker marketplace built around movement, community and the energy of the court. We gave it a confident identity and a flexible digital world that moves across campaigns, commerce and everyday culture.
+            Founded in 2018 by a founder passionate about basketball, Kicksjoint grew through players, collectors and fans. The brand had momentum, but its look, tone and experience varied from one touchpoint to the next.
+          </p>
           <div class="cs-story__credits">
+           <p>[ Challenge ]</p> 
+            <!-- <dl><div><dt>Creative direction</dt><dd>Lawani St.</dd></div></dl> -->
+          </div>
+          <br>
+          <p class="cs-story__lead">
+           Sneaker marketplaces tend to look alike: product grids, price tags, urgency banners. Kicksjoint needed a recognisable identity, one system that could work across storefront, campaigns and social, and an experience that rewarded community as much as checkout.</p>
+
+
+           <div class="cs-story__credits">
             <p>[ Credits ]</p>
             <dl><div><dt>Creative direction</dt><dd>Lawani St.</dd></div></dl>
           </div>
@@ -175,6 +173,12 @@
           </figure>
         </div>
 
+        <div class="cs-gallery__row cs-gallery__row--feature cs-gallery__row--logo-animation">
+          <figure>
+            <iframe src="KICKSJOINT_Animated_Logo_Blinds.html?embed=1&amp;v=20261011-red-black-1" title="Animated Kicksjoint logo" loading="lazy" scrolling="no"></iframe>
+          </figure>
+        </div>
+
         <div class="cs-gallery__row cs-gallery__row--pair cs-gallery__row--square">
           <figure>
             <img src="assets/img/picture/kicksjoint/1.png" alt="Kicksjoint monogram application" width="1138" height="1138" loading="lazy" decoding="async">
@@ -189,12 +193,14 @@
             <img src="assets/img/picture/kicksjoint/8.png" alt="Kicksjoint identity construction" width="2684" height="1509" loading="eager" fetchpriority="low" decoding="async">
           </figure>
         </div>
-        <div class="cs-gallery__row cs-gallery__row--pair cs-gallery__row--landscape">
+        <div class="cs-gallery__row cs-gallery__row--feature">
           <figure>
             <img src="assets/img/picture/kicksjoint/7.png" alt="Kicksjoint campaign composition" width="2684" height="1509" loading="lazy" decoding="async">
           </figure>
-          <figure>
-            <img src="assets/img/picture/kicksjoint/3.png" alt="Kicksjoint campaign artwork" width="5371" height="3019" loading="lazy" decoding="async">
+        </div>
+        <div class="cs-gallery__row cs-gallery__row--feature">
+          <figure class="cs-gallery__media--animated-icons">
+            <iframe src="kicksjoint-icons-animated-v6.html?embed=1&amp;v=20261011-red-black-1" title="Looping Kicksjoint animated brand icons" loading="lazy" scrolling="no"></iframe>
           </figure>
         </div>
  <div class="cs-gallery__row cs-gallery__row--feature">
@@ -315,7 +321,7 @@
             <h2>Let's Talk.</h2>
             <a class="cs-footer__contact-card ll-button ll-button--media" href="mailto:accounts@lawani.st">
               <span class="cs-footer__portrait">
-                <img src="assets/img/me.gif" alt="" width="500" height="594">
+                <img src="assets/img/me.gif" alt="" width="500" height="594" loading="lazy" decoding="async">
               </span>
               <span>accounts@lawani.st</span>
             </a>
@@ -368,10 +374,20 @@
       </footer>
     </main>
 
-    <script src="assets/js/elastic-cursor.js?v=20260610-sound-toggle-1" defer></script>
-    <script src="assets/js/modules/motion-system.js?v=20260913-live-2" defer></script>
-    <script src="assets/js/modules/pitchdeck-overlay.js?v=20260911-production-1" defer></script>
-    <script src="assets/js/pages/lamalama-ui.js?v=20261009-interaction-refactor-1" defer></script>
-    <script src="assets/js/pages/case-study-ui.js?v=20260913-live-2" defer></script>
+    <script type="module" src="assets/js/site-entry.js"></script>
+    <script>
+      window.addEventListener("message", (event) => {
+        const iconsFrame = document.querySelector(".cs-gallery__media--animated-icons iframe");
+        const logoFrame = document.querySelector(".cs-gallery__row--logo-animation iframe");
+        if (event.source === iconsFrame?.contentWindow && event.data?.type === "kicksjoint-icons-height") {
+          const height = Number(event.data.height);
+          if (Number.isFinite(height) && height >= 200 && height <= 5000) iconsFrame.style.height = `${height}px`;
+        } else if (event.source === iconsFrame?.contentWindow && event.data?.type === "kicksjoint-icons-invert" && typeof event.data.inverted === "boolean") {
+          iconsFrame.parentElement?.toggleAttribute("data-inverted", event.data.inverted);
+        } else if (event.source === logoFrame?.contentWindow && event.data?.type === "kicksjoint-logo-invert" && typeof event.data.inverted === "boolean") {
+          logoFrame.parentElement?.toggleAttribute("data-inverted", event.data.inverted);
+        }
+      });
+    </script>
   </body>
 </html>

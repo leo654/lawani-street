@@ -1,2 +1,14 @@
 # Optional source assets retained in the repository but omitted from the
 # GitHub Pages artifact can be listed here when needed.
+assets/video/herohhh.mp4
+assets/video/herojjj.mp4
+assets/video/herojjj.mp4
+assets/img/picture/ademi/22.png
+assets/img/picture/bg1.png
+assets/img/picture/tyol/1b.png
+assets/img/picture/tyol/12.png
+assets/img/picture/tyol/4.png
+assets/img/picture/tyol/6.png
+assets/img/picture/vatug/2.png
+assets/img/picture/dsl/f.png
+assets/img/picture/kicksjoint/11b.png

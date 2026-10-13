@@ -4,71 +4,6 @@
   if (!document.body || !document.body.classList.contains("case-study")) return;
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  document.documentElement.classList.add("cs-preloader-active");
-
-  function initCasePreloader() {
-    var body = document.body;
-
-    function revealImmediately() {
-      document.documentElement.classList.remove("cs-preloader-active");
-      body.classList.remove("cs-preloading");
-      body.classList.add("cs-motion-ready", "cs-intro-complete");
-    }
-
-    // A page-to-page cover already owns entry; do not run a second loader.
-    if (reduceMotion || document.querySelector(".ll-page-transition.is-covering")) {
-      revealImmediately();
-      return;
-    }
-
-    body.classList.add("cs-preloading");
-
-    var loader = document.createElement("div");
-    loader.className = "cs-page-loader";
-    loader.setAttribute("aria-hidden", "true");
-    loader.innerHTML =
-      '<span class="cs-page-loader__counter">00%</span>' +
-      '<span class="cs-page-loader__mark">L:</span>';
-    body.insertBefore(loader, body.firstChild);
-
-    var counter = loader.querySelector(".cs-page-loader__counter");
-    var startedAt = performance.now();
-    var counterDuration = 180;
-    var finished = false;
-
-    function finish() {
-      if (finished) return;
-      finished = true;
-      if (counter) counter.textContent = "100%";
-      loader.classList.add("is-mark-visible");
-
-      window.setTimeout(function () {
-        body.classList.add("cs-motion-ready");
-        loader.classList.add("is-exiting");
-      }, 80);
-
-      window.setTimeout(function () {
-        loader.remove();
-        document.documentElement.classList.remove("cs-preloader-active");
-        body.classList.remove("cs-preloading");
-        body.classList.add("cs-intro-complete");
-      }, 340);
-    }
-
-    function updateCounter(now) {
-      if (finished) return;
-      var progress = Math.min(1, Math.max(0, (now - startedAt) / counterDuration));
-      var eased = 1 - Math.pow(1 - progress, 3);
-      var value = Math.min(100, Math.floor(eased * 100));
-      if (counter) counter.textContent = String(value).padStart(2, "0") + "%";
-
-      if (progress < 1) window.requestAnimationFrame(updateCounter);
-      else finish();
-    }
-
-    window.requestAnimationFrame(updateCounter);
-    window.setTimeout(finish, 500);
-  }
 
   function initCaseStudyEffects() {
     var progress = document.querySelector("[data-cs-scroll-progress]");
@@ -140,11 +75,13 @@
 
   function initCaseReveals() {
     var figures = Array.prototype.slice.call(document.querySelectorAll(".cs-gallery figure"));
+    var revealNodes = Array.prototype.slice.call(document.querySelectorAll(".case-study .ll-reveal"));
+    var targets = Array.from(new Set(figures.concat(revealNodes)));
     var storyCopy = document.querySelector(".cs-story__copy");
     var storyMedia = document.querySelector(".cs-story__media");
     if (storyCopy) storyCopy.style.setProperty("--ll-reveal-delay", "40ms");
     if (storyMedia) storyMedia.style.setProperty("--ll-reveal-delay", "150ms");
-    if (!figures.length) return;
+    if (!targets.length) return;
 
     document.querySelectorAll(".cs-gallery__row").forEach(function (row) {
       Array.prototype.slice.call(row.querySelectorAll("figure")).forEach(function (figure, index) {
@@ -152,10 +89,13 @@
       });
     });
 
+    function reveal(target) {
+      if (target.classList.contains("ll-reveal")) target.classList.add("is-visible");
+      if (target.matches(".cs-gallery figure")) target.classList.add("is-inview");
+    }
+
     if (reduceMotion || !("IntersectionObserver" in window)) {
-      figures.forEach(function (figure) {
-        figure.classList.add("is-inview");
-      });
+      targets.forEach(reveal);
       return;
     }
 
@@ -163,21 +103,48 @@
       function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-inview");
+          reveal(entry.target);
           observer.unobserve(entry.target);
         });
       },
       { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
     );
 
-    figures.forEach(function (figure) {
-      observer.observe(figure);
+    targets.forEach(function (target) {
+      observer.observe(target);
+    });
+    document.body.classList.add("cs-reveals-ready");
+  }
+
+  function initGalleryLayout() {
+    if (document.body.classList.contains("case-study--kicksjoint")) return;
+
+    var widePairCount = 0;
+    document.querySelectorAll(".cs-gallery__row--pair").forEach(function (row) {
+      var figures = Array.prototype.slice.call(row.querySelectorAll(":scope > figure"));
+      if (figures.length !== 2) return;
+
+      var images = figures.map(function (figure) {
+        return figure.querySelector("img");
+      });
+      if (images.some(function (image) { return !image; })) return;
+
+      var isWidePair = images.every(function (image) {
+        var width = image.naturalWidth || Number(image.getAttribute("width"));
+        var height = image.naturalHeight || Number(image.getAttribute("height"));
+        return width > 0 && height > 0 && width / height >= 1.35;
+      });
+      if (!isWidePair) return;
+
+      if (widePairCount % 2 === 1) row.classList.add("cs-gallery__row--feature-pair");
+      widePairCount += 1;
     });
   }
 
   function ready() {
-    initCasePreloader();
+    document.body.classList.add("cs-motion-ready", "cs-intro-complete");
     initCaseStudyEffects();
+    initGalleryLayout();
     initVideoPlayback();
     initCaseReveals();
   }

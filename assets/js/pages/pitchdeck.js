@@ -26,17 +26,12 @@
     var embedded = window.self !== window.top || new URLSearchParams(window.location.search).get("embedded") === "1";
     var overlayActive = !embedded;
     var activeIndex = 0;
-    var navigationFrame = 0;
     var resizeFrame = 0;
     var wheelTotal = 0;
     var wheelTimer = 0;
-    var previewTimer = 0;
-    var navigationLocked = false;
     var closing = false;
     var scrollFrame = 0;
     var scrollSettleTimer = 0;
-    var revealedSlides = new WeakSet();
-    var revealFrame = 0;
     var clientMarquee = deck.querySelector(".ll-deck-client-marquee");
     var marqueeGroups = clientMarquee
       ? Array.prototype.slice.call(clientMarquee.querySelectorAll("ul"))
@@ -143,45 +138,6 @@
       }
     }
 
-    function stopContentAnimations() {
-      if (revealFrame) window.cancelAnimationFrame(revealFrame);
-      revealFrame = 0;
-      slides.forEach(function (slide) {
-        slide.classList.remove("is-revealing");
-        var cultureBoard = slide.querySelector(".ll-culture-board.is-revealing");
-        if (cultureBoard) cultureBoard.classList.remove("is-revealing");
-      });
-    }
-
-    function revealGroups(slide) {
-      var cultureBoard = slide.querySelector(".ll-culture-board");
-      var container = cultureBoard || slide;
-      return Array.prototype.slice.call(container.children).filter(function (element) {
-        return !element.classList.contains("ll-deck-slide__video") &&
-          !element.classList.contains("ll-deck-slide__veil") &&
-          !element.classList.contains("ll-linkedin-notice") &&
-          !element.classList.contains("ll-deck-client-marquee") &&
-          !element.classList.contains("ll-visually-hidden");
-      });
-    }
-
-    function revealSlide(slide) {
-      stopContentAnimations();
-      if (!slide || revealedSlides.has(slide) || reducedMotion()) return;
-      revealedSlides.add(slide);
-
-      revealGroups(slide).forEach(function (element, index) {
-        element.style.setProperty("--deck-reveal-delay", Math.min(index * 40, 120) + "ms");
-      });
-
-      revealFrame = window.requestAnimationFrame(function () {
-        revealFrame = 0;
-        slide.classList.add("is-revealing");
-        var cultureBoard = slide.querySelector(".ll-culture-board");
-        if (cultureBoard) cultureBoard.classList.add("is-revealing");
-      });
-    }
-
     function syncMedia() {
       slides.forEach(function (slide, index) {
         Array.prototype.forEach.call(slide.querySelectorAll("video"), function (video) {
@@ -219,7 +175,7 @@
       if (persistentMobileRail.matches && chapterButtons[index]) {
         var activeChapter = chapterButtons[index];
         var chapterLeft = activeChapter.offsetLeft - ((chapterNav.clientWidth - activeChapter.offsetWidth) / 2);
-        chapterNav.scrollTo({ left: Math.max(0, chapterLeft), behavior: reducedMotion() ? "auto" : "smooth" });
+        chapterNav.scrollTo({ left: Math.max(0, chapterLeft), behavior: "auto" });
       }
 
       currentLabels.forEach(function (label) { label.textContent = format(index); });
@@ -227,29 +183,19 @@
       if (previousButton) previousButton.disabled = index === 0;
       if (nextButton) nextButton.disabled = index === slides.length - 1;
       deck.classList.toggle("is-dark-chapter", slides[index].matches(".ll-deck-slide--vibe"));
-      deck.classList.toggle("is-culture-fullscreen", slides[index].matches(".ll-deck-slide--work"));
-    }
-
-    function easeDeckSweep(progress) {
-      return progress < 0.5
-        ? 16 * progress * progress * progress * progress * progress
-        : 1 - (Math.pow(-2 * progress + 2, 5) / 2);
+      deck.classList.toggle("is-contact-chapter", slides[index].matches(".ll-deck-slide--contact"));
     }
 
     function cancelNavigation() {
-      if (navigationFrame) window.cancelAnimationFrame(navigationFrame);
       if (scrollFrame) window.cancelAnimationFrame(scrollFrame);
       window.clearTimeout(scrollSettleTimer);
-      navigationFrame = 0;
       scrollFrame = 0;
       scrollSettleTimer = 0;
-      navigationLocked = false;
-      deck.classList.remove("is-navigating");
     }
 
     function syncActiveFromScroll() {
       scrollSettleTimer = 0;
-      if (!horizontalDeck.matches || navigationLocked || closing) return;
+      if (!horizontalDeck.matches || closing) return;
 
       var index = nearestSlideIndex(viewport.scrollLeft);
       if (index === activeIndex) return;
@@ -258,11 +204,10 @@
       setActiveVisuals(activeIndex);
       syncMedia();
       window.history.replaceState(null, "", "#" + slides[activeIndex].id);
-      revealSlide(slides[activeIndex]);
     }
 
     function queueScrollSync() {
-      if (!horizontalDeck.matches || navigationLocked || closing || scrollFrame) return;
+      if (!horizontalDeck.matches || closing || scrollFrame) return;
 
       scrollFrame = window.requestAnimationFrame(function () {
         scrollFrame = 0;
@@ -271,60 +216,26 @@
       });
     }
 
-    function animateTo(index, focusSlide) {
+    function navigateTo(index, focusSlide) {
       cancelNavigation();
-      stopContentAnimations();
-      var start = currentPosition();
-      var target = positionFor(slides[index]);
-      var distance = target - start;
-
-      if (reducedMotion() || Math.abs(distance) < 1) {
-        setPosition(target);
-        revealSlide(slides[index]);
-        if (focusSlide) slides[index].focus({ preventScroll: true });
-        return;
-      }
-
-      var startedAt = performance.now();
-      var duration = 420;
-      navigationLocked = true;
-      deck.classList.add("is-navigating");
-
-      function tick(now) {
-        var progress = Math.min(1, (now - startedAt) / duration);
-        setPosition(start + (distance * easeDeckSweep(progress)));
-        if (progress < 1) {
-          navigationFrame = window.requestAnimationFrame(tick);
-          return;
-        }
-        setPosition(target);
-        navigationFrame = 0;
-        navigationLocked = false;
-        deck.classList.remove("is-navigating");
-        revealSlide(slides[index]);
-        if (focusSlide) slides[index].focus({ preventScroll: true });
-      }
-
-      navigationFrame = window.requestAnimationFrame(tick);
+      setPosition(positionFor(slides[index]));
+      if (focusSlide) slides[index].focus({ preventScroll: true });
     }
 
     function goTo(nextIndex, options) {
       var settings = options || {};
       var index = clamp(nextIndex);
-      if (navigationLocked) return;
       if (index === activeIndex && !settings.force) return;
 
       activeIndex = index;
       setActiveVisuals(activeIndex);
       syncMedia();
       window.history.replaceState(null, "", "#" + slides[activeIndex].id);
-      animateTo(activeIndex, Boolean(settings.focusSlide));
+      navigateTo(activeIndex, Boolean(settings.focusSlide));
       if (settings.closeMenu && !desktopRail.matches) setMenu(false, false);
-      if (activeIndex === slides.length - 1 && desktopRail.matches) setMenu(true, false);
     }
 
     function move(direction, focusSlide) {
-      if (navigationLocked) return;
       var target = clamp(activeIndex + direction);
       if (target !== activeIndex) goTo(target, { focusSlide: Boolean(focusSlide) });
     }
@@ -544,7 +455,6 @@
 
       closing = true;
       cancelNavigation();
-      stopContentAnimations();
       syncMedia();
       deck.classList.add("is-leaving");
 
@@ -558,15 +468,7 @@
     setupWorldClock();
 
     menuButton.addEventListener("click", function () {
-      if (navigationLocked) return;
-      window.clearTimeout(previewTimer);
       setMenu(!deck.classList.contains("is-rail-open"), false);
-    });
-
-    menuButton.addEventListener("mouseenter", function () {
-      if (!desktopRail.matches) return;
-      window.clearTimeout(previewTimer);
-      setMenu(true, false);
     });
 
     rail.addEventListener("mouseleave", function () {
@@ -575,7 +477,6 @@
 
     chapterButtons.forEach(function (button) {
       button.addEventListener("click", function () {
-        window.clearTimeout(previewTimer);
         goTo(Number(button.getAttribute("data-deck-target")), { closeMenu: true });
       });
       enhanceControl(button);
@@ -611,8 +512,6 @@
     viewport.addEventListener("wheel", function (event) {
       if (horizontalDeck.matches || closing) return;
       event.preventDefault();
-      if (navigationLocked) return;
-
       wheelTotal += event.deltaY;
       window.clearTimeout(wheelTimer);
       wheelTimer = window.setTimeout(function () { wheelTotal = 0; }, 180);
@@ -682,21 +581,13 @@
           closing = false;
           deck.classList.remove("is-leaving");
           syncMedia();
-          revealSlide(slides[activeIndex]);
           slides[activeIndex].focus({ preventScroll: true });
 
-          if (desktopRail.matches && !reducedMotion()) {
-            window.clearTimeout(previewTimer);
-            setMenu(true, false);
-            previewTimer = window.setTimeout(function () { setMenu(false, false); }, 2500);
-          }
         }
 
         if (event.data.type === "lawani:pitchdeck-deactivate") {
           overlayActive = false;
-          window.clearTimeout(previewTimer);
           setMenu(false, false);
-          stopContentAnimations();
           syncMedia();
         }
       });
@@ -725,14 +616,9 @@
       document.body.classList.add("is-deck-ready");
       syncMedia();
       if (overlayActive) {
-        revealSlide(slides[activeIndex]);
         slides[activeIndex].focus({ preventScroll: true });
       }
       if (embedded) window.parent.postMessage({ type: "lawani:pitchdeck-ready" }, "*");
-      if (desktopRail.matches && !reducedMotion() && !embedded) {
-        setMenu(true, false);
-        previewTimer = window.setTimeout(function () { setMenu(false, false); }, 2500);
-      }
     });
   }
 

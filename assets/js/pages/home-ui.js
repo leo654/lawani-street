@@ -66,10 +66,24 @@
     if (!hero) return;
 
     var video = hero.querySelector("[data-ll-hero-video]");
-    var heroVideoSuppressed = function () {
+    var videoToggle = hero.querySelector("[data-ll-hero-video-toggle]");
+    var heroVisible = true;
+    var heroVideoSuppressed = function (userInitiated) {
       return document.body.classList.contains("ll-pitch-overlay-open") ||
-        document.body.classList.contains("ll-showreel-open");
+        document.body.classList.contains("ll-showreel-open") ||
+        (reduceMotion && !userInitiated) ||
+        document.hidden ||
+        !heroVisible ||
+        (video && video.dataset.userPaused === "true");
     };
+
+    function playHeroVideo(userInitiated) {
+      if (!video || heroVideoSuppressed(userInitiated)) return;
+      video.play().catch(function (error) {
+        if (error.name === "AbortError") return;
+        console.warn("The hero film could not be played.", error);
+      });
+    }
 
     function updateHeroState() {
       document.body.classList.toggle("is-past-home-hero", window.scrollY > hero.offsetHeight * 0.55);
@@ -89,6 +103,28 @@
       scheduleMotionFrame("home-hero", updateHeroState);
     }
 
+    function syncVideoToggle() {
+      if (!videoToggle || !video) return;
+      var paused = video.paused;
+      videoToggle.textContent = paused ? "Play film" : "Pause film";
+      videoToggle.setAttribute("aria-label", paused ? "Play hero film" : "Pause hero film");
+    }
+
+    if (video && videoToggle) {
+      videoToggle.addEventListener("click", function () {
+        if (video.paused) {
+          video.dataset.userPaused = "false";
+          playHeroVideo(true);
+        } else {
+          video.dataset.userPaused = "true";
+          video.pause();
+        }
+      });
+      video.addEventListener("play", syncVideoToggle);
+      video.addEventListener("pause", syncVideoToggle);
+      syncVideoToggle();
+    }
+
     updateHeroState();
     window.addEventListener("scroll", requestHeroUpdate, { passive: true });
     window.addEventListener("resize", requestHeroUpdate, { passive: true });
@@ -97,16 +133,75 @@
 
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) video.pause();
-      else if (!heroVideoSuppressed()) video.play().catch(function () {});
+      else playHeroVideo();
     });
 
-    // The hero film plays independently of page scrolling.
-    video.play().catch(function() {});
+    if ("IntersectionObserver" in window) {
+      var heroObserver = new IntersectionObserver(function (entries) {
+        heroVisible = entries[0].isIntersecting;
+        if (heroVisible) playHeroVideo();
+        else video.pause();
+      });
+      heroObserver.observe(hero);
+    } else {
+      playHeroVideo();
+    }
+  }
+
+  function initFooterParallax() {
+    var footer = document.querySelector(".ll-footer");
+    var marquee = footer && footer.querySelector(".ll-footer__marquee");
+    if (!footer || !marquee || reduceMotion) return;
+
+    var footerCopy = Array.prototype.slice.call(footer.querySelectorAll(
+      ".ll-footer__studio, .ll-footer__project-cta, .ll-footer__year"
+    ));
+
+    Promise.resolve(Boolean(window.gsap && window.ScrollTrigger)).then(function (loaded) {
+      if (!loaded || !window.gsap || !window.ScrollTrigger) {
+        console.warn("GSAP footer animation is unavailable; the footer remains static.");
+        return;
+      }
+
+      window.gsap.registerPlugin(window.ScrollTrigger);
+      var timeline = window.gsap.timeline({
+        scrollTrigger: {
+          trigger: footer,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+          onUpdate: function (self) {
+            window.__lawaniFooterScrollProgress = self.progress;
+          }
+        }
+      });
+
+      timeline.fromTo(marquee, {
+        y: function () { return window.innerWidth <= 560 ? 160 : 280; }
+      }, {
+        y: function () { return window.innerWidth <= 560 ? -160 : -280; },
+        ease: "none",
+        duration: 1
+      }, 0);
+
+      if (footerCopy.length) {
+        window.gsap.set(footerCopy, { autoAlpha: 0, y: 28 });
+        timeline.to(footerCopy, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.22,
+          stagger: 0.07,
+          ease: "power2.out",
+        }, 0.06);
+      }
+    });
   }
 
   function ready() {
     initServiceLinkState();
     initHomeHero();
+    initFooterParallax();
   }
 
   if (document.readyState === "loading") {

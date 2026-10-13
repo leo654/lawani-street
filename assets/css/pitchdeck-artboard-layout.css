@@ -215,7 +215,7 @@ body.ll-deck-page .ll-world-clock__time {
   display: block;
   color: #050505;
   font-family: var(--ll-sans);
-  font-size: clamp(104px, 20.8vw, 288px);
+  font-size: clamp(104px, 16vw, 288px);
   font-variant-numeric: lining-nums tabular-nums;
   font-weight: 700;
   letter-spacing: -0.085em;
@@ -393,12 +393,11 @@ body.ll-deck-page .ll-world-clock__city.is-home [data-clock-offset] {
 
 @media (max-width: 980px) and (min-width: 761px) {
   body.ll-deck-page .ll-world-clock {
-    --deck-page-x: 5vw;
     grid-template-rows: minmax(0, 0.72fr) 1px minmax(0, 1fr);
   }
 
   body.ll-deck-page .ll-world-clock__time {
-    font-size: clamp(120px, 21vw, 210px);
+    font-size: clamp(88px, 12vw, 120px);
   }
 
   body.ll-deck-page .ll-world-clock__heading {
@@ -431,7 +430,7 @@ body.ll-deck-page .ll-world-clock__city.is-home [data-clock-offset] {
     height: auto;
     min-height: 100%;
     grid-template-rows: auto 1px auto;
-    padding: 84px 20px 28px;
+    padding: 84px var(--deck-page-x) 28px;
   }
 
   body.ll-deck-page .ll-world-clock__hero {
@@ -449,7 +448,7 @@ body.ll-deck-page .ll-world-clock__city.is-home [data-clock-offset] {
   }
 
   body.ll-deck-page .ll-world-clock__time {
-    font-size: clamp(74px, 20vw, 112px);
+    font-size: clamp(42px, 13vw, 88px);
     letter-spacing: -0.08em;
   }
 
@@ -516,6 +515,7 @@ body.ll-deck-page .ll-world-clock__city.is-home [data-clock-offset] {
   }
 
   body.ll-deck-page .ll-world-clock__city {
+    min-width: 0;
     min-height: 124px;
     padding: 14px;
     border-radius: 14px;
@@ -532,7 +532,20 @@ body.ll-deck-page .ll-world-clock__city.is-home [data-clock-offset] {
   }
 
   body.ll-deck-page .ll-world-clock__city time {
-    font-size: clamp(20px, 6vw, 26px);
+    font-size: clamp(16px, 5vw, 22px);
+  }
+}
+
+@media (max-width: 420px) {
+  body.ll-deck-page .ll-world-clock__city > div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  html body.ll-deck-page #lets-talk .ll-world-clock__city h3 {
+    font-size: 10px;
+    white-space: normal;
   }
 }
 
@@ -690,7 +703,7 @@ body.ll-deck-page .ll-linkedin-notice__card.is-changing .ll-linkedin-notice__cop
   }
 
   body.ll-deck-page .ll-deck__stage {
-    inset: 8px 8px calc(var(--deck-mobile-nav-height) + 32px + env(safe-area-inset-bottom));
+    inset: 8px 8px calc(var(--deck-mobile-nav-height) + 32px + env(safe-area-inset-bottom)) 8px;
   }
 
   body.ll-deck-page .ll-deck__slides {
@@ -770,7 +783,7 @@ body.ll-deck-page .ll-linkedin-notice__card.is-changing .ll-linkedin-notice__cop
   body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters {
     height: var(--deck-mobile-nav-height);
     min-height: var(--deck-mobile-nav-height);
-    padding: 4px 0 0 !important;
+    padding: 4px !important;
     scroll-snap-type: x proximity;
   }
 
@@ -827,7 +840,7 @@ body.ll-deck-page .ll-linkedin-notice__card.is-changing .ll-linkedin-notice__cop
    Slide 03 is the reference: every chapter's content now uses the same
    left and right inset while full-bleed media remains full bleed. */
 body.ll-deck-page .ll-deck {
-  --deck-page-x: clamp(78px, 6.4vw, 128px);
+  --deck-page-x: clamp(78px, 7.5vw, 136px);
 }
 
 @media (min-width: 761px) {
@@ -837,8 +850,30 @@ body.ll-deck-page .ll-deck {
     left: var(--deck-page-x);
   }
 
+  body.ll-deck-page .ll-service-product {
+    top: var(--deck-page-x);
+    bottom: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-vibe-subject {
+    top: 8%;
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-slide__vibe-copy {
+    right: var(--deck-page-x);
+    left: var(--deck-page-x);
+    width: auto;
+  }
+
   body.ll-deck-page .ll-deck-slide.ll-deck-slide--profile {
     --profile-panel-x: 0px;
+  }
+
+  @media (min-width: 761px) and (max-height: 600px) {
+    body.ll-deck-page .ll-deck-vibe-subject {
+      top: 5%;
+    }
   }
 
   body.ll-deck-page .ll-deck-slide__profile-copy::after {
@@ -1068,37 +1103,13 @@ body.ll-deck-page .ll-deck-slide.ll-deck-slide--work {
   color: #161817;
 }
 
-body.ll-deck-page .ll-deck.is-culture-fullscreen {
-  inset: 0;
-  padding: 0;
-}
-
-html.ll-deck-embedded body.ll-deck-page .ll-deck.is-culture-fullscreen {
-  inset: 0;
-}
-
-body.ll-deck-page .ll-deck.is-culture-fullscreen .ll-deck__stage,
-body.ll-deck-page .ll-deck-slide--work {
-  border-radius: 0;
-}
-
-body.ll-deck-page .ll-deck.is-culture-fullscreen .ll-deck__stage {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  transition:
-    left var(--ll-duration-component) var(--deck-motion),
-    transform var(--ll-duration-component) var(--deck-motion),
-    filter 360ms ease;
-}
-
 body.ll-deck-page .ll-culture-board {
   display: grid;
   width: 100%;
   height: 100%;
   grid-template-rows: auto auto minmax(0, 1fr) auto;
   gap: 0;
-  padding: clamp(38px, 4.8vh, 52px) var(--deck-page-x) var(--deck-page-bottom);
+  padding: 25px var(--deck-page-x) 25px !important;
   overflow: hidden;
   background: #fff;
   color: #161817;
@@ -1153,7 +1164,7 @@ body.ll-deck-page .ll-culture-board__heading h2 {
 body.ll-deck-page .ll-culture-board__heading nav {
   display: flex;
   gap: clamp(18px, 2.8vw, 42px);
-  color: #9a9c99;
+  color: #686b66;
   font-family: var(--ll-sans) !important;
   font-size: clamp(8px, .62vw, 10px);
   white-space: nowrap;
@@ -1213,7 +1224,7 @@ body.ll-deck-page .ll-culture-card h3 {
 body.ll-deck-page .ll-culture-card__copy {
   max-width: 42ch;
   margin: 0;
-  color: #949691;
+  color: #62665f;
   font-family: var(--ll-sans) !important;
   font-size: clamp(10px, .76vw, 13px);
   line-height: 1.65;
@@ -1231,17 +1242,20 @@ body.ll-deck-page .ll-culture-card__actions {
 
 body.ll-deck-page .ll-culture-card__read {
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   gap: 8px;
   color: #262825;
   font-family: var(--ll-sans) !important;
   font-size: clamp(10px, .72vw, 12px);
   text-decoration: none;
+  white-space: nowrap;
 }
 
 body.ll-deck-page .ll-culture-card__read .ll-icon {
   width: 12px;
   height: 12px;
+  flex: 0 0 12px;
   opacity: .65;
   transition: transform 220ms ease, opacity 220ms ease;
 }
@@ -1345,13 +1359,18 @@ body.ll-deck-page .ll-culture-board__navigation > div {
     min-height: 100%;
     grid-template-rows: auto auto auto auto;
     gap: 22px;
-    padding-inline: 5vw;
+    padding-right: var(--deck-page-x) !important;
+    padding-left: var(--deck-page-x) !important;
     overflow: visible;
   }
 
   body.ll-deck-page .ll-culture-board__projects {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 22px;
+  }
+
+  body.ll-deck-page .ll-culture-board__navigation {
+    margin-top: 18px;
   }
 }
 
@@ -1373,23 +1392,19 @@ body.ll-deck-page .ll-culture-board__navigation > div {
     height: auto;
     min-height: 100%;
     grid-template-rows: auto auto 1fr auto;
-    gap: 22px;
-    padding: 84px 20px 22px;
+    gap: 0;
+    padding: 16px var(--deck-page-x) 16px !important;
     overflow: visible;
   }
 
   body.ll-deck-page .ll-culture-board__topline {
-    font-size: 8px;
+    display: none;
   }
 
   body.ll-deck-page .ll-culture-board__heading {
     display: grid;
-    gap: 14px;
-    margin-bottom: 28px;
-  }
-
-  body.ll-deck-page .ll-culture-board__topline {
-    margin-bottom: 32px;
+    gap: 10px;
+    margin: 64px 0 16px;
   }
 
   body.ll-deck-page .ll-culture-board__heading h2 {
@@ -1397,7 +1412,7 @@ body.ll-deck-page .ll-culture-board__navigation > div {
   }
 
   body.ll-deck-page .ll-culture-board__heading nav {
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 9px;
     font-size: 8px;
   }
@@ -1431,5 +1446,682 @@ body.ll-deck-page .ll-culture-board__navigation > div {
     order: 3;
     width: 100%;
     text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  body.ll-deck-page .ll-culture-board__heading nav {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    column-gap: 9px;
+    row-gap: 4px;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 980px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  body.ll-deck-page .ll-deck__slides {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    touch-action: pan-x pan-y;
+  }
+
+  body.ll-deck-page .ll-deck__slides::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 980px) {
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--services {
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  body.ll-deck-page .ll-deck-slide--services::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__header {
+    top: 24px;
+    right: var(--deck-page-x);
+    left: var(--deck-page-x);
+    height: 96px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs > span {
+    margin: 0 4px 0 0;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs button {
+    min-width: 0;
+    min-height: 36px;
+  }
+
+  body.ll-deck-page .ll-service-shop__breadcrumb {
+    top: 15%;
+  }
+
+  body.ll-deck-page .ll-service-product {
+    top: 22%;
+    right: var(--deck-page-x);
+    bottom: 8%;
+    left: var(--deck-page-x);
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-rows: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 12px 4vw;
+  }
+
+  body.ll-deck-page .ll-service-product__copy {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  body.ll-deck-page .ll-service-product__copy h3 {
+    font-size: clamp(36px, 5vw, 52px);
+  }
+
+  body.ll-deck-page .ll-service-product__description {
+    text-align: left;
+  }
+
+  body.ll-deck-page .ll-service-product__visual {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    height: min(54vh, 520px);
+    min-height: 0;
+  }
+
+  body.ll-deck-page .ll-service-product__buy {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  body.ll-deck-page .ll-service-product__details {
+    margin-top: 16px;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 980px) and (max-height: 600px) {
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--services {
+    padding: 78px var(--deck-page-x) 36px;
+  }
+
+  body.ll-deck-page .ll-service-shop__header {
+    position: static;
+    display: grid;
+    height: auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs,
+  body.ll-deck-page .ll-service-shop__brand,
+  body.ll-deck-page .ll-service-shop__meta,
+  body.ll-deck-page .ll-service-shop__breadcrumb,
+  body.ll-deck-page .ll-service-shop__panels,
+  body.ll-deck-page .ll-service-product {
+    position: static;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs {
+    display: flex;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    align-items: center;
+    gap: 8px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs > span {
+    margin: 0 4px 0 0;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs button {
+    min-width: 0;
+    min-height: 36px;
+    flex: 0 0 auto;
+  }
+
+  body.ll-deck-page .ll-service-shop__brand {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta {
+    display: flex;
+    grid-column: 2;
+    grid-row: 2;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    border: 0;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta span {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__breadcrumb {
+    margin-top: 22px;
+    transform: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__panels {
+    margin-top: 22px;
+  }
+
+  body.ll-deck-page .ll-service-product {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    gap: 16px 28px;
+  }
+
+  body.ll-deck-page .ll-service-product__copy {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  body.ll-deck-page .ll-service-product__visual {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    width: 100%;
+    height: clamp(200px, 56vh, 320px);
+    margin: 0;
+  }
+
+  body.ll-deck-page .ll-service-product__buy {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  body.ll-deck-page .ll-service-product__details {
+    margin-top: 12px;
+  }
+
+  body.ll-deck-page .ll-service-shop__arrow {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__pagination {
+    position: static;
+    justify-content: center;
+    margin-top: 16px;
+    transform: none;
+  }
+}
+
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--services {
+    padding: 78px 18px 92px;
+  }
+
+  body.ll-deck-page .ll-service-shop__header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs {
+    display: flex;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs > span {
+    margin: 0 6px 0 0;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs button {
+    min-width: 0;
+    min-height: 36px;
+    flex: 0 0 auto;
+    padding: 7px 10px;
+    border: 1px solid var(--service-shop-line);
+    text-decoration: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs button.is-active {
+    background: var(--service-shop-ink);
+    color: var(--deck-paper);
+  }
+
+  body.ll-deck-page .ll-service-shop__brand {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+  }
+
+  body.ll-deck-page .ll-service-shop__brand h2 {
+    font-size: clamp(20px, 6vw, 25px);
+  }
+
+  body.ll-deck-page .ll-service-shop__meta {
+    display: flex;
+    grid-column: 2;
+    grid-row: 2;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    border: 0;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta a {
+    min-height: 36px;
+    align-content: center;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta span {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta output {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  body.ll-deck-page .ll-service-shop__breadcrumb {
+    margin-top: 22px;
+    font-size: 10px;
+  }
+
+  body.ll-deck-page .ll-service-shop__panels {
+    margin-top: 22px;
+  }
+
+  body.ll-deck-page .ll-service-product__copy > .ll-deck-kicker {
+    margin-bottom: 12px;
+    font-size: 10px;
+  }
+
+  body.ll-deck-page .ll-service-product__copy h3 {
+    font-size: clamp(36px, 10vw, 46px);
+  }
+
+  body.ll-deck-page .ll-service-product__line,
+  body.ll-deck-page .ll-service-product__scope {
+    margin-top: 12px;
+  }
+
+  body.ll-deck-page .ll-service-product__line {
+    font-size: 13px;
+  }
+
+  body.ll-deck-page .ll-service-product__scope {
+    font-size: 12px;
+  }
+
+  body.ll-deck-page .ll-service-product__description {
+    max-width: 48ch;
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  body.ll-deck-page .ll-service-product__visual {
+    height: clamp(180px, 30svh, 260px);
+    margin: 20px 0;
+    overflow: hidden;
+  }
+
+  body.ll-deck-page .ll-service-product__visual img,
+  body.ll-deck-page #service-branding .ll-service-product__visual img,
+  body.ll-deck-page #service-digital .ll-service-product__visual img,
+  body.ll-deck-page #service-marketing .ll-service-product__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  body.ll-deck-page .ll-service-product__buy {
+    grid-template-columns: 126px minmax(0, 1fr);
+    align-items: end;
+    gap: 12px;
+  }
+
+  body.ll-deck-page .ll-service-product__stepper {
+    width: 126px;
+    margin: 0;
+  }
+
+  body.ll-deck-page .ll-service-product__select {
+    min-width: 0;
+    gap: 5px;
+    font-size: 10px;
+  }
+
+  body.ll-deck-page .ll-service-product__select select {
+    height: 38px;
+    font-size: 12px;
+  }
+
+  body.ll-deck-page .ll-service-product__cta,
+  body.ll-deck-page .ll-service-product__details {
+    grid-column: 1 / -1;
+  }
+
+  body.ll-deck-page .ll-service-product__cta {
+    min-height: 46px;
+    margin-top: 0;
+  }
+
+  body.ll-deck-page .ll-service-product__details {
+    margin-top: 8px;
+  }
+
+  body.ll-deck-page .ll-service-product__details summary {
+    padding-block: 12px;
+    font-size: 12px;
+  }
+
+  body.ll-deck-page .ll-service-product__details details p {
+    font-size: 12px;
+  }
+
+  body.ll-deck-page .ll-service-shop__pagination {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  body.ll-deck-page .ll-service-shop__tabs > span {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs {
+    gap: 5px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs button {
+    padding-inline: 8px;
+    font-size: 10px;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta {
+    gap: 5px;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta a,
+  body.ll-deck-page .ll-service-shop__meta output {
+    font-size: 9px;
+  }
+
+  body.ll-deck-page .ll-service-product__buy {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  body.ll-deck-page .ll-service-product__stepper {
+    width: 112px;
+    grid-template-columns: 34px 44px 34px;
+  }
+}
+
+/* On compact screens, keep the service content and conversion controls while
+   removing labels and controls already represented elsewhere. */
+@media (max-width: 760px), (min-width: 761px) and (max-width: 980px) and (max-height: 600px) {
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--services {
+    padding: 78px var(--deck-page-x) 92px;
+    overflow-y: auto;
+  }
+
+  body.ll-deck-page .ll-service-shop__header {
+    position: static;
+    display: grid;
+    height: auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs,
+  body.ll-deck-page .ll-service-shop__brand,
+  body.ll-deck-page .ll-service-shop__meta,
+  body.ll-deck-page .ll-service-shop__breadcrumb,
+  body.ll-deck-page .ll-service-shop__panels,
+  body.ll-deck-page .ll-service-product {
+    position: static;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs > span,
+  body.ll-deck-page .ll-service-shop__meta,
+  body.ll-deck-page .ll-service-shop__breadcrumb,
+  body.ll-deck-page .ll-service-product__copy > .ll-deck-kicker,
+  body.ll-deck-page .ll-service-product__scope,
+  body.ll-deck-page .ll-service-product__stepper,
+  body.ll-deck-page .ll-service-product__details {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__brand {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+    transform: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  body.ll-deck-page .ll-service-shop__panels {
+    margin: 10px 0 0;
+  }
+
+  body.ll-deck-page .ll-service-product {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "visual"
+      "copy"
+      "buy";
+    align-items: start;
+    gap: 0;
+  }
+
+  body.ll-deck-page .ll-service-product[hidden] {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-product__visual {
+    grid-area: visual;
+    width: 100%;
+    height: clamp(150px, 27svh, 220px);
+    margin: 0 0 14px;
+    overflow: hidden;
+    background: #e7e5dd;
+  }
+
+  body.ll-deck-page .ll-service-product__visual img,
+  body.ll-deck-page #service-branding .ll-service-product__visual img,
+  body.ll-deck-page #service-digital .ll-service-product__visual img,
+  body.ll-deck-page #service-marketing .ll-service-product__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  body.ll-deck-page .ll-service-product__copy {
+    grid-area: copy;
+    align-self: start;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--service-shop-line);
+  }
+
+  body.ll-deck-page .ll-service-product__copy h3 {
+    font-size: clamp(32px, 8vw, 42px);
+  }
+
+  body.ll-deck-page .ll-service-product__line {
+    margin-top: 6px;
+    font-size: 13px;
+  }
+
+  body.ll-deck-page .ll-service-product__description {
+    max-width: 52ch;
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  body.ll-deck-page .ll-service-product__buy {
+    grid-area: buy;
+    grid-template-columns: 112px minmax(0, 1fr);
+    align-items: end;
+    gap: 10px;
+    justify-self: stretch;
+    width: 100%;
+    padding-top: 12px;
+  }
+
+  body.ll-deck-page .ll-service-product__select {
+    min-width: 0;
+    gap: 5px;
+    font-size: 9px;
+  }
+
+  body.ll-deck-page .ll-service-product__select select {
+    height: 38px;
+    font-size: 11px;
+  }
+
+  body.ll-deck-page .ll-service-product__cta,
+  body.ll-deck-page .ll-service-product__details {
+    grid-column: 1 / -1;
+  }
+
+  body.ll-deck-page .ll-service-product__cta {
+    min-height: 44px;
+    margin-top: 2px;
+  }
+
+  body.ll-deck-page .ll-service-product__details {
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 380px) {
+  body.ll-deck-page .ll-service-shop__breadcrumb {
+    margin-top: 14px;
+  }
+
+  body.ll-deck-page .ll-service-product__buy {
+    grid-template-columns: 102px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  body.ll-deck-page .ll-service-product__stepper {
+    width: 102px;
+    grid-template-columns: 30px 42px 30px;
+  }
+}
+
+html body.ll-deck-page {
+  --deck-type-primary: clamp(38px, 4.8vw, 64px);
+  --deck-type-heading: clamp(16px, 1.4vw, 20px);
+  --deck-type-body: 14px;
+  --deck-type-label: 10px;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-shop__brand h2,
+html body.ll-deck-page #lets-talk .ll-world-clock__heading h2,
+html body.ll-deck-page #the-work .ll-culture-board__heading h2,
+html body.ll-deck-page #what-i-do .ll-service-product__copy h3,
+html body.ll-deck-page #my-vibe .ll-deck-slide__vibe-copy h2 {
+  font-size: var(--deck-type-primary);
+  line-height: 1;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume__identity-copy h3,
+html body.ll-deck-page #resume .ll-deck-resume section h3,
+html body.ll-deck-page #the-work .ll-culture-card h3,
+html body.ll-deck-page #lets-talk .ll-world-clock__city h3 {
+  font-size: var(--deck-type-heading);
+  line-height: 1.2;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-product__line,
+html body.ll-deck-page #what-i-do .ll-service-product__description,
+html body.ll-deck-page #what-i-do .ll-service-product__details details p,
+html body.ll-deck-page #my-vibe .ll-deck-slide__vibe-copy > p,
+html body.ll-deck-page #the-work .ll-culture-card__copy,
+html body.ll-deck-page #lets-talk .ll-world-clock__heading p {
+  font-size: var(--deck-type-body);
+  line-height: 1.5;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-shop__tabs button,
+html body.ll-deck-page #what-i-do .ll-service-shop__meta,
+html body.ll-deck-page #what-i-do .ll-service-shop__breadcrumb,
+html body.ll-deck-page #what-i-do .ll-service-product__copy > .ll-deck-kicker,
+html body.ll-deck-page #what-i-do .ll-service-product__scope,
+html body.ll-deck-page #what-i-do .ll-service-product__stepper,
+html body.ll-deck-page #what-i-do .ll-service-product__select,
+html body.ll-deck-page #what-i-do .ll-service-product__select select,
+html body:not(#global-square-corners).ll-deck-page #what-i-do .ll-service-product__cta,
+html body.ll-deck-page #what-i-do .ll-service-product__details summary,
+html body.ll-deck-page #my-vibe .ll-deck-vibe-subject,
+html body.ll-deck-page #my-vibe .ll-deck-vibe-number,
+html body.ll-deck-page #my-vibe .ll-deck-vibe-grid figcaption,
+html body.ll-deck-page #the-work .ll-culture-board__topline,
+html body.ll-deck-page #the-work .ll-culture-board__heading nav,
+html body.ll-deck-page #the-work .ll-culture-card__read,
+html body.ll-deck-page #the-work .ll-culture-board__navigation,
+html body.ll-deck-page #lets-talk .ll-world-clock__eyebrow,
+html body.ll-deck-page #lets-talk .ll-world-clock__meta,
+html body.ll-deck-page #lets-talk .ll-world-clock__city [data-clock-offset],
+html body.ll-deck-page #lets-talk .ll-world-clock__daypart,
+html body.ll-deck-page #lets-talk .ll-world-clock__format button,
+html body.ll-deck-page #lets-talk .ll-world-clock__heading > span {
+  font-size: var(--deck-type-label);
+}
+
+@media (max-width: 980px), (hover: none) and (pointer: coarse) and (max-height: 600px) {
+  html body.ll-deck-page #what-i-do,
+  html body.ll-deck-page #my-vibe,
+  html body.ll-deck-page #the-work,
+  html body.ll-deck-page #lets-talk {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  html body.ll-deck-page {
+    --deck-type-primary: clamp(32px, 8vw, 42px);
+    --deck-type-heading: 16px;
+    --deck-type-body: 13px;
+    --deck-type-label: 10px;
   }
 }

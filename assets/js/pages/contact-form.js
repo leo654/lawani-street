@@ -21,7 +21,7 @@
   var currentStep = 1;
   var maxVisitedStep = 1;
   var transitioning = false;
-  var recipient = "talktolawanistreet@gmail.com";
+  var recipient = "accounts@lawani.st";
   var motion = window.LawaniMotion;
 
   var labels = {
