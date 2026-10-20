@@ -1,4 +1,7 @@
 /* Typography and shared controls; use design-tokens.css for foundation values. */
+@import "../css/button-system.css";
+@import "../css/media-reveals.css";
+
 @font-face {
   font-family: "Gridlite";
   src: url("../fonts/GridlitePEVFWeb-All.woff2") format("woff2-variations");
@@ -90,7 +93,26 @@ html body {
 }
 
 html body,
-html body *:not(svg):not(path):not(.fa):not(.fas):not(.far):not(.fab) {
+html body *:not(svg):not(path):not(.fa):not(.fas):not(.far):not(.fab):not(:is(
+  .ll-button,
+  .ll-action-link,
+  .cs-footer__actions a,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .ll-footer__project-cta > a,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .ll-button *,
+  .ll-action-link *,
+  .cs-footer__actions a *,
+  .ll-deck-contact a *,
+  .ll-service-product__cta *,
+  .ll-footer__project-cta > a *,
+  .project-form__button *,
+  .project-form__option *,
+  .lwa-filter button *
+)) {
   font-weight: 700 !important;
   text-transform: uppercase !important;
 }
@@ -227,318 +249,4 @@ html body :is(button, input[type="button"], input[type="submit"], input[type="re
   .ll-nav-toggle__line {
     transition: none;
   }
-}
-
-:root {
-  --ll-button-height: var(--ll-control-height, 50px);
-  --ll-button-padding-inline: 16px;
-  --ll-button-content-gap: 10px;
-  --ll-button-icon-size: 16px;
-  --ll-button-radius: 0px;
-  --ll-button-outline: color-mix(in srgb, currentColor 20%, transparent);
-  --ll-button-surface: transparent;
-  --ll-button-ink: inherit;
-  --ll-button-hover-surface: var(--ll-orange);
-  --ll-button-hover-ink: var(--ll-brand-charcoal, #20221f);
-  --ll-button-font-size: 10px;
-  --ll-button-font-weight: 600;
-  --ll-button-letter-spacing: 0.04em;
-  --ll-button-transition: color 360ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 180ms ease, background-color 180ms ease;
-}
-
-html body:not(#global-square-corners) .ll-button:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle) {
-  appearance: none;
-  position: relative;
-  display: inline-flex;
-  height: var(--ll-button-height);
-  min-height: var(--ll-button-height);
-  align-items: center;
-  justify-content: center;
-  gap: var(--ll-button-content-gap);
-  padding: 0 var(--ll-button-padding-inline);
-  overflow: hidden;
-  isolation: isolate;
-  border: 1px solid var(--ll-button-outline);
-  border-radius: var(--ll-button-radius) !important;
-  background: var(--ll-button-surface);
-  color: var(--ll-button-ink);
-  box-shadow: none;
-  font-family: var(--ll-sans);
-  font-size: var(--ll-button-font-size);
-  font-weight: var(--ll-button-font-weight);
-  line-height: 1;
-  letter-spacing: var(--ll-button-letter-spacing);
-  text-align: center;
-  text-transform: uppercase;
-  transition: var(--ll-button-transition);
-}
-
-html body:not(#global-square-corners) .ll-button.ll-button--split:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle) {
-  justify-content: space-between;
-  gap: 0;
-  padding: 0;
-}
-
-html body:not(#global-square-corners) .ll-button:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle)::after,
-html body:not(#global-square-corners) .cs-footer__actions a::after,
-html body:not(#global-square-corners) .ll-deck-contact a::after,
-html body:not(#global-square-corners) .ll-service-product__cta::after,
-html body:not(#global-square-corners) .project-form__button::after,
-html body:not(#global-square-corners) .ll-footer__project-cta > a::after {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  border-radius: inherit;
-  background: var(--ll-button-hover-surface);
-  content: "";
-  pointer-events: none;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-html body:not(#global-square-corners) .ll-button:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle):is(:hover, :focus-visible),
-html body:not(#global-square-corners) .cs-footer__actions a:is(:hover, :focus-visible),
-html body:not(#global-square-corners) .ll-deck-contact a:is(:hover, :focus-visible),
-html body:not(#global-square-corners) .ll-service-product__cta:is(:hover, :focus-visible),
-html body:not(#global-square-corners) .project-form__button:is(:hover, :focus-visible),
-html body:not(#global-square-corners) .ll-footer__project-cta > a:is(:hover, :focus-visible) {
-  border-color: var(--ll-button-hover-surface);
-  background-color: transparent;
-  color: var(--ll-button-hover-ink);
-}
-
-html body:not(#global-square-corners) .ll-button:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle):focus-visible,
-html body:not(#global-square-corners) .cs-footer__actions a:focus-visible,
-html body:not(#global-square-corners) .ll-deck-contact a:focus-visible,
-html body:not(#global-square-corners) .ll-service-product__cta:focus-visible,
-html body:not(#global-square-corners) .project-form__button:focus-visible,
-html body:not(#global-square-corners) .ll-footer__project-cta > a:focus-visible {
-  outline: 2px solid var(--ll-orange);
-  outline-offset: 3px;
-}
-
-html body:not(#global-square-corners) :is(.project-form__option, .lwa-filter button):focus-visible {
-  outline: 2px solid var(--ll-orange);
-  outline-offset: 3px;
-}
-
-html body:not(#global-square-corners) .ll-button:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle):is(:hover, :focus-visible)::after,
-html body:not(#global-square-corners) .cs-footer__actions a:is(:hover, :focus-visible)::after,
-html body:not(#global-square-corners) .ll-deck-contact a:is(:hover, :focus-visible)::after,
-html body:not(#global-square-corners) .ll-service-product__cta:is(:hover, :focus-visible)::after,
-html body:not(#global-square-corners) .project-form__button:is(:hover, :focus-visible)::after,
-html body:not(#global-square-corners) .ll-footer__project-cta > a:is(:hover, :focus-visible)::after {
-  transform: scaleX(1);
-}
-
-html body:not(#global-square-corners) .ll-button:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle) > :is(svg, .ll-icon, .ll-arrow-glyph) {
-  z-index: 0;
-  width: var(--ll-button-icon-size);
-  height: var(--ll-button-icon-size);
-  flex: 0 0 var(--ll-button-icon-size);
-  margin: 0;
-}
-
-html body:not(#global-square-corners) .ll-button.ll-button--media:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle) {
-  justify-content: flex-start;
-  gap: var(--ll-button-content-gap);
-  padding: 8px var(--ll-button-padding-inline) 8px 8px;
-}
-
-html body:not(#global-square-corners) .ll-button.ll-button--compact:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle) {
-  height: 36px;
-  min-height: 36px;
-  padding-inline: 10px;
-}
-
-html body:not(#global-square-corners) .ll-button.ll-button--media:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle) > :is(img, span:has(> img), .ll-contact-dock__portrait) {
-  width: 34px;
-  height: 34px;
-  flex: 0 0 34px;
-  overflow: hidden;
-}
-
-html body:not(#global-square-corners) .ll-button.ll-button--media:not(.ll-button--square):not(.ll-theme-toggle):not(.ll-sound-toggle) > :is(img, span:has(> img), .ll-contact-dock__portrait) img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-html body:not(#global-square-corners) .cs-footer__actions a,
-html body:not(#global-square-corners) .ll-deck-contact a,
-html body:not(#global-square-corners) .ll-service-product__cta,
-html body:not(#global-square-corners) .project-form__button {
-  appearance: none;
-  position: relative;
-  display: inline-flex;
-  min-height: var(--ll-button-height);
-  height: var(--ll-button-height);
-  align-items: center;
-  justify-content: center;
-  gap: var(--ll-button-content-gap);
-  padding: 0 var(--ll-button-padding-inline);
-  overflow: hidden;
-  isolation: isolate;
-  border: 1px solid var(--ll-button-outline);
-  border-radius: var(--ll-button-radius) !important;
-  background: var(--ll-button-surface);
-  color: var(--ll-button-ink);
-  font-family: var(--ll-sans);
-  font-size: var(--ll-button-font-size);
-  font-weight: var(--ll-button-font-weight);
-  line-height: 1;
-  letter-spacing: var(--ll-button-letter-spacing);
-  text-align: center;
-  text-transform: uppercase;
-  transition: var(--ll-button-transition);
-}
-
-html body:not(#global-square-corners) .project-form__button {
-  width: 100%;
-}
-
-html body:not(#global-square-corners) :is(.project-form__option, .lwa-filter button) {
-  font-family: var(--ll-sans);
-  font-size: var(--ll-button-font-size);
-  font-weight: var(--ll-button-font-weight);
-  letter-spacing: var(--ll-button-letter-spacing);
-  border-radius: var(--ll-button-radius) !important;
-  transition: var(--ll-button-transition);
-}
-
-html body:not(#global-square-corners) .project-form__button:not(.project-form__button--secondary) {
-  border-color: var(--ll-button-outline);
-  background: transparent;
-  color: inherit;
-}
-
-html body:not(#global-square-corners) .project-form__button:disabled {
-  cursor: wait;
-  opacity: 0.58;
-}
-
-html body:not(#global-square-corners) :is(.ll-button, .cs-footer__actions a, .ll-deck-contact a, .ll-service-product__cta, .project-form__button):disabled {
-  cursor: not-allowed;
-  opacity: 0.58;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html body:not(#global-square-corners) :is(.ll-button, .cs-footer__actions a, .ll-deck-contact a, .ll-service-product__cta, .project-form__button, .project-form__option, .lwa-filter button),
-  html body:not(#global-square-corners) :is(.ll-button, .cs-footer__actions a, .ll-deck-contact a, .ll-service-product__cta, .project-form__button, .ll-footer__project-cta > a),
-  html body:not(#global-square-corners) :is(.ll-button, .cs-footer__actions a, .ll-deck-contact a, .ll-service-product__cta, .project-form__button, .ll-footer__project-cta > a)::after {
-    transition: none;
-  }
-}
-
-html body:not(#global-square-corners) .ll-contact-dock .ll-button {
-  border-radius: var(--ll-button-radius) !important;
-}
-
-html body:not(#global-square-corners) .ll-contact-dock__primary.ll-button {
-  background: var(--ll-tray-primary);
-}
-
-html body:not(#global-square-corners) .ll-contact-dock__primary.ll-button:is(:hover, :focus-visible) {
-  background-color: transparent;
-}
-
-html body:not(#global-square-corners) .ll-manifesto .ll-action-link.ll-button::before {
-  background: var(--ll-button-hover-surface);
-}
-
-html body:not(#global-square-corners) .ll-manifesto .ll-action-link.ll-button:is(:hover, :focus-visible) {
-  background-color: transparent;
-  color: var(--ll-button-hover-ink);
-}
-
-html body:not(#global-square-corners) .project-form__option {
-  min-height: 50px;
-  padding: 0 16px;
-  border-radius: var(--ll-button-radius) !important;
-  background: transparent;
-  color: var(--contact-paper);
-  font-size: var(--ll-button-font-size);
-  font-weight: var(--ll-button-font-weight);
-  letter-spacing: 0.04em;
-  transition: var(--ll-button-transition);
-}
-
-html body:not(#global-square-corners) .project-form__option:is(:hover, :focus-visible),
-html body:not(#global-square-corners) .project-form__option.selected {
-  border-color: var(--ll-button-hover-surface);
-  background: var(--ll-button-hover-surface);
-  color: var(--ll-button-hover-ink);
-}
-
-html body:not(#global-square-corners) .lwa-filter button {
-  box-sizing: border-box;
-  height: 36px;
-  min-height: 36px;
-  padding-inline: 16px;
-  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
-  border-radius: var(--ll-button-radius) !important;
-  background: transparent;
-  font-size: var(--ll-button-font-size);
-  font-weight: var(--ll-button-font-weight);
-  transition: var(--ll-button-transition);
-}
-
-html body:not(#global-square-corners) .lwa-filter button:is(:hover, :focus-visible),
-html body:not(#global-square-corners) .lwa-filter button.is-active {
-  border-color: var(--ll-button-hover-surface);
-  background: var(--ll-button-hover-surface);
-  color: var(--ll-button-hover-ink);
-}
-
-html body .ll-nav-dock__brand.ll-button.ll-button--square,
-html body .ll-nav-toggle.ll-button.ll-button--square {
-  justify-content: center;
-  padding: 0;
-}
-
-html body .ll-nav-toggle.ll-button.ll-button--square > svg {
-  width: 20px;
-  height: 20px;
-}
-
-html body .ll-nav-toggle.ll-button.ll-button--square > .ll-nav-toggle__lines {
-  width: 30px;
-  height: 36px;
-}
-
-html body:not(#global-square-corners) :is(
-  .cs-footer__actions a,
-  .ll-deck-contact a,
-  .ll-service-product__cta,
-  .project-form__button,
-  .ll-footer__project-cta > a
-):is(:hover, :focus-visible) {
-  border-color: var(--ll-button-hover-surface);
-  background-color: transparent;
-  color: var(--ll-button-hover-ink);
-}
-
-html body:not(#global-square-corners) :is(
-  .cs-footer__actions a,
-  .ll-deck-contact a,
-  .ll-service-product__cta,
-  .project-form__button,
-  .ll-footer__project-cta > a
-):is(:hover, :focus-visible)::after {
-  transform: scaleX(1);
-}
-
-html body:not(#global-square-corners) :is(
-  .cs-footer__actions a,
-  .ll-deck-contact a,
-  .ll-service-product__cta,
-  .project-form__button,
-  .ll-footer__project-cta > a
-):focus-visible {
-  outline: 2px solid var(--ll-orange);
-  outline-offset: 3px;
 }

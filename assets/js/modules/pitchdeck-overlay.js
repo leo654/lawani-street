@@ -81,7 +81,7 @@
 
   function postToDeck(type) {
     if (!ready || !frame || !frame.contentWindow) return;
-    frame.contentWindow.postMessage({ type: type }, "*");
+    frame.contentWindow.postMessage({ type: type }, window.location.origin);
   }
 
   function scheduleDeckActivation() {
@@ -265,7 +265,7 @@
 
   window.addEventListener("message", function (event) {
     if (!root || !frame || event.source !== frame.contentWindow || !event.data) return;
-    if (event.origin !== window.location.origin && event.origin !== "null") return;
+    if (event.origin !== window.location.origin) return;
 
     if (event.data.type === "lawani:pitchdeck-ready") {
       ready = true;

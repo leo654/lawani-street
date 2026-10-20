@@ -22,34 +22,41 @@ cd "$ROOT_DIR"
 ./scripts/production-check.sh
 
 rm -rf "$OUTPUT_DIR"
-mkdir -p "$OUTPUT_DIR"
-
-rsync -a \
-  --exclude-from "$ROOT_DIR/scripts/production-assets-ignore.txt" \
-  --exclude '/.git/' \
-  --exclude '/.devin/' \
-  --exclude '/node_modules/' \
-  --exclude '/.github/' \
-  --exclude '/.vscode/' \
-  --exclude '/docs/' \
-  --exclude '/legacy/' \
-  --exclude '/php/' \
-  --exclude '/scripts/' \
-  --exclude '/scss/' \
-  --exclude "/$OUTPUT_NAME/" \
-  --exclude '/.DS_Store' \
-  --exclude '/.gitattributes' \
-  --exclude '/.gitignore' \
-  --exclude '/README.md' \
-  --exclude '/STRUCTURE.md' \
-  --exclude '*.scss' \
-  ./ "$OUTPUT_DIR/"
-
 LAWANI_OUTPUT_DIR="$OUTPUT_DIR" npm run build
 
+mkdir -p "$OUTPUT_DIR/assets/favicons"
+rsync -a \
+  "$ROOT_DIR/robots.txt" \
+  "$ROOT_DIR/sitemap.xml" \
+  "$ROOT_DIR/.nojekyll" \
+  "$OUTPUT_DIR/"
+rsync -a "$ROOT_DIR/assets/favicons/" "$OUTPUT_DIR/assets/favicons/"
+
+mkdir -p "$OUTPUT_DIR/assets/js/libs" "$OUTPUT_DIR/assets/js/modules" "$OUTPUT_DIR/assets/js/pages"
+rsync -a \
+  "$ROOT_DIR/assets/js/libs/gsap.min.js" \
+  "$ROOT_DIR/assets/js/libs/ScrollTrigger.min.js" \
+  "$OUTPUT_DIR/assets/js/libs/"
+rsync -a \
+  "$ROOT_DIR/assets/js/modules/section-reveals.js" \
+  "$OUTPUT_DIR/assets/js/modules/"
+
+rsync -a \
+  "$ROOT_DIR/assets/js/pages/home-loader.js" \
+  "$OUTPUT_DIR/assets/js/pages/"
+
+node "$ROOT_DIR/scripts/copy-production-media.mjs" "$ROOT_DIR" "$OUTPUT_DIR"
+
+if rg -q --glob '*.css' '@import' "$OUTPUT_DIR/assets/build"; then
+  printf 'Production CSS contains unresolved imports.\n' >&2
+  exit 1
+fi
+node scripts/prune-production-duplicates.mjs "$OUTPUT_DIR"
+
 artifact_size_kib="$(du -sk "$OUTPUT_DIR" | awk '{print $1}')"
-if (( artifact_size_kib > 1048576 )); then
-  printf 'Production artifact exceeds 1 GiB: %s KiB\n' "$artifact_size_kib" >&2
+max_artifact_size_kib=$((650 * 1024))
+if (( artifact_size_kib > max_artifact_size_kib )); then
+  printf 'Production artifact exceeds 650 MiB: %s KiB\n' "$artifact_size_kib" >&2
   exit 1
 fi
 

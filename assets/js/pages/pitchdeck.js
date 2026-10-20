@@ -32,6 +32,7 @@
     var closing = false;
     var scrollFrame = 0;
     var scrollSettleTimer = 0;
+    var slideTween = null;
     var clientMarquee = deck.querySelector(".ll-deck-client-marquee");
     var marqueeGroups = clientMarquee
       ? Array.prototype.slice.call(clientMarquee.querySelectorAll("ul"))
@@ -98,10 +99,6 @@
 
     function positionFor(slide) {
       return horizontalDeck.matches ? slide.offsetLeft : slide.offsetTop;
-    }
-
-    function currentPosition() {
-      return horizontalDeck.matches ? viewport.scrollLeft : viewport.scrollTop;
     }
 
     function setPosition(position) {
@@ -191,6 +188,10 @@
       window.clearTimeout(scrollSettleTimer);
       scrollFrame = 0;
       scrollSettleTimer = 0;
+      if (slideTween) {
+        slideTween.kill();
+        slideTween = null;
+      }
     }
 
     function syncActiveFromScroll() {
@@ -218,7 +219,26 @@
 
     function navigateTo(index, focusSlide) {
       cancelNavigation();
-      setPosition(positionFor(slides[index]));
+      var position = positionFor(slides[index]);
+      if (reducedMotion()) {
+        setPosition(position);
+      } else if (window.gsap && typeof window.gsap.to === "function") {
+        var scrollAxis = horizontalDeck.matches ? "scrollLeft" : "scrollTop";
+        var slideDuration = parseFloat(
+          window.getComputedStyle(document.documentElement).getPropertyValue("--motion-slide-duration")
+        ) / 1000;
+        slideTween = window.gsap.to(viewport, {
+          [scrollAxis]: position,
+          duration: slideDuration || 0.9,
+          ease: "power3.inOut",
+          overwrite: "auto",
+          onComplete: function () { slideTween = null; }
+        });
+      } else if (horizontalDeck.matches) {
+        viewport.scrollTo({ left: position, behavior: "smooth" });
+      } else {
+        viewport.scrollTo({ top: position, behavior: "smooth" });
+      }
       if (focusSlide) slides[index].focus({ preventScroll: true });
     }
 
@@ -456,11 +476,13 @@
       closing = true;
       cancelNavigation();
       syncMedia();
-      deck.classList.add("is-leaving");
 
       var destination = closeButton ? closeButton.href.split("#")[0] : "index.html";
-      if (reducedMotion()) window.location.href = destination;
-      else window.setTimeout(function () { window.location.href = destination; }, 240);
+      if (window.LawaniMotion && typeof window.LawaniMotion.navigateToPage === "function") {
+        window.LawaniMotion.navigateToPage(destination);
+      } else {
+        window.location.href = destination;
+      }
     }
 
     setupServiceShop();
@@ -510,7 +532,11 @@
     }
 
     viewport.addEventListener("wheel", function (event) {
-      if (horizontalDeck.matches || closing) return;
+      if (closing) return;
+      if (horizontalDeck.matches) {
+        cancelNavigation();
+        return;
+      }
       event.preventDefault();
       wheelTotal += event.deltaY;
       window.clearTimeout(wheelTimer);
@@ -525,6 +551,7 @@
        scroll position keeps chapter state, media and URL in sync after a
        short swipe without capturing vertical gestures inside a slide. */
     viewport.addEventListener("scroll", queueScrollSync, { passive: true });
+    viewport.addEventListener("pointerdown", cancelNavigation, { passive: true });
     document.addEventListener("visibilitychange", syncMedia);
 
     document.addEventListener("keydown", function (event) {

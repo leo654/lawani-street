@@ -94,7 +94,7 @@ html[data-theme="light"] .contact-background::after {
 .contact-intro h1 {
   max-width: 7ch;
   margin: clamp(56px, 9vh, 104px) 0 56px;
-  color: var(--ll-orange);
+  color: #e54810;
   font-family: var(--ll-sans);
   font-size: clamp(58px, 6.5vw, 116px);
   font-weight: 700;

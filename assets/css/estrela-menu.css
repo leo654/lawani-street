@@ -1,5 +1,5 @@
 /* Estrela.studio-inspired nav + menu */
-@import url("blend-gradient.css?v=20260623-blend1");
+@import "blend-gradient.css";
 
 :root {
   --es-unit: clamp(8px, 0.694444vw, 10px);

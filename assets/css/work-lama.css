@@ -373,10 +373,6 @@ body.work-index {
   transition: opacity 360ms ease, transform 420ms var(--ll-ease);
 }
 
-.lwa-project__gallery figure:hover {
-  opacity: 0.94;
-}
-
 .lwa-gallery-progress {
   display: flex;
   align-items: center;

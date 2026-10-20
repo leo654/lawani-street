@@ -757,9 +757,9 @@ var LAWANI_CREATE_ZONED_CLOCK = typeof LAWANI_SHARED.createZonedClock === 'funct
 	// Preload accordion images for smoother swaps
 	var accordionImageSources = [
 		defaultImageSrc,
-		'assets/img/04.png',
-		'assets/img/strat.png',
-		'assets/img/copy.png'
+		'assets/img/04.webp',
+		'assets/img/strat.webp',
+		'assets/img/copy.webp'
 	];
 
 	accordionImageSources.forEach(function(src) {

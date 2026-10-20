@@ -1041,8 +1041,8 @@ body.ll-deck-page .ll-deck-contact a > .ll-icon--arrow-up-right {
   position: absolute;
   top: 50%;
   right: 20px;
-  width: 16px;
-  height: 16px;
+  width: var(--ll-button-arrow-size);
+  height: var(--ll-button-arrow-size);
   margin: 0;
   fill: none;
   color: currentColor;

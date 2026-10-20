@@ -6,8 +6,8 @@
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function scheduleMotionFrame(key, callback) {
-    if (window.LawaniMotion && typeof window.LawaniMotion.frame === "function") {
-      window.LawaniMotion.frame(key, callback);
+    if (window.LawaniMotion && typeof window.LawaniMotion.scheduleFrame === "function") {
+      window.LawaniMotion.scheduleFrame(key, callback);
       return;
     }
     window.requestAnimationFrame(callback);
@@ -143,6 +143,7 @@
     if (!projects.length) return;
     var firstFeaturedProject = document.querySelector(".ll-work [data-work-item]");
     var scrollTimer = 0;
+    var observer = null;
     if (firstFeaturedProject) firstFeaturedProject.classList.add("is-visible");
 
     function setExpanded(project, expanded, moveIntoView) {
@@ -226,7 +227,7 @@
       return;
     }
 
-    var observer = new IntersectionObserver(function (entries) {
+    observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         entry.target.classList.add("is-visible");
@@ -235,6 +236,10 @@
     }, { rootMargin: "0px 0px -8%", threshold: 0.06 });
 
     projects.forEach(function (project) { observer.observe(project); });
+
+    window.addEventListener("beforeunload", function () {
+      if (observer) observer.disconnect();
+    }, { once: true });
   }
 
   function initFilters() {

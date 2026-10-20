@@ -1,10 +1,10 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-theme-mode="light" data-theme="light">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="Start a project with Lawani St. Share the ambition, scope, timeline, and what success should look like.">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#e8e7e1">
     <meta name="robots" content="index, follow">
 
     <title>Start a Project | Lawani St.</title>
@@ -24,16 +24,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
     <link rel="preload" href="assets/fonts/GridlitePEVFWeb-All.woff2" as="font" type="font/woff2" crossorigin>
 
-    <script>
-      (function () {
-        var mode = "light";
-        var theme = mode;
-        document.documentElement.setAttribute("data-theme-mode", mode);
-        document.documentElement.setAttribute("data-theme", theme);
-        var themeMeta = document.querySelector('meta[name="theme-color"]');
-        if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#000000");
-      })();
-    </script>
     <link rel="stylesheet" href="assets/css/entries/contact.css">
   </head>
 
@@ -44,7 +34,7 @@
     <header class="ll-floating-header" data-ll-header>
       <div class="ll-nav-dock">
         <a class="ll-nav-dock__brand ll-button ll-button--square" href="index.html" aria-label="Lawani St home">
-          <span aria-hidden="true">L:</span>
+          <span aria-hidden="true">L</span>
         </a>
         <p class="ll-nav-dock__note" data-ll-nav-note>Start something worth building</p>
         <button
@@ -55,11 +45,11 @@
           aria-label="Open navigation"
           data-ll-menu-toggle
         >
-          <svg class="ll-icon ll-nav-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path class="ll-icon__menu-line ll-icon__menu-line--top" d="M5 6.5h14"></path>
-            <path class="ll-icon__menu-line ll-icon__menu-line--middle" d="M5 12h14"></path>
-            <path class="ll-icon__menu-line ll-icon__menu-line--bottom" d="M5 17.5h14"></path>
-          </svg>
+          <span class="ll-nav-toggle__lines" aria-hidden="true">
+            <i class="ll-nav-toggle__line ll-nav-toggle__line--1"></i>
+            <i class="ll-nav-toggle__line ll-nav-toggle__line--2"></i>
+            <i class="ll-nav-toggle__line ll-nav-toggle__line--3"></i>
+          </span>
           <span class="ll-visually-hidden" data-ll-menu-label>Menu</span>
         </button>
       </div>
@@ -112,24 +102,21 @@
 
     <main class="contact-main" id="main-content">
       <section class="contact-layout" aria-labelledby="contact-title">
-        <aside class="contact-intro">
+        <div class="contact-intro">
           <p class="contact-kicker">[ Start a project ]</p>
           <div>
-            <h1 id="contact-title">hi</h1>
-            <!-- <p class="contact-intro__copy">Tell me what you are building and how i can help make it better. I will reply with clear next steps.</p> -->
+            <h1 id="contact-title">Have a project?</h1>
+            <p class="contact-intro__copy">Tell me about the ambition, the challenge, and what you want this project to change.</p>
           </div>
           <div class="contact-direct">
-            <!-- <p class="contact-direct__label">Do you Prefer a direct route?</p> -->
+            <p class="contact-direct__label">Prefer a direct route?</p>
             <a href="mailto:accounts@lawani.st">accounts@lawani.st</a>
             <a href="https://calendly.com/leonardlawani/30min" target="_blank" rel="noopener"> Schedule a 30-minute call <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M7 17 17 7"></path>
               <path d="M7 7h10v10"></path>
             </svg></a>
-            <p class="contact-availability"></p>
-            <br> 
           </div>
-         
-        </aside>
+        </div>
 
         <form class="project-form" action="php/mail.php" method="post" novalidate data-project-form>
           <ol class="project-form__progress" aria-label="Project inquiry progress">

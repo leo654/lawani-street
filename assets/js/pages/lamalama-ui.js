@@ -3,11 +3,13 @@
 
   if (!document.body || !document.body.matches(".home-index, .case-study, .work-index, .ll-contact-page")) return;
 
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var reduceMotion = (window.LawaniFeatures && window.LawaniFeatures.get("reducedMotion")) ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var CONSTANTS = window.LawaniConstants || {};
 
   function scheduleMotionFrame(key, callback) {
-    if (window.LawaniMotion && typeof window.LawaniMotion.frame === "function") {
-      window.LawaniMotion.frame(key, callback);
+    if (window.LawaniMotion && typeof window.LawaniMotion.scheduleFrame === "function") {
+      window.LawaniMotion.scheduleFrame(key, callback);
       return;
     }
     window.requestAnimationFrame(callback);
@@ -94,7 +96,7 @@
       if (!note || !sections.length) return;
 
       var active = sections[0];
-      var threshold = window.innerHeight * 0.46;
+      var threshold = window.innerHeight * (CONSTANTS.SCROLL?.NAV_NOTE_THRESHOLD || 0.46);
 
       sections.forEach(function (section) {
         if (section.getBoundingClientRect().top <= threshold) active = section;
@@ -110,7 +112,7 @@
             { opacity: 0, transform: "translate3d(0, 5px, 0)" },
             { opacity: 1, transform: "translate3d(0, 0, 0)" }
           ],
-          { duration: 280, easing: "cubic-bezier(0.16, 1, 0.3, 1)" }
+          { duration: CONSTANTS.DURATION?.REVEAL || 280, easing: CONSTANTS.EASING?.OUT || "cubic-bezier(0.16, 1, 0.3, 1)" }
         );
       }
     }
@@ -231,97 +233,6 @@
 
     menu.inert = true;
     setSubmenu(false);
-  }
-
-  function initSoundToggle() {
-    var toggles = Array.prototype.slice.call(document.querySelectorAll("[data-ll-sound-toggle]"));
-    var soundEnabled = false;
-    var audioContext = null;
-
-    toggles.forEach(function (toggle) {
-      toggle.classList.remove("ll-button", "ll-button--compact");
-    });
-
-    try {
-      soundEnabled = localStorage.getItem("ll-sound-effects") === "on";
-    } catch (error) {
-      console.warn("Sound preference could not be read from local storage.", error);
-    }
-
-    function updateSoundToggle() {
-      toggles.forEach(function (toggle) {
-        var stateLabel = soundEnabled ? "Sound On" : "Sound Off";
-        var nextLabel = soundEnabled ? "off" : "on";
-        toggle.classList.add("ll-sound-toggle");
-        toggle.setAttribute("data-sound-mode", soundEnabled ? "on" : "off");
-        toggle.setAttribute("aria-pressed", String(soundEnabled));
-        toggle.setAttribute("aria-label", stateLabel + ". Turn sound " + nextLabel + ".");
-        toggle.innerHTML =
-          '<span class="ll-sound-toggle__choice ll-sound-toggle__choice--off" aria-hidden="true">' +
-            '<svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="m17 9 5 6m0-6-5 6"></path></svg>' +
-          '</span>' +
-          '<span class="ll-sound-toggle__choice ll-sound-toggle__choice--on" aria-hidden="true">' +
-            '<svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg>' +
-          '</span>' +
-          '<span class="ll-sound-toggle__indicator" aria-hidden="true"></span>';
-      });
-    }
-
-    function playUiSound() {
-      var AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
-      if (!soundEnabled) return;
-      if (!AudioContextConstructor) {
-        console.warn("Sound effects are unavailable because Web Audio is not supported.");
-        return;
-      }
-
-      if (!audioContext) audioContext = new AudioContextConstructor();
-      if (audioContext.state === "suspended") {
-        audioContext.resume().catch(function (error) {
-          console.warn("Sound effects could not resume the audio context.", error);
-        });
-      }
-
-      var oscillator = audioContext.createOscillator();
-      var gain = audioContext.createGain();
-      var now = audioContext.currentTime;
-      oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime(660, now);
-      oscillator.frequency.exponentialRampToValueAtTime(440, now + 0.045);
-      gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(0.035, now + 0.008);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
-      oscillator.connect(gain);
-      gain.connect(audioContext.destination);
-      oscillator.start(now);
-      oscillator.stop(now + 0.065);
-    }
-
-    updateSoundToggle();
-
-    toggles.forEach(function (toggle) {
-      toggle.addEventListener("click", function () {
-        soundEnabled = !soundEnabled;
-        updateSoundToggle();
-        try {
-          localStorage.setItem("ll-sound-effects", soundEnabled ? "on" : "off");
-        } catch (error) {
-          console.warn("Sound preference could not be saved to local storage.", error);
-        }
-      });
-    });
-
-    document.addEventListener("click", function (event) {
-      var target = event.target.closest("a[href], button, [role='button']");
-      if (!target || target.matches("[data-ll-sound-toggle]")) return;
-      playUiSound();
-    }, true);
-
-    window.addEventListener("storage", function (event) {
-      if (event.key !== "ll-sound-effects") return;
-      soundEnabled = event.newValue === "on";
-      updateSoundToggle();
-    });
   }
 
   function initMotionReady() {
@@ -551,7 +462,7 @@
     window.__sectionRevealsInjected = true;
 
     var script = document.createElement("script");
-    script.src = "assets/js/modules/section-reveals.js?v=20261011-reveal-layer-optimization-1";
+    script.src = "assets/js/modules/section-reveals.js?v=20261016-editorial-reveals-1";
     script.async = true;
     script.setAttribute("data-section-reveals", "1");
     document.head.appendChild(script);
@@ -685,7 +596,6 @@
 
   function ready() {
     initMotionReady();
-    initSoundToggle();
     initClock();
     initViewportState();
     initMenu();

@@ -1,7 +1,6 @@
-# Optional source assets retained in the repository but omitted from the
-# GitHub Pages artifact can be listed here when needed.
+# Optional source assets omitted from the GitHub Pages artifact can be listed here.
+# Production image references use the compressed WebP variants where available.
 assets/video/herohhh.mp4
-assets/video/herojjj.mp4
 assets/video/herojjj.mp4
 assets/img/picture/ademi/22.png
 assets/img/picture/bg1.png
@@ -12,3 +11,10 @@ assets/img/picture/tyol/6.png
 assets/img/picture/vatug/2.png
 assets/img/picture/dsl/f.png
 assets/img/picture/kicksjoint/11b.png
+assets/video/ademi.mp4
+assets/video/bpm.mp4
+assets/video/dsl.mov
+assets/video/ffgfgg.mp4
+assets/video/hero.mp4
+assets/video/hero.m4v
+assets/video/herok.mp4

@@ -2,7 +2,7 @@
 
 ## Project Layout
 
-- Entry pages stay at repository root (`*.html`).
+- Public route pages stay at repository root (`*.html`). `vite.config.mjs` explicitly lists production routes; standalone experiments remain available in local development but are excluded from production.
 - All static runtime files are under `assets/` (`css`, `js`, `img`, `fonts`, `video`, `favicons`, `slide`).
 - Archived root-level legacy files are in `legacy/unused-root/`.
 - Shared behavior lives in `assets/js/modules/`; route-specific behavior lives in `assets/js/pages/`.
@@ -32,7 +32,9 @@ npm ci
 ./scripts/build-production.sh _site
 ```
 
-The production build uses Vite to process linked CSS and emit content-hashed assets while preserving the static HTML routes. The published site is `https://leo654.github.io/lawani-street/`. Its canonical URLs, social metadata, sitemap, and robots file use that production origin. The Pages build excludes development files, archived files, the PHP endpoint, and unused heavyweight source assets listed in `scripts/production-assets-ignore.txt`.
+The production build uses Vite to process linked CSS and emit content-hashed assets while preserving the static HTML routes. It builds into a clean output folder and copies only static media plus direct-path runtime dependencies, avoiding source/build duplicates. The published site is `https://leo654.github.io/lawani-street/`. Its canonical URLs, social metadata, sitemap, and robots file use that production origin. The Pages build excludes development files, archived files, the PHP endpoint, and unused heavyweight source assets listed in `scripts/production-assets-ignore.txt`.
+
+The Pages artifact has a 650 MiB size ceiling. Where a visually equivalent WebP delivery image exists, page references use it to reduce transfer size; social preview metadata keeps crawler-compatible PNG/JPG images. Large project videos use 720p H.264 MP4 delivery variants.
 
 ## Local Preview
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-theme-mode="light" data-theme="light">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#070807">
+    <meta name="theme-color" content="#efeee8">
     <meta name="description" content="Lawani St is an independent creative studio building distinctive identities, digital products, and experiences.">
     <meta name="author" content="Lawani St">
     <meta name="robots" content="index, follow">
@@ -32,13 +32,6 @@
 
     <script>
       (function () {
-        var mode = "light";
-        var theme = mode;
-        document.documentElement.setAttribute("data-theme-mode", mode);
-        document.documentElement.setAttribute("data-theme", theme);
-        var themeMeta = document.querySelector('meta[name="theme-color"]');
-        if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#efeee8" : "#070807");
-
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         var entering = false;
         try {
@@ -49,13 +42,6 @@
         if (!entering) document.documentElement.classList.add("home-preloader-active");
       })();
     </script>
-    <style>
-      html.home-preloader-active body.home-index .ll-home-hero__media {
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-      }
-    </style>
     <link rel="stylesheet" href="assets/css/entries/home.css">
 
   </head>
@@ -64,13 +50,13 @@
     <div class="home-page-loader" data-home-loader aria-hidden="true">
       <div class="home-page-loader__frame">
         <div class="home-page-loader__top">
-          <span class="home-page-loader__brand">L:</span>
-          <span>Independent creative studio</span>
+          <span class="home-page-loader__brand">Hello</span>
+          <!-- <span>Independent creative studio</span> -->
           <span class="home-page-loader__edition">London / Everywhere</span>
         </div>
         <div class="home-page-loader__center">
           <span class="home-page-loader__counter">00%</span>
-          <span class="home-page-loader__mark">L:</span>
+          <span class="home-page-loader__mark">L</span>
         </div>
         <div class="home-page-loader__bottom">
           <span>All in or not at all</span>
@@ -79,86 +65,12 @@
         <div class="home-page-loader__track"><span></span></div>
       </div>
     </div>
-    <script>
-      (function () {
-        var loader = document.querySelector("[data-home-loader]");
-        if (!loader) return;
-        if (!document.documentElement.classList.contains("home-preloader-active")) {
-          loader.remove();
-          return;
-        }
-
-        var counter = loader.querySelector(".home-page-loader__counter");
-        var count = loader.querySelector(".home-page-loader__count");
-        var startedAt = performance.now();
-        var minimumDuration = 650;
-        var logoHoldDuration = 520;
-        var exitDuration = 560;
-        var finished = false;
-        var pageLoaded = document.readyState === "complete";
-
-        function reveal() {
-          document.documentElement.classList.remove("home-preloader-active");
-          loader.remove();
-        }
-
-        function finish() {
-          if (finished) return;
-          finished = true;
-          var heroVideo = document.querySelector("[data-ll-hero-video]");
-          if (heroVideo) {
-            heroVideo.preload = "auto";
-            heroVideo.play().catch(function (error) {
-              if (error.name !== "AbortError") console.warn("The hero film could not be played.", error);
-            });
-          }
-          if (counter) counter.textContent = "100%";
-          if (count) count.textContent = "100 / 100";
-          loader.style.setProperty("--home-loader-progress", "1");
-          loader.classList.add("is-mark-visible");
-
-          window.setTimeout(function () {
-            loader.classList.add("is-exiting");
-          }, logoHoldDuration);
-          window.setTimeout(reveal, logoHoldDuration + exitDuration + 40);
-        }
-
-        function update(now) {
-          if (finished) return;
-          var elapsed = now - startedAt;
-          var progress = Math.min(0.92, 1 - Math.exp(-elapsed / 420));
-          var value = Math.min(92, Math.floor(progress * 100));
-
-          if (counter) counter.textContent = String(value).padStart(2, "0") + "%";
-          if (count) count.textContent = String(value).padStart(2, "0") + " / 100";
-          loader.style.setProperty("--home-loader-progress", String(progress));
-
-          if (pageLoaded && elapsed >= minimumDuration) {
-            finish();
-            return;
-          }
-          window.setTimeout(function () {
-            update(performance.now());
-          }, 50);
-        }
-
-        window.addEventListener("load", function () {
-          pageLoaded = true;
-        }, { once: true });
-        window.setTimeout(function () {
-          pageLoaded = true;
-        }, 1400);
-        window.setTimeout(function () {
-          update(performance.now());
-        }, 0);
-      })();
-    </script>
-    <a class="ll-skip-link" href="#main-content">Skip to main content</a>
+    <script src="assets/js/pages/home-loader.js"></script>
 
     <header class="ll-floating-header" data-ll-header>
       <div class="ll-nav-dock">
         <a class="ll-nav-dock__brand ll-button ll-button--square" href="index.html" aria-label="Lawani St home">
-          <span aria-hidden="true">L:</span>
+          <span aria-hidden="true">L</span>
         </a>
         <p class="ll-nav-dock__note" data-ll-nav-note>Cases with Impact</p>
         <button
@@ -169,11 +81,11 @@
           aria-label="Open navigation"
           data-ll-menu-toggle
         >
-          <svg class="ll-icon ll-nav-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path class="ll-icon__menu-line ll-icon__menu-line--top" d="M5 6.5h14"></path>
-            <path class="ll-icon__menu-line ll-icon__menu-line--middle" d="M5 12h14"></path>
-            <path class="ll-icon__menu-line ll-icon__menu-line--bottom" d="M5 17.5h14"></path>
-          </svg>
+          <span class="ll-nav-toggle__lines" aria-hidden="true">
+            <i class="ll-nav-toggle__line ll-nav-toggle__line--1"></i>
+            <i class="ll-nav-toggle__line ll-nav-toggle__line--2"></i>
+            <i class="ll-nav-toggle__line ll-nav-toggle__line--3"></i>
+          </span>
           <span class="ll-visually-hidden" data-ll-menu-label>Menu</span>
         </button>
       </div>
@@ -229,7 +141,7 @@
       <div class="ll-mobile-menu__actions">
 
         
-        <a class="ll-mobile-menu__pitch ll-button" href="#how-i-work">About Me</a>
+        <a class="ll-mobile-menu__pitch ll-button" href="pitchdeck.html">Resume</a>
         <div>
           <a class="ll-mobile-menu__cta ll-button" href="mailto:accounts@lawani.st?subject=Schedule%20a%20call">Schedule a call</a>
           <a class="ll-mobile-menu__cta ll-button" href="vcard.html">Start a project</a>
@@ -252,12 +164,12 @@
           <video
             data-ll-hero-video
             preload="none"
-            poster="assets/img/picture/home/"
+            poster="assets/img/picture/home/hero-poster.jpg"
             muted
             loop
             playsinline
           >
-            <source src="assets/video/hero.mp4" type="video/mp4">
+            <source src="assets/video/hero-m4v-720.mp4" type="video/mp4">
           </video>
           <span class="ll-home-hero__play-cue" aria-hidden="true"><i></i><b>Play reel</b></span>
         </button>
@@ -269,7 +181,7 @@
 
           <div class="ll-home-hero__message">
             <h1 id="ll-hero-title">
-              <span aria-hidden="true">L: </span>
+              <span aria-hidden="true">L</span>
               <span class="ll-visually-hidden">Lawani St — independent creative studio</span>
               <!-- <span>brands get it.</span> -->
             </h1>
@@ -300,7 +212,7 @@
 
       <section class="ll-hero-showreel" role="dialog" aria-modal="true" aria-label="Hero showreel" aria-hidden="true" data-ll-hero-showreel inert>
         <video class="ll-hero-showreel__video" playsinline preload="none" data-ll-hero-showreel-video>
-          <source src="assets/video/hero.mp4" type="video/mp4">
+          <source src="assets/video/hero-720.mp4" type="video/mp4">
         </video>
         <button class="ll-hero-showreel__close" type="button" aria-label="Close hero showreel" data-ll-hero-close>
           <span>Close</span>
@@ -331,17 +243,17 @@
               <span class="lwa-project__tags"><span>Branding</span><span>Experience</span><span>Digital</span></span>
               <span class="lwa-project__state" data-work-state>( + )</span>
               <span class="lwa-project__rail" aria-hidden="true">
-                <img src="assets/img/picture/kicksjoint/1.png" alt="" width="1615" height="1615" loading="eager" decoding="async">
+                <img src="assets/img/picture/kicksjoint/1.webp" alt="" width="1615" height="1615" loading="eager" decoding="async">
                 <img src="assets/img/picture/kicksjoint/bg1.png" alt="" width="1138" height="1138" loading="eager" decoding="async">
-                <img src="assets/img/case2.png" alt="" width="2684" height="1509" loading="eager" decoding="async">
-                <img src="assets/img/kj2.png" alt="" width="2684" height="1509" loading="eager" decoding="async">
+                <img src="assets/img/case2.webp" alt="" width="2684" height="1509" loading="eager" decoding="async">
+                <img src="assets/img/kj2.webp" alt="" width="2684" height="1509" loading="eager" decoding="async">
               </span>
               <span class="lwa-project__summary-copy">A culture-led sneaker marketplace identity built to move confidently across campaigns, commerce, and community.</span>
             </button>
             <div class="lwa-project__detail" id="home-work-kicksjoint" aria-hidden="true" data-work-detail>
               <div class="lwa-project__detail-inner">
                 <div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="kicksjoint.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div>
-                <div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="Kicksjoint project images"><figure><img src="assets/img/picture/kicksjoint/1.png" alt="Kicksjoint identity artwork" loading="lazy" decoding="async" width="1615" height="1615"></figure><figure><img src="assets/img/picture/kicksjoint/bg1.png" alt="Kicksjoint campaign artwork" loading="lazy" decoding="async" width="1138" height="1138"></figure><figure><img src="assets/img/case2.png" alt="Kicksjoint digital artwork" loading="lazy" decoding="async" width="2684" height="1509"></figure><figure><img src="assets/img/kj2.png" alt="Kicksjoint brand application" loading="lazy" decoding="async" width="2684" height="1509"></figure></div>
+                <div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="Kicksjoint project images"><figure><img src="assets/img/picture/kicksjoint/1.webp" alt="Kicksjoint identity artwork" loading="lazy" decoding="async" width="1615" height="1615"></figure><figure><img src="assets/img/picture/kicksjoint/bg1.png" alt="Kicksjoint campaign artwork" loading="lazy" decoding="async" width="1138" height="1138"></figure><figure><img src="assets/img/case2.webp" alt="Kicksjoint digital artwork" loading="lazy" decoding="async" width="2684" height="1509"></figure><figure><img src="assets/img/kj2.webp" alt="Kicksjoint brand application" loading="lazy" decoding="async" width="2684" height="1509"></figure></div>
               </div>
             </div>
           </article>
@@ -351,10 +263,10 @@
               <span class="lwa-project__title">Ademi</span>
               <span class="lwa-project__tags"><span>Branding</span><span>Campaign</span><span>Experience</span></span>
               <span class="lwa-project__state" data-work-state>( + )</span>
-              <span class="lwa-project__rail" aria-hidden="true"><img src="assets/img/ademi1.png" alt="" loading="lazy" decoding="async" width="866" height="866"><img src="assets/img/picture/ademi/1.png" alt="" loading="lazy" decoding="async" width="1591" height="1591"><img src="assets/img/ademi2.png" alt="" loading="lazy" decoding="async" width="1036" height="1035"><img src="assets/img/ademi3.png" alt="" loading="lazy" decoding="async" width="1766" height="989"></span>
+              <span class="lwa-project__rail" aria-hidden="true"><img src="assets/img/ademi1.png" alt="" loading="lazy" decoding="async" width="866" height="866"><img src="assets/img/picture/ademi/1.webp" alt="" loading="lazy" decoding="async" width="1591" height="1591"><img src="assets/img/ademi2.webp" alt="" loading="lazy" decoding="async" width="1036" height="1035"><img src="assets/img/ademi3.webp" alt="" loading="lazy" decoding="async" width="1766" height="989"></span>
               <span class="lwa-project__summary-copy">An expressive identity system that gives Ademi a confident rhythm across campaigns, product moments, and digital storytelling.</span>
             </button>
-            <div class="lwa-project__detail" id="home-work-ademi" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="ademi.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="Ademi project images"><figure><img src="assets/img/ademi1.png" alt="Ademi campaign artwork" loading="lazy" decoding="async" width="866" height="866"></figure><figure><img src="assets/img/picture/ademi/1.png" alt="Ademi identity artwork" loading="lazy" decoding="async" width="1591" height="1591"></figure><figure><img src="assets/img/ademi2.png" alt="Ademi visual system" loading="lazy" decoding="async" width="1036" height="1035"></figure><figure><img src="assets/img/ademi3.png" alt="Ademi brand application" loading="lazy" decoding="async" width="1766" height="989"></figure></div></div></div>
+            <div class="lwa-project__detail" id="home-work-ademi" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="ademi.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="Ademi project images"><figure><img src="assets/img/ademi1.png" alt="Ademi campaign artwork" loading="lazy" decoding="async" width="866" height="866"></figure><figure><img src="assets/img/picture/ademi/1.webp" alt="Ademi identity artwork" loading="lazy" decoding="async" width="1591" height="1591"></figure><figure><img src="assets/img/ademi2.webp" alt="Ademi visual system" loading="lazy" decoding="async" width="1036" height="1035"></figure><figure><img src="assets/img/ademi3.webp" alt="Ademi brand application" loading="lazy" decoding="async" width="1766" height="989"></figure></div></div></div>
           </article>
 
           <article class="lwa-project" data-work-item data-categories="strategy branding digital">
@@ -362,10 +274,10 @@
               <span class="lwa-project__title">EnterScale</span>
               <span class="lwa-project__tags"><span>Strategy</span><span>Branding</span><span>Digital</span></span>
               <span class="lwa-project__state" data-work-state>( + )</span>
-              <span class="lwa-project__rail" aria-hidden="true"><img src="assets/img/ent.png" alt="" loading="lazy" decoding="async" width="1400" height="1400"><img src="assets/img/picture/enterscale/right.png" alt="" loading="lazy" decoding="async" width="1644" height="1644"><img src="assets/img/picture/enterscale/into.png" alt="" loading="lazy" decoding="async" width="5367" height="2795"><img src="assets/img/picture/enterscale/10b.png" alt="" loading="lazy" decoding="async" width="2925" height="1644"></span>
+              <span class="lwa-project__rail" aria-hidden="true"><img src="assets/img/ent.webp" alt="" loading="lazy" decoding="async" width="1400" height="1400"><img src="assets/img/picture/enterscale/right.webp" alt="" loading="lazy" decoding="async" width="1644" height="1644"><img src="assets/img/picture/enterscale/into.webp" alt="" loading="lazy" decoding="async" width="5367" height="2795"><img src="assets/img/picture/enterscale/10b.webp" alt="" loading="lazy" decoding="async" width="2925" height="1644"></span>
               <span class="lwa-project__summary-copy">A strategy-led identity for a growth partner, turning operational clarity into a sharp and scalable brand system.</span>
             </button>
-            <div class="lwa-project__detail" id="home-work-enterscale" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="enterscale.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="EnterScale project images"><figure><img src="assets/img/ent.png" alt="EnterScale identity artwork" loading="lazy" decoding="async" width="1400" height="1400"></figure><figure><img src="assets/img/picture/enterscale/right.png" alt="EnterScale brand application" loading="lazy" decoding="async" width="1644" height="1644"></figure><figure><img src="assets/img/picture/enterscale/into.png" alt="EnterScale digital experience" loading="lazy" decoding="async" width="5367" height="2795"></figure><figure><img src="assets/img/picture/enterscale/10b.png" alt="EnterScale campaign artwork" loading="lazy" decoding="async" width="2925" height="1644"></figure></div></div></div>
+            <div class="lwa-project__detail" id="home-work-enterscale" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="enterscale.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="EnterScale project images"><figure><img src="assets/img/ent.webp" alt="EnterScale identity artwork" loading="lazy" decoding="async" width="1400" height="1400"></figure><figure><img src="assets/img/picture/enterscale/right.webp" alt="EnterScale brand application" loading="lazy" decoding="async" width="1644" height="1644"></figure><figure><img src="assets/img/picture/enterscale/into.webp" alt="EnterScale digital experience" loading="lazy" decoding="async" width="5367" height="2795"></figure><figure><img src="assets/img/picture/enterscale/10b.webp" alt="EnterScale campaign artwork" loading="lazy" decoding="async" width="2925" height="1644"></figure></div></div></div>
           </article>
 
           <article class="lwa-project" data-work-item data-categories="branding digital product">
@@ -373,10 +285,10 @@
               <span class="lwa-project__title">VatuG</span>
               <span class="lwa-project__tags"><span>Branding</span><span>Digital</span><span>Product</span></span>
               <span class="lwa-project__state" data-work-state>( + )</span>
-              <span class="lwa-project__rail" aria-hidden="true"><img src="assets/img/vatug.png" alt="" loading="lazy" decoding="async" width="1178" height="663"><img src="assets/img/picture/vatug/right.png" alt="" loading="lazy" decoding="async" width="1032" height="1032"><img src="assets/img/picture/vatug/left.png" alt="" loading="lazy" decoding="async" width="2868" height="2868"><img src="assets/img/picture/vatug/bg.png" alt="" loading="lazy" decoding="async" width="5367" height="2795"></span>
+              <span class="lwa-project__rail" aria-hidden="true"><img src="assets/img/vatug.png" alt="" loading="lazy" decoding="async" width="1178" height="663"><img src="assets/img/picture/vatug/right.png" alt="" loading="lazy" decoding="async" width="1032" height="1032"><img src="assets/img/picture/vatug/left.png" alt="" loading="lazy" decoding="async" width="2868" height="2868"><img src="assets/img/picture/vatug/bg.webp" alt="" loading="lazy" decoding="async" width="5367" height="2795"></span>
               <span class="lwa-project__summary-copy">A flexible identity and digital toolkit that gives VatuG more clarity, consistency, and confidence at every customer touchpoint.</span>
             </button>
-            <div class="lwa-project__detail" id="home-work-vatug" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="vatug.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="VatuG project images"><figure><img src="assets/img/vatug.png" alt="VatuG identity artwork" loading="lazy" decoding="async" width="1178" height="663"></figure><figure><img src="assets/img/picture/vatug/right.png" alt="VatuG digital product" loading="lazy" decoding="async" width="1032" height="1032"></figure><figure><img src="assets/img/picture/vatug/left.png" alt="VatuG brand application" loading="lazy" decoding="async" width="2868" height="2868"></figure><figure><img src="assets/img/picture/vatug/bg.png" alt="VatuG campaign artwork" loading="lazy" decoding="async" width="5367" height="2795"></figure></div></div></div>
+            <div class="lwa-project__detail" id="home-work-vatug" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="vatug.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="VatuG project images"><figure><img src="assets/img/vatug.png" alt="VatuG identity artwork" loading="lazy" decoding="async" width="1178" height="663"></figure><figure><img src="assets/img/picture/vatug/right.png" alt="VatuG digital product" loading="lazy" decoding="async" width="1032" height="1032"></figure><figure><img src="assets/img/picture/vatug/left.png" alt="VatuG brand application" loading="lazy" decoding="async" width="2868" height="2868"></figure><figure><img src="assets/img/picture/vatug/bg.webp" alt="VatuG campaign artwork" loading="lazy" decoding="async" width="5367" height="2795"></figure></div></div></div>
           </article>
 
           <article class="lwa-project" data-work-item data-categories="strategy experience product">
@@ -384,10 +296,10 @@
               <span class="lwa-project__title">Doorstep Logistics</span>
               <span class="lwa-project__tags"><span>Strategy</span><span>Experience</span><span>Product</span></span>
               <span class="lwa-project__state" data-work-state>( + )</span>
-              <span class="lwa-project__rail" aria-hidden="true"><img src="assets/img/picture/dsl/Artboard22.png" alt="" loading="lazy" decoding="async" width="2684" height="1509"><img src="assets/img/picture/dsl/ui.png" alt="" loading="lazy" decoding="async" width="1097" height="1387"><img src="assets/img/picture/dsl/21.png" alt="" loading="lazy" decoding="async" width="2684" height="1509"><img src="assets/img/picture/dsl/laptop.png" alt="" loading="lazy" decoding="async" width="5465" height="3057"></span>
+              <span class="lwa-project__rail" aria-hidden="true"><img src="assets/img/picture/dsl/Artboard22.png" alt="" loading="lazy" decoding="async" width="2684" height="1509"><img src="assets/img/picture/dsl/ui.png" alt="" loading="lazy" decoding="async" width="1097" height="1387"><img src="assets/img/picture/dsl/21.webp" alt="" loading="lazy" decoding="async" width="2684" height="1509"><img src="assets/img/picture/dsl/laptop.png" alt="" loading="lazy" decoding="async" width="5465" height="3057"></span>
               <span class="lwa-project__summary-copy">A service and product experience that makes logistics feel simpler, more transparent, and easier to trust from booking to delivery.</span>
             </button>
-            <div class="lwa-project__detail" id="home-work-dsl" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="dsl.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="Doorstep Logistics project images"><figure><img src="assets/img/picture/dsl/Artboard22.png" alt="Doorstep Logistics identity" loading="lazy" decoding="async" width="2684" height="1509"></figure><figure><img src="assets/img/picture/dsl/ui.png" alt="Doorstep Logistics interface" loading="lazy" decoding="async" width="1097" height="1387"></figure><figure><img src="assets/img/picture/dsl/21.png" alt="Doorstep Logistics product experience" loading="lazy" decoding="async" width="2684" height="1509"></figure><figure><img src="assets/img/picture/dsl/laptop.png" alt="Doorstep Logistics website" loading="lazy" decoding="async" width="5465" height="3057"></figure></div></div></div>
+            <div class="lwa-project__detail" id="home-work-dsl" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="dsl.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="Doorstep Logistics project images"><figure><img src="assets/img/picture/dsl/Artboard22.png" alt="Doorstep Logistics identity" loading="lazy" decoding="async" width="2684" height="1509"></figure><figure><img src="assets/img/picture/dsl/ui.png" alt="Doorstep Logistics interface" loading="lazy" decoding="async" width="1097" height="1387"></figure><figure><img src="assets/img/picture/dsl/21.webp" alt="Doorstep Logistics product experience" loading="lazy" decoding="async" width="2684" height="1509"></figure><figure><img src="assets/img/picture/dsl/laptop.png" alt="Doorstep Logistics website" loading="lazy" decoding="async" width="5465" height="3057"></figure></div></div></div>
           </article>
 
           <article class="lwa-project" data-work-item data-categories="branding campaign content">
@@ -395,10 +307,10 @@
               <span class="lwa-project__title">TYOL</span>
               <span class="lwa-project__tags"><span>Branding</span><span>Campaign</span><span>Content</span></span>
               <span class="lwa-project__state" data-work-state>( + )</span>
-              <span class="lwa-project__rail" aria-hidden="true"><img src="assets/img/tyol.png" alt="" loading="lazy" decoding="async" width="1509" height="1509"><img src="assets/img/picture/tyol/2b.png" alt="" loading="lazy" decoding="async" width="1032" height="1032"><img src="assets/img/picture/tyol/1a.png" alt="" loading="lazy" decoding="async" width="2270" height="2270"><img src="assets/img/picture/tyol/bg.png" alt="" loading="lazy" decoding="async" width="5367" height="2795"></span>
+              <span class="lwa-project__rail" aria-hidden="true"><img src="assets/img/tyol.png" alt="" loading="lazy" decoding="async" width="1509" height="1509"><img src="assets/img/picture/tyol/2b.png" alt="" loading="lazy" decoding="async" width="1032" height="1032"><img src="assets/img/picture/tyol/1a.png" alt="" loading="lazy" decoding="async" width="2270" height="2270"><img src="assets/img/picture/tyol/bg.webp" alt="" loading="lazy" decoding="async" width="5367" height="2795"></span>
               <span class="lwa-project__summary-copy">A campaign world designed to make lagos feel visible, participatory, and culturally alive across content, events, and social moments.</span>
             </button>
-            <div class="lwa-project__detail" id="home-work-tyol" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="tyol.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="TYOL project images"><figure><img src="assets/img/tyol.png" alt="TYOL campaign artwork" loading="lazy" decoding="async" width="1509" height="1509"></figure><figure><img src="assets/img/picture/tyol/2b.png" alt="TYOL editorial artwork" loading="lazy" decoding="async" width="1032" height="1032"></figure><figure><img src="assets/img/picture/tyol/1a.png" alt="TYOL campaign landscape" loading="lazy" decoding="async" width="2270" height="2270"></figure><figure><img src="assets/img/picture/tyol/bg.png" alt="TYOL content system" loading="lazy" decoding="async" width="5367" height="2795"></figure></div></div></div>
+            <div class="lwa-project__detail" id="home-work-tyol" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="tyol.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="TYOL project images"><figure><img src="assets/img/tyol.png" alt="TYOL campaign artwork" loading="lazy" decoding="async" width="1509" height="1509"></figure><figure><img src="assets/img/picture/tyol/2b.png" alt="TYOL editorial artwork" loading="lazy" decoding="async" width="1032" height="1032"></figure><figure><img src="assets/img/picture/tyol/1a.png" alt="TYOL campaign landscape" loading="lazy" decoding="async" width="2270" height="2270"></figure><figure><img src="assets/img/picture/tyol/bg.webp" alt="TYOL content system" loading="lazy" decoding="async" width="5367" height="2795"></figure></div></div></div>
           </article>
 
           <article class="lwa-project" data-work-item data-categories="branding campaign content">
@@ -406,10 +318,10 @@
               <span class="lwa-project__title">Beat Per Minute</span>
               <span class="lwa-project__tags"><span>Branding</span><span>Campaign</span><span>Content</span></span>
               <span class="lwa-project__state" data-work-state>( + )</span>
-              <span class="lwa-project__rail" aria-hidden="true"><img src="assets/img/bpm2.png" alt="" loading="lazy" decoding="async" width="1400" height="1400"><img src="assets/img/dj1.png" alt="" loading="lazy" decoding="async" width="1834" height="1037"><img src="assets/img/dj2.png" alt="" loading="lazy" decoding="async" width="1400" height="1400"><img src="assets/img/bpm1.png" alt="" loading="lazy" decoding="async" width="1400" height="1400"></span>
+              <span class="lwa-project__rail" aria-hidden="true"><img src="assets/img/bpm2.webp" alt="" loading="lazy" decoding="async" width="1400" height="1400"><img src="assets/img/dj1.webp" alt="" loading="lazy" decoding="async" width="1834" height="1037"><img src="assets/img/dj2.webp" alt="" loading="lazy" decoding="async" width="1400" height="1400"><img src="assets/img/bpm1.webp" alt="" loading="lazy" decoding="async" width="1400" height="1400"></span>
               <span class="lwa-project__summary-copy">A high-energy identity and campaign system that turns rhythm, performance, and nightlife culture into a recognisable visual pulse.</span>
             </button>
-            <div class="lwa-project__detail" id="home-work-bpm" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="bpm.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="Beat Per Minute project images"><figure><img src="assets/img/bpm2.png" alt="Beat Per Minute identity artwork" loading="lazy" decoding="async" width="1400" height="1400"></figure><figure><img src="assets/img/dj1.png" alt="Beat Per Minute event photography" loading="lazy" decoding="async" width="1834" height="1037"></figure><figure><img src="assets/img/dj2.png" alt="Beat Per Minute performance artwork" loading="lazy" decoding="async" width="1400" height="1400"></figure><figure><img src="assets/img/bpm1.png" alt="Beat Per Minute campaign application" loading="lazy" decoding="async" width="1400" height="1400"></figure></div></div></div>
+            <div class="lwa-project__detail" id="home-work-bpm" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="bpm.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="vcard.html"><span>Start a project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="Beat Per Minute project images"><figure><img src="assets/img/bpm2.webp" alt="Beat Per Minute identity artwork" loading="lazy" decoding="async" width="1400" height="1400"></figure><figure><img src="assets/img/dj1.webp" alt="Beat Per Minute event photography" loading="lazy" decoding="async" width="1834" height="1037"></figure><figure><img src="assets/img/dj2.webp" alt="Beat Per Minute performance artwork" loading="lazy" decoding="async" width="1400" height="1400"></figure><figure><img src="assets/img/bpm1.webp" alt="Beat Per Minute campaign application" loading="lazy" decoding="async" width="1400" height="1400"></figure></div></div></div>
           </article>
         </div>
       </section>
@@ -479,7 +391,7 @@
         </div>
       </section>
   <section class="ll-client-strip" aria-label="Selected client brands">
-        <div class="ll-client-strip__marquee ll-reveal">
+        <div class="ll-client-strip__marquee">
           <div class="ll-client-strip__track">
             <ul class="ll-client-strip__logos">
               <li><img src="assets/img/mtn.svg" alt="MTN" width="1000" height="1000" loading="lazy" decoding="async"></li>
@@ -512,14 +424,15 @@
                   <img src="assets/img/1.jpg" alt="A creative studio workspace filled with plants and design materials" width="1024" height="1024" loading="lazy" decoding="async">
                 </figure>
                 <figure>
-                  <img src="assets/img/lion.png" alt="Hands at work on a laptop" width="1240" height="1240" loading="lazy" decoding="async">
+                  <img src="assets/img/lion.webp" alt="Hands at work on a laptop" width="1240" height="1240" loading="lazy" decoding="async">
                 </figure>
               </div>
-              <p class="ll-manifesto__caption">London based <span aria-hidden="true">/</span> Working everywhere</p>
+              <p class="ll-manifesto__caption">Designer <span aria-hidden="true">|
+              </span> Thinker</p>
             </div>
             <figure class="ll-manifesto__portrait">
               <video
-                src="assets/video/herok.mp4"
+                src="assets/video/holo.mp4"
                 width="1122"
                 height="1395"
                 autoplay
@@ -573,12 +486,18 @@
       </div>
       <div class="ll-footer__marquee" aria-hidden="true"></div>
       <div class="ll-footer__utility" id="footer-navigation">
-          <nav aria-label="Social media">
-            <a href="https://www.instagram.com/lawani.st" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="17" height="17" rx="4"></rect><circle cx="12" cy="12" r="4"></circle><circle class="ll-footer__social-dot" cx="17.6" cy="6.8" r="1"></circle></svg>
-            </a>
+          <nav class="ll-footer__social-links" aria-label="Social media and booking">
             <a href="https://www.linkedin.com/in/leonardlawani/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9v10M5 5.5v.1M10 19v-6a4 4 0 0 1 8 0v6M10 9v10"></path></svg>
+              <svg class="ll-footer__linkedin-icon" viewBox="0 0 2200 2200" aria-hidden="true" focusable="false"><path class="ll-footer__linkedin-bg" fill-rule="evenodd" d="M1530.6,309.6H669.4c-222.1,0-401.9,179.8-401.9,401.9v861.3c0,222.1,179.8,401.9,401.9,401.9h861.3  c222.1,0,401.9-179.8,401.9-401.9V711.5C1932.5,490.2,1752.7,309.6,1530.6,309.6z M1788.7,1544c0,158.2-128.6,286.8-286.8,286.8  H698.1c-158.2,0-286.8-128.6-286.8-286.8V740.2c0-158.2,128.6-286.8,286.8-286.8h803.7c158.2,0,286.8,128.6,286.8,286.8V1544z"/><rect x="686.6" y="987.1" width="178.2" height="555.3" class="ll-footer__linkedin-glyph"/><path class="ll-footer__linkedin-glyph" fill-rule="evenodd" d="M1333.2,1005.2c-0.9-0.3-1.8-0.7-2.7-1c-25.8-9.6-53.3-15.6-81.9-17.3c-1.1-0.1-2.1-0.1-3.2-0.2c-0.1,0-0.2,0-0.2,0   c-2.4-0.1-4.7-0.2-7.1-0.3c-2.5-0.1-4.9-0.1-7.4-0.1c-2.5,0-5,0-7.4,0.1c-2.4,0.1-4.8,0.2-7.1,0.3c-0.1,0-0.2,0-0.2,0   c-1.1,0-2.1,0.1-3.2,0.2c-28.7,1.8-56.2,7.8-81.9,17.3c-0.8,0.3-1.6,0.6-2.4,0.9c-108.4,41.4-185.3,146.5-185.3,268.8v267.6h178.2   v-267.6c0-60.7,48.7-109.5,109.5-109.5c30.4,0,57.7,12.2,77.5,32c10.5,10.5,18.9,23.2,24.4,37.3c0.3,0.8,0.6,1.7,1,2.5   c0.6,1.7,1.2,3.4,1.7,5.1c1.3,4.3,2.4,8.7,3.2,13.2c0.5,2.7,0.9,5.4,1.1,8.2c0.4,3.7,0.6,7.4,0.6,11.2v267.6h178.2v-267.6   C1518.2,1151.7,1441.4,1046.7,1333.2,1005.2z"/><circle cx="775.3" cy="836.1" r="93.5" class="ll-footer__linkedin-glyph"/></svg>
+              <span>LinkedIn</span>
+            </a>
+            <a href="https://calendly.com/leonardlawani/30min" target="_blank" rel="noopener noreferrer" aria-label="Book a 30-minute call">
+              <svg class="ll-footer__calendar-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 5h12a1.5 1.5 0 0 1 1.5 1.5v5M8 3v4M14 3v4M5 9h12"></path><circle cx="17" cy="17" r="4.5"></circle><path d="M17 14.8v2.4l1.5 1"></path></svg>
+              <span>Book a 30-minute call</span>
+            </a>
+            <a href="https://www.instagram.com/lawani.st" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg class="ll-footer__instagram-icon" viewBox="0 0 2200 2200" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M1528.1,294H666.9C445,294,265,474,265,695.9v861.2C265,1779,445,1959,666.9,1959h861.2   c221.9,0,401.9-180,401.9-401.9V695.9C1930,474,1750,294,1528.1,294z M1786.5,1528.4c0,158.5-128.6,287.1-287.1,287.1H695.6   c-158.5,0-287.1-128.6-287.1-287.1V724.6c0-158.5,128.6-287.1,287.1-287.1h803.8c158.5,0,287.1,128.6,287.1,287.1V1528.4z"/><path fill-rule="evenodd" d="M1097.5,695.9c-237.7,0-430.6,192.9-430.6,430.6c0,237.7,192.9,430.6,430.6,430.6s430.6-192.9,430.6-430.6   C1528.1,888.8,1335.2,695.9,1097.5,695.9z M1097.5,1413.6c-158.2,0-287.1-128.9-287.1-287.1s128.9-287.1,287.1-287.1   s287.1,128.9,287.1,287.1S1255.7,1413.6,1097.5,1413.6z"/><circle class="st0" cx="1556.8" cy="667.2" r="86.1"/></svg>
+              <span>Instagram</span>
             </a>
           </nav>
           <nav aria-label="Legal">

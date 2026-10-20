@@ -21,40 +21,40 @@
   /* Type system - unified with lamalama-ui
      ========================================
      Font families mapped to semantic roles */
-  --ds-font-display: var(--ll-sans);
-  --ds-font-body: var(--ll-sans);
+  --ds-font-display: var(--font-family-display);
+  --ds-font-body: var(--font-family-body);
 
   /* Typography scale - mapped to semantic use cases
      ========================================
      fs: font size
      lh: line height
      ls: letter spacing */
-  --ds-fs-body: var(--ll-type-body);
-  --ds-fs-meta: var(--ll-type-compact-metadata);
-  --ds-fs-display: var(--ll-type-display);
-  --ds-lh-body: var(--ll-leading-body);
-  --ds-ls-body: var(--ll-ls-normal);
-  --ds-ls-meta: var(--ll-ls-wide);
-  --ds-ls-display: var(--ll-ls-tight);
+  --ds-fs-body: var(--font-size-base);
+  --ds-fs-meta: var(--font-size-xs);
+  --ds-fs-display: var(--font-size-4xl);
+  --ds-lh-body: var(--line-height-loose);
+  --ds-ls-body: var(--letter-spacing-normal);
+  --ds-ls-meta: var(--letter-spacing-wide);
+  --ds-ls-display: var(--letter-spacing-tight);
 
   /* Spacing rhythm - Fibonacci-based scale
      ========================================
      Based on golden ratio (1.618) for harmonious proportions
      space-1 (5px) → space-9 (233px)
      Use clamp() for responsive values between breakpoints */
-  --ds-space-1: var(--ll-space-xs);
-  --ds-space-2: var(--ll-space-sm);
-  --ds-space-3: var(--ll-space-md);
-  --ds-space-4: var(--ll-space-lg);
-  --ds-space-5: var(--ll-space-xl);
+  --ds-space-1: var(--space-xs);
+  --ds-space-2: var(--space-sm);
+  --ds-space-3: var(--space-md);
+  --ds-space-4: var(--space-lg);
+  --ds-space-5: var(--space-xl);
 
   /* Accessibility tokens
      ========================================
      WCAG 2.1 AA compliant color contrasts and focus states */
-  --ds-focus-ring: 2px solid var(--ll-orange);
-  --ds-focus-offset: 4px;
-  --ds-min-touch-target: 44px;
-  --ds-min-contrast-ratio: 4.5;
+  --ds-focus-ring: var(--focus-ring);
+  --ds-focus-offset: var(--focus-offset);
+  --ds-min-touch-target: var(--min-touch-target);
+  --ds-min-contrast-ratio: var(--min-contrast-ratio);
 }
 
 /* Base type consistency between home + work */

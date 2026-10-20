@@ -14,10 +14,10 @@
       var slide = notice.closest("[data-deck-slide]");
       var posts = [
         { title: "Thinking out loud", copy: "Good work starts with a useful question, not a decorative answer.", image: "assets/img/snap.jpg" },
-        { title: "Make the system sing", copy: "Consistency is not repetition. It is giving every decision a shared point of view.", image: "assets/img/kj2.png" },
+        { title: "Make the system sing", copy: "Consistency is not repetition. It is giving every decision a shared point of view.", image: "assets/img/kj2.webp" },
         { title: "Design for the second look", copy: "The first moment gets attention. The second one earns trust.", image: "assets/img/ademi1.png" },
-        { title: "Start where people are", copy: "Strategy is empathy with a sharper pencil.", image: "assets/img/tyol1.png" },
-        { title: "Keep the rough edges", copy: "The best brands leave enough room for people to feel something back.", image: "assets/img/bpm2.png" }
+        { title: "Start where people are", copy: "Strategy is empathy with a sharper pencil.", image: "assets/img/tyol1.webp" },
+        { title: "Keep the rough edges", copy: "The best brands leave enough room for people to feel something back.", image: "assets/img/bpm2.webp" }
       ];
       var postIndex = 0;
       var timer = 0;

@@ -3,11 +3,13 @@
 
   if (!document.body || !document.body.classList.contains("home-index")) return;
 
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var reduceMotion = (window.LawaniFeatures && window.LawaniFeatures.get("reducedMotion")) ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var CONSTANTS = window.LawaniConstants || {};
 
   function scheduleMotionFrame(key, callback) {
-    if (window.LawaniMotion && typeof window.LawaniMotion.frame === "function") {
-      window.LawaniMotion.frame(key, callback);
+    if (window.LawaniMotion && typeof window.LawaniMotion.scheduleFrame === "function") {
+      window.LawaniMotion.scheduleFrame(key, callback);
       return;
     }
     window.requestAnimationFrame(callback);
@@ -40,7 +42,8 @@
       });
     });
 
-    if (!("IntersectionObserver" in window)) return;
+    if (!(window.LawaniFeatures && window.LawaniFeatures.supported("intersectionObserver")) &&
+        !("IntersectionObserver" in window)) return;
 
     var observer = new IntersectionObserver(
       function (entries) {
@@ -53,12 +56,16 @@
           });
         if (visible.length) activate(visible[0].target.id);
       },
-      { threshold: [0.25, 0.5, 0.75], rootMargin: "-18% 0px -52% 0px" }
+      { threshold: CONSTANTS.SCROLL?.SERVICE_LINK_THRESHOLD || [0.25, 0.5, 0.75], rootMargin: CONSTANTS.SCROLL?.SERVICE_LINK_ROOT_MARGIN || "-18% 0px -52% 0px" }
     );
 
     sections.forEach(function (section) {
       observer.observe(section);
     });
+
+    window.addEventListener("beforeunload", function () {
+      observer.disconnect();
+    }, { once: true });
   }
 
   function initHomeHero() {
@@ -68,6 +75,7 @@
     var video = hero.querySelector("[data-ll-hero-video]");
     var videoToggle = hero.querySelector("[data-ll-hero-video-toggle]");
     var heroVisible = true;
+    var heroObserver = null;
     var heroVideoSuppressed = function (userInitiated) {
       return document.body.classList.contains("ll-pitch-overlay-open") ||
         document.body.classList.contains("ll-showreel-open") ||
@@ -82,21 +90,33 @@
       video.play().catch(function (error) {
         if (error.name === "AbortError") return;
         console.warn("The hero film could not be played.", error);
+
+        // Fallback: show poster image if video fails
+        var poster = video.getAttribute("poster");
+        if (poster && !video.dataset.fallbackShown) {
+          video.dataset.fallbackShown = "true";
+          video.style.display = "none";
+          var fallbackImg = document.createElement("img");
+          fallbackImg.src = poster;
+          fallbackImg.alt = "Hero image";
+          fallbackImg.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;";
+          video.parentNode.insertBefore(fallbackImg, video);
+        }
       });
     }
 
     function updateHeroState() {
-      document.body.classList.toggle("is-past-home-hero", window.scrollY > hero.offsetHeight * 0.55);
+      document.body.classList.toggle("is-past-home-hero", window.scrollY > hero.offsetHeight * (CONSTANTS.SCROLL?.HERO_PAST_THRESHOLD || 0.55));
       var progress = 0;
 
-      if (!reduceMotion && window.innerWidth > 820) {
+      if (!reduceMotion && window.innerWidth > (CONSTANTS.BREAKPOINT?.HERO_EFFECT || 820)) {
         progress = Math.min(1, Math.max(0, window.scrollY / Math.max(1, hero.offsetHeight)));
         hero.style.setProperty("--ll-hero-scroll", progress.toFixed(4));
       } else {
         hero.style.setProperty("--ll-hero-scroll", "0");
       }
 
-      hero.style.setProperty("--ll-hero-line-scale", Math.max(0.18, 1 - progress * 0.82).toFixed(4));
+      hero.style.setProperty("--ll-hero-line-scale", Math.max(CONSTANTS.SCROLL?.HERO_LINE_SCALE_MIN || 0.18, 1 - progress * (CONSTANTS.SCROLL?.HERO_LINE_SCALE_MAX || 0.82)).toFixed(4));
     }
 
     function requestHeroUpdate() {
@@ -137,7 +157,7 @@
     });
 
     if ("IntersectionObserver" in window) {
-      var heroObserver = new IntersectionObserver(function (entries) {
+      heroObserver = new IntersectionObserver(function (entries) {
         heroVisible = entries[0].isIntersecting;
         if (heroVisible) playHeroVideo();
         else video.pause();
@@ -146,6 +166,10 @@
     } else {
       playHeroVideo();
     }
+
+    window.addEventListener("beforeunload", function () {
+      if (heroObserver) heroObserver.disconnect();
+    }, { once: true });
   }
 
   function initFooterParallax() {
@@ -169,7 +193,7 @@
           trigger: footer,
           start: "top bottom",
           end: "bottom top",
-          scrub: 0.8,
+          scrub: 1,
           invalidateOnRefresh: true,
           onUpdate: function (self) {
             window.__lawaniFooterScrollProgress = self.progress;
@@ -177,10 +201,14 @@
         }
       });
 
+      function getParallaxTravel() {
+        return Math.min(Math.round(marquee.clientHeight * 0.18), 170);
+      }
+
       timeline.fromTo(marquee, {
-        y: function () { return window.innerWidth <= 560 ? 160 : 280; }
+        "--ll-footer-parallax-y": function () { return getParallaxTravel() + "px"; }
       }, {
-        y: function () { return window.innerWidth <= 560 ? -160 : -280; },
+        "--ll-footer-parallax-y": function () { return -getParallaxTravel() + "px"; },
         ease: "none",
         duration: 1
       }, 0);

@@ -2,58 +2,61 @@
 
 ## Overview
 
-The repository is organized so page routes remain at root, while all static assets are centralized in `assets/`.
+This is a static multi-page site. Production routes remain at the repository root so their public URLs stay stable; Vite has an explicit allowlist for the pages included in a production build.
 
-## Directory Structure
-
-```
+```text
 html/
 ├── assets/
-│   ├── css/                  # Stylesheets and vendor CSS
-│   ├── js/                   # Application scripts, modules, third-party libraries
-│   │   ├── modules/          # Shared systems (motion, reusable interactions)
-│   │   └── pages/            # Route-specific behavior
-│   ├── img/                  # Images and project-specific visual assets
-│   ├── fonts/                # Font files
-│   ├── video/                # Video assets
-│   ├── favicons/             # Favicon and web manifest files
-│   └── slide/                # Slide-specific assets
-├── docs/
-│   └── FILE_MANAGEMENT.md    # Operational file management rules
-├── legacy/
-│   └── unused-root/          # Archived root files retained for reference
-├── php/                      # Mail endpoint
-├── scss/                     # SCSS source files
-├── scripts/
-│   └── file-manager.sh       # Size/reference auditing utility
-└── *.html                    # Page entry points (kept at root for stable URLs)
+│   ├── css/
+│   │   ├── entries/           # Vite CSS entrypoints, one per page family
+│   │   ├── *.css              # Shared systems and route styles
+│   ├── favicons/
+│   ├── fonts/
+│   ├── img/
+│   ├── js/
+│   │   ├── modules/           # Shared behavior
+│   │   ├── pages/             # Page-family behavior
+│   │   └── libs/              # Third-party runtime libraries
+│   ├── partials/              # Static HTML fragments
+│   └── video/
+├── docs/                      # Project and audit documentation
+├── php/                       # Optional mail endpoint
+├── scripts/                   # Build and maintenance commands
+├── *.html                     # Public routes and local-only experiments
+└── vite.config.mjs            # Production HTML entry allowlist
 ```
 
-## Front-end Contracts
+There is no `legacy/`, `scss/`, or `assets/slide/` directory in the current tree. Standalone experiments such as `bpm3.html`, `KICKSJOINT_Animated_Logo_Blinds.html`, and `kicksjoint-icons-animated-v6.html` remain available to the local dev server but are intentionally absent from the production entry allowlist.
 
-- `assets/css/lamalama-ui.css` owns the shared visual language and components.
-- `assets/css/benchmark-system.css` owns shared layout composition.
-- `assets/css/motion-system.css` owns timing, easing, reveal, and page-transition behavior.
-- `assets/css/pitchdeck-overlay.css` and `assets/js/modules/pitchdeck-overlay.js` exclusively own the reusable full-screen resume lifecycle; `assets/js/pages/pitchdeck.js` exclusively owns navigation and motion inside the isolated deck.
-- `assets/js/pages/lamalama-ui.js` owns shared shell controls, menu state, theme, and hero atmosphere; `assets/js/pages/home-ui.js` contains homepage-only section and video state.
-- Continuous background motion must pause while a full-screen experience is active.
-- Page-only styling stays in a named route stylesheet such as `contact-page.css`.
-- Shared JavaScript belongs in `assets/js/modules/`; page controllers belong in `assets/js/pages/`.
+## Front-end ownership
+
+- `assets/css/entries/` defines the CSS dependency graph for each route family.
+- `assets/css/lamalama-ui-site.css` is the shared site-shell stylesheet for home, work, case study, contact, and privacy pages.
+- `assets/css/lamalama-ui.css` is the separate stylesheet baseline used by the pitch deck. These two files contain divergent rules and are not source/minified copies of one another; do not regenerate one from the other without a visual migration.
+- `assets/css/design-tokens.css`, `design-tokens-standard.css`, `theme-system.css`, and `motion-system.css` own their named token, theme, and motion layers.
+- `assets/js/site-entry.js` is the Vite runtime entry and dispatches to shared modules and page controllers based on page classes and data attributes.
+- Shared JavaScript belongs in `assets/js/modules/`; page-family controllers belong in `assets/js/pages/`.
+- `assets/js/pages/lamalama-ui.js` owns shared shell controls and menu state; `assets/js/pages/home-ui.js` owns home-only interactions.
+- The pitch-deck overlay lifecycle is shared through `assets/css/pitchdeck-overlay.css` and `assets/js/modules/pitchdeck-overlay.js`; `assets/js/pages/pitchdeck.js` owns interactions inside the deck.
 - Keep inline JavaScript limited to the early theme bootstrap required to prevent a flash of the wrong theme.
 
-## File Management Workflow
+## Production build
+
+`vite.config.mjs` is the source of truth for production HTML routes. `scripts/build-production.sh` builds into a clean output directory, then copies static media and the small set of direct-path runtime dependencies. It omits source HTML, CSS, and JavaScript from the published artifact, preventing duplicate pages and source files from keeping redundant media in the output. Exact duplicate images, video, and fonts are pruned after the build. The artifact has a 650 MiB ceiling.
+
+Use the production pipeline to prepare the deployable artifact:
+
+```bash
+./scripts/production-check.sh
+./scripts/build-production.sh _site
+```
+
+The default `npm run build` is a clean Vite build into `dist`; it does not copy the extra static files used by the production pipeline.
+
+## File management
 
 1. Keep new static assets under `assets/`.
-2. Keep route files (`*.html`) at root unless routing is intentionally changed.
-3. Archive superseded loose files in `legacy/unused-root/`.
-4. Run link integrity checks after moves:
-
-```bash
-./scripts/file-manager.sh check-links
-```
-
-5. Use size report to manage bloat:
-
-```bash
-./scripts/file-manager.sh largest
-```
+2. Keep public route files at the repository root unless routing changes intentionally.
+3. Add public pages to `vite.config.mjs`; keep local experiments out of its production allowlist.
+4. Run `./scripts/file-manager.sh check-links` after moving files.
+5. Use `./scripts/file-manager.sh largest` to inspect source asset weight.

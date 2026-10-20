@@ -3,45 +3,36 @@
  * ========================================
  * One timing and easing contract for page, component and scroll choreography.
  *
- * Usage Guidelines:
- * - Use semantic duration tokens based on interaction type
- * - Avoid arbitrary values - use the defined scale
- * - Respect prefers-reduced-motion for accessibility
- *
- * Duration Scale:
- * - fast (180ms): Micro-interactions, hover states
- * - control (240ms): Button clicks, menu toggles
- * - reveal (420ms): Section reveals, component entrances
- * - page (320ms): Page transitions
- *
- * Easing Functions:
- * - ease-out: Standard exit (cubic-bezier(0.16, 1, 0.3, 1))
- * - ease-in-out: Bidirectional (cubic-bezier(0.65, 0, 0.35, 1))
- * - ease-sweep-in: Entry transitions (cubic-bezier(0.76, 0, 0.24, 1))
- * - ease-sweep-out: Exit transitions (cubic-bezier(0.16, 1, 0.3, 1))
+ * Motion durations and easing are sourced from the shared design tokens.
+ * Reveals use a longer 760ms transition; reduced-motion overrides are below.
  */
 
 :root {
-  /* Animation easing functions */
-  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --motion-ease-sweep-in: cubic-bezier(0.76, 0, 0.24, 1);
-  --motion-ease-sweep-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Animation easing functions - use standardized tokens */
+  --motion-ease-out: var(--ease-out);
+  --motion-ease-in-out: var(--ease-in-out);
+  --motion-ease-sweep-in: var(--ease-sweep-in);
+  --motion-ease-sweep-out: var(--ease-sweep-out);
 
-  /* Animation durations */
-  --motion-fast: 180ms;
-  --motion-control: 240ms;
-  --motion-reveal: 420ms;
-  --motion-page-cover: 320ms;
-  --motion-page-reveal: 420ms;
-  --motion-page: var(--motion-page-cover);
+  /* Animation durations - use standardized tokens */
+  --motion-fast: var(--duration-fast);
+  --motion-control: var(--duration-normal);
+  --motion-reveal: 760ms;
+  --motion-page-cover: var(--duration-slower);
+  --motion-page-reveal: var(--duration-slow);
+  --motion-page: var(--duration-slower);
+  --motion-media-opacity: 600ms;
+  --motion-media-scale: 800ms;
+  --motion-slide-duration: 900ms;
+  --motion-hero-title: 950ms;
+  --motion-hero-meta: 760ms;
 
   /* Legacy aliases (for backward compatibility) */
-  --ll-ease: var(--motion-ease-out);
-  --ll-ease-out-expo: var(--motion-ease-out);
-  --ll-duration-micro: var(--motion-fast);
-  --ll-duration-control: var(--motion-control);
-  --ll-duration-component: var(--motion-reveal);
+  --ll-ease: var(--ease-out);
+  --ll-ease-out-expo: var(--ease-out);
+  --ll-duration-micro: var(--duration-fast);
+  --ll-duration-control: var(--duration-normal);
+  --ll-duration-component: var(--duration-slow);
 }
 
 html {
@@ -108,7 +99,7 @@ html.ll-page-leaving .ll-page-transition::before,
   clip-path: none;
   transform: translate3d(0, 13px, 0);
   transition:
-    opacity var(--motion-control) ease,
+    opacity var(--motion-reveal) var(--motion-ease-out),
     transform var(--motion-reveal) var(--motion-ease-out);
   transition-delay: var(--ll-reveal-delay, 0ms);
 }
@@ -117,6 +108,14 @@ html.ll-page-leaving .ll-page-transition::before,
   opacity: 1;
   transform: translate3d(0, 0, 0);
   will-change: auto;
+}
+
+.ll-contact-dock__preview-media img,
+.ll-contact-dock__preview:hover .ll-contact-dock__preview-media img,
+.ll-contact-dock__preview:focus-visible .ll-contact-dock__preview-media img {
+  filter: grayscale(1) contrast(1.08);
+  transform: none;
+  transition: none;
 }
 
 :is(.ll-button, .ll-menu-row, .ll-action-link, .lwa-filter button) {

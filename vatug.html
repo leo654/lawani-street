@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-theme-mode="light" data-theme="light">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#e8e7e1">
     <meta name="description" content="A digital-first identity with a strong product edge, designed to communicate trust, momentum and technical ambition.">
     <meta name="author" content="Lawani St">
     <meta name="robots" content="index, follow">
@@ -23,16 +23,6 @@
     <link rel="shortcut icon" href="assets/img/fav.ico" type="image/x-icon">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
     <link rel="preload" href="assets/fonts/GridlitePEVFWeb-All.woff2" as="font" type="font/woff2" crossorigin>
-    <script>
-      (function () {
-        var mode = "light";
-        var theme = mode;
-        document.documentElement.setAttribute("data-theme-mode", mode);
-        document.documentElement.setAttribute("data-theme", theme);
-        var themeMeta = document.querySelector('meta[name="theme-color"]');
-        if (themeMeta) themeMeta.setAttribute("content", theme === "light" ? "#e8e7e1" : "#000000");
-      })();
-    </script>
     <link rel="stylesheet" href="assets/css/entries/case-study.css">
   </head>
 
@@ -42,7 +32,7 @@
     <header class="ll-floating-header" data-ll-header>
       <div class="ll-nav-dock">
         <a class="ll-nav-dock__brand ll-button ll-button--square" href="index.html" aria-label="Lawani St home">
-          <span aria-hidden="true">L:</span>
+          <span aria-hidden="true">L</span>
         </a>
         <p class="ll-nav-dock__note" data-ll-nav-note>Cases with teeth</p>
         <button
@@ -53,11 +43,11 @@
           aria-label="Open navigation"
           data-ll-menu-toggle
         >
-          <svg class="ll-icon ll-nav-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path class="ll-icon__menu-line ll-icon__menu-line--top" d="M5 6.5h14"></path>
-            <path class="ll-icon__menu-line ll-icon__menu-line--middle" d="M5 12h14"></path>
-            <path class="ll-icon__menu-line ll-icon__menu-line--bottom" d="M5 17.5h14"></path>
-          </svg>
+          <span class="ll-nav-toggle__lines" aria-hidden="true">
+            <i class="ll-nav-toggle__line ll-nav-toggle__line--1"></i>
+            <i class="ll-nav-toggle__line ll-nav-toggle__line--2"></i>
+            <i class="ll-nav-toggle__line ll-nav-toggle__line--3"></i>
+          </span>
           <span class="ll-visually-hidden" data-ll-menu-label>Menu</span>
         </button>
       </div>
@@ -172,10 +162,10 @@
 
         <div class="cs-gallery__row cs-gallery__row--pair">
           <figure>
-            <img src="assets/img/picture/vatug/7.png" alt="VatuG project visual 06" loading="lazy" decoding="async" width="2684" height="1510">
+            <img src="assets/img/picture/vatug/7.webp" alt="VatuG project visual 06" loading="lazy" decoding="async" width="2684" height="1510">
           </figure>
           <figure>
-            <img src="assets/img/picture/vatug/8.png" alt="VatuG project visual 07" loading="lazy" decoding="async" width="2684" height="1510">
+            <img src="assets/img/picture/vatug/8.webp" alt="VatuG project visual 07" loading="lazy" decoding="async" width="2684" height="1510">
           </figure>
         </div>
 
@@ -190,19 +180,19 @@
 
         <div class="cs-gallery__row cs-gallery__row--pair">
           <figure>
-            <img src="assets/img/picture/vatug/11.png" alt="VatuG project visual 10" loading="lazy" decoding="async" width="2684" height="1510">
+            <img src="assets/img/picture/vatug/11.webp" alt="VatuG project visual 10" loading="lazy" decoding="async" width="2684" height="1510">
           </figure>
           <figure>
-            <img src="assets/img/picture/vatug/12.png" alt="VatuG project visual 11" loading="lazy" decoding="async" width="2684" height="1510">
+            <img src="assets/img/picture/vatug/12.webp" alt="VatuG project visual 11" loading="lazy" decoding="async" width="2684" height="1510">
           </figure>
         </div>
 
         <div class="cs-gallery__row cs-gallery__row--pair">
           <figure>
-            <img src="assets/img/picture/vatug/13.png" alt="VatuG project visual 12" loading="lazy" decoding="async" width="2684" height="1510">
+            <img src="assets/img/picture/vatug/13.webp" alt="VatuG project visual 12" loading="lazy" decoding="async" width="2684" height="1510">
           </figure>
           <figure>
-            <img src="assets/img/picture/vatug/stn.png" alt="VatuG project visual 13" loading="lazy" decoding="async" width="2684" height="1510">
+            <img src="assets/img/picture/vatug/stn.webp" alt="VatuG project visual 13" loading="lazy" decoding="async" width="2684" height="1510">
           </figure>
         </div>
 
@@ -217,7 +207,7 @@
 
         <div class="cs-gallery__row cs-gallery__row--feature">
           <figure>
-            <img src="assets/img/picture/vatug/13b.png" alt="VatuG project visual 01" loading="eager" decoding="async" width="4455" height="2496">
+            <img src="assets/img/picture/vatug/13b.webp" alt="VatuG project visual 01" loading="eager" decoding="async" width="4455" height="2496">
           </figure>
         </div>
 
@@ -237,7 +227,7 @@
             <span class="cs-related-row__rail" aria-hidden="true">
               <img src="assets/img/picture/dsl/Artboard22.png" alt="" loading="lazy" decoding="async" width="2684" height="1509">
               <img src="assets/img/picture/dsl/ui.png" alt="" loading="lazy" decoding="async" width="1097" height="1387">
-              <img src="assets/img/picture/dsl/21.png" alt="" loading="lazy" decoding="async" width="2684" height="1509">
+              <img src="assets/img/picture/dsl/21.webp" alt="" loading="lazy" decoding="async" width="2684" height="1509">
             </span>
           </a>
           <a class="cs-related-row" href="tyol.html">
@@ -255,15 +245,15 @@
             <ul class="cs-tags" aria-label="Beat Per Minute disciplines"><li>Branding</li><li>Music</li></ul>
             <span class="cs-related-row__view"><span>View</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></span>
             <span class="cs-related-row__rail" aria-hidden="true">
-              <img src="assets/img/bpm2.png" alt="" loading="lazy" decoding="async" width="1400" height="1400">
-              <img src="assets/img/dj1.png" alt="" loading="lazy" decoding="async" width="1834" height="1037">
-              <img src="assets/img/dj2.png" alt="" loading="lazy" decoding="async" width="1400" height="1400">
+              <img src="assets/img/bpm2.webp" alt="" loading="lazy" decoding="async" width="1400" height="1400">
+              <img src="assets/img/dj1.webp" alt="" loading="lazy" decoding="async" width="1834" height="1037">
+              <img src="assets/img/dj2.webp" alt="" loading="lazy" decoding="async" width="1400" height="1400">
             </span>
           </a>
         </div>
       </section>
 
-      <footer class="cs-footer" id="project-contact" data-ll-section-note="Slide into our inbox">
+          <footer class="cs-footer" id="project-contact" data-ll-section-note="Slide into our inbox">
         <div class="cs-footer__main">
           <div class="cs-footer__lead">
             <h2>Let's Talk.</h2>
@@ -297,27 +287,30 @@
           </div>
         </div>
 
-        <div class="cs-footer__bottom" id="project-footer-navigation">
-          <span>Independent studio</span>
-          <span>London / Everywhere</span>
-          <time datetime="" data-ll-clock>00 : 00 : 00</time>
-          <span class="cs-footer__socials">
-            <span>Follow us</span>
-            <a href="https://www.instagram.com/lawani.st" target="_blank" rel="noopener noreferrer">Instagram +</a>
-            <a href="https://www.linkedin.com/in/leonardlawani/" target="_blank" rel="noopener noreferrer">LinkedIn +</a>
-          </span>
-          <button
-            class="ll-theme-toggle ll-sound-toggle ll-theme-toggle--footer ll-button"
-            type="button"
-            aria-label="Sound Off. Turn sound on."
-            aria-pressed="false"
-            data-ll-sound-toggle
-          >
-            <span class="ll-sound-toggle__choice ll-sound-toggle__choice--off" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="m17 9 5 6m0-6-5 6"></path></svg></span>
-            <span class="ll-sound-toggle__choice ll-sound-toggle__choice--on" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg></span>
-            <span class="ll-sound-toggle__indicator" aria-hidden="true"></span>
-          </button>
-          <span>EN</span>
+        <div class="ll-footer__utility" id="project-footer-navigation">
+          <nav class="ll-footer__social-links" aria-label="Social media and booking">
+            <a href="https://www.linkedin.com/in/leonardlawani/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <svg class="ll-footer__linkedin-icon" viewBox="0 0 2200 2200" aria-hidden="true" focusable="false"><path class="ll-footer__linkedin-bg" fill-rule="evenodd" d="M1530.6,309.6H669.4c-222.1,0-401.9,179.8-401.9,401.9v861.3c0,222.1,179.8,401.9,401.9,401.9h861.3  c222.1,0,401.9-179.8,401.9-401.9V711.5C1932.5,490.2,1752.7,309.6,1530.6,309.6z M1788.7,1544c0,158.2-128.6,286.8-286.8,286.8  H698.1c-158.2,0-286.8-128.6-286.8-286.8V740.2c0-158.2,128.6-286.8,286.8-286.8h803.7c158.2,0,286.8,128.6,286.8,286.8V1544z"/><rect x="686.6" y="987.1" width="178.2" height="555.3" class="ll-footer__linkedin-glyph"/><path class="ll-footer__linkedin-glyph" fill-rule="evenodd" d="M1333.2,1005.2c-0.9-0.3-1.8-0.7-2.7-1c-25.8-9.6-53.3-15.6-81.9-17.3c-1.1-0.1-2.1-0.1-3.2-0.2c-0.1,0-0.2,0-0.2,0   c-2.4-0.1-4.7-0.2-7.1-0.3c-2.5-0.1-4.9-0.1-7.4-0.1c-2.5,0-5,0-7.4,0.1c-2.4,0.1-4.8,0.2-7.1,0.3c-0.1,0-0.2,0-0.2,0   c-1.1,0-2.1,0.1-3.2,0.2c-28.7,1.8-56.2,7.8-81.9,17.3c-0.8,0.3-1.6,0.6-2.4,0.9c-108.4,41.4-185.3,146.5-185.3,268.8v267.6h178.2   v-267.6c0-60.7,48.7-109.5,109.5-109.5c30.4,0,57.7,12.2,77.5,32c10.5,10.5,18.9,23.2,24.4,37.3c0.3,0.8,0.6,1.7,1,2.5   c0.6,1.7,1.2,3.4,1.7,5.1c1.3,4.3,2.4,8.7,3.2,13.2c0.5,2.7,0.9,5.4,1.1,8.2c0.4,3.7,0.6,7.4,0.6,11.2v267.6h178.2v-267.6   C1518.2,1151.7,1441.4,1046.7,1333.2,1005.2z"/><circle cx="775.3" cy="836.1" r="93.5" class="ll-footer__linkedin-glyph"/></svg>
+              <span>LinkedIn</span>
+            </a>
+            <a href="https://calendly.com/leonardlawani/30min" target="_blank" rel="noopener noreferrer" aria-label="Book a 30-minute call">
+              <svg class="ll-footer__calendar-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 5h12a1.5 1.5 0 0 1 1.5 1.5v5M8 3v4M14 3v4M5 9h12"></path><circle cx="17" cy="17" r="4.5"></circle><path d="M17 14.8v2.4l1.5 1"></path></svg>
+              <span>Book a 30-minute call</span>
+            </a>
+            <a href="https://www.instagram.com/lawani.st" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg class="ll-footer__instagram-icon" viewBox="0 0 2200 2200" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M1528.1,294H666.9C445,294,265,474,265,695.9v861.2C265,1779,445,1959,666.9,1959h861.2   c221.9,0,401.9-180,401.9-401.9V695.9C1930,474,1750,294,1528.1,294z M1786.5,1528.4c0,158.5-128.6,287.1-287.1,287.1H695.6   c-158.5,0-287.1-128.6-287.1-287.1V724.6c0-158.5,128.6-287.1,287.1-287.1h803.8c158.5,0,287.1,128.6,287.1,287.1V1528.4z"/><path fill-rule="evenodd" d="M1097.5,695.9c-237.7,0-430.6,192.9-430.6,430.6c0,237.7,192.9,430.6,430.6,430.6s430.6-192.9,430.6-430.6   C1528.1,888.8,1335.2,695.9,1097.5,695.9z M1097.5,1413.6c-158.2,0-287.1-128.9-287.1-287.1s128.9-287.1,287.1-287.1   s287.1,128.9,287.1,287.1S1255.7,1413.6,1097.5,1413.6z"/><circle class="st0" cx="1556.8" cy="667.2" r="86.1"/></svg>
+              <span>Instagram</span>
+            </a>
+          </nav>
+          <nav aria-label="Legal">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="privacy.html#cookie-settings">Cookie Preferences</a>
+          </nav>
+          <p>&copy; 2026 Lawani St.</p>
+          <a class="ll-footer__credits" href="team.html">Credits</a>
+          <a class="ll-footer__back-to-top" href="#" aria-label="Scroll to top">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5"></path><path d="m6 11 6-6 6 6"></path></svg>
+          </a>
         </div>
       </footer>
     </main>

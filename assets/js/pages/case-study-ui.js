@@ -42,56 +42,91 @@
   }
 
   function initVideoPlayback() {
-    var video = document.querySelector(".cs-story__media video");
-    if (!video) return;
+    var videos = Array.prototype.slice.call(
+      document.querySelectorAll(".cs-story__media video, video[data-lazy-video]")
+    );
+    if (!videos.length) return;
 
-    function playWhenVisible() {
+    var observer = null;
+
+    function loadVideo(video) {
+      if (video.dataset.lazyLoaded) return;
+      video.dataset.lazyLoaded = "true";
+      video.load();
+    }
+
+    function playWhenVisible(video) {
       if (document.hidden || document.body.classList.contains("ll-pitch-overlay-open")) return;
-      video.play().catch(function () {});
+      loadVideo(video);
+      video.play().catch(function (error) {
+        if (error.name === "AbortError") return;
+        console.warn("Case study video could not be played:", error);
+
+        var poster = video.getAttribute("poster");
+        if (poster && !video.dataset.fallbackShown) {
+          video.dataset.fallbackShown = "true";
+          video.style.display = "none";
+          var fallbackImg = document.createElement("img");
+          fallbackImg.src = poster;
+          fallbackImg.alt = "Case study image";
+          fallbackImg.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;";
+          video.parentNode.insertBefore(fallbackImg, video);
+        }
+      });
+    }
+
+    function updatePlayback() {
+      videos.forEach(function (video) {
+        if (document.hidden) {
+          video.pause();
+          return;
+        }
+        var bounds = video.getBoundingClientRect();
+        if (bounds.bottom > 0 && bounds.top < window.innerHeight) playWhenVisible(video);
+      });
     }
 
     if ("IntersectionObserver" in window) {
-      var observer = new IntersectionObserver(
+      observer = new IntersectionObserver(
         function (entries) {
           entries.forEach(function (entry) {
-            if (entry.isIntersecting) playWhenVisible();
+            var video = entry.target;
+            if (entry.isIntersecting) playWhenVisible(video);
             else video.pause();
           });
         },
-        { threshold: 0.08, rootMargin: "80px 0px" }
+        { threshold: 0.08, rootMargin: "600px 0px" }
       );
-      observer.observe(video);
+      videos.forEach(function (video) {
+        observer.observe(video);
+      });
+    } else {
+      updatePlayback();
+      window.addEventListener("scroll", updatePlayback, { passive: true });
+      window.addEventListener("resize", updatePlayback, { passive: true });
     }
 
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) {
-        video.pause();
-      } else {
-        var bounds = video.getBoundingClientRect();
-        if (bounds.bottom > 0 && bounds.top < window.innerHeight) playWhenVisible();
-      }
-    });
+    document.addEventListener("visibilitychange", updatePlayback);
+
+    window.addEventListener("beforeunload", function () {
+      if (observer) observer.disconnect();
+      window.removeEventListener("scroll", updatePlayback);
+      window.removeEventListener("resize", updatePlayback);
+      document.removeEventListener("visibilitychange", updatePlayback);
+    }, { once: true });
   }
 
   function initCaseReveals() {
-    var figures = Array.prototype.slice.call(document.querySelectorAll(".cs-gallery figure"));
-    var revealNodes = Array.prototype.slice.call(document.querySelectorAll(".case-study .ll-reveal"));
-    var targets = Array.from(new Set(figures.concat(revealNodes)));
+    var targets = Array.prototype.slice.call(
+      document.querySelectorAll(".case-study .ll-reveal:not(.cs-story__media)")
+    );
     var storyCopy = document.querySelector(".cs-story__copy");
-    var storyMedia = document.querySelector(".cs-story__media");
+    var observer = null;
     if (storyCopy) storyCopy.style.setProperty("--ll-reveal-delay", "40ms");
-    if (storyMedia) storyMedia.style.setProperty("--ll-reveal-delay", "150ms");
     if (!targets.length) return;
-
-    document.querySelectorAll(".cs-gallery__row").forEach(function (row) {
-      Array.prototype.slice.call(row.querySelectorAll("figure")).forEach(function (figure, index) {
-        figure.style.setProperty("--cs-reveal-order", String(index));
-      });
-    });
 
     function reveal(target) {
       if (target.classList.contains("ll-reveal")) target.classList.add("is-visible");
-      if (target.matches(".cs-gallery figure")) target.classList.add("is-inview");
     }
 
     if (reduceMotion || !("IntersectionObserver" in window)) {
@@ -99,7 +134,7 @@
       return;
     }
 
-    var observer = new IntersectionObserver(
+    observer = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
@@ -114,6 +149,10 @@
       observer.observe(target);
     });
     document.body.classList.add("cs-reveals-ready");
+
+    window.addEventListener("beforeunload", function () {
+      if (observer) observer.disconnect();
+    }, { once: true });
   }
 
   function initGalleryLayout() {
