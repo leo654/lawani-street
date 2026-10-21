@@ -1,6 +1,6 @@
 /* Baseline home motion system (start-over foundation).
    - Single init path for home page motion
-   - Lazy-load Three via runtime.shared.js (MotionLibs.ensureThreeJs)
+   - Use the optional shared Three loader when one is available
    - Respects prefers-reduced-motion
    - Pauses WebGL rAF when offscreen / tab hidden
 */

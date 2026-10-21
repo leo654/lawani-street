@@ -1,0 +1,21 @@
+body.ll-media-reveals-ready .ll-media-reveal :is(img, video) {
+  opacity: 0;
+  transform: scale(1.02);
+  transform-origin: center;
+  transition:
+    opacity var(--motion-media-opacity, 600ms) var(--motion-ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    transform var(--motion-media-scale, 800ms) var(--motion-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+body.ll-media-reveals-ready .ll-media-reveal.is-visible :is(img, video) {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.ll-media-reveals-ready .ll-media-reveal :is(img, video) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -323,12 +323,16 @@ body.work-index {
 
 .lwa-project__actions .ll-button,
 .lwa-footer__contact .ll-button {
-  width: auto;
+  width: var(--button-width-content, auto);
   min-width: 0;
   justify-content: space-between;
   border: 1px solid var(--lwa-line);
   background: transparent;
   color: var(--lwa-fg);
+}
+
+.lwa-project__actions .ll-button {
+  --ll-button-font-size: var(--button-font-size-sm, 12px);
 }
 
 .lwa-project__actions .ll-button > .ll-icon--arrow-up-right,

@@ -117,7 +117,8 @@
         '<h2 class="cookie-consent__title" id="cookie-consent-title">We value your privacy</h2>',
         '<p class="cookie-consent__text cookie-consent__notice-text" data-cookie-notice>',
           'We use cookies to improve your experience and understand site traffic. Optional analytics and marketing are only enabled with your permission. Learn more in our ',
-          '<a class="cookie-consent__link" href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.',
+          '<a class="cookie-consent__link" href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy policy</a> or ',
+          '<button class="cookie-consent__link cookie-consent__button--manage" type="button" data-cookie-action="manage">Customize</button>.',
         '</p>',
         '<div class="cookie-consent__preferences" data-cookie-preferences hidden>',
           '<p class="cookie-consent__preferences-intro">Choose which optional preferences to save. Necessary storage is always on so we can remember your choice.</p>',
@@ -138,9 +139,8 @@
           'Your preferences could not be saved in this browser. Check your storage settings and try again.',
         '</p>',
         '<div class="cookie-consent__actions" data-cookie-actions>',
-          '<button class="cookie-consent__button cookie-consent__button--manage" type="button" data-cookie-action="manage">Customize</button>',
-          '<button class="cookie-consent__button" type="button" data-cookie-action="decline">Reject All</button>',
-          '<button class="cookie-consent__button cookie-consent__button--accept" type="button" data-cookie-action="accept">Accept All</button>',
+          '<button class="cookie-consent__button" type="button" data-cookie-action="decline">Decline</button>',
+          '<button class="cookie-consent__button cookie-consent__button--accept" type="button" data-cookie-action="accept">Accept</button>',
         '</div>',
       '</div>'
     ].join("");
@@ -161,7 +161,7 @@
     dialog.querySelector('[data-cookie-action="decline"]').hidden = manage;
     var acceptButton = dialog.querySelector('[data-cookie-action="accept"], [data-cookie-action="save"]');
     acceptButton.setAttribute("data-cookie-action", manage ? "save" : "accept");
-    acceptButton.textContent = manage ? "Save preferences" : "Accept All";
+    acceptButton.textContent = manage ? "Save preferences" : "Accept";
     manageButton.textContent = manage ? "Back" : "Customize";
     dialog.querySelector("[data-cookie-error]").hidden = true;
     actions.querySelector('[data-cookie-action="decline"]').setAttribute("aria-label", "Reject all optional preferences");

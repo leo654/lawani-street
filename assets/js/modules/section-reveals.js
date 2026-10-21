@@ -38,7 +38,7 @@
 		if (window.gsap && window.ScrollTrigger) return Promise.resolve();
 		if (gsapLoaderPromise) return gsapLoaderPromise;
 
-		// GSAP_CORE_URL / GSAP_SCROLLTRIGGER_URL come from runtime.shared.js (global vars).
+		// Use configured global URLs when available, with local library paths as fallbacks.
 		gsapLoaderPromise = Promise.resolve()
 			.then(function() {
 				if (window.gsap) return;
@@ -132,9 +132,7 @@
 			{ selector: '.ll-work-intro > *', effect: 'line' },
 			{ selector: '.ll-services-breakdown', effect: 'rise' },
 			{ selector: '.ll-services-columns > section', effect: 'rise', stagger: 110 },
-			{ selector: '.ll-manifesto > .ll-label', effect: 'line' },
 			{ selector: '.ll-manifesto__visual', effect: 'rise' },
-			{ selector: '.ll-manifesto__content > h2', effect: 'line' },
 			{ selector: '.ll-manifesto__copy', effect: 'rise' }
 		].forEach(function(group) {
 			Array.prototype.slice.call(document.querySelectorAll(group.selector)).forEach(function(node, index) {

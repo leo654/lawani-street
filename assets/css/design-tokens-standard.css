@@ -1,0 +1,314 @@
+/**
+ * Lawani St. Design Tokens - Standardized
+ * ========================================
+ * Semantic token layer for the Lawani St. design system.
+ * Foundational brand values and the legacy --ll-* API live in design-tokens.css.
+ * Keep this layer mapped to those values so import order cannot change the brand.
+ *
+ * Token Naming Convention:
+ * --[category]-[property]-[variant]-[state]
+ *
+ * Categories:
+ * - color: Color palette (brand, neutral, semantic, functional)
+ * - space: Spacing scale (Fibonacci-based)
+ * - font: Typography (size, weight, line-height, letter-spacing)
+ * - ease: Animation easing functions
+ * - duration: Animation timing
+ * - radius: Border radius
+ * - shadow: Box shadows
+ * - z-index: Z-index scale
+ * - layout: Layout dimensions
+ */
+
+:root {
+  /* ========================================
+     COLORS
+     ======================================== */
+
+  /* Brand Colors */
+  --color-brand-primary: var(--ll-brand-orange);
+  --color-brand-secondary: var(--ll-brand-charcoal);
+  --color-brand-accent: var(--ll-brand-black);
+
+  /* Neutral Palette (0 = darkest, 6 = lightest) */
+  --color-neutral-0: var(--ll-brand-black);
+  --color-neutral-1: var(--ll-brand-charcoal);
+  --color-neutral-2: #4a4d4a;       /* Medium gray */
+  --color-neutral-3: #9d9b95;       /* Light gray */
+  --color-neutral-4: var(--ll-paper);
+  --color-neutral-5: var(--ll-white);
+  --color-neutral-6: #ffffff;       /* Pure white */
+
+  /* Semantic Colors - Text */
+  --color-text-primary: var(--ll-white);
+  --color-text-secondary: var(--color-neutral-3);
+  --color-text-muted: var(--color-neutral-2);
+  --color-text-inverse: var(--color-neutral-0);
+
+  /* Semantic Colors - Background */
+  --color-bg-primary: var(--color-neutral-0);
+  --color-bg-secondary: var(--color-neutral-1);
+  --color-bg-elevated: var(--color-neutral-2);
+  --color-bg-surface: var(--color-neutral-4);
+  --color-bg-inverse: var(--color-neutral-5);
+
+  /* Semantic Colors - Border */
+  --color-border-subtle: var(--ll-light-line);
+  --color-border-default: rgba(244, 242, 236, 0.34);
+  --color-border-strong: rgba(244, 242, 236, 0.5);
+
+  /* Functional Colors */
+  --color-accent: var(--color-brand-primary);
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* Opacity Variants - Brand Primary */
+  --color-brand-primary-5: rgba(255, 79, 18, 0.05);
+  --color-brand-primary-10: rgba(255, 79, 18, 0.1);
+  --color-brand-primary-15: rgba(255, 79, 18, 0.15);
+  --color-brand-primary-20: rgba(255, 79, 18, 0.2);
+  --color-brand-primary-30: rgba(255, 79, 18, 0.3);
+  --color-brand-primary-40: rgba(255, 79, 18, 0.4);
+  --color-brand-primary-50: rgba(255, 79, 18, 0.5);
+
+  /* Opacity Variants - Neutral 5 (White) */
+  --color-neutral-5-5: rgba(244, 242, 236, 0.05);
+  --color-neutral-5-10: rgba(244, 242, 236, 0.1);
+  --color-neutral-5-15: rgba(244, 242, 236, 0.15);
+  --color-neutral-5-20: rgba(244, 242, 236, 0.2);
+  --color-neutral-5-30: rgba(244, 242, 236, 0.3);
+  --color-neutral-5-40: rgba(244, 242, 236, 0.4);
+  --color-neutral-5-50: rgba(244, 242, 236, 0.5);
+  --color-neutral-5-60: rgba(244, 242, 236, 0.6);
+  --color-neutral-5-70: rgba(244, 242, 236, 0.7);
+  --color-neutral-5-80: rgba(244, 242, 236, 0.8);
+  --color-neutral-5-90: rgba(244, 242, 236, 0.9);
+
+  /* Opacity Variants - Neutral 0 (Black) */
+  --color-neutral-0-10: rgba(7, 8, 7, 0.1);
+  --color-neutral-0-20: rgba(7, 8, 7, 0.2);
+  --color-neutral-0-30: rgba(7, 8, 7, 0.3);
+  --color-neutral-0-40: rgba(7, 8, 7, 0.4);
+  --color-neutral-0-50: rgba(7, 8, 7, 0.5);
+  --color-neutral-0-60: rgba(7, 8, 7, 0.6);
+  --color-neutral-0-70: rgba(7, 8, 7, 0.7);
+  --color-neutral-0-80: rgba(7, 8, 7, 0.8);
+  --color-neutral-0-90: rgba(7, 8, 7, 0.9);
+
+  /* ========================================
+     SPACING (Fibonacci-based scale)
+     ======================================== */
+
+  /* Base spacing unit: 5px */
+  --space-unit: 5px;
+
+  /* Fibonacci scale */
+  --space-0: 0;
+  --space-1: calc(var(--space-unit) * 1);      /* 5px */
+  --space-2: calc(var(--space-unit) * 1.6);    /* 8px */
+  --space-3: calc(var(--space-unit) * 2.6);    /* 13px */
+  --space-4: calc(var(--space-unit) * 4.2);    /* 21px */
+  --space-5: calc(var(--space-unit) * 6.8);    /* 34px */
+  --space-6: calc(var(--space-unit) * 11);     /* 55px */
+  --space-7: calc(var(--space-unit) * 17.8);   /* 89px */
+  --space-8: calc(var(--space-unit) * 28.8);   /* 144px */
+  --space-9: calc(var(--space-unit) * 46.6);   /* 233px */
+
+  /* Semantic spacing aliases */
+  --space-xs: var(--space-1);
+  --space-sm: var(--space-2);
+  --space-md: var(--space-3);
+  --space-lg: var(--space-4);
+  --space-xl: var(--space-5);
+  --space-2xl: var(--space-6);
+  --space-3xl: var(--space-7);
+  --space-4xl: var(--space-8);
+
+  /* Component-specific spacing */
+  --space-gutter: clamp(var(--space-4), 2.5vw, var(--space-6));
+  --space-grid-gap: clamp(var(--space-3), 1.65vw, var(--space-5));
+  --space-section: clamp(var(--space-7), 10vw, var(--space-8));
+  --space-section-compact: clamp(var(--space-6), 6vw, var(--space-7));
+  --space-container: var(--space-6);
+
+  /* ========================================
+     TYPOGRAPHY
+     ======================================== */
+
+  /* Font Families */
+  --font-family-display: var(--ll-sans);
+  --font-family-body: var(--ll-sans);
+  --font-family-mono: "AuxMono-Regular", monospace;
+
+  /* Font Sizes (clamp-based responsive) */
+  --font-size-xs: var(--ll-type-compact-metadata);
+  --font-size-sm: var(--ll-type-body-small);
+  --font-size-base: var(--ll-type-body);
+  --font-size-lg: var(--ll-type-body-large);
+  --font-size-xl: var(--ll-type-h3);
+  --font-size-2xl: var(--ll-type-h2);
+  --font-size-3xl: var(--ll-type-h1);
+  --font-size-4xl: var(--ll-type-display);
+
+  /* Line Heights */
+  --line-height-tight: 0.98;
+  --line-height-snug: 1.04;
+  --line-height-normal: 1.18;
+  --line-height-relaxed: 1.25;
+  --line-height-loose: 1.55;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.035em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.08em;
+  --letter-spacing-wider: 0.12em;
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 800;
+
+  /* Semantic Typography Combinations */
+  --text-display: var(--font-size-4xl) / var(--line-height-tight);
+  --text-h1: var(--font-size-3xl) / var(--line-height-snug);
+  --text-h2: var(--font-size-2xl) / var(--line-height-normal);
+  --text-h3: var(--font-size-xl) / var(--line-height-relaxed);
+  --text-h4: var(--font-size-lg) / var(--line-height-relaxed);
+  --text-body: var(--font-size-base) / var(--line-height-loose);
+  --text-body-large: var(--font-size-lg) / var(--line-height-loose);
+  --text-body-small: var(--font-size-sm) / var(--line-height-relaxed);
+  --text-small: var(--font-size-sm) / var(--line-height-relaxed);
+  --text-xs: var(--font-size-xs) / var(--line-height-relaxed);
+  --text-meta: var(--font-size-xs) / var(--line-height-relaxed);
+  --text-button: var(--font-size-sm) / var(--line-height-normal);
+  --text-label: var(--font-size-xs) / var(--line-height-relaxed);
+
+  /* ========================================
+     MOTION
+     ======================================== */
+
+  /* Easing Functions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-snap: cubic-bezier(0.22, 0.75, 0.28, 1);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-sweep-in: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-sweep-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Durations */
+  --duration-instant: 100ms;
+  --duration-fast: 180ms;
+  --duration-normal: 240ms;
+  --duration-slow: 420ms;
+  --duration-slower: 500ms;
+  --duration-slowest: 900ms;
+
+  /* Semantic Transitions */
+  --transition-micro: var(--duration-fast) var(--ease-out);
+  --transition-control: var(--duration-normal) var(--ease-out);
+  --transition-component: var(--duration-slow) var(--ease-out);
+  --transition-page: var(--duration-slower) var(--ease-smooth);
+
+  /* ========================================
+     LAYOUT & GEOMETRY
+     ======================================== */
+
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* Semantic Radius */
+  --radius-default: var(--radius-none);
+  --radius-control: var(--radius-none);
+  --radius-card: var(--radius-lg);
+  --radius-button: var(--radius-none);
+  --radius-dock: var(--radius-none);
+
+  /* Layout Dimensions */
+  --container-max: 1440px;
+  --container-content: 1200px;
+  --container-narrow: 800px;
+  --control-height: 50px;
+  --control-padding-x: 16px;
+  --icon-size: 16px;
+
+  /* Button hierarchy: compact actions, default actions, and prominent actions. */
+  --button-height-sm: max(var(--min-touch-target, 44px), 44px);
+  --button-height-md: max(var(--min-touch-target, 44px), var(--control-height));
+  --button-height-lg: max(var(--min-touch-target, 44px), 56px);
+  --button-font-size-sm: var(--font-size-xs, 12px);
+  --button-font-size-md: var(--font-size-sm, 14px);
+  --button-font-size-lg: var(--font-size-base, 16px);
+  --button-padding-inline-sm: 12px;
+  --button-padding-inline-md: var(--control-padding-x);
+  --button-padding-inline-lg: 20px;
+  --button-width-content: max-content;
+  --button-width-full: 100%;
+  --button-width-home-pair: min(
+    clamp(260px, 24vw, 320px),
+    calc(100vw - var(--space-gutter) - var(--space-gutter))
+  );
+
+  /* Z-Index Scale */
+  --z-below: -1;
+  --z-base: 0;
+  --z-above: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal: 400;
+  --z-popover: 500;
+  --z-tooltip: 600;
+  --z-max: 2147483647;
+
+  /* ========================================
+     SHADOWS
+     ======================================== */
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+
+  /* Colored Shadows */
+  --shadow-brand: 0 10px 30px rgba(255, 79, 18, 0.2);
+  --shadow-elevated: 0 18px 52px rgba(4, 8, 14, 0.42);
+
+  /* ========================================
+     ACCESSIBILITY
+     ======================================== */
+
+  --focus-ring: 2px solid var(--color-brand-primary);
+  --focus-offset: 4px;
+  --min-touch-target: 44px;
+  --min-contrast-ratio: 4.5;
+
+  /* ========================================
+     BREAKPOINTS
+     ======================================== */
+
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+}
+
+/* The home route intentionally uses a compact base size. */
+body.home-index {
+  --font-size-base: 14px;
+  --text-body: var(--font-size-base) / var(--line-height-loose);
+}

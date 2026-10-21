@@ -1,0 +1,46 @@
+body.ll-error-page {
+  min-height: 100svh;
+  background: var(--ll-black);
+  color: var(--ll-white);
+}
+
+.ll-error-page__main {
+  display: flex;
+  min-height: 100svh;
+  align-items: center;
+  justify-content: center;
+  padding: 40px var(--ll-gutter);
+}
+
+.ll-error-page__content {
+  text-align: center;
+}
+
+.ll-error-page__content h1 {
+  margin: 0 0 20px;
+  font-size: clamp(80px, 15vw, 200px);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.ll-error-page__content p {
+  margin: 0 0 40px;
+  font-size: 18px;
+}
+
+.ll-error-page__content a {
+  display: inline-flex;
+  min-height: var(--ll-control-height);
+  align-items: center;
+  padding: 0 32px;
+  border: 1px solid var(--ll-white);
+  background: var(--ll-white);
+  color: var(--ll-black);
+  font-weight: 500;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.ll-error-page__content a:is(:hover, :focus-visible) {
+  border-color: var(--ll-orange);
+  background: var(--ll-orange);
+}

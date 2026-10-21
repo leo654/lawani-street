@@ -469,7 +469,7 @@
       if (closing) return;
 
       if (embedded) {
-        window.parent.postMessage({ type: "lawani:pitchdeck-close" }, "*");
+        window.parent.postMessage({ type: "lawani:pitchdeck-close" }, window.location.origin);
         return;
       }
 
@@ -527,7 +527,7 @@
         if (destination.origin !== window.location.origin) return;
 
         event.preventDefault();
-        window.parent.postMessage({ type: "lawani:pitchdeck-navigate", href: destination.href }, "*");
+        window.parent.postMessage({ type: "lawani:pitchdeck-navigate", href: destination.href }, window.location.origin);
       });
     }
 
@@ -645,7 +645,7 @@
       if (overlayActive) {
         slides[activeIndex].focus({ preventScroll: true });
       }
-      if (embedded) window.parent.postMessage({ type: "lawani:pitchdeck-ready" }, "*");
+      if (embedded) window.parent.postMessage({ type: "lawani:pitchdeck-ready" }, window.location.origin);
     });
   }
 

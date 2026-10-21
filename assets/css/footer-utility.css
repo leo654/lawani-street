@@ -1,0 +1,158 @@
+/* Compact utility row shared by non-home page footers. */
+:is(.cs-footer, .lwa-footer) .ll-footer__utility {
+  display: grid;
+  grid-template-columns: auto auto minmax(12px, 1fr) auto auto 36px;
+  align-items: center;
+  gap: clamp(12px, 2vw, 28px);
+  margin-top: clamp(56px, 9vw, 110px);
+  padding: 16px 0 0;
+  border-top: 1px solid currentColor;
+  color: inherit;
+  font-family: var(--ll-mono, monospace);
+  font-size: 10px;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility :where(nav, p) {
+  margin: 0;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility :where(a, p) {
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 7px 12px;
+  border: 1px dashed currentColor;
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a:is(:hover, :focus-visible) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__linkedin-bg {
+  fill: currentColor;
+  stroke: none;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__linkedin-glyph {
+  fill: currentColor;
+  stroke: none;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__instagram-icon :is(path, circle) {
+  fill: currentColor;
+  stroke: none;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__calendar-icon circle {
+  fill: var(--cs-bg, var(--lwa-bg, #fff));
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__calendar-icon path:last-child {
+  stroke-width: 1.6;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav[aria-label="Legal"] {
+  gap: clamp(14px, 2vw, 28px);
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__credits {
+  justify-self: end;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__back-to-top {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__back-to-top svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+@media (max-width: 900px) {
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility {
+    grid-template-columns: minmax(0, 1fr) auto 36px;
+    gap: 14px 10px;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav[aria-label="Legal"] {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility > p {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__credits {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__back-to-top {
+    grid-column: 3;
+    grid-row: 3;
+    justify-self: end;
+  }
+}
+
+@media (max-width: 560px) {
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a {
+    min-height: 40px;
+    gap: 8px;
+    padding: 6px 9px;
+    font-size: 9px;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links svg {
+    width: 20px;
+    height: 20px;
+    flex-basis: 20px;
+  }
+}

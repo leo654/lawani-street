@@ -1,6 +1,3 @@
-import Lenis from "lenis";
-import "lenis/dist/lenis.css";
-
 (function () {
   "use strict";
 
@@ -36,74 +33,79 @@ import "lenis/dist/lenis.css";
   function initSmoothScroll() {
     if (reduced() || !document.querySelector("main") || document.body.classList.contains("ll-deck-page")) return;
 
-    smoothScroll = new Lenis({
-      autoRaf: false,
-      allowNestedScroll: true,
-      anchors: false,
-      lerp: 0.085,
-      smoothWheel: true,
-      wheelMultiplier: 0.9
-    });
+    import("lenis").then(function (lenisModule) {
+      if (smoothScroll || reduced()) return;
 
-    smoothScroll.on("scroll", function () {
-      if (window.ScrollTrigger) window.ScrollTrigger.update();
-    });
+      var Lenis = lenisModule.default;
+      smoothScroll = new Lenis({
+        autoRaf: false,
+        allowNestedScroll: true,
+        anchors: false,
+        lerp: 0.085,
+        smoothWheel: true,
+        wheelMultiplier: 0.9
+      });
 
-    var rafId = 0;
-    var gsapTicker = null;
-    if (window.gsap && window.gsap.ticker) {
-      gsapTicker = function (time) {
-        smoothScroll.raf(time * 1000);
-      };
-      window.gsap.ticker.add(gsapTicker);
-      window.gsap.ticker.lagSmoothing(0);
-    } else {
-      var raf = function (time) {
-        smoothScroll.raf(time);
+      smoothScroll.on("scroll", function () {
+        if (window.ScrollTrigger) window.ScrollTrigger.update();
+      });
+
+      var rafId = 0;
+      var gsapTicker = null;
+      if (window.gsap && window.gsap.ticker) {
+        gsapTicker = function (time) {
+          smoothScroll.raf(time * 1000);
+        };
+        window.gsap.ticker.add(gsapTicker);
+        window.gsap.ticker.lagSmoothing(0);
+      } else {
+        var raf = function (time) {
+          smoothScroll.raf(time);
+          rafId = window.requestAnimationFrame(raf);
+        };
         rafId = window.requestAnimationFrame(raf);
-      };
-      rafId = window.requestAnimationFrame(raf);
-    }
-
-    function syncScrollLock() {
-      var body = document.body;
-      var html = document.documentElement;
-      var locked = body.classList.contains("ll-menu-open") ||
-        body.classList.contains("ll-showreel-open") ||
-        body.classList.contains("ll-pitch-overlay-open") ||
-        html.classList.contains("ll-page-leaving") ||
-        body.style.overflow === "hidden" ||
-        html.style.overflow === "hidden";
-      if (locked) smoothScroll.stop();
-      else smoothScroll.start();
-    }
-
-    var lockObserver = new MutationObserver(syncScrollLock);
-    lockObserver.observe(document.body, { attributes: true, attributeFilter: ["class", "style"] });
-    lockObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "style"] });
-    syncScrollLock();
-
-    function handlePageShow(event) {
-      if (event.persisted) {
-        smoothScroll.resize();
-        smoothScroll.scrollTo(window.scrollY, { immediate: true, force: true });
       }
+
+      function syncScrollLock() {
+        var body = document.body;
+        var html = document.documentElement;
+        var locked = body.classList.contains("ll-menu-open") ||
+          body.classList.contains("ll-showreel-open") ||
+          body.classList.contains("ll-pitch-overlay-open") ||
+          html.classList.contains("ll-page-leaving") ||
+          body.style.overflow === "hidden" ||
+          html.style.overflow === "hidden";
+        if (locked) smoothScroll.stop();
+        else smoothScroll.start();
+      }
+
+      var lockObserver = new MutationObserver(syncScrollLock);
+      lockObserver.observe(document.body, { attributes: true, attributeFilter: ["class", "style"] });
+      lockObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "style"] });
       syncScrollLock();
-    }
 
-    window.addEventListener("pageshow", handlePageShow);
-    window.addEventListener("pagehide", function (event) {
-      smoothScroll.stop();
-      if (event.persisted) return;
+      function handlePageShow(event) {
+        if (event.persisted) {
+          smoothScroll.resize();
+          smoothScroll.scrollTo(window.scrollY, { immediate: true, force: true });
+        }
+        syncScrollLock();
+      }
 
-      lockObserver.disconnect();
-      window.removeEventListener("pageshow", handlePageShow);
-      if (gsapTicker) window.gsap.ticker.remove(gsapTicker);
-      if (rafId) window.cancelAnimationFrame(rafId);
-      smoothScroll.destroy();
-    }, { once: true });
+      window.addEventListener("pageshow", handlePageShow);
+      window.addEventListener("pagehide", function (event) {
+        smoothScroll.stop();
+        if (event.persisted) return;
 
-    return smoothScroll;
+        lockObserver.disconnect();
+        window.removeEventListener("pageshow", handlePageShow);
+        if (gsapTicker) window.gsap.ticker.remove(gsapTicker);
+        if (rafId) window.cancelAnimationFrame(rafId);
+        smoothScroll.destroy();
+      }, { once: true });
+    }).catch(function () {
+      // Native scrolling remains available when Lenis is not bundled.
+    });
   }
 
   function observe(elements, onEnter, options) {
@@ -213,10 +215,15 @@ import "lenis/dist/lenis.css";
       }
 
       overlay.addEventListener("transitionend", onCoverEnd);
+      var transitionDuration = window.getComputedStyle(overlay).transitionDuration
+        .split(",")
+        .map(function (value) { return parseFloat(value) * (value.indexOf("ms") === -1 ? 1000 : 1); })
+        .filter(Number.isFinite)
+        .reduce(function (longest, value) { return Math.max(longest, value); }, 0);
       window.setTimeout(function () {
         overlay.removeEventListener("transitionend", onCoverEnd);
         navigate();
-      }, 500);
+      }, transitionDuration + 120);
     };
 
     document.addEventListener("click", function (event) {

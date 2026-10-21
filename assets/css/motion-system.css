@@ -18,8 +18,8 @@
   --motion-fast: var(--duration-fast);
   --motion-control: var(--duration-normal);
   --motion-reveal: 760ms;
-  --motion-page-cover: var(--duration-slower);
-  --motion-page-reveal: var(--duration-slow);
+  --motion-page-cover: 540ms;
+  --motion-page-reveal: 680ms;
   --motion-page: var(--duration-slower);
   --motion-media-opacity: 600ms;
   --motion-media-scale: 800ms;
@@ -40,6 +40,33 @@ html {
   scrollbar-gutter: stable both-edges;
 }
 
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch],
+.lenis [data-lenis-prevent-vertical],
+.lenis [data-lenis-prevent-horizontal] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.lenis.lenis-autoToggle {
+  transition-property: overflow;
+  transition-duration: 1ms;
+  transition-behavior: allow-discrete;
+}
+
 html.ll-page-leaving {
   overflow: hidden;
 }
@@ -51,10 +78,13 @@ html.ll-page-leaving {
   display: block;
   overflow: hidden;
   background: #f04b18;
+  opacity: 0;
   pointer-events: none;
   transform: translate3d(0, 103%, 0);
-  transition: transform var(--motion-page-cover) var(--motion-ease-sweep-in);
-  will-change: transform;
+  transition:
+    transform var(--motion-page-cover) var(--motion-ease-sweep-in),
+    opacity var(--motion-page-cover) var(--motion-ease-out);
+  will-change: transform, opacity;
 }
 
 .ll-page-transition::before {
@@ -68,6 +98,7 @@ html.ll-page-leaving {
 
 html.ll-page-leaving .ll-page-transition,
 .ll-page-transition.is-covering {
+  opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 
@@ -81,8 +112,11 @@ html.ll-page-leaving .ll-page-transition::before,
 }
 
 .ll-page-transition.is-covering.is-revealing {
+  opacity: 0;
   transform: translate3d(0, -103%, 0);
-  transition: transform var(--motion-page-reveal) var(--motion-ease-sweep-out);
+  transition:
+    transform var(--motion-page-reveal) var(--motion-ease-sweep-out),
+    opacity var(--motion-page-reveal) var(--motion-ease-out);
 }
 
 /* Keep the centered navigation rail pinned to the layout viewport, not 100vw. */

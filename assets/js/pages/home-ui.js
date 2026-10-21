@@ -68,6 +68,23 @@
     }, { once: true });
   }
 
+  function initSkillRowSelection() {
+    var rows = Array.prototype.slice.call(document.querySelectorAll("[data-skill-row]"));
+    if (!rows.length) return;
+
+    rows.forEach(function (row) {
+      row.addEventListener("click", function () {
+        var wasSelected = row.getAttribute("aria-pressed") === "true";
+
+        rows.forEach(function (item) {
+          item.setAttribute("aria-pressed", "false");
+        });
+
+        if (!wasSelected) row.setAttribute("aria-pressed", "true");
+      });
+    });
+  }
+
   function initHomeHero() {
     var hero = document.querySelector("[data-ll-home-hero]");
     if (!hero) return;
@@ -228,6 +245,7 @@
 
   function ready() {
     initServiceLinkState();
+    initSkillRowSelection();
     initHomeHero();
     initFooterParallax();
   }

@@ -3,8 +3,8 @@
 ## Project Layout
 
 - Public route pages stay at repository root (`*.html`). `vite.config.mjs` explicitly lists production routes; standalone experiments remain available in local development but are excluded from production.
-- All static runtime files are under `assets/` (`css`, `js`, `img`, `fonts`, `video`, `favicons`, `slide`).
-- Archived root-level legacy files are in `legacy/unused-root/`.
+- Static files live under `assets/` (`css`, `js`, `img`, `fonts`, `video`, `favicons`, and `partials`).
+- The current tree has no legacy archive; standalone experiments stay at the root and are excluded from the production route allowlist.
 - Shared behavior lives in `assets/js/modules/`; route-specific behavior lives in `assets/js/pages/`.
 - Shared motion timing and page transitions are defined by `motion-system.css` and `motion-system.js`.
 - Resume links use one preloaded full-screen fade in `pitchdeck-overlay.css` / `pitchdeck-overlay.js`; the isolated `pitchdeck.html` controller owns only slide navigation and remains directly accessible.

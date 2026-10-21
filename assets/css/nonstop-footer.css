@@ -1,0 +1,630 @@
+@property --footer-relight {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --footer-light-x {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+
+@property --footer-light-y {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+
+/* Oversized, embossed studio signature with a compact lower footer bar. */
+:is(.ll-footer, .cs-footer, .lwa-footer) {
+  --footer-ink: #c5c5c7;
+  --footer-utility-bg: #efeee8;
+  --footer-utility-ink: #20221f;
+  --footer-utility-pad-top: 18px;
+  --footer-utility-pad-bottom: 20px;
+  --footer-utility-control-height: 42px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  clip-path: inset(0);
+  background: #050505 !important;
+  color: var(--footer-ink) !important;
+  transition: --footer-light-x 140ms ease-out, --footer-light-y 140ms ease-out;
+}
+
+/* content-visibility containment makes fixed descendants behave like local content. */
+.cs-footer {
+  content-visibility: visible;
+}
+
+:is(.ll-footer, .cs-footer, .lwa-footer)::before {
+  --footer-relight: 0;
+  position: absolute;
+  z-index: 0;
+  right: -0.12em;
+  bottom: 3.5%;
+  left: -0.12em;
+  overflow: hidden;
+  color: transparent;
+  background: none;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.9px rgba(226, 230, 239, calc(0.22 + var(--footer-relight) * 0.22));
+  content: "LAWANI ST.";
+  font-family: "Gridlite", sans-serif;
+  font-size: clamp(360px, 48vw, 960px);
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  line-height: 0.72;
+  text-align: center;
+  white-space: nowrap;
+  clip-path: inset(50% 0 0);
+  opacity: 0;
+  transition: --footer-relight 260ms ease, opacity 180ms ease, filter 180ms ease;
+  filter: none;
+  pointer-events: none;
+}
+
+/* A moving, feathered mask lets the pointer catch only the hollow letter stroke. */
+:is(.ll-footer, .cs-footer, .lwa-footer)::after {
+  position: absolute;
+  z-index: 0;
+  right: -0.12em;
+  bottom: 3.5%;
+  left: -0.12em;
+  overflow: hidden;
+  color: transparent;
+  background: none;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.15px rgba(240, 243, 250, 0.78);
+  text-stroke: 1.15px rgba(240, 243, 250, 0.78);
+  content: "LAWANI ST.";
+  font-family: "Gridlite", sans-serif;
+  font-size: clamp(360px, 48vw, 960px);
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  line-height: 0.72;
+  text-align: center;
+  white-space: nowrap;
+  clip-path: inset(50% 0 0);
+  opacity: 0;
+  mask-image: radial-gradient(ellipse 20% 150% at var(--footer-light-x, 50%) var(--footer-light-y, 50%), #000 0%, rgba(0, 0, 0, 0.68) 46%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 20% 150% at var(--footer-light-x, 50%) var(--footer-light-y, 50%), #000 0%, rgba(0, 0, 0, 0.68) 46%, transparent 100%);
+  filter: drop-shadow(0 0 5px rgba(222, 231, 255, 0.24));
+  transition: opacity 160ms ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.ll-footer, .cs-footer, .lwa-footer):hover::before {
+    --footer-relight: 0.55;
+    opacity: 1;
+    filter:
+      drop-shadow(var(--footer-bevel-x, 0px) var(--footer-bevel-y, -1px) 0.7px rgba(255, 255, 255, 0.30))
+      drop-shadow(calc(var(--footer-bevel-x, 0px) * -1) calc(var(--footer-bevel-y, -1px) * -1) 0.9px rgba(0, 0, 0, 0.72));
+  }
+
+  :is(.ll-footer, .cs-footer, .lwa-footer):hover::after {
+    opacity: 0.88;
+  }
+}
+
+:is(.ll-footer, .cs-footer, .lwa-footer) > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Homepage: leave a quiet black field above the low, cropped wordmark. */
+html[data-theme] body.home-index .ll-footer {
+  height: 60vh;
+  height: 60svh;
+  min-height: 60svh;
+  max-height: 60svh;
+  padding: 0 var(--ll-gutter) !important;
+}
+
+body.home-index .ll-footer::before,
+body.home-index .ll-footer::after {
+  bottom: 96px;
+  text-align: center;
+}
+
+:is(.ll-footer, .cs-footer, .lwa-footer).is-mark-fixed::before {
+  position: fixed;
+  right: 0;
+  bottom: 96px;
+  left: 0;
+  width: auto;
+  clip-path: inset(50% 0 0);
+  opacity: 1;
+  transform: translate3d(0, var(--footer-parallax-y, 0px), 0);
+  will-change: opacity, transform;
+}
+
+:is(.ll-footer, .cs-footer, .lwa-footer).is-mark-fixed::after {
+  position: fixed;
+  right: 0;
+  bottom: 96px;
+  left: 0;
+  width: auto;
+  clip-path: inset(50% 0 0);
+  transform: translate3d(0, var(--footer-parallax-y, 0px), 0);
+  will-change: opacity, transform;
+}
+
+body.home-index .ll-footer__panel {
+  min-height: 0;
+  padding: 0 !important;
+  background: transparent !important;
+  color: var(--footer-ink) !important;
+}
+
+body.home-index .ll-footer__endcap {
+  min-height: 0;
+  border: 0;
+  position: static;
+}
+
+body.home-index .ll-footer__studio,
+body.home-index .ll-footer__year,
+body.home-index .ll-footer__marquee,
+body.home-index .ll-footer__webgl {
+  display: none !important;
+}
+
+body.home-index .ll-footer__project-cta {
+  position: absolute;
+  top: clamp(32px, 8vh, 56px);
+  right: auto;
+  bottom: auto;
+  left: calc(50% - clamp(24px, 1.67vw, 30px) - 5px);
+  z-index: 3;
+  margin: 0;
+}
+
+body.home-index .ll-manifesto__copy > .ll-action-link,
+body.home-index .ll-footer__project-cta > a {
+  width: var(--button-width-home-pair);
+  justify-content: space-between;
+}
+
+body.home-index .ll-footer__utility {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  box-sizing: border-box;
+  grid-template-columns: auto auto minmax(12px, 1fr) auto auto 36px;
+  align-items: center;
+  gap: 12px clamp(12px, 2vw, 28px);
+  margin: 0 !important;
+  padding: var(--footer-utility-pad-top) var(--ll-gutter) var(--footer-utility-pad-bottom) !important;
+  border-top: 1px solid rgba(32, 34, 31, 0.5) !important;
+  background: var(--footer-utility-bg);
+  color: var(--footer-utility-ink) !important;
+  font-family: var(--ll-mono, monospace);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+body.home-index .ll-footer__utility nav.ll-footer__social-links {
+  grid-column: auto;
+  grid-row: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+body.home-index .ll-footer__utility nav.ll-footer__social-links a {
+  display: inline-flex;
+  min-height: var(--footer-utility-control-height);
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  padding: 7px 12px;
+  border: 1px dashed currentColor;
+  background: transparent;
+  font: inherit;
+  text-decoration: none;
+}
+
+body.home-index .ll-footer__utility nav.ll-footer__social-links svg {
+  display: none !important;
+}
+
+body.home-index .ll-footer__utility nav.ll-footer__social-links .ll-footer__linkedin-bg,
+body.home-index .ll-footer__utility nav.ll-footer__social-links .ll-footer__linkedin-glyph {
+  fill: currentColor;
+  stroke: none;
+}
+
+body.home-index .ll-footer__utility nav.ll-footer__social-links .ll-footer__instagram-icon :is(path, circle) {
+  fill: currentColor;
+  stroke: none;
+}
+
+body.home-index .ll-footer__utility nav.ll-footer__social-links .ll-footer__calendar-icon circle {
+  fill: var(--footer-utility-bg);
+  stroke: currentColor;
+}
+
+body.home-index .ll-footer__utility nav[aria-label="Legal"] {
+  grid-column: auto;
+  grid-row: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px clamp(14px, 2vw, 28px);
+}
+
+body.home-index .ll-footer__utility > p {
+  grid-column: auto;
+  grid-row: auto;
+  margin: 0;
+}
+
+body.home-index .ll-footer__credits {
+  display: inline-flex;
+  justify-self: end;
+}
+
+body.home-index .ll-footer__back-to-top {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  border: 0;
+  color: inherit !important;
+}
+
+body.home-index .ll-footer__back-to-top svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+body.home-index .ll-footer__utility :where(a, p) {
+  color: inherit !important;
+  text-decoration: none;
+}
+
+body.home-index .ll-footer__utility a:hover,
+body.home-index .ll-footer__utility a:focus-visible {
+  color: #d85a3f !important;
+}
+
+:is(.cs-footer, .lwa-footer) {
+  padding-bottom: 0 !important;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility {
+  position: relative;
+  z-index: 2;
+  grid-template-columns: auto auto minmax(12px, 1fr) auto auto 36px;
+  gap: 12px clamp(12px, 2vw, 28px);
+  margin: clamp(42px, 7vw, 88px) calc(0px - var(--ll-page-gutter, var(--ll-gutter))) 0 !important;
+  padding: var(--footer-utility-pad-top) var(--ll-gutter) var(--footer-utility-pad-bottom) !important;
+  border-top: 1px solid rgba(32, 34, 31, 0.5) !important;
+  background: var(--footer-utility-bg);
+  color: var(--footer-utility-ink) !important;
+  font-family: var(--ll-mono, monospace);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links,
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav[aria-label="Legal"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a {
+  display: inline-flex;
+  min-height: var(--footer-utility-control-height);
+  align-items: center;
+  gap: 0;
+  padding: 7px 12px;
+  border: 1px dashed currentColor;
+  background: transparent;
+  font: inherit;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links svg {
+  display: none !important;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__linkedin-bg,
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__linkedin-glyph {
+  fill: currentColor;
+  stroke: none;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__instagram-icon :is(path, circle) {
+  fill: currentColor;
+  stroke: none;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__calendar-icon circle {
+  fill: var(--footer-utility-bg);
+  stroke: currentColor;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility > p {
+  margin: 0;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__credits {
+  display: inline-flex;
+  justify-self: end;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__back-to-top {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  color: inherit !important;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__back-to-top svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility :where(a, p) {
+  color: inherit !important;
+  text-decoration: none;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility a:hover,
+:is(.cs-footer, .lwa-footer) .ll-footer__utility a:focus-visible {
+  color: #d85a3f !important;
+}
+
+@media (max-width: 640px) {
+  :is(.ll-footer, .cs-footer, .lwa-footer)::before,
+  :is(.ll-footer, .cs-footer, .lwa-footer)::after {
+    right: -0.18em;
+    left: -0.18em;
+    bottom: 7%;
+    font-size: clamp(320px, 90vw, 520px);
+    clip-path: inset(42% 0 0);
+  }
+
+  body.home-index .ll-footer__utility {
+    grid-template-columns: minmax(0, 1fr) auto 36px;
+    gap: 12px 10px;
+    padding: 14px var(--ll-gutter) !important;
+  }
+
+  body.home-index .ll-footer__utility nav.ll-footer__social-links {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    gap: 7px 12px;
+  }
+
+  body.home-index .ll-footer__utility nav[aria-label="Legal"] {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  body.home-index .ll-footer__utility > p {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  body.home-index .ll-footer__credits {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  body.home-index .ll-footer__back-to-top {
+    grid-column: 3;
+    grid-row: 3;
+  }
+
+  body.home-index .ll-footer__project-cta {
+    top: 12px;
+    right: auto;
+    bottom: auto;
+    left: 0;
+  }
+
+}
+
+@media (max-width: 720px) {
+  body.home-index {
+    --button-width-home-pair: min(
+      520px,
+      calc(100vw - var(--ll-gutter) - var(--ll-gutter))
+    );
+  }
+
+  body.home-index .ll-manifesto__copy > .ll-action-link {
+    max-width: 100%;
+  }
+
+  body.home-index .ll-footer__project-cta {
+    position: absolute;
+    top: 12px;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: var(--button-width-home-pair);
+    max-width: 100%;
+    margin: 0;
+  }
+
+  body.home-index .ll-footer__project-cta > a {
+    width: 100%;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  body.home-index .ll-footer__utility {
+    grid-template-columns: minmax(0, 1fr) auto 36px;
+    gap: 12px 10px;
+  }
+
+  body.home-index .ll-footer__utility nav.ll-footer__social-links {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  body.home-index .ll-footer__utility nav[aria-label="Legal"] {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  body.home-index .ll-footer__utility > p {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  body.home-index .ll-footer__credits {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  body.home-index .ll-footer__back-to-top {
+    grid-column: 3;
+    grid-row: 3;
+  }
+}
+
+@media (max-width: 900px) {
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility {
+    grid-template-columns: minmax(0, 1fr) auto 36px;
+    gap: 14px 10px;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav[aria-label="Legal"] {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility > p {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__credits {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__back-to-top {
+    grid-column: 3;
+    grid-row: 3;
+  }
+}
+
+@media (max-width: 560px) {
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a {
+    min-height: 40px;
+    gap: 8px;
+    padding: 6px 9px;
+    font-size: 9px;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links svg {
+    width: 20px;
+    height: 20px;
+    flex-basis: 20px;
+  }
+}
+
+/* Keep footer utility labels centered even when the social icons are hidden. */
+html body :is(.ll-footer, .cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a {
+  align-items: center;
+}
+
+html body :is(.ll-footer, .cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a > span {
+  display: block;
+  align-self: center;
+  margin-block: 0;
+  line-height: 1;
+  transform: none !important;
+}
+
+/* Footer calls to action share the index CTA fill and motion across pages. */
+html body :is(
+  .cs-footer__actions .ll-button,
+  .lwa-footer__contact > div > .ll-button
+) {
+  --ll-button-hover-surface: var(--ll-orange);
+  --ll-button-hover-ink: var(--ll-brand-charcoal, #20221f);
+  transition: var(--ll-button-transition);
+}
+
+html body :is(
+  .cs-footer__actions .ll-button,
+  .lwa-footer__contact > div > .ll-button
+)::before {
+  content: none !important;
+  display: none !important;
+}
+
+html body :is(
+  .cs-footer__actions .ll-button,
+  .lwa-footer__contact > div > .ll-button
+) > :is(span, svg) {
+  position: relative;
+  z-index: 1;
+  color: inherit !important;
+}
+
+html body .cs-footer__actions .ll-button > span:first-child {
+  transform: none !important;
+}
+
+html body :is(
+  .cs-footer__actions .ll-button,
+  .lwa-footer__contact > div > .ll-button
+):is(:hover, :focus-visible) {
+  border-color: var(--ll-button-hover-surface) !important;
+  background-color: var(--ll-button-hover-surface) !important;
+  color: var(--ll-button-hover-ink) !important;
+}
+
+html body .cs-footer__actions .ll-button:is(:hover, :focus-visible) > .ll-icon--arrow-up-right {
+  transform: rotate(45deg) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.ll-footer, .cs-footer, .lwa-footer),
+  :is(.ll-footer, .cs-footer, .lwa-footer)::before,
+  :is(.ll-footer, .cs-footer, .lwa-footer)::after {
+    transition: none !important;
+  }
+
+  :is(.ll-footer, .cs-footer, .lwa-footer) * {
+    transition-duration: 0.01ms !important;
+  }
+}

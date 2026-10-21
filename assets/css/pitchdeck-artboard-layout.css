@@ -2132,3 +2132,98 @@ html body:not(#global-square-corners).ll-deck-page #what-i-do .ll-service-produc
     --deck-type-label: 10px;
   }
 }
+
+/* Resume slide: use a clear identity > section title > supporting copy rhythm. */
+html body.ll-deck-page #resume .ll-deck-resume__identity-copy h2 {
+  margin: 0;
+  font-size: clamp(18px, 1.55vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume__identity-copy > p {
+  margin-top: 10px;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume section h2 {
+  margin: 0 0 8px;
+  line-height: 1.15;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume section p,
+html body.ll-deck-page #resume .ll-deck-resume section li {
+  line-height: 1.5;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume__education ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume__education li {
+  display: grid;
+  gap: 2px;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume__education strong {
+  font-weight: 600;
+}
+
+@media (min-width: 981px) {
+  html body.ll-deck-page #resume .ll-deck-resume {
+    top: 8%;
+    right: 8.6%;
+    bottom: 18%;
+    left: 10.8%;
+    height: auto;
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__identity {
+    padding-top: clamp(42px, 8vh, 72px);
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__portrait {
+    box-sizing: border-box;
+    width: min(100%, clamp(170px, 16vw, 210px));
+    aspect-ratio: 0.78;
+    padding: 8px 8px 24px;
+    background: #f4f2ec;
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__portrait img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__identity-copy {
+    margin-top: clamp(44px, 10vh, 88px);
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__identity-copy address {
+    gap: 4px;
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__identity-copy address > span {
+    margin-bottom: clamp(8px, 1.4vh, 12px);
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__main {
+    display: grid;
+    grid-template-rows: minmax(0, 40fr) minmax(0, 25fr) minmax(0, 23fr) minmax(0, 12fr);
+    padding-left: clamp(10px, 1.1vw, 18px);
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__main section,
+  html body.ll-deck-page #resume .ll-deck-resume__expertise section {
+    position: static;
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__expertise {
+    display: grid;
+    grid-template-rows: minmax(0, 42fr) minmax(0, 27fr) minmax(0, 31fr);
+  }
+}

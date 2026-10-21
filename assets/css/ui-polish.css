@@ -1,0 +1,202 @@
+/* Shared finishing details for controls and inline icon alignment. */
+:root {
+  --ll-ui-focus: var(--ll-orange, #d5a13b);
+  --ll-ui-motion: 180ms cubic-bezier(.2, .7, .2, 1);
+}
+
+:where(svg) {
+  vertical-align: middle;
+}
+
+/* Gertix reference: crisp, technical linework and directional arrow marks. */
+.ll-icon {
+  stroke-width: 1.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  shape-rendering: geometricPrecision;
+}
+
+.ll-icon--arrow-up-right,
+.ll-icon--arrow-left,
+.ll-icon--arrow-down,
+.ll-icon--arrow-up {
+  transform-origin: center;
+  transition: transform var(--ll-ui-motion) cubic-bezier(.2, .7, .2, 1);
+}
+
+.ll-icon--plus {
+  stroke-width: 1.4;
+}
+
+/* Keep footer social and booking icons in step with the inverse link hover. */
+html body :is(.cs-footer, .lwa-footer, .ll-footer) .ll-footer__utility nav.ll-footer__social-links a:is(:hover, :focus-visible) {
+  border-color: var(--ll-brand-charcoal, #20221f);
+  background: var(--ll-brand-charcoal, #20221f);
+  color: #f4f2ec;
+}
+
+html body :is(.cs-footer, .lwa-footer, .ll-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__linkedin-bg,
+html body :is(.cs-footer, .lwa-footer, .ll-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__linkedin-glyph,
+html body :is(.cs-footer, .lwa-footer, .ll-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__instagram-icon :is(path, circle),
+html body :is(.cs-footer, .lwa-footer, .ll-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__calendar-icon circle {
+  transition: fill 180ms ease;
+}
+
+html body :is(.cs-footer, .lwa-footer, .ll-footer) .ll-footer__utility nav.ll-footer__social-links a:is(:hover, :focus-visible) .ll-footer__calendar-icon circle {
+  fill: var(--ll-brand-charcoal, #20221f);
+}
+
+/* Three equal bars stay centered and morph into a close control. */
+.ll-nav-dock .ll-nav-toggle {
+  position: relative;
+  display: grid;
+  padding: 0;
+  place-items: center;
+  transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.ll-nav-toggle__lines {
+  display: flex;
+  width: 30px;
+  height: 36px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  transform: rotate(0deg);
+  transition: transform 360ms cubic-bezier(.22, .72, .24, 1);
+}
+
+.ll-nav-toggle::after {
+  content: none;
+}
+
+.ll-nav-toggle__line {
+  display: block;
+  width: 18px;
+  height: 2px;
+  flex: 0 0 2px;
+  border-radius: 0;
+  background: currentColor;
+  transform-origin: center;
+  transition: transform 380ms cubic-bezier(.22, 1.12, .36, 1), opacity 170ms ease;
+}
+
+/* A restrained stagger gives the toggle a little more character on both states. */
+.ll-nav-toggle__line--1 {
+  transition-delay: 0ms;
+}
+
+.ll-nav-toggle__line--2 {
+  transition-delay: 55ms;
+}
+
+.ll-nav-toggle__line--3 {
+  transition-delay: 25ms;
+}
+
+.ll-nav-toggle:not([aria-expanded="true"]):is(:hover, :focus-visible) .ll-nav-toggle__line--1 {
+  transform: translateX(1px) scaleX(.86);
+}
+
+.ll-nav-toggle:not([aria-expanded="true"]):is(:hover, :focus-visible) .ll-nav-toggle__line--2 {
+  transform: scaleX(.68);
+}
+
+.ll-nav-toggle:not([aria-expanded="true"]):is(:hover, :focus-visible) .ll-nav-toggle__line--3 {
+  transform: translateX(-1px) scaleX(.86);
+}
+
+.ll-nav-toggle[aria-expanded="true"] .ll-nav-toggle__line--1 {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.ll-nav-toggle[aria-expanded="true"] .ll-nav-toggle__line--2 {
+  opacity: 0;
+  transform: scaleX(.2);
+}
+
+.ll-nav-toggle[aria-expanded="true"] .ll-nav-toggle__line--3 {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.ll-nav-toggle[aria-expanded="true"] .ll-nav-toggle__lines {
+  transform: rotate(90deg);
+}
+
+.ll-nav-toggle[aria-expanded="true"] .ll-nav-toggle__line--2 {
+  transition-delay: 35ms;
+}
+
+.ll-nav-toggle[aria-expanded="true"] .ll-nav-toggle__line--3 {
+  transition-delay: 60ms;
+}
+
+.ll-nav-toggle:active {
+  transform: scale(.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ll-nav-toggle__line {
+    transition-duration: .01ms;
+  }
+
+  .ll-nav-dock .ll-nav-toggle {
+    transition-duration: .01ms;
+  }
+}
+
+.ll-button .ll-icon--arrow-up-right {
+  transform: rotate(45deg);
+}
+
+.ll-button:is(:hover, :focus-visible) .ll-icon--arrow-up-right {
+  transform: translateX(2px);
+}
+
+:where(button, a, input, select, textarea) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(button, [role="button"], a):focus-visible {
+  outline: 2px solid var(--ll-ui-focus);
+  outline-offset: 3px;
+}
+
+:where(.ll-button, .ll-nav-toggle, .ll-nav-dock__brand, .ll-theme-toggle, .ll-sound-toggle) {
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+}
+
+:where(.ll-icon, .ll-arrow-glyph, .ll-button > svg, .ll-nav-toggle__icon) {
+  display: block;
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+:where(.ll-button, .ll-footer__project-cta > a, .ll-service-product__cta) > :is(svg, .ll-icon, .ll-arrow-glyph) {
+  vertical-align: middle;
+}
+
+:where(.ll-button, .ll-nav-toggle, .ll-nav-dock__brand, .ll-theme-toggle, .ll-sound-toggle, .ll-hero-showreel__close, .ll-hero-showreel__control-row button) {
+  transition-property: color, background-color, border-color, box-shadow, transform;
+  transition-duration: var(--ll-ui-motion);
+  transition-timing-function: cubic-bezier(.2, .7, .2, 1);
+}
+
+:where(.ll-button, .ll-nav-toggle, .ll-nav-dock__brand, .ll-theme-toggle, .ll-sound-toggle):disabled,
+:where(.ll-button, .ll-nav-toggle, .ll-nav-dock__brand, .ll-theme-toggle, .ll-sound-toggle)[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: .55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.ll-button, .ll-nav-toggle, .ll-nav-dock__brand, .ll-theme-toggle, .ll-sound-toggle, .ll-hero-showreel__close, .ll-hero-showreel__control-row button) {
+    scroll-behavior: auto;
+    transition-duration: .01ms;
+  }
+}
