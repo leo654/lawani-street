@@ -89,6 +89,8 @@
   font-weight: 400 !important;
   line-height: 1.55 !important;
   letter-spacing: 0 !important;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 #cookie-consent .cookie-consent__link {
