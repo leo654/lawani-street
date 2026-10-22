@@ -129,7 +129,6 @@
 
 		var targets = [];
 		[
-			{ selector: '.ll-work-intro > *', effect: 'line' },
 			{ selector: '.ll-services-breakdown', effect: 'rise' },
 			{ selector: '.ll-services-columns > section', effect: 'rise', stagger: 110 },
 			{ selector: '.ll-manifesto__visual', effect: 'rise' },

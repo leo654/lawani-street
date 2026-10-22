@@ -141,7 +141,7 @@
     display: grid;
     position: relative;
     left: 16px;
-    grid-template-rows: minmax(0, 32fr) minmax(0, 22fr) minmax(0, 20fr) minmax(0, 26fr);
+    grid-template-rows: minmax(0, 32fr) minmax(0, 15fr) minmax(0, 27fr) minmax(0, 26fr);
     gap: 0;
     padding: 0;
   }
@@ -173,5 +173,20 @@
 
   html body.ll-deck-page.ll-pitch-page #resume .ll-deck-resume__education li {
     gap: 2px;
+  }
+}
+
+html body.ll-pitch-page .elastic-cursor,
+html body.ll-pitch-page.cursor-hover .elastic-cursor {
+  border-color: var(--ll-orange);
+}
+
+@media (min-width: 1400px) and (hover: hover) and (pointer: fine) {
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-resume__main {
+    width: calc(100% + 100px);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-resume__experience .ll-deck-resume__position strong {
+    white-space: nowrap;
   }
 }

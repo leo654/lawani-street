@@ -77,6 +77,7 @@
         pause: '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>',
         next: '<path d="M4 10h10.2L9.5 5.3 12.3 2.5 22 12l-9.7 9.5-2.8-2.8 4.7-4.7H4z"/>',
         previous: '<path d="M20 10H9.8l4.7-4.7-2.8-2.8L2 12l9.7 9.5 2.8-2.8-4.7-4.7H20z"/>',
+        up: '<path transform="rotate(-90 12 12)" d="M4 10h10.2L9.5 5.3 12.3 2.5 22 12l-9.7 9.5-2.8-2.8 4.7-4.7H4z"/>',
         "sound-on": '<path d="M4 10v4h4l5 4V6l-5 4H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/>',
         "sound-off": '<path d="M4 10v4h4l5 4V6l-5 4H4z"/><path d="m17 9 5 6m0-6-5 6"/>',
         sun: '<circle cx="12" cy="12" r="5"/><path d="M11 1h2v4h-2zM11 19h2v4h-2zM1 11h4v2H1zM19 11h4v2h-4zM3.5 4.9 4.9 3.5l2.8 2.8-1.4 1.4zM16.3 17.7l1.4-1.4 2.8 2.8-1.4 1.4zM16.3 6.3l2.8-2.8 1.4 1.4-2.8 2.8zM3.5 19.1l2.8-2.8 1.4 1.4-2.8 2.8z"/>',
@@ -327,6 +328,7 @@
         var explicit = target.getAttribute("data-cursor");
         if (explicit === "none") return "dot";
         if (explicit && cursorIcons[explicit]) return explicit;
+        if (target.matches(".ll-footer__back-to-top")) return "up";
         if (target.matches("[data-ll-sound-toggle]")) {
           return target.getAttribute("aria-pressed") === "true" ? "sound-off" : "sound-on";
         }

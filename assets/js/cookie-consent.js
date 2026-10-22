@@ -114,9 +114,9 @@
     dialog.inert = true;
     dialog.innerHTML = [
       '<div class="cookie-consent__content">',
-        '<h2 class="cookie-consent__title" id="cookie-consent-title">We value your privacy</h2>',
+        '<h2 class="cookie-consent__title" id="cookie-consent-title">Cookies</h2>',
         '<p class="cookie-consent__text cookie-consent__notice-text" data-cookie-notice>',
-          'We use cookies to improve your experience and understand site traffic. Optional analytics and marketing are only enabled with your permission. Learn more in our ',
+          'Optional analytics help us understand site traffic. Optional marketing technologies are only used with your permission. Read our ',
           '<a class="cookie-consent__link" href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy policy</a> or ',
           '<button class="cookie-consent__link cookie-consent__button--manage" type="button" data-cookie-action="manage">Customize</button>.',
         '</p>',
