@@ -8499,7 +8499,11 @@ body.ll-deck-page .ll-service-product__select select {
 body.ll-deck-page .ll-service-product__select-icon {
   position: absolute;
   top: 50%;
-  right: 12px;
+  right: 10px;
+  width: 18px;
+  height: 18px;
+  flex-basis: 18px;
+  font-size: 15px;
   pointer-events: none;
   transform: translateY(-50%);
 }

@@ -30,7 +30,17 @@
   }
 
   function loadThree() {
-    return import("../libs/three.module.js");
+    return import("../libs/three.module.js").then(function (THREE) {
+      return {
+        WebGLRenderer: THREE.WebGLRenderer,
+        Scene: THREE.Scene,
+        OrthographicCamera: THREE.OrthographicCamera,
+        Vector2: THREE.Vector2,
+        ShaderMaterial: THREE.ShaderMaterial,
+        PlaneGeometry: THREE.PlaneGeometry,
+        Mesh: THREE.Mesh
+      };
+    });
   }
 
   function start() {

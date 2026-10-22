@@ -47,7 +47,7 @@
   }
 
   document.querySelectorAll("svg.ll-service-product__select-icon").forEach(function (svg) {
-    createGlyph(svg, "v", "ll-arrow-glyph--chevron-down");
+    createGlyph(svg, "↓", "ll-arrow-glyph--chevron-down");
   });
 
   document.querySelectorAll(".ll-button__icon-panel > svg").forEach(function (svg) {

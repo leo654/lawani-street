@@ -19,8 +19,15 @@ body.home-index {
 }
 
 /* Keep the header's designer CTA compact beside the portrait. */
+html body:not(#global-square-corners).home-index .ll-contact-dock {
+  width: max-content;
+}
+
 html body:not(#global-square-corners).home-index .ll-contact-dock__primary.ll-button {
-  font-size: 10px;
+  width: max-content;
+  padding-inline: 8px;
+  font-size: 11px;
+  line-height: 12px;
 }
 
 body.home-index .ll-button:not(.ll-mobile-menu__pitch):not(.ll-mobile-menu__cta):not(.ll-button--square):not(.ll-theme-toggle):not(.ll-nav-toggle):not(.ll-button--media):not(.ll-contact-dock .ll-button) {

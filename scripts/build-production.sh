@@ -32,7 +32,7 @@ rsync -a \
   "$OUTPUT_DIR/"
 rsync -a "$ROOT_DIR/assets/favicons/" "$OUTPUT_DIR/assets/favicons/"
 
-mkdir -p "$OUTPUT_DIR/assets/js/libs" "$OUTPUT_DIR/assets/js/modules" "$OUTPUT_DIR/assets/js/pages"
+mkdir -p "$OUTPUT_DIR/assets/js/libs" "$OUTPUT_DIR/assets/js/modules"
 rsync -a \
   "$ROOT_DIR/assets/js/libs/gsap.min.js" \
   "$ROOT_DIR/assets/js/libs/ScrollTrigger.min.js" \
@@ -40,10 +40,6 @@ rsync -a \
 rsync -a \
   "$ROOT_DIR/assets/js/modules/section-reveals.js" \
   "$OUTPUT_DIR/assets/js/modules/"
-
-rsync -a \
-  "$ROOT_DIR/assets/js/pages/home-loader.js" \
-  "$OUTPUT_DIR/assets/js/pages/"
 
 node "$ROOT_DIR/scripts/copy-production-media.mjs" "$ROOT_DIR" "$OUTPUT_DIR"
 

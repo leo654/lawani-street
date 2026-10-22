@@ -85,7 +85,7 @@
 #cookie-consent .cookie-consent__text {
   margin: 0;
   color: inherit;
-  font-size: 14px !important;
+  font-size: 12px !important;
   font-weight: 400 !important;
   line-height: 1.55 !important;
   letter-spacing: 0 !important;
@@ -346,7 +346,7 @@
   }
 
   #cookie-consent .cookie-consent__text {
-    font-size: 13px !important;
+    font-size: 11px !important;
     line-height: 1.5 !important;
   }
 
