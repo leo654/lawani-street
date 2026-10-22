@@ -15,6 +15,5 @@ assets/video/ademi.mp4
 assets/video/bpm.mp4
 assets/video/dsl.mov
 assets/video/ffgfgg.mp4
-assets/video/hero.mp4
 assets/video/hero.m4v
 assets/video/herok.mp4
