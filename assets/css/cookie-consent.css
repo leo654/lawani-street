@@ -23,7 +23,7 @@
 #cookie-consent * {
   box-sizing: border-box;
   font-family: var(--font-family-body, var(--ll-sans, "Gridlite")), sans-serif !important;
-  text-transform: none !important;
+  text-transform: uppercase !important;
 }
 
 .cookie-consent[aria-hidden="false"] {
