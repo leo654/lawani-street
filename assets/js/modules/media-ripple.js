@@ -4,7 +4,8 @@
 
   var mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (!mediaQuery.matches || reduceMotion.matches || !document.body) return;
+  if (!mediaQuery.matches || reduceMotion.matches || !document.body ||
+      document.body.matches(".home-index, .work-index")) return;
 
   var media = Array.prototype.slice.call(document.querySelectorAll(
     ".case-study .cs-story__media img, .case-study .cs-story__media video, " +
