@@ -240,6 +240,8 @@
 
     var buttons = Array.prototype.slice.call(filter.querySelectorAll("[data-filter]"));
     var count = filter.querySelector(".lwa-filter__count");
+    var filterAnimations = new WeakMap();
+    var hasAppliedInitialFilter = false;
 
     function applyFilter(value) {
       var visible = 0;
@@ -252,6 +254,11 @@
       projects.forEach(function (project) {
         var categories = (project.getAttribute("data-categories") || "").split(/\s+/);
         var matches = value === "all" || categories.indexOf(value) !== -1;
+        var currentAnimation = filterAnimations.get(project);
+        if (currentAnimation) {
+          currentAnimation.cancel();
+          filterAnimations.delete(project);
+        }
         project.hidden = !matches;
         if (!matches) {
           project.classList.remove("is-expanded");
@@ -269,15 +276,17 @@
 
         visible += 1;
         project.classList.add("is-visible");
-        if (!reduceMotion && typeof project.animate === "function") {
-          project.animate([
+        if (hasAppliedInitialFilter && !reduceMotion && typeof project.animate === "function") {
+          var animation = project.animate([
             { opacity: 0, transform: "translate3d(0, 18px, 0)" },
             { opacity: 1, transform: "translate3d(0, 0, 0)" }
           ], { duration: 520, easing: "cubic-bezier(0.16, 1, 0.3, 1)" });
+          filterAnimations.set(project, animation);
         }
       });
 
       if (count) count.textContent = "[ " + String(visible).padStart(2, "0") + " ]";
+      hasAppliedInitialFilter = true;
     }
 
     buttons.forEach(function (button) {

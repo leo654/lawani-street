@@ -53,8 +53,6 @@
   var disposed = false;
 
   function clearActiveRipple() {
-    activeMedia = null;
-    activeTarget = null;
     targetStrength = 0;
     requestRender();
   }
@@ -252,7 +250,15 @@
           gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, activeMedia);
         } catch (_) {
           activeMedia = null;
+          activeTarget = null;
           targetStrength = 0;
+          strength = 0;
+          canvas.classList.remove("is-active");
+          canvas.style.filter = "";
+          canvas.style.opacity = "";
+          canvas.width = 1;
+          canvas.height = 1;
+          return;
         }
         var sourceSize = getSourceSize(activeMedia || document.createElement("img"));
         var fit = getFitGeometry(activeMedia, rect, sourceSize);
@@ -270,9 +276,11 @@
       }
     }
 
-    if (activeMedia || strength > 0.008) {
+    if (targetStrength > 0.008 || strength > 0.008) {
       frame = window.requestAnimationFrame(render);
     } else {
+      activeMedia = null;
+      activeTarget = null;
       canvas.classList.remove("is-active");
       canvas.style.filter = "";
       canvas.style.opacity = "";
@@ -401,7 +409,17 @@
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) {
       activeMedia = null;
+      activeTarget = null;
       targetStrength = 0;
+      strength = 0;
+      canvas.classList.remove("is-active");
+      canvas.style.filter = "";
+      canvas.style.opacity = "";
+      if (frame) window.cancelAnimationFrame(frame);
+      frame = 0;
+      canvas.width = 1;
+      canvas.height = 1;
+      return;
     }
     requestRender();
   });
