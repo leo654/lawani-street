@@ -38,6 +38,7 @@
     var moved = false;
     var startX = 0;
     var startScroll = 0;
+    var activePointerId = null;
 
     gallery.querySelectorAll("img").forEach(function (image) {
       image.draggable = false;
@@ -48,6 +49,7 @@
       if (event.pointerType !== "mouse" || event.button !== 0) return;
       active = true;
       moved = false;
+      activePointerId = event.pointerId;
       startX = event.clientX;
       startScroll = gallery.scrollLeft;
       gallery.classList.add("is-dragging");
@@ -57,24 +59,29 @@
     });
 
     gallery.addEventListener("pointermove", function (event) {
-      if (!active) return;
+      if (!active || event.pointerId !== activePointerId) return;
       var delta = event.clientX - startX;
       if (Math.abs(delta) > 4) moved = true;
-      gallery.scrollLeft = startScroll - delta * 1.15;
+      gallery.scrollLeft = startScroll - delta;
       if (moved && event.cancelable) event.preventDefault();
     });
 
     function stop(event) {
       if (!active) return;
+      if (event && event.pointerId != null && event.pointerId !== activePointerId) return;
+      var pointerId = activePointerId;
       active = false;
+      activePointerId = null;
       gallery.classList.remove("is-dragging");
-      if (event.pointerId != null && gallery.hasPointerCapture && gallery.hasPointerCapture(event.pointerId)) {
-        gallery.releasePointerCapture(event.pointerId);
+      if (pointerId != null && gallery.hasPointerCapture && gallery.hasPointerCapture(pointerId)) {
+        gallery.releasePointerCapture(pointerId);
       }
     }
 
     gallery.addEventListener("pointerup", stop);
     gallery.addEventListener("pointercancel", stop);
+    gallery.addEventListener("lostpointercapture", stop);
+    window.addEventListener("blur", stop);
     gallery.addEventListener("dragstart", function (event) { event.preventDefault(); });
   }
 

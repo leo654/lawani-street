@@ -64,6 +64,12 @@
     requestRender();
   }
 
+  document.querySelectorAll("[data-work-gallery]").forEach(function (gallery) {
+    gallery.addEventListener("scroll", function () {
+      if (activeTarget && gallery.contains(activeTarget)) clearActiveRipple();
+    }, { passive: true });
+  });
+
   function compileShader(type, source) {
     var shader = gl.createShader(type);
     gl.shaderSource(shader, source);

@@ -375,7 +375,11 @@ body.home-index .ll-work .lwa-project.is-expanded .lwa-project__detail-inner {
 }
 
 .lwa-project__gallery::-webkit-scrollbar { display: none; }
-.lwa-project__gallery.is-dragging { cursor: grabbing; }
+.lwa-project__gallery.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+}
 
 .lwa-project__gallery figure {
   height: 476px;
