@@ -7094,8 +7094,21 @@ html[data-theme="light"] .home-index #ll-hero-title {
     padding:82px var(--ll-gutter) 18px
   }
   .home-index .ll-home-hero__message {
-    grid-template-columns:1fr;
-    align-items:end
+    grid-template-columns:max-content minmax(0,1fr);
+    grid-template-rows:auto;
+    align-content:end;
+    align-items:end;
+    gap:14px
+  }
+  .home-index .ll-home-hero h1 {
+    grid-column:1;
+  }
+  .home-index .ll-home-hero__message > p {
+    grid-column:2;
+    justify-self:end;
+    max-width:none;
+    text-align:right;
+    white-space:nowrap
   }
   .home-index .ll-home-hero__rail {
     grid-template-columns:minmax(0,1fr) max-content;
