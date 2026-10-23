@@ -46,10 +46,10 @@ See `docs/FILE_MANAGEMENT.md` for conventions.
 
 ## Contact Form
 
-The project intake at `vcard.html` is split into `assets/css/contact-page.css` and `assets/js/pages/contact-form.js`. It posts to `php/mail.php` and delivers to `talktolawanistreet@gmail.com`. For production, deploy behind a PHP-capable server and configure:
+The project intake at `vcard.html` is split into `assets/css/contact-page.css` and `assets/js/pages/contact-form.js`. On GitHub Pages, it prepares a draft addressed to `talktolawanistreet@gmail.com` and provides a copyable brief; GitHub Pages does not run the PHP endpoint. For production, deploy behind a PHP-capable server and configure:
 
 - `CONTACT_FROM` (optional, falls back to the delivery address)
 - `CONTACT_FROM_NAME` (optional)
 - `SMTP_HOST`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `SMTP_PORT`, `SMTP_ENCRYPTION` (optional SMTP delivery)
 
-Without `SMTP_*`, the endpoint falls back to local `mail()`. GitHub Pages cannot run PHP, so the production contact form opens a prefilled email instead; PHP delivery remains available when the source is deployed to a PHP-capable server.
+Without `SMTP_*`, the endpoint falls back to local `mail()`. GitHub Pages cannot run PHP, so the production contact form prepares a prefilled email and copyable brief; PHP delivery remains available when the source is deployed to a PHP-capable server.
