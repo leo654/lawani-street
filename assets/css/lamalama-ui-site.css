@@ -3184,7 +3184,8 @@ html[data-theme="light"] .ll-work-dock:is(:hover,
   grid-column:10 / -1;
   align-self:end;
   max-width:32ch;
-  margin:0 0 6px
+  margin:0 0 6px;
+  text-align:right
 }
 .home-index .ll-home-hero__rail {
   grid-template-columns:repeat(12,minmax(0,1fr));
