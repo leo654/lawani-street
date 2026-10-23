@@ -9535,8 +9535,15 @@ html[data-theme="light"] .ll-mobile-menu {
   transform: translate(-50%, 0);
 }
 
-/* All visible copy uses the same uppercase treatment across every page. */
-html body * {
+/* The interface keeps its uppercase voice; case-study narrative remains prose. */
+html body *:not(.cs-story__lead):not(.cs-footer__copy) {
+  text-transform: uppercase !important;
+}
+
+html body.case-study :is(.cs-story__lead, .cs-footer__copy) {
+  font-family: var(--font-family-body, "Gridlite", sans-serif) !important;
+  font-weight: 400 !important;
+  letter-spacing: normal;
   text-transform: uppercase !important;
 }
 

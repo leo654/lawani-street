@@ -1,3 +1,8 @@
+// Resolve these classic scripts relative to this module so the site works on
+// both Vite and plain static servers such as VS Code Live Server.
+const gsapCoreUrl = new URL("./libs/gsap.min.js", import.meta.url).href;
+const scrollTriggerUrl = new URL("./libs/ScrollTrigger.min.js", import.meta.url).href;
+
 const body = document.body;
 const page = {
   home: body.classList.contains("home-index"),
@@ -17,6 +22,8 @@ const hasCookieUI = !page.error && !document.body.classList.contains("redirect-p
 const usesGsap = page.home || page.work || page.caseStudy || page.contact || page.pitchdeck || page.privacy || page.error;
 
 document.documentElement.classList.replace("no-js", "js");
+window.GSAP_CORE_URL = gsapCoreUrl;
+window.GSAP_SCROLLTRIGGER_URL = scrollTriggerUrl;
 
 document.querySelectorAll('[data-work-detail][aria-hidden="true"]').forEach((detail) => {
   detail.inert = true;
@@ -36,9 +43,9 @@ function loadClassicScript(source) {
 async function loadMotionDependencies() {
   if (!usesGsap) return;
   try {
-    if (!window.gsap) await loadClassicScript(new URL("./libs/gsap.min.js", import.meta.url).href);
+    if (!window.gsap) await loadClassicScript(gsapCoreUrl);
     if ((page.home || page.work || page.caseStudy || page.pitchdeck) && !window.ScrollTrigger) {
-      await loadClassicScript(new URL("./libs/ScrollTrigger.min.js", import.meta.url).href);
+      await loadClassicScript(scrollTriggerUrl);
     }
     if (window.gsap && window.ScrollTrigger) window.gsap.registerPlugin(window.ScrollTrigger);
   } catch (error) {
@@ -60,6 +67,9 @@ async function initialize() {
     if (page.home || page.work || page.caseStudy) {
       await import("./modules/media-reveals.js").catch((error) => {
         console.warn("Media scroll reveals failed to load.", error);
+      });
+      await import("./modules/media-ripple.js").catch((error) => {
+        console.warn("Media ripple effect failed to load.", error);
       });
     }
 

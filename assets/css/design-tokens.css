@@ -17,6 +17,8 @@
 
   /* Default theme values; theme-system.css owns light/dark overrides. */
   --ll-theme-bg: var(--ll-brand-black);
+  --ll-theme-surface: var(--ll-brand-charcoal);
+  --ll-theme-raised: #2b2d2a;
   --ll-theme-ink: #f2f0e9;
   --ll-theme-muted: rgba(242, 240, 233, 0.62);
   --ll-theme-line: rgba(242, 240, 233, 0.2);
@@ -32,15 +34,20 @@
   /* Spacing */
   --ll-golden-ratio: 1.618;
   --ll-golden-ratio-inverse: 0.618;
-  --space-1: 5px;
-  --space-2: 8px;
-  --space-3: 13px;
-  --space-4: 21px;
-  --space-5: 34px;
-  --space-6: 55px;
-  --space-7: 89px;
-  --space-8: 144px;
-  --space-9: 233px;
+
+  /* One numeric spacing scale; semantic aliases live in
+     design-tokens-standard.css. */
+  --space-unit: 5px;
+  --space-0: 0;
+  --space-1: calc(var(--space-unit) * 1);
+  --space-2: calc(var(--space-unit) * 1.6);
+  --space-3: calc(var(--space-unit) * 2.6);
+  --space-4: calc(var(--space-unit) * 4.2);
+  --space-5: calc(var(--space-unit) * 6.8);
+  --space-6: calc(var(--space-unit) * 11);
+  --space-7: calc(var(--space-unit) * 17.8);
+  --space-8: calc(var(--space-unit) * 28.8);
+  --space-9: calc(var(--space-unit) * 46.6);
   --ll-page-gutter: clamp(var(--space-4), 2.5vw, var(--space-6));
   --ll-gutter: var(--ll-page-gutter);
   --ll-grid-gap: clamp(var(--space-3), 1.65vw, var(--space-5));

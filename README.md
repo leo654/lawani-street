@@ -2,37 +2,25 @@
 
 ## Project Layout
 
-- Public route pages stay at repository root (`*.html`). `vite.config.mjs` explicitly lists production routes; standalone experiments remain available in local development but are excluded from production.
+- Public route pages stay at repository root (`*.html`). `vite.config.mjs` explicitly lists production routes; other standalone experiments remain available in local development but are excluded from production.
 - Static files live under `assets/` (`css`, `js`, `img`, `fonts`, `video`, `favicons`, and `partials`).
-- The current tree has no legacy archive; standalone experiments stay at the root and are excluded from the production route allowlist.
+- Three standalone animation pages stay at the root and are included in the production build because case studies embed them in iframes. The unused design-system prototype is kept in `docs/legacy-design-system-experiment.css` for reference.
 - Shared behavior lives in `assets/js/modules/`; route-specific behavior lives in `assets/js/pages/`.
 - Shared motion timing and page transitions are defined by `motion-system.css` and `motion-system.js`.
 - Resume links use one preloaded full-screen fade in `pitchdeck-overlay.css` / `pitchdeck-overlay.js`; the isolated `pitchdeck.html` controller owns only slide navigation and remains directly accessible.
 - Full-screen overlays suspend background video and halftone rendering, then restore only media that was previously playing.
 
-## File Management
+## Available commands
 
-```bash
-./scripts/file-manager.sh status
-./scripts/file-manager.sh largest
-./scripts/file-manager.sh check-links
-```
-
-For a full-page/link validation run:
-
-```bash
-./scripts/file-manager.sh check-links all
-```
-
-Run the complete production validation and prepare the same clean artifact used by GitHub Pages:
+This source copy has no `scripts/` maintenance or production-validation utilities. Its available package commands are:
 
 ```bash
 npm ci
-./scripts/production-check.sh
-./scripts/build-production.sh _site
+npm run dev
+npm run build
 ```
 
-The production build uses Vite to process linked CSS and emit content-hashed assets while preserving the static HTML routes. It builds into a clean output folder and copies only static media plus direct-path runtime dependencies, avoiding source/build duplicates. The published site is `https://leo654.github.io/lawani-street/`. Its canonical URLs, social metadata, sitemap, and robots file use that production origin. The Pages build excludes development files, archived files, the PHP endpoint, and unused heavyweight source assets listed in `scripts/production-assets-ignore.txt`.
+Vite serves the local preview and builds the listed HTML routes into `dist/` by default. The earlier documentation referenced shell scripts and an ignore list that are not present in this copy; do not rely on those commands until the files are restored. The published site is `https://leo654.github.io/lawani-street/`.
 
 The Pages artifact has a 650 MiB size ceiling. Where a visually equivalent WebP delivery image exists, page references use it to reduce transfer size; social preview metadata keeps crawler-compatible PNG/JPG images. Large project videos use 720p H.264 MP4 delivery variants.
 
@@ -42,14 +30,8 @@ On macOS, double-click `Open Website.command` to start the local server and open
 
 Opening an individual HTML file directly with `file://` may show an incomplete page because browsers restrict the JavaScript modules used by the site. Use the launcher or run `npm run dev` and open the local URL it prints instead.
 
-See `docs/FILE_MANAGEMENT.md` for conventions.
+The structural audit snapshot is in `docs/structural-audit-production-2026-10-16.csv`.
 
 ## Contact Form
 
-The project intake at `vcard.html` is split into `assets/css/contact-page.css` and `assets/js/pages/contact-form.js`. On GitHub Pages, it prepares a draft addressed to `talktolawanistreet@gmail.com` and provides a copyable brief; GitHub Pages does not run the PHP endpoint. For production, deploy behind a PHP-capable server and configure:
-
-- `CONTACT_FROM` (optional, falls back to the delivery address)
-- `CONTACT_FROM_NAME` (optional)
-- `SMTP_HOST`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `SMTP_PORT`, `SMTP_ENCRYPTION` (optional SMTP delivery)
-
-Without `SMTP_*`, the endpoint falls back to local `mail()`. GitHub Pages cannot run PHP, so the production contact form prepares a prefilled email and copyable brief; PHP delivery remains available when the source is deployed to a PHP-capable server.
+The project intake at `vcard.html` is split into `assets/css/contact-page.css` and `assets/js/pages/contact-form.js`. This static source copy does not include `php/mail.php` or a server submission endpoint. The form prepares an email draft and a copyable brief; the visitor chooses whether to open their email app and send it. A server-backed submission flow requires a separately supplied endpoint and deployment configuration.

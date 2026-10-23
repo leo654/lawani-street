@@ -118,9 +118,11 @@
           </div>
         </div>
 
-        <form class="project-form" action="php/mail.php" method="post" novalidate data-project-form>
+        <form class="project-form" action="mailto:talktolawanistreet@gmail.com" method="post" enctype="text/plain" novalidate data-project-form data-submit-mode="email">
           <noscript>
-            <p class="project-form__status" role="status">The guided form needs JavaScript. <a href="mailto:talktolawanistreet@gmail.com?subject=Start%20a%20project">Email me directly</a> instead.</p>
+            <p class="project-form__status" role="status">
+              The guided form needs JavaScript. <a href="mailto:talktolawanistreet@gmail.com?subject=Start%20a%20project">Email me directly</a> instead.
+            </p>
           </noscript>
           <ol class="project-form__progress" aria-label="Project inquiry progress">
             <li aria-current="step" data-progress-step="1">
@@ -143,7 +145,7 @@
 
           <fieldset class="project-form__step" data-step="1" aria-hidden="false" aria-labelledby="project-step-one">
             <h2 class="project-form__question" id="project-step-one">Let's talk</h2>
-            <p class="project-form__hint">Choose every service that fits. We can refine the scope together later.</p>
+            <p class="project-form__hint">Choose every service that fits. I can refine the scope with you later.</p>
             <div class="project-form__options">
               <button type="button" class="project-form__option" data-project-type="brand-identity" aria-pressed="false">Brand identity</button>
               <button type="button" class="project-form__option" data-project-type="website" aria-pressed="false">Website</button>

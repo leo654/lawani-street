@@ -22,6 +22,10 @@ const htmlPages = {
   'vatug': resolve(root, 'vatug.html'),
   'vcard': resolve(root, 'vcard.html'),
   'work': resolve(root, 'work.html'),
+  // These three pages are standalone experiments and are also embedded by case studies.
+  'bpm3': resolve(root, 'bpm3.html'),
+  'kicksjoint-logo-motion': resolve(root, 'KICKSJOINT_Animated_Logo_Blinds.html'),
+  'kicksjoint-icon-motion': resolve(root, 'kicksjoint-icons-animated-v6.html'),
 };
 
 export default defineConfig({

@@ -139,30 +139,50 @@ body.case-study {
 
 .cs-story {
   display: grid;
-  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+  grid-template-columns: minmax(0, min(700px, 58%)) minmax(0, 1fr);
   gap: clamp(44px, 8vw, 150px);
   padding: 38px var(--ll-page-gutter) var(--cs-media-gap);
   align-items: start;
 }
 
 .cs-story__copy {
+  grid-column: 1;
+  grid-row: 1;
   position: sticky;
   top: 128px;
   align-self: start;
   display: flex;
   flex-direction: column;
-  max-width: 590px;
+  width: 100%;
+  max-width: 700px;
   color: var(--cs-ink);
+}
+
+.cs-story__label {
+  margin: 0 0 var(--space-2, 8px);
+  color: var(--color-text-secondary, var(--cs-muted));
+  font-family: var(--font-family-mono, var(--ll-mono));
+  font-size: var(--font-size-xs, var(--ll-type-compact-metadata));
+  line-height: var(--line-height-normal, 1.18);
+  letter-spacing: var(--letter-spacing-wide, 0.08em);
+  text-transform: uppercase;
+}
+
+.cs-story__lead + .cs-story__label {
+  margin-top: var(--space-5, 34px);
 }
 
 .cs-story__lead {
   position: static;
-  max-width: 58ch;
+  width: 100%;
+  max-width: 700px;
   margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: var(--ll-leading-body);
-  letter-spacing: var(--ll-ls-normal);
+  color: var(--color-text-primary, var(--cs-ink));
+  font-family: var(--font-family-body, var(--ll-sans));
+  font-size: var(--font-size-sm, var(--ll-type-body-small));
+  font-weight: 450;
+  line-height: var(--line-height-loose, var(--ll-leading-body));
+  letter-spacing: var(--letter-spacing-normal, 0);
   text-align: justify;
   text-transform: uppercase;
 }
@@ -200,11 +220,17 @@ body.case-study {
 }
 
 .cs-story__media {
+  aspect-ratio: auto;
   position: relative;
   min-height: 0;
   margin: 0;
   overflow: hidden;
   background: #050505;
+}
+
+.cs-story > .cs-story__media {
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .cs-story__media::after {
@@ -222,14 +248,13 @@ body.case-study {
   transform: none;
 }
 
-.cs-story__media {
-  aspect-ratio: auto;
+.cs-story__media video {
+  aspect-ratio: 16 / 9;
 }
 
 .cs-story__media > :is(img, video) {
   position: static;
   padding-top: 0;
-  object-fit: contain;
 }
 
 .cs-gallery {
@@ -291,6 +316,11 @@ body.case-study {
   width: 100%;
   height: auto;
   object-fit: contain;
+  aspect-ratio: 16 / 9;
+}
+
+.case-study--tyol .cs-story__media video {
+  aspect-ratio: 1;
 }
 
 .cs-gallery .cs-gallery__media--animated-icons {
@@ -700,6 +730,12 @@ body.case-study :is(.cs-related, .cs-footer) .ll-reveal {
 
   .cs-story {
     grid-template-columns: 1fr;
+  }
+
+  .cs-story__copy,
+  .cs-story > .cs-story__media {
+    grid-column: auto;
+    grid-row: auto;
   }
 
   .cs-story__copy {

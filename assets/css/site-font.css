@@ -102,6 +102,8 @@ html body *:not(svg):not(path):not(.fa):not(.fas):not(.far):not(.fab):not(:is(
   .ll-footer__project-cta > a,
   .project-form__button,
   .project-form__option,
+  .cs-story__lead,
+  .cs-footer__copy,
   .lwa-filter button,
   .ll-button *,
   .ll-action-link *,
@@ -114,6 +116,14 @@ html body *:not(svg):not(path):not(.fa):not(.fas):not(.far):not(.fab):not(:is(
   .lwa-filter button *
 )) {
   font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+
+/* Case-study prose keeps the site typeface and uppercase voice at a compact reading size. */
+html body.case-study :is(.cs-story__lead, .cs-footer__copy) {
+  font-family: var(--font-family-body, "Gridlite", sans-serif) !important;
+  font-weight: 700 !important;
+  letter-spacing: normal;
   text-transform: uppercase !important;
 }
 
