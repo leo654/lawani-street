@@ -4,8 +4,7 @@
 
   var mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (!mediaQuery.matches || reduceMotion.matches || !document.body ||
-      document.body.matches(".home-index, .work-index")) return;
+  if (!mediaQuery.matches || reduceMotion.matches || !document.body) return;
 
   var media = Array.prototype.slice.call(document.querySelectorAll(
     ".case-study .cs-story__media img, .case-study .cs-story__media video, " +
@@ -13,12 +12,7 @@
     "body.home-index .ll-home-hero__media video[data-ll-hero-video], " +
     "body.home-index .ll-manifesto__gallery img, " +
     "body.home-index .ll-manifesto__portrait img, " +
-    "body.home-index .ll-manifesto__portrait video, " +
-    "body.home-index .home-project-slides__media img, " +
-    "body.home-index [data-work-item] .lwa-project__rail img, " +
-    "body.home-index [data-work-gallery] img, " +
-    "body.work-index .lwa-project__rail img, " +
-    "body.work-index .lwa-project__gallery img"
+    "body.home-index .ll-manifesto__portrait video"
   ));
   if (!media.length) return;
 
