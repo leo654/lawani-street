@@ -142,20 +142,14 @@
     var projects = Array.prototype.slice.call(document.querySelectorAll("[data-work-item]"));
     if (!projects.length) return;
     var firstFeaturedProject = document.querySelector(".ll-work [data-work-item]");
-    var scrollTimer = 0;
     var observer = null;
     if (firstFeaturedProject) firstFeaturedProject.classList.add("is-visible");
 
-    function setExpanded(project, expanded, moveIntoView) {
+    function setExpanded(project, expanded) {
       var toggle = project.querySelector("[data-work-toggle]");
       var detail = project.querySelector("[data-work-detail]");
       var state = project.querySelector("[data-work-state]");
       if (!toggle || !detail) return;
-
-      if (scrollTimer) {
-        window.clearTimeout(scrollTimer);
-        scrollTimer = 0;
-      }
 
       if (expanded) {
         detail.querySelectorAll('img[loading="lazy"]').forEach(function (image) {
@@ -163,7 +157,7 @@
         });
 
         projects.forEach(function (other) {
-          if (other !== project && other.classList.contains("is-expanded")) setExpanded(other, false, false);
+          if (other !== project && other.classList.contains("is-expanded")) setExpanded(other, false);
         });
       }
 
@@ -172,16 +166,6 @@
       detail.setAttribute("aria-hidden", String(!expanded));
       detail.inert = !expanded;
       if (state) state.textContent = expanded ? "( - )" : "( + )";
-
-      if (expanded && moveIntoView) {
-        scrollTimer = window.setTimeout(function () {
-          scrollTimer = 0;
-          if (!project.classList.contains("is-expanded")) return;
-          var offset = window.innerWidth <= 820 ? 72 : 92;
-          var top = project.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top: Math.max(0, top), behavior: reduceMotion ? "auto" : "smooth" });
-        }, reduceMotion ? 0 : 160);
-      }
     }
 
     projects.forEach(function (project, index) {
@@ -211,7 +195,7 @@
             railMoved = false;
             return;
           }
-          setExpanded(project, !project.classList.contains("is-expanded"), true);
+          setExpanded(project, !project.classList.contains("is-expanded"));
         });
       }
 

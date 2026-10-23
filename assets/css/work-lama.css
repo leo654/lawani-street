@@ -91,6 +91,11 @@ body.work-index {
   contain-intrinsic-size: 168px;
 }
 
+.lwa-project.is-expanded {
+  content-visibility: visible;
+  contain-intrinsic-size: none;
+}
+
 .lwa-project[hidden] { display: none; }
 
 .lwa-project__toggle {
@@ -216,7 +221,7 @@ body.work-index {
 .lwa-project.is-expanded .lwa-project__rail {
   visibility: hidden;
   opacity: 0;
-  transition: opacity 260ms ease, visibility 0s linear 260ms;
+  transition: opacity 140ms ease, visibility 0s linear 140ms;
 }
 
 .lwa-project.is-expanded .lwa-project__summary-copy {
@@ -248,11 +253,12 @@ body.work-index {
 .lwa-project__detail {
   display: grid;
   grid-template-rows: 0fr;
+  min-height: 0;
+  overflow: hidden;
   visibility: hidden;
-  opacity: 0;
+  opacity: 1;
   transition:
     grid-template-rows var(--lwa-expand-duration) var(--lwa-expand-ease),
-    opacity 320ms ease,
     visibility 0s linear var(--lwa-expand-duration);
 }
 
@@ -262,7 +268,6 @@ body.work-index {
   opacity: 1;
   transition:
     grid-template-rows var(--lwa-expand-duration) var(--lwa-expand-ease),
-    opacity 420ms ease 80ms,
     visibility 0s;
 }
 
@@ -282,7 +287,22 @@ body.work-index {
 .lwa-project.is-expanded .lwa-project__detail-inner {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: 80ms;
+  transition-delay: 160ms;
+}
+
+body.home-index.ll-media-reveals-ready .ll-work .lwa-project__gallery .ll-media-reveal :is(img, video) {
+  opacity: 1;
+  transition: none;
+}
+
+body.home-index .ll-work .lwa-project__detail-inner {
+  transform: none;
+  transition: opacity 280ms ease;
+}
+
+body.home-index .ll-work .lwa-project.is-expanded .lwa-project__detail-inner {
+  transform: none;
+  transition-delay: 160ms;
 }
 
 .lwa-project__summary {
@@ -290,28 +310,6 @@ body.work-index {
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--ll-grid-gap);
   padding: var(--space-1) var(--ll-gutter) var(--space-5);
-}
-
-@media (min-width: 821px) {
-  .lwa-project.is-expanded .lwa-project__detail {
-    position: relative;
-    z-index: 1;
-    margin-top: -72px;
-    padding-top: 72px;
-  }
-
-  .lwa-project.is-expanded .lwa-project__detail-inner {
-    margin-top: -72px;
-    padding-top: 72px;
-    overflow-x: clip;
-    overflow-y: visible;
-  }
-
-  .lwa-project.is-expanded .lwa-project__summary {
-    position: relative;
-    z-index: 2;
-    margin-top: -72px;
-  }
 }
 
 .lwa-project__actions {
