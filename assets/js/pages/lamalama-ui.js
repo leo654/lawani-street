@@ -462,7 +462,7 @@
     window.__sectionRevealsInjected = true;
 
     var script = document.createElement("script");
-    script.src = "assets/js/modules/section-reveals.js?v=20261022-featured-work-label-1";
+    script.src = "assets/js/modules/section-reveals.js?v=20261024-opaque-services-surface-1";
     script.async = true;
     script.setAttribute("data-section-reveals", "1");
     document.head.appendChild(script);

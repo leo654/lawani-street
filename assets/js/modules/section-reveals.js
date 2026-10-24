@@ -84,7 +84,7 @@
 					isVisibleNode(node);
 			});
 		var sections = Array.prototype.slice.call(document.querySelectorAll(
-			'main > section:not([aria-hidden="true"]):not([inert]):not([data-ll-home-hero]):not([data-ll-hero-showreel]):not(.ll-work):not(.ll-client-strip)'
+			'main > section:not([aria-hidden="true"]):not([inert]):not([data-ll-home-hero]):not([data-ll-hero-showreel]):not([data-no-scroll-reveal]):not(.ll-work):not(.ll-client-strip)'
 		));
 
 		sections.forEach(function(section) {
