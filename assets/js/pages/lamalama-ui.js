@@ -460,12 +460,9 @@
   function loadSectionReveals() {
     if (window.__sectionRevealsInjected) return;
     window.__sectionRevealsInjected = true;
-
-    var script = document.createElement("script");
-    script.src = "assets/js/modules/section-reveals.js?v=20261024-opaque-services-surface-1";
-    script.async = true;
-    script.setAttribute("data-section-reveals", "1");
-    document.head.appendChild(script);
+    import("../modules/section-reveals.js").catch(function (error) {
+      console.warn("Section reveals failed to load.", error);
+    });
   }
 
   function initHeroShowreel() {
