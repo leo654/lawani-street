@@ -305,8 +305,10 @@ a:focus-visible > .ll-icon--plus {
   pointer-events:none
 }
 .ll-nav-dock,
-.ll-contact-dock {
-  pointer-events:auto
+.ll-contact-dock,
+.ll-contact-dock__primary {
+  /* LiquidGL disables its targets by default; header controls must remain clickable. */
+  pointer-events:auto !important
 }
 body:not(.home-index) .ll-contact-dock__studio,
 body:not(.home-index) .ll-contact-dock__pitch {
