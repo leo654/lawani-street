@@ -34,6 +34,7 @@
   canvas.setAttribute("role", "presentation");
   canvas.style.position = "absolute";
   canvas.style.inset = "0";
+  canvas.style.pointerEvents = "none";
   canvas.style.zIndex = "1";
   canvas.style.width = "100%";
   canvas.style.height = "100%";
