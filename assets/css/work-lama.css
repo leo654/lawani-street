@@ -142,6 +142,7 @@ body.work-index {
   min-height: var(--lwa-row-head-height);
   align-items: center;
   font-family: var(--ll-sans);
+  font-size: clamp(18px, 1.45vw, 21px);
   /*! font-size: var(--ll-type-project-title); */
   font-weight: 650;
   line-height: 1;
@@ -614,6 +615,7 @@ body.home-index .ll-work .lwa-project.is-expanded .lwa-project__detail-inner {
   .lwa-project__title {
     grid-column: 1;
     grid-row: 1;
+    font-size: clamp(18px, 4.8vw, 20px);
     padding-top: 0;
   }
 
