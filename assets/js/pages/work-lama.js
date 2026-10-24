@@ -38,7 +38,6 @@
     var moved = false;
     var startX = 0;
     var startScroll = 0;
-    var activePointerId = null;
 
     gallery.querySelectorAll("img").forEach(function (image) {
       image.draggable = false;
@@ -49,7 +48,6 @@
       if (event.pointerType !== "mouse" || event.button !== 0) return;
       active = true;
       moved = false;
-      activePointerId = event.pointerId;
       startX = event.clientX;
       startScroll = gallery.scrollLeft;
       gallery.classList.add("is-dragging");
@@ -59,29 +57,24 @@
     });
 
     gallery.addEventListener("pointermove", function (event) {
-      if (!active || event.pointerId !== activePointerId) return;
+      if (!active) return;
       var delta = event.clientX - startX;
       if (Math.abs(delta) > 4) moved = true;
-      gallery.scrollLeft = startScroll - delta;
+      gallery.scrollLeft = startScroll - delta * 1.15;
       if (moved && event.cancelable) event.preventDefault();
     });
 
     function stop(event) {
       if (!active) return;
-      if (event && event.pointerId != null && event.pointerId !== activePointerId) return;
-      var pointerId = activePointerId;
       active = false;
-      activePointerId = null;
       gallery.classList.remove("is-dragging");
-      if (pointerId != null && gallery.hasPointerCapture && gallery.hasPointerCapture(pointerId)) {
-        gallery.releasePointerCapture(pointerId);
+      if (event.pointerId != null && gallery.hasPointerCapture && gallery.hasPointerCapture(event.pointerId)) {
+        gallery.releasePointerCapture(event.pointerId);
       }
     }
 
     gallery.addEventListener("pointerup", stop);
     gallery.addEventListener("pointercancel", stop);
-    gallery.addEventListener("lostpointercapture", stop);
-    window.addEventListener("blur", stop);
     gallery.addEventListener("dragstart", function (event) { event.preventDefault(); });
   }
 
@@ -149,14 +142,20 @@
     var projects = Array.prototype.slice.call(document.querySelectorAll("[data-work-item]"));
     if (!projects.length) return;
     var firstFeaturedProject = document.querySelector(".ll-work [data-work-item]");
+    var scrollTimer = 0;
     var observer = null;
     if (firstFeaturedProject) firstFeaturedProject.classList.add("is-visible");
 
-    function setExpanded(project, expanded) {
+    function setExpanded(project, expanded, moveIntoView) {
       var toggle = project.querySelector("[data-work-toggle]");
       var detail = project.querySelector("[data-work-detail]");
       var state = project.querySelector("[data-work-state]");
       if (!toggle || !detail) return;
+
+      if (scrollTimer) {
+        window.clearTimeout(scrollTimer);
+        scrollTimer = 0;
+      }
 
       if (expanded) {
         detail.querySelectorAll('img[loading="lazy"]').forEach(function (image) {
@@ -164,7 +163,7 @@
         });
 
         projects.forEach(function (other) {
-          if (other !== project && other.classList.contains("is-expanded")) setExpanded(other, false);
+          if (other !== project && other.classList.contains("is-expanded")) setExpanded(other, false, false);
         });
       }
 
@@ -173,6 +172,16 @@
       detail.setAttribute("aria-hidden", String(!expanded));
       detail.inert = !expanded;
       if (state) state.textContent = expanded ? "( - )" : "( + )";
+
+      if (expanded && moveIntoView) {
+        scrollTimer = window.setTimeout(function () {
+          scrollTimer = 0;
+          if (!project.classList.contains("is-expanded")) return;
+          var offset = window.innerWidth <= 820 ? 72 : 92;
+          var top = project.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: Math.max(0, top), behavior: reduceMotion ? "auto" : "smooth" });
+        }, reduceMotion ? 0 : 160);
+      }
     }
 
     projects.forEach(function (project, index) {
@@ -202,7 +211,7 @@
             railMoved = false;
             return;
           }
-          setExpanded(project, !project.classList.contains("is-expanded"));
+          setExpanded(project, !project.classList.contains("is-expanded"), true);
         });
       }
 
@@ -240,8 +249,6 @@
 
     var buttons = Array.prototype.slice.call(filter.querySelectorAll("[data-filter]"));
     var count = filter.querySelector(".lwa-filter__count");
-    var filterAnimations = new WeakMap();
-    var hasAppliedInitialFilter = false;
 
     function applyFilter(value) {
       var visible = 0;
@@ -254,11 +261,6 @@
       projects.forEach(function (project) {
         var categories = (project.getAttribute("data-categories") || "").split(/\s+/);
         var matches = value === "all" || categories.indexOf(value) !== -1;
-        var currentAnimation = filterAnimations.get(project);
-        if (currentAnimation) {
-          currentAnimation.cancel();
-          filterAnimations.delete(project);
-        }
         project.hidden = !matches;
         if (!matches) {
           project.classList.remove("is-expanded");
@@ -276,17 +278,15 @@
 
         visible += 1;
         project.classList.add("is-visible");
-        if (hasAppliedInitialFilter && !reduceMotion && typeof project.animate === "function") {
-          var animation = project.animate([
+        if (!reduceMotion && typeof project.animate === "function") {
+          project.animate([
             { opacity: 0, transform: "translate3d(0, 18px, 0)" },
             { opacity: 1, transform: "translate3d(0, 0, 0)" }
           ], { duration: 520, easing: "cubic-bezier(0.16, 1, 0.3, 1)" });
-          filterAnimations.set(project, animation);
         }
       });
 
       if (count) count.textContent = "[ " + String(visible).padStart(2, "0") + " ]";
-      hasAppliedInitialFilter = true;
     }
 
     buttons.forEach(function (button) {

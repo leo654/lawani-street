@@ -20,7 +20,7 @@ html body .elastic-cursor-dot:not(#global-square-corners) {
 }
 html body .elastic-cursor:not(#global-square-corners),
 html body.cursor-hover .elastic-cursor:not(#global-square-corners) {
-  background:transparent !important;
+  background:0 0 !important;
   box-shadow:none !important;
   filter:none !important
 }
@@ -313,7 +313,7 @@ body:not(.home-index) .ll-contact-dock__pitch {
   display:none
 }
 .ll-nav-dock {
-  position:absolute;
+  position:fixed;
   top:22px;
   left:0;
   right:0;
@@ -327,7 +327,9 @@ body:not(.home-index) .ll-contact-dock__pitch {
   overflow:hidden;
   border:1px solid rgba(255,255,255,0.05);
   border-radius:var(--ll-control-radius);
-  background:rgba(7,8,7,0.94);
+  background:rgba(7,8,7,0.58);
+  -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  backdrop-filter:blur(16px) saturate(1.2);
   box-shadow:none
 }
 .ll-nav-dock__brand {
@@ -374,7 +376,7 @@ body:not(.home-index) .ll-contact-dock__pitch {
   transform:translateY(-5px) rotate(-45deg)
 }
 .ll-contact-dock {
-  position:absolute;
+  position:fixed;
   top:22px;
   right:22px;
   display:grid;
@@ -395,7 +397,7 @@ body:not(.home-index) .ll-contact-dock__pitch {
   gap:20px;
   height:var(--ll-control-height);
   padding:7px 7px;
-  background:var(--ll-paper);
+  background:rgba(210,208,202,.58);
   color:var(--ll-black)
 }
 .ll-contact-dock__portrait {
@@ -3184,8 +3186,7 @@ html[data-theme="light"] .ll-work-dock:is(:hover,
   grid-column:10 / -1;
   align-self:end;
   max-width:32ch;
-  margin:0 0 6px;
-  text-align:right
+  margin:0 0 6px
 }
 .home-index .ll-home-hero__rail {
   grid-template-columns:repeat(12,minmax(0,1fr));
@@ -7095,21 +7096,8 @@ html[data-theme="light"] .home-index #ll-hero-title {
     padding:82px var(--ll-gutter) 18px
   }
   .home-index .ll-home-hero__message {
-    grid-template-columns:max-content minmax(0,1fr);
-    grid-template-rows:auto;
-    align-content:end;
-    align-items:end;
-    gap:14px
-  }
-  .home-index .ll-home-hero h1 {
-    grid-column:1;
-  }
-  .home-index .ll-home-hero__message > p {
-    grid-column:2;
-    justify-self:end;
-    max-width:none;
-    text-align:right;
-    white-space:nowrap
+    grid-template-columns:1fr;
+    align-items:end
   }
   .home-index .ll-home-hero__rail {
     grid-template-columns:minmax(0,1fr) max-content;
@@ -8619,13 +8607,7 @@ html[data-theme="light"] .ll-mobile-menu {
 .ll-mobile-menu.is-open {
   transform:translate(-50%,0)
 }
-html body *:not(.cs-story__lead):not(.cs-footer__copy) {
-  text-transform:uppercase !important
-}
-html body.case-study :is(.cs-story__lead,.cs-footer__copy) {
-  font-family:var(--font-family-body,"Gridlite",sans-serif) !important;
-  font-weight:400 !important;
-  letter-spacing:normal;
+html body * {
   text-transform:uppercase !important
 }
 body.home-index .ll-footer,

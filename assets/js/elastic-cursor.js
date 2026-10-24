@@ -149,7 +149,7 @@
         var script = document.querySelector("script[data-elastic-cursor-gsap]");
         if (!script) {
           script = document.createElement("script");
-          script.src = window.GSAP_CORE_URL || "assets/js/libs/gsap.min.js?v=20261001-cursor-webgl-1";
+          script.src = "assets/js/libs/gsap.min.js?v=20261001-cursor-webgl-1";
           script.async = true;
           script.setAttribute("data-elastic-cursor-gsap", "true");
           document.head.appendChild(script);

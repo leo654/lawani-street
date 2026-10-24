@@ -32,14 +32,11 @@ jobs:
       - name: Install build dependencies
         run: npm ci
 
-      - name: Install ripgrep
-        run: sudo apt-get update && sudo apt-get install -y ripgrep
-
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
 
-      - name: Validate and prepare production site
-        run: ./scripts/build-production.sh _site
+      - name: Build static site
+        run: npm run build:pages
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5

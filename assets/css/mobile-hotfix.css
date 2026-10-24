@@ -1115,6 +1115,6 @@ body.webpage .menu[data-estrela-menu] .m-top-item.btn-block .btn .btn-dot-inner 
 }
 /* Lawani St typography rule: presentation copy remains uppercase on every legacy page. */
 html body,
-html body *:not(.cs-story__lead):not(.cs-footer__copy) {
+html body * {
   text-transform: uppercase !important;
 }

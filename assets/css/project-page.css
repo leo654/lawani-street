@@ -378,9 +378,8 @@ body.webpage.project-page .grid-container .video-wrapper video {
 
   .project-next__media-link:hover img,
   .project-next__media-link:focus-visible img {
-    /* Keep the image framing and color unchanged; media hover is handled by the ripple. */
-    transform: translate3d(0, 0, 0) scale(1.01);
-    filter: inherit;
+    transform: translate3d(0, 0, 0) scale(1.045);
+    filter: saturate(1.04) contrast(1.03);
   }
 }
 

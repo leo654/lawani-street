@@ -9,23 +9,21 @@ const htmlPages = {
   '404': resolve(root, '404.html'),
   'ademi': resolve(root, 'ademi.html'),
   'bpm': resolve(root, 'bpm.html'),
+  'bpm3': resolve(root, 'bpm3.html'),
   'contact': resolve(root, 'contact.html'),
   'dsl': resolve(root, 'dsl.html'),
   'enterscale': resolve(root, 'enterscale.html'),
   'index': resolve(root, 'index.html'),
+  'KICKSJOINT_Animated_Logo_Blinds': resolve(root, 'KICKSJOINT_Animated_Logo_Blinds.html'),
   'kicksjoint': resolve(root, 'kicksjoint.html'),
+  'kicksjoint-icons-animated-v6': resolve(root, 'kicksjoint-icons-animated-v6.html'),
   'me': resolve(root, 'me.html'),
   'pitchdeck': resolve(root, 'pitchdeck.html'),
   'privacy': resolve(root, 'privacy.html'),
   'team': resolve(root, 'team.html'),
   'tyol': resolve(root, 'tyol.html'),
   'vatug': resolve(root, 'vatug.html'),
-  'vcard': resolve(root, 'vcard.html'),
   'work': resolve(root, 'work.html'),
-  // These three pages are standalone experiments and are also embedded by case studies.
-  'bpm3': resolve(root, 'bpm3.html'),
-  'kicksjoint-logo-motion': resolve(root, 'KICKSJOINT_Animated_Logo_Blinds.html'),
-  'kicksjoint-icon-motion': resolve(root, 'kicksjoint-icons-animated-v6.html'),
 };
 
 export default defineConfig({

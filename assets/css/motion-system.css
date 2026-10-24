@@ -180,17 +180,3 @@ html.ll-page-leaving .ll-page-transition::before,
     transition: none !important;
   }
 }
-/* One shared overlay canvas renders pointer ripples over the active media. */
-.ll-media-ripple-canvas {
-  position: fixed;
-  z-index: 12;
-  display: block;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.ll-media-ripple-canvas.is-active {
-  opacity: 1;
-}

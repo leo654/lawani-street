@@ -1,8 +1,3 @@
-// Resolve these classic scripts relative to this module so the site works on
-// both Vite and plain static servers such as VS Code Live Server.
-const gsapCoreUrl = new URL("./libs/gsap.min.js", import.meta.url).href;
-const scrollTriggerUrl = new URL("./libs/ScrollTrigger.min.js", import.meta.url).href;
-
 const body = document.body;
 const page = {
   home: body.classList.contains("home-index"),
@@ -22,8 +17,6 @@ const hasCookieUI = !page.error && !document.body.classList.contains("redirect-p
 const usesGsap = page.home || page.work || page.caseStudy || page.contact || page.pitchdeck || page.privacy || page.error;
 
 document.documentElement.classList.replace("no-js", "js");
-window.GSAP_CORE_URL = gsapCoreUrl;
-window.GSAP_SCROLLTRIGGER_URL = scrollTriggerUrl;
 
 document.querySelectorAll('[data-work-detail][aria-hidden="true"]').forEach((detail) => {
   detail.inert = true;
@@ -43,9 +36,9 @@ function loadClassicScript(source) {
 async function loadMotionDependencies() {
   if (!usesGsap) return;
   try {
-    if (!window.gsap) await loadClassicScript(gsapCoreUrl);
+    if (!window.gsap) await loadClassicScript(new URL("./libs/gsap.min.js", import.meta.url).href);
     if ((page.home || page.work || page.caseStudy || page.pitchdeck) && !window.ScrollTrigger) {
-      await loadClassicScript(scrollTriggerUrl);
+      await loadClassicScript(new URL("./libs/ScrollTrigger.min.js", import.meta.url).href);
     }
     if (window.gsap && window.ScrollTrigger) window.gsap.registerPlugin(window.ScrollTrigger);
   } catch (error) {
@@ -68,9 +61,6 @@ async function initialize() {
       await import("./modules/media-reveals.js").catch((error) => {
         console.warn("Media scroll reveals failed to load.", error);
       });
-      await import("./modules/media-ripple.js").catch((error) => {
-        console.warn("Media ripple effect failed to load.", error);
-      });
     }
 
     await import("./modules/constants.js").catch((e) => console.warn("Constants failed to load:", e));
@@ -84,7 +74,7 @@ async function initialize() {
         await import("./pages/kicksjoint-ui.js").catch((e) => console.warn("Kicksjoint UI failed to load:", e));
       }
       if (body.classList.contains("case-study--tyol")) {
-        await import("./pages/tyol-ui.js").catch((e) => console.warn("TYOL UI failed to load:", e));
+        await import("./components/replay.js").catch((e) => console.warn("TYOL logo controls failed to load:", e));
       }
     }
 
@@ -101,6 +91,9 @@ async function initialize() {
     }
 
     if (hasSharedMotion) {
+      await import("./modules/liquid-glass.js").catch((error) => {
+        console.warn("Liquid glass failed to load; using the CSS fallback.", error);
+      });
       if (inSiteShell || page.pitchdeck) {
         await import("./elastic-cursor.js").catch((e) => console.warn("Elastic cursor failed to load:", e));
       }
@@ -116,6 +109,7 @@ async function initialize() {
     if (hasCookieUI) await import("./cookie-consent.js").catch((e) => console.warn("Cookie consent failed to load:", e));
 
     if (page.home) {
+      await import("./pages/home-loader.js").catch((e) => console.warn("Home loader failed to load:", e));
       await import("./pages/home-ui.js").catch((e) => console.warn("Home UI failed to load:", e));
       await import("./pages/home-footer-webgl.js").catch((e) => console.warn("Home footer WebGL failed to load:", e));
     }

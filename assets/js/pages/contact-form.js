@@ -17,11 +17,6 @@
   var descriptionCount = form.querySelector("[data-description-count]");
   var submitButton = form.querySelector("[data-submit-button]");
   var formStatus = form.querySelector("[data-form-status]");
-  var emailFallback = form.querySelector("[data-email-fallback]");
-  var emailLink = form.querySelector("[data-email-link]");
-  var emailBrief = form.querySelector("[data-email-brief]");
-  var copyBriefButton = form.querySelector("[data-copy-brief]");
-  var copyStatus = form.querySelector("[data-copy-status]");
   var selectedTypes = new Set();
   var currentStep = 1;
   var maxVisitedStep = 1;
@@ -220,17 +215,6 @@
     formStatus.appendChild(link);
   }
 
-  function clearPreparedEmail() {
-    if (emailFallback) emailFallback.hidden = true;
-    if (emailLink) emailLink.removeAttribute("href");
-    if (emailBrief) emailBrief.value = "";
-    if (copyStatus) copyStatus.textContent = "";
-    if (form.getAttribute("data-state") === "ready") {
-      form.removeAttribute("data-state");
-      setStatus("idle", "");
-    }
-  }
-
   function buildMailto(formData, projectTypes) {
     var lines = [
       "PROJECT TYPE:\n" + projectTypes,
@@ -255,95 +239,17 @@
     var formData = new FormData(form);
     var projectTypes = Array.from(selectedTypes).map(function (value) { return labels[value]; }).join(", ");
     var fallback = buildMailto(formData, projectTypes);
-    formData.set("projectTypes", projectTypes);
-    formData.set("message", fallback.body);
-
-    var isGithubPages = /(^|\.)github\.io$/i.test(window.location.hostname);
-    var useEmailClient = form.getAttribute("data-submit-mode") === "email";
-    if (window.location.protocol === "file:" || isGithubPages || useEmailClient) {
-      form.setAttribute("data-state", "ready");
-      setStatus("ready", "Your brief is ready. Nothing has been sent. Open the draft and send it, or copy the brief below.");
-      emailLink.href = fallback.url;
-      emailBrief.value = fallback.body;
-      emailFallback.hidden = false;
-      emailLink.focus({ preventScroll: true });
-      return;
-    }
-
-    submitButton.disabled = true;
-    submitButton.setAttribute("aria-busy", "true");
-    submitButton.textContent = "Sending…";
-    setStatus("pending", "Sending your project request…");
-
-    fetch(form.action, {
-      method: "POST",
-      body: formData,
-      headers: { Accept: "application/json", "X-Requested-With": "XMLHttpRequest" },
-      credentials: "same-origin"
-    })
-      .then(function (response) {
-        return response.text().then(function (text) {
-          var data = null;
-          try { data = text ? JSON.parse(text) : null; } catch (error) {}
-          if (!response.ok || !data || data.ok !== true) {
-            throw new Error(data && data.error ? data.error : "Unable to send automatically");
-          }
-          return data;
-        });
-      })
-      .then(function () {
-        form.setAttribute("data-state", "success");
-        submitButton.textContent = "Project sent";
-        setStatus("success", "Thanks — your project request has been sent.");
-      })
-      .catch(function () {
-        form.setAttribute("data-state", "error");
-        submitButton.disabled = false;
-        submitButton.textContent = "Try again";
-        setStatus("error", "Automatic sending failed.", fallback.url);
-      })
-      .finally(function () {
-        submitButton.setAttribute("aria-busy", "false");
-      });
+    // GitHub Pages cannot run the PHP endpoint mentioned in older setup notes.
+    // Open the prefilled email directly instead of trying to fetch a mailto URL.
+    window.location.assign(fallback.url);
   });
 
   Array.prototype.slice.call(form.querySelectorAll("input, textarea, select")).forEach(function (input) {
     input.addEventListener("input", function () {
       setError(input, "");
-      if (form.getAttribute("data-state") === "ready") clearPreparedEmail();
       if (form.getAttribute("data-state") === "error") setStatus("idle", "");
     });
   });
-
-  options.forEach(function (button) {
-    button.addEventListener("click", clearPreparedEmail);
-  });
-
-  if (copyBriefButton && emailBrief && copyStatus) {
-    copyBriefButton.addEventListener("click", function () {
-      function copied() {
-        copyStatus.textContent = "Brief copied. Paste it into an email to talktolawanistreet@gmail.com.";
-      }
-
-      function selectForManualCopy() {
-        emailBrief.focus();
-        emailBrief.select();
-        copyStatus.textContent = "Copy is unavailable here. The brief is selected; copy it and email talktolawanistreet@gmail.com.";
-      }
-
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(emailBrief.value).then(copied, selectForManualCopy);
-        return;
-      }
-
-      try {
-        if (document.execCommand("copy")) copied();
-        else selectForManualCopy();
-      } catch (error) {
-        selectForManualCopy();
-      }
-    });
-  }
 
   if (description && descriptionCount) {
     description.addEventListener("input", function () {

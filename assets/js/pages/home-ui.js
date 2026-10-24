@@ -93,6 +93,16 @@
     var videoToggle = hero.querySelector("[data-ll-hero-video-toggle]");
     var heroVisible = true;
     var heroObserver = null;
+    function markHeroVideoReady() {
+      if (video && video.readyState >= 2) hero.classList.add("is-video-ready");
+    }
+
+    if (video) {
+      video.addEventListener("loadeddata", markHeroVideoReady);
+      video.addEventListener("playing", markHeroVideoReady);
+      markHeroVideoReady();
+    }
+
     var heroVideoSuppressed = function (userInitiated) {
       return document.body.classList.contains("ll-pitch-overlay-open") ||
         document.body.classList.contains("ll-showreel-open") ||

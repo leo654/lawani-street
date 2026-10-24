@@ -1,0 +1,115 @@
+/* TYOL logo replay control and its SVG animation. */
+.case-study--tyol .tyol-logo-stage {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.case-study--tyol .tyol-logo-stage:focus-visible {
+  outline: 2px solid var(--ll-orange);
+  outline-offset: 4px;
+}
+
+.case-study--tyol .tyol-logo-stage:disabled {
+  cursor: default;
+}
+
+.case-study--tyol .tyol-logo-animation {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.case-study--tyol .tyol-logo-animation .bg { fill: #0550fd; }
+
+.case-study--tyol .tyol-logo-animation .g {
+  display: none;
+  fill: none;
+  stroke: #010101;
+  stroke-width: 0.7;
+}
+
+.case-study--tyol .tyol-logo-animation .logo {
+  fill: #f3b724;
+  stroke: #f3b724;
+  stroke-width: 1;
+  stroke-linejoin: miter;
+}
+
+.case-study--tyol .tyol-logo-stage.is-armed .g {
+  display: block;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.case-study--tyol .tyol-logo-stage.is-armed .logo {
+  fill: rgba(1, 1, 1, 0);
+  stroke: #010101;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.case-study--tyol .tyol-logo-stage.is-playing .g {
+  animation:
+    tyol-draw 1.05s cubic-bezier(0.16, 1, 0.3, 1) var(--d) forwards,
+    tyol-gfade 0.55s ease 2.5s forwards;
+}
+
+.case-study--tyol .tyol-logo-stage.is-playing .logo {
+  animation:
+    tyol-draw 1.45s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards,
+    tyol-paint 3.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.case-study--tyol .tyol-logo-animation .g--01 { --d: 0.22s; }
+.case-study--tyol .tyol-logo-animation .g--02 { --d: 0.32s; }
+.case-study--tyol .tyol-logo-animation .g--03 { --d: 0.42s; }
+.case-study--tyol .tyol-logo-animation .g--04 { --d: 0.52s; }
+.case-study--tyol .tyol-logo-animation .g--05 { --d: 0.27s; }
+.case-study--tyol .tyol-logo-animation .g--06 { --d: 0.37s; }
+.case-study--tyol .tyol-logo-animation .g--07 { --d: 0.47s; }
+.case-study--tyol .tyol-logo-animation .g--08 { --d: 0.57s; }
+.case-study--tyol .tyol-logo-animation .g--09 { --d: 0.62s; }
+.case-study--tyol .tyol-logo-animation .g--10 { --d: 0.67s; }
+.case-study--tyol .tyol-logo-animation .g--11 { --d: 0.72s; }
+
+@keyframes tyol-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes tyol-gfade {
+  to { opacity: 0; }
+}
+
+@keyframes tyol-paint {
+  0% { fill: rgba(1, 1, 1, 0); stroke: #010101; }
+  38% {
+    fill: rgba(1, 1, 1, 0);
+    stroke: #010101;
+    animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  }
+  58% { fill: #010101; stroke: #010101; }
+  66% {
+    fill: #010101;
+    stroke: #010101;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  100% { fill: #f3b724; stroke: #f3b724; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-study--tyol .tyol-logo-animation .g { display: none; }
+
+  .case-study--tyol .tyol-logo-animation .logo {
+    animation: none;
+    stroke-dashoffset: 0;
+    fill: #f3b724;
+    stroke: #f3b724;
+  }
+}
