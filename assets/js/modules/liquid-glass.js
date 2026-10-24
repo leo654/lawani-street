@@ -1,10 +1,10 @@
 import liquidGL from "../../../node_modules/liquid-gl/liquidGL.js";
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const navLensSelector = ".ll-nav-dock, .ll-contact-dock";
-const hasNavLenses = document.querySelector(navLensSelector);
+const glassTargetSelector = ".ll-nav-dock, .ll-contact-dock__primary";
+const hasGlassTargets = document.querySelector(glassTargetSelector);
 
-if (!reduceMotion && hasNavLenses) {
+if (!reduceMotion && hasGlassTargets) {
   try {
     const effects = [];
 
@@ -38,7 +38,7 @@ if (!reduceMotion && hasNavLenses) {
       }));
     }
 
-    createLens(navLensSelector, 100, {
+    createLens(glassTargetSelector, 100, {
       interactionStrength: 1.2,
       interactionRadius: 0.9,
     });

@@ -16,7 +16,7 @@
         )
       );
       gap: var(--ll-tray-gap);
-      overflow: visible;
+      overflow: hidden;
       border-radius: 0;
       background: transparent;
       box-shadow: none;
@@ -259,4 +259,3 @@
       transition: none;
     }
   }
-  
