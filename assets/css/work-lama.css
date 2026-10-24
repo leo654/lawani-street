@@ -126,7 +126,7 @@ body.work-index {
   min-height: var(--lwa-row-head-height);
   align-items: center;
   font-family: var(--ll-sans);
-  font-size: clamp(18px, 1.45vw, 21px);
+  font-size: clamp(15px, calc(1.45vw - 3px), 18px);
   font-weight: 650;
   line-height: 1;
   letter-spacing: -0.035em;
@@ -609,7 +609,7 @@ body.work-index .lwa-project__tags > span {
     grid-column: 1;
     grid-row: 1;
     padding-top: 0;
-    font-size: clamp(18px, 4.8vw, 20px);
+    font-size: clamp(15px, calc(4.8vw - 3px), 17px);
   }
 
   .lwa-project__state {
