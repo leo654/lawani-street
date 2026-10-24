@@ -1,21 +1,10 @@
-import liquidGL from "liquid-gl";
+import liquidGL from "../../../node_modules/liquid-gl/liquidGL.js";
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const navLensSelector = ".ll-nav-dock, .ll-contact-dock";
-const mediaLensSelector = [
-  "body.home-index .ll-home-hero__media",
-  "body.home-index .ll-manifesto__gallery figure",
-  "body.home-index .ll-manifesto__portrait",
-  "body.home-index .lwa-project__gallery figure:has(img, video)",
-  ".case-study .cs-story__media",
-  ".case-study .cs-gallery figure:has(img, video)",
-  ".work-index .lwa-project__gallery figure:has(img, video)",
-  ".ll-menu-reel",
-].join(", ");
 const hasNavLenses = document.querySelector(navLensSelector);
-const hasMediaLenses = document.querySelector(mediaLensSelector);
 
-if (!reduceMotion && (hasNavLenses || hasMediaLenses)) {
+if (!reduceMotion && hasNavLenses) {
   try {
     const effects = [];
 
@@ -53,8 +42,6 @@ if (!reduceMotion && (hasNavLenses || hasMediaLenses)) {
       interactionStrength: 1.2,
       interactionRadius: 0.9,
     });
-    createLens(mediaLensSelector, 1);
-
     window.addEventListener("pagehide", () => effects.forEach((effect) => effect.destroy()), { once: true });
   } catch (error) {
     console.warn("Liquid glass could not start; using the CSS glass fallback.", error);

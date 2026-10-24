@@ -61,6 +61,9 @@ async function initialize() {
       await import("./modules/media-reveals.js").catch((error) => {
         console.warn("Media scroll reveals failed to load.", error);
       });
+      await import("./modules/media-ripple.js").catch((error) => {
+        console.warn("Media ripple effect failed to load.", error);
+      });
     }
 
     await import("./modules/constants.js").catch((e) => console.warn("Constants failed to load:", e));
