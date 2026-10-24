@@ -115,10 +115,6 @@ html[data-theme] body.home-index .ll-work .lwa-project__tags > span {
   color: #f4f2ec;
 }
 
-body.home-index .lwa-project__title {
-  font-size: clamp(18px, 1.45vw, 21px);
-}
-
 body.home-index .ll-footer__actions .ll-button,
 body.home-index .ll-manifesto__copy .ll-action-link,
 body.home-index .lwa-project__actions .ll-button {
@@ -159,12 +155,6 @@ body.home-index .ll-mobile-menu.is-open .ll-mobile-menu__actions > * { animation
 
   body.home-index .ll-services-contact {
     align-items: center;
-  }
-}
-
-@media (max-width: 820px) {
-  body.home-index .lwa-project__title {
-    font-size: clamp(18px, 4.8vw, 20px);
   }
 }
 
