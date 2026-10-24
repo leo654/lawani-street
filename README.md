@@ -34,4 +34,4 @@ The structural audit snapshot is in `docs/structural-audit-production-2026-10-16
 
 ## Contact Form
 
-The project intake at `vcard.html` is split into `assets/css/contact-page.css` and `assets/js/pages/contact-form.js`. This static source copy does not include `php/mail.php` or a server submission endpoint. The form prepares an email draft and a copyable brief; the visitor chooses whether to open their email app and send it. A server-backed submission flow requires a separately supplied endpoint and deployment configuration.
+The project intake at `contact.html` is split into `assets/css/contact-page.css` and `assets/js/pages/contact-form.js`. This static source copy does not include `php/mail.php` or a server submission endpoint. The form prepares an email draft and a copyable brief; the visitor chooses whether to open their email app and send it. A server-backed submission flow requires a separately supplied endpoint and deployment configuration.

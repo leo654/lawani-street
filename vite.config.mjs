@@ -20,7 +20,6 @@ const htmlPages = {
   'team': resolve(root, 'team.html'),
   'tyol': resolve(root, 'tyol.html'),
   'vatug': resolve(root, 'vatug.html'),
-  'vcard': resolve(root, 'vcard.html'),
   'work': resolve(root, 'work.html'),
   // These three pages are standalone experiments and are also embedded by case studies.
   'bpm3': resolve(root, 'bpm3.html'),
