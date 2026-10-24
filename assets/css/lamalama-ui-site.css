@@ -384,6 +384,7 @@ body:not(.home-index) .ll-contact-dock__pitch {
   display:grid;
   width:220px;
   gap:4px;
+  overflow:hidden;
   font-family:var(--ll-mono);
   text-transform:uppercase
 }
