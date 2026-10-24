@@ -23,7 +23,7 @@ body.home-index .ll-home-hero {
   --ll-hero-x: 0px;
   --ll-hero-y: 0px;
   background: var(--ll-hero-ink);
-  transition: background-color 360ms ease, color 360ms ease;
+  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 html[data-theme="light"] body.home-index {
@@ -63,7 +63,7 @@ body.home-index .ll-home-hero > .ll-home-hero__media {
 body.home-index .ll-home-hero > .ll-home-hero__wash {
   pointer-events: none;
   background: none;
-  transition: opacity 260ms ease;
+  transition: opacity var(--motion-component, 420ms) var(--motion-ease-out, ease);
 }
 
 body.home-index .ll-home-hero > .ll-home-hero__content {
@@ -121,7 +121,7 @@ body.home-index .ll-home-hero__rail-line {
 body.home-index .ll-home-hero__media video {
   filter: none;
   opacity: 0;
-  transition: opacity 320ms ease;
+  transition: opacity var(--motion-component, 420ms) var(--motion-ease-out, ease);
 }
 
 body.home-index .ll-home-hero.is-video-ready .ll-home-hero__media video {
@@ -138,7 +138,7 @@ body.home-index .ll-work-intro,
 body.home-index .ll-work .lwa-archive {
   background: var(--ll-hero-ink);
   color: var(--ll-hero-paper);
-  transition: background-color 360ms ease, border-color 360ms ease, color 360ms ease;
+  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), border-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 body.home-index .ll-work-intro {

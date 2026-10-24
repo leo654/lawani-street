@@ -2,9 +2,9 @@
 (function () {
   "use strict";
 
-  var mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (!mediaQuery.matches || reduceMotion.matches || !document.body) return;
+  if (reduceMotion.matches || !document.body) return;
 
   var media = Array.prototype.slice.call(document.querySelectorAll(
     ".case-study .cs-story__media img, .case-study .cs-story__media video, " +
@@ -366,11 +366,30 @@
     clearActiveRipple();
   }
 
+  function touchStart(event) {
+    if (event.pointerType !== "touch") return;
+    activateAt(event.currentTarget, event);
+  }
+
+  function touchEnd(event) {
+    if (event.pointerType !== "touch" || event.currentTarget !== activeTarget) return;
+    clearActiveRipple();
+  }
+
+  function handleClick() {
+    // Desktop clicks dismiss the ripple before a media card opens. On touch,
+    // let the short ripple finish; scrolling still clears it immediately.
+    if (finePointer.matches) stopRippleWhileScrolling();
+  }
+
   targets.forEach(function (group) {
     group.target.addEventListener("pointerenter", enter, { passive: true });
     group.target.addEventListener("pointermove", move, { passive: true });
+    group.target.addEventListener("pointerdown", touchStart, { passive: true });
+    group.target.addEventListener("pointerup", touchEnd, { passive: true });
+    group.target.addEventListener("pointercancel", touchEnd, { passive: true });
     group.target.addEventListener("pointerleave", leave, { passive: true });
-    group.target.addEventListener("click", stopRippleWhileScrolling, { passive: true });
+    group.target.addEventListener("click", handleClick, { passive: true });
   });
 
   function stopRippleWhileScrolling() {

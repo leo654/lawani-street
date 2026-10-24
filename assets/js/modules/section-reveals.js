@@ -6,6 +6,9 @@
 
 	var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 	var gsapLoaderPromise = null;
+	var motionConfig = window.LawaniConstants || {};
+	var revealDuration = ((motionConfig.DURATION && motionConfig.DURATION.REVEAL) || 760) / 1000;
+	var revealEase = (motionConfig.EASING && motionConfig.EASING.GSAP_OUT) || 'power3.out';
 
 	function loadScriptOnce(src, markerAttr) {
 		return new Promise(function(resolve) {
@@ -156,17 +159,15 @@
 			node.style.transition = 'none';
 
 			var delay = parseFloat(window.getComputedStyle(node).getPropertyValue('--ll-reveal-delay')) || 0;
-			var isSection = node.tagName === 'SECTION';
-
 			gsap.fromTo(node, {
 				autoAlpha: 0,
-				y: isSection ? 14 : 8
+				y: 14
 			}, {
 				autoAlpha: 1,
 				y: 0,
-				duration: isSection ? 1.05 : 0.95,
+				duration: revealDuration,
 				delay: delay / 1000,
-				ease: 'power2.out',
+				ease: revealEase,
 				overwrite: 'auto',
 				onComplete: function() {
 					node.classList.add('is-visible');
@@ -217,13 +218,12 @@
 					return;
 				}
 
-				gsap.fromTo(card, { autoAlpha: 0, y: 46, rotateX: -6, scale: 0.985 }, {
+				gsap.fromTo(card, { autoAlpha: 0, y: 18, scale: 0.99 }, {
 					autoAlpha: 1,
 					y: 0,
-					rotateX: 0,
 					scale: 1,
-					duration: 1.0,
-					ease: 'expo.out',
+					duration: revealDuration,
+					ease: revealEase,
 					scrollTrigger: {
 						trigger: card,
 						start: 'top 86%',
@@ -237,11 +237,11 @@
 				if (item.getAttribute('data-reveal-ready') === '1') return;
 				item.setAttribute('data-reveal-ready', '1');
 
-				gsap.fromTo(item, { autoAlpha: 0, y: 28 }, {
+				gsap.fromTo(item, { autoAlpha: 0, y: 14 }, {
 					autoAlpha: 1,
 					y: 0,
-					duration: 0.9,
-					ease: 'power3.out',
+					duration: revealDuration,
+					ease: revealEase,
 					scrollTrigger: {
 						trigger: item,
 						start: 'top 88%',

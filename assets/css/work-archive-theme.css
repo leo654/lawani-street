@@ -1,0 +1,51 @@
+/* One visual source for the shared work archive on home and work pages. */
+:is(body.home-index, body.work-index) .ll-work .lwa-archive {
+  --lwa-bg: var(--ll-brand-black);
+  --lwa-fg: #f2f0e9;
+  --lwa-muted: rgba(242, 240, 233, 0.68);
+  --lwa-line: rgba(242, 240, 233, 0.18);
+  --lwa-panel: var(--ll-theme-raised);
+  --lwa-action-hover-bg: var(--ll-paper);
+  --lwa-action-hover-fg: var(--ll-brand-charcoal);
+  background: var(--lwa-bg);
+  color: var(--lwa-fg);
+}
+
+:is(body.home-index, body.work-index) .ll-work .lwa-project__toggle {
+  color: var(--lwa-fg);
+}
+
+:is(body.home-index, body.work-index) .ll-work .lwa-project__tags > span {
+  border-color: var(--lwa-line);
+  background: var(--ll-brand-black);
+  color: #f2f0e9;
+}
+
+:is(body.home-index, body.work-index) .ll-work .lwa-project__actions .ll-button {
+  --ll-glass-control-surface: color-mix(in srgb, var(--lwa-fg) 8%, transparent);
+  --ll-glass-control-line: var(--lwa-line);
+  --ll-glass-control-ink: var(--lwa-fg);
+  --ll-glass-control-hover: var(--lwa-action-hover-bg);
+  --ll-glass-control-hover-line: var(--lwa-action-hover-bg);
+  --ll-glass-control-hover-ink: var(--lwa-action-hover-fg);
+}
+
+html[data-theme="light"] :is(body.home-index, body.work-index) .ll-work .lwa-archive {
+  --lwa-bg: #e8e7e1;
+  --lwa-fg: #171917;
+  --lwa-muted: rgba(23, 25, 23, 0.68);
+  --lwa-line: rgba(23, 25, 23, 0.18);
+  --lwa-panel: #f2f0e9;
+  --lwa-action-hover-bg: var(--ll-orange);
+  --lwa-action-hover-fg: var(--ll-brand-charcoal);
+}
+
+html[data-theme="light"] :is(body.home-index, body.work-index) .ll-work .lwa-project__toggle {
+  color: #171917;
+}
+
+html[data-theme="light"] :is(body.home-index, body.work-index) .ll-work .lwa-project__tags > span {
+  border-color: rgba(23, 25, 23, 0.18);
+  background: #171917;
+  color: #f2f0e9;
+}

@@ -34,11 +34,10 @@ body.work-index {
 .lwa-hero {
   --lwa-hero-scroll: 0;
   display: grid;
-  min-height: 59svh;
+  min-height: 48svh;
   place-content: center;
   place-items: center;
-  padding: 132px var(--ll-gutter) 72px;
-  border-bottom: 1px solid var(--lwa-line);
+  padding: 132px var(--ll-gutter) 44px;
   text-align: center;
 }
 
@@ -57,7 +56,9 @@ body.work-index {
   will-change: transform, opacity;
 }
 
-.lwa-hero h1 span { display: block; }
+.lwa-hero h1 span {
+  display: block;
+}
 
 .lwa-hero__meta {
   display: flex;
@@ -76,8 +77,8 @@ body.work-index {
   --lwa-muted: var(--ll-light-muted);
   --lwa-line: var(--ll-light-line);
   --lwa-panel: var(--ll-black);
-  --lwa-expand-duration: 640ms;
-  --lwa-expand-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --lwa-expand-duration: var(--motion-expand, 640ms);
+  --lwa-expand-ease: var(--motion-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
   border-top: 0;
   background: var(--lwa-bg);
   color: var(--lwa-fg);
@@ -215,15 +216,15 @@ body.work-index .lwa-project__tags > span {
   opacity: 0;
   transform: translate3d(0, 8px, 0);
   transition:
-    opacity 260ms ease,
-    transform 420ms var(--lwa-expand-ease),
-    visibility 0s linear 420ms;
+    opacity var(--motion-control, 240ms) var(--motion-ease-out, ease),
+    transform var(--motion-component, 420ms) var(--lwa-expand-ease),
+    visibility 0s linear var(--motion-component, 420ms);
 }
 
 .lwa-project.is-expanded .lwa-project__rail {
   visibility: hidden;
   opacity: 0;
-  transition: opacity 260ms ease, visibility 0s linear 260ms;
+  transition: opacity var(--motion-control, 240ms) var(--motion-ease-out, ease), visibility 0s linear var(--motion-control, 240ms);
 }
 
 .lwa-project.is-expanded .lwa-project__summary-copy {
@@ -231,12 +232,18 @@ body.work-index .lwa-project__tags > span {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   transition:
-    opacity 320ms ease 100ms,
-    transform 520ms var(--lwa-expand-ease) 80ms,
+    opacity var(--motion-component, 420ms) var(--motion-ease-out, ease) 80ms,
+    transform var(--motion-expand, 640ms) var(--lwa-expand-ease) 80ms,
     visibility 0s;
 }
 
 .js .ll-work .lwa-project:first-child {
+  opacity: 1;
+  transform: none;
+}
+
+/* Keep the shared work archives readable even before their scroll observer runs. */
+.js :is(body.home-index, body.work-index) .ll-work .lwa-project {
   opacity: 1;
   transform: none;
 }
@@ -259,7 +266,7 @@ body.work-index .lwa-project__tags > span {
   opacity: 0;
   transition:
     grid-template-rows var(--lwa-expand-duration) var(--lwa-expand-ease),
-    opacity 320ms ease,
+    opacity var(--motion-component, 420ms) var(--motion-ease-out, ease),
     visibility 0s linear var(--lwa-expand-duration);
 }
 
@@ -269,7 +276,7 @@ body.work-index .lwa-project__tags > span {
   opacity: 1;
   transition:
     grid-template-rows var(--lwa-expand-duration) var(--lwa-expand-ease),
-    opacity 420ms ease 80ms,
+    opacity var(--motion-component, 420ms) var(--motion-ease-out, ease) 80ms,
     visibility 0s;
 }
 
@@ -282,8 +289,8 @@ body.work-index .lwa-project__tags > span {
   opacity: 0;
   transform: translate3d(0, 14px, 0);
   transition:
-    opacity 320ms ease,
-    transform 560ms var(--lwa-expand-ease);
+    opacity var(--motion-component, 420ms) var(--motion-ease-out, ease),
+    transform var(--motion-expand, 640ms) var(--lwa-expand-ease);
 }
 
 .lwa-project.is-expanded .lwa-project__detail-inner {
@@ -333,9 +340,6 @@ body.work-index .lwa-project__tags > span {
   width: var(--button-width-content, auto);
   min-width: 0;
   justify-content: space-between;
-  border: 1px solid var(--lwa-line);
-  background: transparent;
-  color: var(--lwa-fg);
 }
 
 .lwa-project__actions .ll-button {
@@ -345,13 +349,6 @@ body.work-index .lwa-project__tags > span {
 .lwa-project__actions .ll-button > .ll-icon--arrow-up-right,
 .lwa-footer__contact .ll-button > .ll-icon--arrow-up-right {
   margin: 0;
-}
-
-.lwa-project__actions .ll-button:is(:hover, :focus-visible),
-.lwa-footer__contact .ll-button:is(:hover, :focus-visible) {
-  border-color: var(--ll-paper);
-  background: var(--ll-paper);
-  color: var(--ll-black);
 }
 
 .lwa-project__gallery {
@@ -381,7 +378,7 @@ body.work-index .lwa-project__tags > span {
   margin: 0;
   background: var(--lwa-panel);
   scroll-snap-align: start;
-  transition: opacity 360ms ease, transform 420ms var(--ll-ease);
+  transition: opacity var(--motion-component, 420ms) var(--motion-ease-out, ease), transform var(--motion-component, 420ms) var(--motion-ease-out, ease);
 }
 
 .lwa-gallery-progress {
@@ -415,7 +412,7 @@ body.work-index .lwa-project__tags > span {
   background: var(--lwa-fg);
   transform: scaleX(0.25);
   transform-origin: left center;
-  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 .lwa-project__gallery img {
@@ -459,7 +456,7 @@ body.work-index .lwa-project__tags > span {
   line-height: 1;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background-color 180ms ease, color 180ms ease;
+  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 .lwa-filter button:is(:hover, :focus-visible),
@@ -540,14 +537,14 @@ body.work-index .lwa-project__tags > span {
 .js .lwa-hero > *,
 .js .lwa-project {
   opacity: 0;
-  transform: translate3d(0, 24px, 0);
+  transform: translate3d(0, var(--motion-reveal-offset, 14px), 0);
 }
 
 .js .lwa-hero.is-visible > *,
 .js .lwa-project.is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition: opacity 720ms var(--ll-ease), transform 820ms var(--ll-ease);
+  transition: opacity var(--motion-reveal, 760ms) var(--motion-ease-out, ease), transform var(--motion-reveal, 760ms) var(--motion-ease-out, ease);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -583,8 +580,8 @@ body.work-index .lwa-project__tags > span {
 
 @media (max-width: 820px) {
   .lwa-hero {
-    min-height: 44svh;
-    padding: 108px var(--ll-gutter) 58px;
+    min-height: 38svh;
+    padding: 108px var(--ll-gutter) 38px;
   }
 
   .lwa-hero h1 {

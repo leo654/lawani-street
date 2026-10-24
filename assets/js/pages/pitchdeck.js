@@ -307,8 +307,8 @@
                 { opacity: 0, transform: "translate3d(0, 10px, 0)" },
                 { opacity: 1, transform: "translate3d(0, 0, 0)" }
               ], {
-                duration: 440,
-                easing: "cubic-bezier(.22, 1, .36, 1)"
+                duration: (window.LawaniConstants?.DURATION?.COMPONENT || 420),
+                easing: (window.LawaniConstants?.EASING?.OUT || "cubic-bezier(0.16, 1, 0.3, 1)")
               });
               entrance.onfinish = function () { entrance.cancel(); };
             }

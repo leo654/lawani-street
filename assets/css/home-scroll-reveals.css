@@ -1,6 +1,6 @@
 .home-index.home-scroll-reveals-ready [data-home-reveal] {
   opacity: 0;
-  transform: translate3d(0, 34px, 0);
+  transform: translate3d(0, var(--motion-reveal-offset), 0);
   transition:
     opacity var(--motion-reveal) var(--motion-ease-out),
     transform var(--motion-reveal) var(--motion-ease-out),

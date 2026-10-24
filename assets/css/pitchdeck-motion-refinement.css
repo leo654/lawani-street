@@ -11,7 +11,7 @@ body.ll-deck-page .ll-deck {
   --deck-page-x: clamp(72px, 6.4vw, 126px);
   --deck-page-top: clamp(84px, 8.6vh, 118px);
   --deck-page-bottom: clamp(56px, 9.4vh, 88px);
-  --deck-motion: cubic-bezier(.76, 0, .24, 1);
+  --deck-motion: var(--motion-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
   inset: var(--deck-gutter);
   border-radius: 4px;
   opacity: 0;
@@ -71,7 +71,7 @@ body.ll-deck-page .ll-deck__stage {
 
   body.ll-deck-page .ll-deck__rail {
     background: transparent;
-    transition: background-color 220ms ease, -webkit-backdrop-filter 220ms ease, backdrop-filter 220ms ease;
+    transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), -webkit-backdrop-filter var(--motion-control, 240ms) var(--motion-ease-out, ease), backdrop-filter var(--motion-control, 240ms) var(--motion-ease-out, ease);
   }
 
   body.ll-deck-page .ll-deck.is-rail-open .ll-deck__rail {
@@ -87,7 +87,7 @@ body.ll-deck-page .ll-deck__stage {
   body.ll-deck-page .ll-deck__menu-toggle {
     border-radius: 4px;
     visibility: visible;
-    transition: visibility 0s linear, opacity 180ms ease, background-color 220ms ease, border-color 220ms ease, color 220ms ease, transform 280ms var(--deck-motion);
+    transition: visibility 0s linear, opacity var(--motion-control, 240ms) var(--motion-ease-out, ease), background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), border-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease), transform var(--motion-control, 240ms) var(--deck-motion);
   }
 
   /* The reference removes the left trigger completely once the chapter rail takes over. */
@@ -96,11 +96,11 @@ body.ll-deck-page .ll-deck__stage {
     opacity: 0;
     pointer-events: none;
     transform: translate3d(-18px, 0, 0);
-    transition: visibility 0s linear 280ms, opacity 180ms ease, background-color 220ms ease, border-color 220ms ease, color 220ms ease, transform 280ms var(--deck-motion);
+    transition: visibility 0s linear var(--motion-control, 240ms), opacity var(--motion-control, 240ms) var(--motion-ease-out, ease), background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), border-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease), transform var(--motion-control, 240ms) var(--deck-motion);
   }
 
   body.ll-deck-page .ll-deck__chapters {
-    transition: opacity 170ms ease 70ms, transform 500ms var(--deck-motion);
+    transition: opacity var(--motion-control, 240ms) var(--motion-ease-out, ease) 70ms, transform var(--motion-component, 420ms) var(--deck-motion);
   }
 
   body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters {
@@ -110,7 +110,7 @@ body.ll-deck-page .ll-deck__stage {
   body.ll-deck-page .ll-deck__chapters button {
     opacity: 0;
     transform: translate3d(-10px, 0, 0);
-    transition: opacity 180ms ease, transform 460ms var(--deck-motion), background-color 220ms ease, color 220ms ease;
+    transition: opacity var(--motion-control, 240ms) var(--motion-ease-out, ease), transform var(--motion-component, 420ms) var(--deck-motion), background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
   }
 
   body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button {

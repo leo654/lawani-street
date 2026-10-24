@@ -4,7 +4,6 @@
 @import "../sound-toggle.css";
 @import "../case-study.css";
 @import "../components/replay.css";
-@import "../button-system.css";
 @import "../benchmark-system.css";
 @import "../motion-system.css";
 @import "../pitchdeck-overlay.css";
@@ -14,3 +13,5 @@
 @import "../ui-polish.css";
 @import "../footer-utility.css";
 @import "../nonstop-footer.css";
+
+@import "../button-system.css";

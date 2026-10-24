@@ -16,12 +16,32 @@
   --ll-button-font-size: var(--button-font-size-md, var(--font-size-sm, 14px));
   --ll-button-font-weight: var(--font-weight-semibold, 600);
   --ll-button-letter-spacing: var(--letter-spacing-wide, 0.08em);
+  --ll-button-motion-duration: var(--motion-control, 240ms);
+  --ll-button-motion-easing: var(--motion-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
   --ll-button-transition:
-    color var(--transition-control, 240ms ease),
-    border-color var(--transition-micro, 180ms ease),
-    background-color var(--transition-micro, 180ms ease),
-    transform var(--transition-micro, 180ms ease);
-  --ll-button-focus-ring: var(--color-accent);
+    color var(--ll-button-motion-duration) var(--ll-button-motion-easing),
+    border-color var(--ll-button-motion-duration) var(--ll-button-motion-easing),
+    background-color var(--ll-button-motion-duration) var(--ll-button-motion-easing),
+    transform var(--ll-button-motion-duration) var(--ll-button-motion-easing),
+    translate var(--ll-button-motion-duration) var(--ll-button-motion-easing);
+  --ll-button-focus-ring: var(--ll-orange, var(--color-accent, #d5a13b));
+  --ll-glass-control-surface: rgba(7, 8, 7, 0.56);
+  --ll-glass-control-hover: rgba(244, 242, 236, 0.94);
+  --ll-glass-control-line: rgba(244, 242, 236, 0.2);
+  --ll-glass-control-hover-line: rgba(244, 242, 236, 0.34);
+  --ll-glass-control-ink: #f4f2ec;
+  --ll-glass-control-hover-ink: var(--ll-brand-charcoal, #20221f);
+}
+
+/* Square shell controls keep their own geometry, while using the same timing. */
+html body :is(.ll-button.ll-button--square, .ll-theme-toggle, .ll-sound-toggle) {
+  transition-duration: var(--ll-button-motion-duration);
+  transition-timing-function: var(--ll-button-motion-easing);
+}
+
+:where(button, [role="button"], a):focus-visible {
+  outline: 2px solid var(--ll-button-focus-ring);
+  outline-offset: 3px;
 }
 
 html body:not(#global-square-corners) :is(
@@ -77,20 +97,6 @@ html body:not(#global-square-corners) :is(
   color: var(--ll-button-hover-ink);
 }
 
-html body:not(#global-square-corners) :is(
-  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
-  .cs-footer__actions a,
-  .ll-deck-contact a,
-  .ll-service-product__cta,
-  .project-form__button,
-  .ll-footer__project-cta > a,
-  .project-form__option,
-  .lwa-filter button
-):focus-visible {
-  outline: 2px solid var(--ll-button-focus-ring);
-  outline-offset: 3px;
-}
-
 html body:not(#global-square-corners) .ll-button.ll-button--split:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle) {
   justify-content: space-between;
   gap: 0;
@@ -116,7 +122,31 @@ html body:not(#global-square-corners) :is(
   width: var(--ll-button-arrow-size);
   height: var(--ll-button-arrow-size);
   flex-basis: var(--ll-button-arrow-size);
-  transition: transform var(--duration-normal, 240ms) var(--ease-out, ease);
+  transition: var(--ll-button-transition);
+}
+
+/* Use the same rightward arrow nudge for every CTA, including footer actions. */
+html body .ll-button :is(.ll-icon--arrow-up-right, .ll-arrow-glyph--up-right) {
+  --ll-button-arrow-x: 0px;
+  --ll-button-arrow-y: 0px;
+  transform: rotate(45deg);
+  translate: var(--ll-button-arrow-x) var(--ll-button-arrow-y);
+}
+
+html body .ll-button:is(:hover, :focus-visible) :is(.ll-icon--arrow-up-right, .ll-arrow-glyph--up-right) {
+  --ll-button-arrow-x: 2px;
+}
+
+/* Footer back-to-top uses the same motion timing and distance as other arrows. */
+html body .ll-footer__back-to-top > .ll-icon--arrow-up {
+  --ll-button-arrow-x: 0px;
+  --ll-button-arrow-y: 0px;
+  translate: var(--ll-button-arrow-x) var(--ll-button-arrow-y);
+  transition: var(--ll-button-transition);
+}
+
+html body .ll-footer__back-to-top:is(:hover, :focus-visible) > .ll-icon--arrow-up {
+  --ll-button-arrow-y: -2px;
 }
 
 html body:not(#global-square-corners) :is(
@@ -269,12 +299,115 @@ html body:not(#global-square-corners) :is(
   pointer-events: none;
 }
 
+/* Shared frosted treatment for site controls, owned by the button system. */
+/* Structural exceptions: nav items sit on one glass sheet; archive/skill rows and
+   showreel controls keep their distinct row or text-only presentation. */
+html body :where(
+  button:not(.ll-nav-toggle, .ll-home-hero__media, .lwa-project__toggle, .ll-hero-showreel__control-row button, [data-skill-row]),
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  [role="button"],
+  .ll-button:not(.ll-nav-dock__brand, .ll-nav-toggle),
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-footer__back-to-top,
+  .ll-action-link,
+  .cs-back,
+  .cs-jump,
+  .ll-menu-group__items a,
+  .ll-footer__project-cta > a,
+  .ll-deck-contact a,
+  .ll-service-product__cta
+) {
+  transition: var(--ll-button-transition);
+  border-color: var(--ll-glass-control-line) !important;
+  background: var(--ll-glass-control-surface) !important;
+  color: var(--ll-glass-control-ink) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.18) !important;
+  backdrop-filter: blur(12px) saturate(1.18) !important;
+}
+
+html body :where(
+  button:not(.ll-nav-toggle, .ll-home-hero__media, .lwa-project__toggle, .ll-hero-showreel__control-row button, [data-skill-row]),
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  [role="button"],
+  .ll-button:not(.ll-nav-dock__brand, .ll-nav-toggle),
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-footer__back-to-top,
+  .ll-action-link,
+  .cs-back,
+  .cs-jump,
+  .ll-menu-group__items a,
+  .ll-footer__project-cta > a,
+  .ll-deck-contact a,
+  .ll-service-product__cta
+):is(:hover, :focus-visible, [aria-pressed="true"], [aria-expanded="true"], .is-active, .selected) {
+  border-color: var(--ll-glass-control-hover-line) !important;
+  background: var(--ll-glass-control-hover) !important;
+  color: var(--ll-glass-control-hover-ink) !important;
+}
+
+/* Preserve the service-link palette while sharing the same glass treatment. */
+.ll-service-links a {
+  --ll-glass-control-surface: rgba(7, 8, 7, 0.28);
+  --ll-glass-control-line: rgba(244, 242, 236, 0.22);
+  --ll-glass-control-ink: var(--ll-white);
+  --ll-glass-control-hover: var(--ll-paper);
+  --ll-glass-control-hover-line: var(--ll-paper);
+  --ll-glass-control-hover-ink: var(--ll-black);
+}
+
+html[data-theme="light"] .ll-service-links a {
+  --ll-glass-control-surface: rgba(246, 244, 237, 0.34);
+  --ll-glass-control-line: rgba(23, 25, 23, 0.24);
+  --ll-glass-control-ink: #171917;
+  --ll-glass-control-hover: #3c3c3c;
+  --ll-glass-control-hover-line: #171917;
+  --ll-glass-control-hover-ink: #f6f4ed;
+}
+
+.ll-service-links a:is(:hover, :focus-visible, .is-active) > :is(span, svg) {
+  color: var(--ll-glass-control-hover-ink) !important;
+}
+
+/* Keep the established orange footer hover in this shared button system. */
+html body :is(
+  .ll-footer__actions a,
+  .cs-footer__actions .ll-button,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-footer__project-cta > a,
+  .ll-footer__back-to-top
+) {
+  --ll-glass-control-hover: var(--ll-orange);
+  --ll-glass-control-hover-line: var(--ll-orange);
+  --ll-glass-control-hover-ink: var(--ll-brand-charcoal, #20221f);
+}
+
 html body:not(#global-square-corners) .ll-contact-dock__primary.ll-button {
   background: var(--ll-tray-primary);
 }
 
 html body:not(#global-square-corners) .ll-contact-dock__primary.ll-button:is(:hover, :focus-visible) {
   background-color: var(--ll-button-hover-surface);
+}
+
+html body:is(.home-index, .work-index) .ll-contact-dock .ll-contact-dock__primary.ll-button,
+html body:is(.home-index, .work-index) .ll-contact-dock .ll-contact-dock__primary.ll-button > span {
+  color: #f4f2ec !important;
+}
+
+html body:is(.home-index, .work-index) .ll-contact-dock .ll-contact-dock__primary.ll-button:is(:hover, :focus-visible),
+html body:is(.home-index, .work-index) .ll-contact-dock .ll-contact-dock__primary.ll-button:is(:hover, :focus-visible) > span {
+  color: #070807 !important;
 }
 
 html body:not(#global-square-corners) .ll-manifesto .ll-action-link.ll-button::before {
@@ -316,6 +449,10 @@ html body .ll-nav-toggle.ll-button.ll-button--square > .ll-nav-toggle__lines {
     transition: none;
   }
 
+  html body :is(.ll-button.ll-button--square, .ll-theme-toggle, .ll-sound-toggle) {
+    transition: none !important;
+  }
+
   html body:not(#global-square-corners) :is(
     .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
     .cs-footer__actions a,
@@ -350,6 +487,312 @@ html body .ll-nav-toggle.ll-button.ll-button--square > .ll-nav-toggle__lines {
     .ll-arrow-glyph--down,
     .ll-arrow-glyph--up
   ) {
+    transform: none;
+  }
+}
+
+/* One interaction motion for every CTA. Component files may set the glass and
+   hover color tokens above, but they no longer define separate hover choreography. */
+:root {
+  --ll-button-motion-duration: var(--motion-control, 240ms);
+  --ll-button-motion-easing: var(--motion-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+  --ll-button-fill-duration: var(--motion-component, 420ms);
+  --ll-button-fill-motion: transform var(--ll-button-fill-duration) var(--ll-button-motion-easing);
+}
+
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top
+) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    color var(--ll-button-motion-duration) var(--ll-button-motion-easing),
+    border-color var(--ll-button-motion-duration) var(--ll-button-motion-easing),
+    background-color var(--ll-button-motion-duration) var(--ll-button-motion-easing),
+    transform var(--ll-button-motion-duration) var(--ll-button-motion-easing);
+}
+
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top
+)::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ll-glass-control-hover, var(--ll-paper));
+  content: "";
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: var(--ll-button-fill-motion);
+}
+
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top
+):is(:hover, :focus-visible, [aria-pressed="true"], [aria-expanded="true"], .is-active, .selected) {
+  border-color: var(--ll-glass-control-hover-line, currentColor) !important;
+  background: transparent !important;
+  color: var(--ll-glass-control-hover-ink, var(--ll-brand-charcoal, #20221f)) !important;
+}
+
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top
+):is(:hover, :focus-visible, [aria-pressed="true"], [aria-expanded="true"], .is-active, .selected)::before {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top
+) > * {
+  position: relative;
+  z-index: 1;
+}
+
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top
+) > span:first-child {
+  transition: transform var(--ll-button-fill-duration) var(--ll-button-motion-easing);
+}
+
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top
+):is(:hover, :focus-visible) > span:first-child {
+  transform: translateX(2px);
+}
+
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top
+) :is(.ll-icon--arrow-up-right, .ll-icon--arrow-left, .ll-icon--arrow-down, .ll-icon--arrow-up, .ll-arrow-glyph) {
+  transition:
+    transform var(--ll-button-fill-duration) var(--ll-button-motion-easing),
+    translate var(--ll-button-fill-duration) var(--ll-button-motion-easing);
+}
+
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top
+):is(:hover, :focus-visible) :is(.ll-icon--arrow-up-right, .ll-arrow-glyph--up-right) {
+  --ll-button-arrow-x: 2px;
+}
+
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top
+):is(:hover, :focus-visible) :is(.ll-icon--arrow-up, .ll-arrow-glyph--up) {
+  --ll-button-arrow-y: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body :is(
+    .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+    .ll-action-link,
+    .ll-service-links a,
+    .ll-footer__actions a,
+    .cs-footer__actions a,
+    .ll-footer__project-cta > a,
+    .lwa-footer__contact > div > .ll-button,
+    .ll-deck-contact a,
+    .ll-service-product__cta,
+    .project-form__button,
+    .project-form__option,
+    .lwa-filter button,
+    .cs-back,
+    .cs-jump,
+    .ll-footer__back-to-top
+  ),
+  html body :is(
+    .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+    .ll-action-link,
+    .ll-service-links a,
+    .ll-footer__actions a,
+    .cs-footer__actions a,
+    .ll-footer__project-cta > a,
+    .lwa-footer__contact > div > .ll-button,
+    .ll-deck-contact a,
+    .ll-service-product__cta,
+    .project-form__button,
+    .project-form__option,
+    .lwa-filter button,
+    .cs-back,
+    .cs-jump,
+    .ll-footer__back-to-top
+  )::before,
+  html body :is(
+    .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+    .ll-action-link,
+    .ll-service-links a,
+    .ll-footer__actions a,
+    .cs-footer__actions a,
+    .ll-footer__project-cta > a,
+    .lwa-footer__contact > div > .ll-button,
+    .ll-deck-contact a,
+    .ll-service-product__cta,
+    .project-form__button,
+    .project-form__option,
+    .lwa-filter button,
+    .cs-back,
+    .cs-jump,
+    .ll-footer__back-to-top
+  ) > * {
+    transition: none !important;
+  }
+
+  html body :is(
+    .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+    .ll-action-link,
+    .ll-service-links a,
+    .ll-footer__actions a,
+    .cs-footer__actions a,
+    .ll-footer__project-cta > a,
+    .lwa-footer__contact > div > .ll-button,
+    .ll-deck-contact a,
+    .ll-service-product__cta,
+    .project-form__button,
+    .project-form__option,
+    .lwa-filter button,
+    .cs-back,
+    .cs-jump,
+    .ll-footer__back-to-top
+  ):is(:hover, :focus-visible) > span:first-child {
     transform: none;
   }
 }

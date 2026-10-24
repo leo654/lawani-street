@@ -259,6 +259,7 @@
       });
 
       projects.forEach(function (project) {
+        var wasHidden = project.hidden;
         var categories = (project.getAttribute("data-categories") || "").split(/\s+/);
         var matches = value === "all" || categories.indexOf(value) !== -1;
         project.hidden = !matches;
@@ -278,11 +279,14 @@
 
         visible += 1;
         project.classList.add("is-visible");
-        if (!reduceMotion && typeof project.animate === "function") {
+        if (wasHidden && !reduceMotion && typeof project.animate === "function") {
+          var timing = window.LawaniConstants || {};
+          var duration = (timing.DURATION && timing.DURATION.COMPONENT) || 420;
+          var easing = (timing.EASING && timing.EASING.OUT) || "cubic-bezier(0.16, 1, 0.3, 1)";
           project.animate([
-            { opacity: 0, transform: "translate3d(0, 18px, 0)" },
+            { opacity: 0, transform: "translate3d(0, 14px, 0)" },
             { opacity: 1, transform: "translate3d(0, 0, 0)" }
-          ], { duration: 520, easing: "cubic-bezier(0.16, 1, 0.3, 1)" });
+          ], { duration: duration, easing: easing });
         }
       });
 

@@ -17,7 +17,10 @@
   /* Animation durations - use standardized tokens */
   --motion-fast: var(--duration-fast);
   --motion-control: var(--duration-normal);
+  --motion-component: var(--duration-slow);
   --motion-reveal: 760ms;
+  --motion-expand: 640ms;
+  --motion-reveal-offset: 14px;
   --motion-page-cover: 540ms;
   --motion-page-reveal: 680ms;
   --motion-page: var(--duration-slower);
@@ -131,7 +134,7 @@ html.ll-page-leaving .ll-page-transition::before,
 .js .ll-reveal {
   opacity: 0;
   clip-path: none;
-  transform: translate3d(0, 13px, 0);
+  transform: translate3d(0, var(--motion-reveal-offset), 0);
   transition:
     opacity var(--motion-reveal) var(--motion-ease-out),
     transform var(--motion-reveal) var(--motion-ease-out);

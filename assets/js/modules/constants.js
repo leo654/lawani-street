@@ -1,6 +1,19 @@
 (function () {
   "use strict";
 
+  function cssDuration(name, fallback) {
+    if (!document.documentElement || typeof window.getComputedStyle !== "function") return fallback;
+    var value = window.getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    var amount = parseFloat(value);
+    if (!Number.isFinite(amount)) return fallback;
+    return value.indexOf("ms") !== -1 ? amount : amount * 1000;
+  }
+
+  function cssEasing(name, fallback) {
+    if (!document.documentElement || typeof window.getComputedStyle !== "function") return fallback;
+    return window.getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+  }
+
   /**
    * Lawani St. Constants
    * ========================================
@@ -30,11 +43,13 @@
 
     // Animation durations (ms)
     DURATION: {
-      MICRO: 180,                        // Micro-interactions, hover states
-      CONTROL: 240,                     // Button clicks, menu toggles
-      REVEAL: 420,                      // Section reveals, component entrances
-      PAGE_COVER: 320,                   // Page transition cover
-      PAGE_REVEAL: 420,                  // Page transition reveal
+      MICRO: cssDuration("--motion-fast", 180),
+      CONTROL: cssDuration("--motion-control", 240),
+      COMPONENT: cssDuration("--motion-component", 420),
+      REVEAL: cssDuration("--motion-reveal", 760),
+      EXPAND: cssDuration("--motion-expand", 640),
+      PAGE_COVER: cssDuration("--motion-page-cover", 540),
+      PAGE_REVEAL: cssDuration("--motion-page-reveal", 680),
       BUTTON_SCRAMBLE: 720,             // Button text scramble effect
       OVERLAY_EXIT: 520,                // Overlay exit animation
       OVERLAY_OPEN_DELAY: 400,           // Delay before overlay activation
@@ -59,10 +74,12 @@
 
     // Easing functions (CSS cubic-bezier format)
     EASING: {
-      OUT: "cubic-bezier(0.16, 1, 0.3, 1)",
-      IN_OUT: "cubic-bezier(0.65, 0, 0.35, 1)",
-      SWEEP_IN: "cubic-bezier(0.76, 0, 0.24, 1)",
-      SWEEP_OUT: "cubic-bezier(0.16, 1, 0.3, 1)",
+      OUT: cssEasing("--motion-ease-out", "cubic-bezier(0.16, 1, 0.3, 1)"),
+      IN_OUT: cssEasing("--motion-ease-in-out", "cubic-bezier(0.65, 0, 0.35, 1)"),
+      SWEEP_IN: cssEasing("--motion-ease-sweep-in", "cubic-bezier(0.76, 0, 0.24, 1)"),
+      SWEEP_OUT: cssEasing("--motion-ease-sweep-out", "cubic-bezier(0.16, 1, 0.3, 1)"),
+      GSAP_OUT: "power3.out",
+      GSAP_IN_OUT: "power2.inOut",
     },
 
     // Breakpoints (px)

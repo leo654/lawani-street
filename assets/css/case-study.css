@@ -31,7 +31,7 @@ body.case-study {
   color: var(--ll-white);
   font-family: var(--ll-mono);
   text-transform: uppercase;
-  transition: background-color 180ms ease, color 180ms ease;
+  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 .cs-back:hover,
@@ -109,6 +109,13 @@ body.case-study {
   gap: 2px;
 }
 
+.cs-project-date {
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .cs-tags li {
   padding: 8px 11px 7px;
   background: var(--ll-black);
@@ -128,7 +135,7 @@ body.case-study {
   border-radius: var(--ll-control-radius);
   font-family: var(--ll-mono);
   text-transform: uppercase;
-  transition: background-color 180ms ease, color 180ms ease;
+  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 .cs-jump:hover,
@@ -165,6 +172,11 @@ body.case-study {
   letter-spacing: var(--ll-ls-normal);
   text-align: justify;
   text-transform: uppercase;
+}
+
+.cs-story__label,
+.cs-story__credits > p {
+  font-size: 1rem;
 }
 
 .cs-story__credits {
@@ -388,14 +400,14 @@ body.case-study {
   font-weight: 700;
   letter-spacing: var(--ll-ls-normal);
   text-transform: uppercase;
-  transition: color 280ms ease, transform 600ms var(--ll-ease);
+  transition: color var(--motion-control, 240ms) var(--motion-ease-out, ease), transform var(--motion-component, 420ms) var(--motion-ease-out, ease);
 }
 
 .cs-related-row > .cs-tags,
 .cs-related-row__view {
   position: relative;
   z-index: 2;
-  transition: opacity 220ms ease, transform 500ms var(--ll-ease);
+  transition: opacity var(--motion-control, 240ms) var(--motion-ease-out, ease), transform var(--motion-component, 420ms) var(--motion-ease-out, ease);
 }
 
 .cs-related-row__view {
@@ -415,7 +427,7 @@ body.case-study {
   gap: 8px;
   opacity: 0;
   transform: translate3d(32px, 0, 0);
-  transition: opacity 260ms ease, transform 650ms var(--ll-ease);
+  transition: opacity var(--motion-control, 240ms) var(--motion-ease-out, ease), transform var(--motion-component, 420ms) var(--motion-ease-out, ease);
   pointer-events: none;
 }
 
@@ -505,7 +517,7 @@ body.case-study {
   color: var(--cs-ink);
   font-family: var(--ll-mono);
   text-transform: uppercase;
-  transition: background-color 180ms ease, color 180ms ease;
+  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 .cs-footer__contact-card:hover,
@@ -571,7 +583,7 @@ body.case-study {
   border-radius: var(--ll-control-radius);
   font-family: var(--ll-mono);
   text-transform: uppercase;
-  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), border-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 .cs-footer__actions a:hover,
@@ -599,7 +611,7 @@ body.case-study {
 }
 
 .cs-footer__socials a {
-  transition: color 180ms ease;
+  transition: color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 .cs-footer__socials a:hover,
@@ -609,7 +621,7 @@ body.case-study {
 
 .case-study .ll-reveal {
   opacity: 0;
-  transform: translate3d(0, 13px, 0);
+  transform: translate3d(0, var(--motion-reveal-offset, 14px), 0);
   transition:
     opacity var(--motion-reveal, 760ms) var(--motion-ease-out, ease),
     transform var(--motion-reveal, 760ms) var(--motion-ease-out, ease);
@@ -1084,7 +1096,7 @@ html body.case-study .cs-footer__actions .ll-button:is(:hover, :focus-visible) >
 .cs-tags li {
   position: relative;
   overflow: hidden;
-  transition: background-color 180ms ease, color 180ms ease;
+  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 .cs-tags li::after {

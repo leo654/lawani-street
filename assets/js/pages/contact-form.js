@@ -149,7 +149,7 @@
         { opacity: 1, transform: "translate3d(0,0,0)" },
         { opacity: 0, transform: "translate3d(0,-12px,0)" }
       ],
-      { duration: 220, easing: "cubic-bezier(0.65,0,0.35,1)", fill: "forwards" }
+      { duration: (window.LawaniConstants?.DURATION?.CONTROL || 240), easing: (window.LawaniConstants?.EASING?.IN_OUT || "cubic-bezier(0.65, 0, 0.35, 1)"), fill: "forwards" }
     );
     animation.finished.then(finish, finish);
   }

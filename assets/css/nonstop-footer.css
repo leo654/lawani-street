@@ -573,50 +573,6 @@ html body :is(.ll-footer, .cs-footer, .lwa-footer) .ll-footer__utility nav.ll-fo
   transform: none !important;
 }
 
-/* Footer calls to action share the index CTA fill and motion across pages. */
-html body :is(
-  .cs-footer__actions .ll-button,
-  .lwa-footer__contact > div > .ll-button
-) {
-  --ll-button-hover-surface: var(--ll-orange);
-  --ll-button-hover-ink: var(--ll-brand-charcoal, #20221f);
-  transition: var(--ll-button-transition);
-}
-
-html body :is(
-  .cs-footer__actions .ll-button,
-  .lwa-footer__contact > div > .ll-button
-)::before {
-  content: none !important;
-  display: none !important;
-}
-
-html body :is(
-  .cs-footer__actions .ll-button,
-  .lwa-footer__contact > div > .ll-button
-) > :is(span, svg) {
-  position: relative;
-  z-index: 1;
-  color: inherit !important;
-}
-
-html body .cs-footer__actions .ll-button > span:first-child {
-  transform: none !important;
-}
-
-html body :is(
-  .cs-footer__actions .ll-button,
-  .lwa-footer__contact > div > .ll-button
-):is(:hover, :focus-visible) {
-  border-color: var(--ll-button-hover-surface) !important;
-  background-color: var(--ll-button-hover-surface) !important;
-  color: var(--ll-button-hover-ink) !important;
-}
-
-html body .cs-footer__actions .ll-button:is(:hover, :focus-visible) > .ll-icon--arrow-up-right {
-  transform: rotate(45deg) !important;
-}
-
 @media (prefers-reduced-motion: reduce) {
   :is(.ll-footer, .cs-footer, .lwa-footer),
   :is(.ll-footer, .cs-footer, .lwa-footer)::before,
@@ -641,17 +597,6 @@ html body .ll-footer__utility .ll-footer__back-to-top:is(:hover, :focus-visible)
   border: 0;
   background: transparent;
   color: inherit !important;
-}
-
-html body .ll-footer__back-to-top > .ll-arrow-glyph {
-  width: 16px;
-  height: 16px;
-  font-size: 16px;
-  transition: translate 180ms ease;
-}
-
-html body .ll-footer__back-to-top:is(:hover, :focus-visible) > .ll-arrow-glyph {
-  translate: 0 -2px;
 }
 
 /* Keep the work archive footer as compact as the index contact footer. */

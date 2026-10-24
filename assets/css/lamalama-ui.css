@@ -3029,10 +3029,10 @@ body.home-index:not(.is-past-home-hero) .ll-work-dock {
   opacity: 0;
   transform: translate3d(0, -8px, 0);
   transition:
-    opacity 180ms ease,
-    transform 420ms var(--ll-ease),
-    background-color 150ms ease,
-    color 150ms ease;
+    opacity var(--motion-control, 240ms) var(--motion-ease-out, ease),
+    transform var(--motion-component, 420ms) var(--motion-ease-out, ease),
+    background-color var(--motion-control, 240ms) var(--motion-ease-out, ease),
+    color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 .ll-mobile-menu.is-open .ll-menu-row,

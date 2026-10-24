@@ -253,7 +253,7 @@
       display: none;
     }
   }
-  
+
   @media (prefers-reduced-motion: reduce) {
     body.home-index .ll-contact-dock__pitch-preview {
       transition: none;

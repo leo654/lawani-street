@@ -112,7 +112,7 @@
             { opacity: 0, transform: "translate3d(0, 5px, 0)" },
             { opacity: 1, transform: "translate3d(0, 0, 0)" }
           ],
-          { duration: CONSTANTS.DURATION?.REVEAL || 280, easing: CONSTANTS.EASING?.OUT || "cubic-bezier(0.16, 1, 0.3, 1)" }
+          { duration: CONSTANTS.DURATION?.COMPONENT || 420, easing: CONSTANTS.EASING?.OUT || "cubic-bezier(0.16, 1, 0.3, 1)" }
         );
       }
     }

@@ -967,7 +967,7 @@ body.case-study .cs-back {
 }
 
 body.home-index .ll-contact-dock {
-  right: var(--ll-page-gutter);
+  right: 16px;
 }
 
 body .ll-mobile-menu,
@@ -1213,11 +1213,6 @@ body.home-index .ll-footer__actions .ll-button.ll-tactile-control {
   border-color: var(--ll-themed-action-line);
   background: var(--ll-themed-action-surface);
   color: var(--ll-themed-action-ink);
-  transition:
-    background-color 420ms var(--ll-ease),
-    border-color 420ms var(--ll-ease),
-    color 320ms ease,
-    transform 240ms var(--ll-ease);
 }
 
 body.home-index .ll-footer__actions .ll-button.ll-tactile-control:is(:hover, :focus-visible) {

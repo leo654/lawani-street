@@ -176,7 +176,7 @@ html[data-theme="light"] .contact-background::after {
   display: grid;
   gap: 9px;
   color: color-mix(in srgb, var(--contact-paper) 38%, transparent);
-  transition: color var(--motion-control, 360ms) var(--motion-ease-out, ease);
+  transition: color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 .project-form__progress li::after {
@@ -186,7 +186,7 @@ html[data-theme="light"] .contact-background::after {
   content: "";
   transform: scaleX(0.2);
   transform-origin: left;
-  transition: transform 560ms var(--motion-ease-out, ease), background-color 280ms ease;
+  transition: transform var(--motion-component, 420ms) var(--motion-ease-out, ease), background-color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 .project-form__progress li[aria-current="step"],
@@ -286,10 +286,10 @@ html[data-theme="light"] .contact-background::after {
   cursor: pointer;
   font-weight: 700;
   transition:
-    background-color var(--motion-control, 360ms) var(--motion-ease-out, ease),
-    border-color var(--motion-fast, 180ms) ease,
-    color var(--motion-fast, 180ms) ease,
-    transform var(--motion-control, 360ms) var(--motion-ease-out, ease);
+    background-color var(--motion-control, 240ms) var(--motion-ease-out, ease),
+    border-color var(--motion-control, 240ms) var(--motion-ease-out, ease),
+    color var(--motion-control, 240ms) var(--motion-ease-out, ease),
+    transform var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 .project-form__option::after { content: "( + )"; }

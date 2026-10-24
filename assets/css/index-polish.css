@@ -6,11 +6,6 @@ body.home-index :is(#work, #services, #how-i-work, #contact, #service-branding, 
   scroll-margin-top: calc(var(--ll-control-height) + 28px);
 }
 
-body.home-index :is(a, button, input, [tabindex]):focus-visible {
-  outline: 2px solid var(--ll-orange);
-  outline-offset: 4px;
-}
-
 body.home-index {
   --ll-button-height: var(--ll-control-height);
   --ll-button-padding-x: var(--ll-control-padding-x);
@@ -38,8 +33,6 @@ body.home-index .ll-button:not(.ll-mobile-menu__pitch):not(.ll-mobile-menu__cta)
 html[data-theme="light"] body.home-index :is(
   .ll-service-links .ll-button,
   .ll-manifesto .ll-action-link,
-  .lwa-project__actions .ll-button,
-  .ll-footer__actions .ll-button,
   .ll-services-contact-card
 ):is(:hover, :focus-visible) {
   border-color: var(--ll-orange);
@@ -50,15 +43,9 @@ html[data-theme="light"] body.home-index :is(
 html[data-theme="light"] body.home-index :is(
   .ll-service-links .ll-button,
   .ll-manifesto .ll-action-link,
-  .lwa-project__actions .ll-button,
-  .ll-footer__actions .ll-button,
   .ll-services-contact-card
 ):is(:hover, :focus-visible) > :is(span, svg) {
   color: var(--ll-brand-charcoal);
-}
-
-html[data-theme="light"] body.home-index .ll-footer__actions .ll-button.ll-tactile-control:is(:hover, :focus-visible) > :is(span, .ll-icon) {
-  color: #fff;
 }
 
 body.home-index .ll-manifesto .ll-action-link::before {
@@ -123,9 +110,9 @@ body.home-index .lwa-project__actions .ll-button {
 
 body.home-index .ll-mobile-menu {
   transition:
-    visibility 0s linear 420ms,
-    opacity 260ms ease,
-    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    visibility 0s linear var(--motion-component),
+    opacity var(--motion-control) var(--motion-ease-out),
+    transform var(--motion-component) var(--motion-ease-out);
 }
 
 body.home-index .ll-mobile-menu.is-open {
@@ -135,7 +122,7 @@ body.home-index .ll-mobile-menu.is-open {
 body.home-index .ll-mobile-menu.is-open .ll-menu-row,
 body.home-index .ll-mobile-menu.is-open .ll-menu-group__items.is-open a,
 body.home-index .ll-mobile-menu.is-open .ll-mobile-menu__actions > * {
-  animation: ll-menu-item-enter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: ll-menu-item-enter var(--motion-component) var(--motion-ease-out) both;
 }
 
 body.home-index .ll-mobile-menu.is-open .ll-mobile-menu__nav > :nth-child(2) { animation-delay: 45ms; }
@@ -365,7 +352,7 @@ html[data-theme] body.home-index .ll-footer__panel :where(a, h2, p, span) {
 .home-index .ll-footer__panel-header nav a,
 .home-index .ll-footer__panel-contact {
   text-decoration: none;
-  transition: color 160ms ease;
+  transition: color var(--motion-control) var(--motion-ease-out);
 }
 
 .home-index .ll-footer__panel-header nav a:hover,
@@ -423,7 +410,7 @@ html[data-theme] body.home-index .ll-footer__panel :where(a, h2, p, span) {
   font-weight: 500;
   letter-spacing: -0.065em;
   line-height: 1.1;
-  transition: color 160ms ease;
+  transition: color var(--motion-control) var(--motion-ease-out);
 }
 
 .home-index .ll-footer__story p {
@@ -483,33 +470,7 @@ html[data-theme] body.home-index .ll-footer__panel :where(a, h2, p, span) {
   flex: 1 1 0;
   min-height: 48px;
   border-color: rgba(32, 34, 31, 0.4);
-  color: var(--ll-brand-charcoal);
   font-size: 10px;
-}
-
-.home-index .ll-footer__cta .ll-footer__actions a:first-child {
-  background: var(--ll-brand-charcoal);
-  color: #f4f2ec;
-}
-
-.home-index .ll-footer__cta .ll-footer__actions a:first-child > :is(span, svg) {
-  color: #f4f2ec;
-}
-
-.home-index .ll-footer__cta .ll-footer__actions a:last-child > :is(span, svg) {
-  color: var(--ll-brand-charcoal);
-}
-
-.home-index .ll-footer__cta .ll-footer__actions a:first-child:is(:hover, :focus-visible) {
-  border-color: #d85a3f;
-  background: #d85a3f;
-  color: var(--ll-brand-charcoal);
-}
-
-.home-index .ll-footer__cta .ll-footer__actions a:last-child:is(:hover, :focus-visible) {
-  border-color: var(--ll-brand-charcoal);
-  background: var(--ll-brand-charcoal);
-  color: #f4f2ec;
 }
 
 .home-index .ll-footer__marquee {
@@ -559,7 +520,6 @@ html[data-theme] body.home-index .ll-footer__bottom {
   border: 1px solid rgba(244, 242, 236, 0.72);
   border-radius: 999px;
   color: #f4f2ec !important;
-  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
 }
 
 .home-index .ll-footer__back-to-top svg {
@@ -570,17 +530,12 @@ html[data-theme] body.home-index .ll-footer__bottom {
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.5;
-  transition: transform 180ms ease;
 }
 
 .home-index .ll-footer__back-to-top:hover {
   border-color: #d85a3f;
   background: #d85a3f;
   color: var(--ll-brand-charcoal) !important;
-}
-
-.home-index .ll-footer__back-to-top:hover svg {
-  transform: translateY(-3px);
 }
 
 .home-index .ll-footer__back-to-top:focus-visible {
@@ -855,7 +810,7 @@ html[data-theme] body.home-index .ll-footer__panel :where(a, h2, p, span) {
   letter-spacing: 0 !important;
   line-height: 1.35;
   text-decoration: none;
-  transition: color 160ms ease;
+  transition: color var(--motion-control) var(--motion-ease-out);
   text-transform: none !important;
 }
 
@@ -1632,7 +1587,7 @@ html[data-theme] body.home-index .ll-footer__panel {
   letter-spacing: 0 !important;
   line-height: 1.1;
   text-transform: none !important;
-  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+  transition: color var(--motion-control) var(--motion-ease-out), background-color var(--motion-control) var(--motion-ease-out), border-color var(--motion-control) var(--motion-ease-out);
 }
 
 .home-index .ll-footer__utility nav.ll-footer__social-links a:is(:hover, :focus-visible) {
@@ -1656,7 +1611,7 @@ html[data-theme] body.home-index .ll-footer__panel {
 .home-index .ll-footer__utility nav.ll-footer__social-links .ll-footer__linkedin-bg {
   fill: currentColor;
   stroke: none;
-  transition: fill 180ms ease;
+  transition: fill var(--motion-control) var(--motion-ease-out);
 }
 
 .home-index .ll-footer__utility nav.ll-footer__social-links .ll-footer__linkedin-glyph {
@@ -1673,7 +1628,7 @@ html[data-theme] body.home-index .ll-footer__panel {
   fill: #e9e9e9;
   stroke: currentColor;
   stroke-width: 1.8;
-  transition: fill 180ms ease;
+  transition: fill var(--motion-control) var(--motion-ease-out);
 }
 
 .home-index .ll-footer__utility nav.ll-footer__social-links a:is(:hover, :focus-visible) .ll-footer__calendar-icon circle {

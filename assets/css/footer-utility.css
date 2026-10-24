@@ -39,7 +39,7 @@
   gap: 10px;
   padding: 7px 12px;
   border: 1px dashed currentColor;
-  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+  transition: color var(--motion-control, 240ms) var(--motion-ease-out, ease), background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), border-color var(--motion-control, 240ms) var(--motion-ease-out, ease);
 }
 
 :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a:is(:hover, :focus-visible) {
