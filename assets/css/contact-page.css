@@ -680,7 +680,7 @@ html body.ll-contact-page .contact-direct a {
 }
 
 html body.ll-contact-page .project-form {
-  padding-top: clamp(220px, 19.2vh, 292px);
+  padding-top: clamp(112px, 12.2vh, 184px);
 }
 
 html body.ll-contact-page .project-form__progress {
