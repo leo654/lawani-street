@@ -796,3 +796,73 @@ html body :is(
     transform: none;
   }
 }
+
+/* Keep interactive controls anchored during hover/focus; feedback stays in color and fill. */
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top,
+  .ll-pd-nav button,
+  .ll-deck__chapters button,
+  .ll-skill-category li button,
+  .btn,
+  .card-price__btn
+):is(:hover, :focus-visible) {
+  transform: none !important;
+  translate: none !important;
+}
+
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top
+):is(:hover, :focus-visible) > span:first-child,
+html body .ll-skill-category li button:is(:hover, :focus-visible, [aria-pressed="true"]) > span,
+html body .ll-deck__chapters button:is(:hover, :focus-visible) > b {
+  transform: none !important;
+  translate: none !important;
+}
+
+html body :is(
+  .ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle),
+  .ll-action-link,
+  .ll-service-links a,
+  .ll-footer__actions a,
+  .cs-footer__actions a,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact > div > .ll-button,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .cs-back,
+  .cs-jump,
+  .ll-footer__back-to-top
+):is(:hover, :focus-visible) :is(.ll-icon--arrow-up-right, .ll-icon--arrow-up, .ll-arrow-glyph) {
+  translate: none !important;
+}
