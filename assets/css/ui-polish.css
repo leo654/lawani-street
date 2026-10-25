@@ -116,25 +116,33 @@ html body.home-index .ll-home-hero__message > p.ll-home-hero__scroll-hint {
 
 @media (max-width: 820px) {
   html body.home-index .ll-home-hero__message {
-    grid-template-columns: max-content max-content;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto;
     align-content: end;
-    justify-content: start;
+    justify-content: center;
+    justify-items: center;
     align-items: end;
-    column-gap: clamp(14px, 4vw, 24px);
+    column-gap: 0;
     row-gap: 0;
   }
 
   html body.home-index .ll-home-hero__message > #ll-hero-title {
     grid-column: 1;
-    width: max-content;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  html body.home-index .ll-home-hero__message > #ll-hero-title > span[aria-hidden="true"] {
+    display: none;
   }
 
   html body.home-index .ll-home-hero__message > .ll-home-hero__scroll-hint {
-    grid-column: 2;
+    grid-column: 1;
     max-width: none;
+    justify-self: center;
     margin: 0 0 4px;
-    text-align: left;
+    text-align: center;
   }
 }
 
