@@ -104,12 +104,12 @@ html[data-theme="light"] .contact-background::after {
 }
 
 .contact-intro__copy {
-  max-width: 30ch;
+  max-width: 35ch;
   margin: 0;
   color: var(--contact-muted);
   font-size: clamp(15px, 1.15vw, 18px);
   line-height: 1.45;
-  text-align: left;
+  text-align: justify;
 }
 
 .contact-direct {
