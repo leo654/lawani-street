@@ -505,24 +505,6 @@ html body.ll-contact-page .project-form__question {
 
 .project-form__button { width: 100%; justify-content: center; text-align: center; }
 
-.project-form__button:not(.project-form__button--secondary) {
-  --ll-glass-control-surface: #999;
-  --ll-glass-control-line: #999;
-  --ll-glass-control-ink: #111;
-  --ll-glass-control-hover: var(--contact-paper);
-  --ll-glass-control-hover-line: var(--ll-glass-control-hover);
-  --ll-glass-control-hover-ink: #111;
-  border-color: #999;
-  background: #999;
-  color: #111;
-}
-
-.project-form__button:is(:hover, :focus-visible) {
-  border-color: var(--contact-paper);
-  background: var(--contact-paper);
-  color: #111;
-}
-
 .project-form__button:disabled { cursor: wait; opacity: 0.58; transform: none; }
 
 .project-form__back {
@@ -756,31 +738,12 @@ html body.ll-contact-page .project-form__actions {
 }
 
 html body.ll-contact-page .project-form__button {
-  min-height: clamp(58px, 4vw, 68px);
+  height: var(--ll-control-height, 50px);
+  min-height: var(--ll-control-height, 50px);
   border-color: color-mix(in srgb, var(--contact-paper) 36%, transparent);
   background: transparent;
   color: var(--contact-paper);
   transform: none;
-  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
-}
-
-html body.ll-contact-page .project-form__button:not(.project-form__button--secondary) {
-  border-color: var(--ll-orange);
-  background: var(--ll-orange);
-  color: #151715;
-}
-
-html body.ll-contact-page .project-form__button:is(:hover, :focus-visible) {
-  border-color: var(--contact-paper);
-  background: var(--contact-paper);
-  color: var(--contact-ink);
-  transform: none;
-}
-
-html body.ll-contact-page .project-form__button:not(.project-form__button--secondary):is(:hover, :focus-visible) {
-  border-color: color-mix(in srgb, var(--ll-orange) 78%, #151715);
-  background: color-mix(in srgb, var(--ll-orange) 78%, #151715);
-  color: #151715;
 }
 
 html body.ll-contact-page .project-form__privacy-note {

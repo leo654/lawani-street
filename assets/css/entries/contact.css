@@ -18,13 +18,13 @@ html body.ll-contact-page {
   --ll-glass-control-surface: transparent;
   --ll-glass-control-line: rgba(23, 25, 22, 0.28);
   --ll-glass-control-ink: #171916;
-  --ll-glass-control-hover: #171916;
-  --ll-glass-control-hover-line: #171916;
-  --ll-glass-control-hover-ink: #e8e7e1;
+  --ll-glass-control-hover: var(--ll-orange);
+  --ll-glass-control-hover-line: var(--ll-orange);
+  --ll-glass-control-hover-ink: #171916;
   --ll-button-surface: transparent;
   --ll-button-ink: #171916;
-  --ll-button-hover-surface: #171916;
-  --ll-button-hover-ink: #e8e7e1;
+  --ll-button-hover-surface: var(--ll-orange);
+  --ll-button-hover-ink: #171916;
 }
 
 html body.ll-contact-page .project-form__option {
@@ -37,21 +37,19 @@ html body.ll-contact-page .project-form__option {
 }
 
 html body.ll-contact-page .project-form__option::before {
-  background: #171916;
+  background: var(--ll-orange);
 }
 
 html body.ll-contact-page .project-form__button {
-  height: auto !important;
-  min-height: clamp(58px, 4vw, 68px) !important;
+  height: var(--ll-control-height, 50px) !important;
+  min-height: var(--ll-control-height, 50px) !important;
+  background: transparent !important;
   color: #171916;
   border-color: rgba(23, 25, 22, 0.36);
 }
 
 html body.ll-contact-page .project-form__button:not(.project-form__button--secondary) {
-  background: #ff4f12 !important;
-  border-color: #ff4f12 !important;
-  color: #171916 !important;
-  --ll-glass-control-hover: #d83e0d;
-  --ll-glass-control-hover-line: #d83e0d;
+  --ll-glass-control-hover: var(--ll-orange);
+  --ll-glass-control-hover-line: var(--ll-orange);
   --ll-glass-control-hover-ink: #171916;
 }
