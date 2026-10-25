@@ -342,14 +342,62 @@ html[data-theme="light"] .contact-background::after {
 }
 
 .project-form :is(input, select) { min-height: 62px; padding: 0 18px; }
-.project-form select { 
+.project-form__select-wrap {
+  position: relative;
+  isolation: isolate;
+}
+
+.project-form__select-wrap::before {
+  position: absolute;
+  z-index: 1;
+  top: 12px;
+  right: 48px;
+  bottom: 12px;
+  width: 1px;
+  background: color-mix(in srgb, var(--contact-paper) 20%, transparent);
+  content: "";
+  pointer-events: none;
+  transition: background-color var(--motion-fast, 180ms) ease;
+}
+
+.project-form__select-wrap::after {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 19px;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid var(--contact-muted);
+  border-bottom: 1px solid var(--contact-muted);
+  content: "";
+  pointer-events: none;
+  transform: translateY(-70%) rotate(45deg);
+  transition: border-color var(--motion-fast, 180ms) ease, transform var(--motion-fast, 180ms) ease;
+}
+
+.project-form__select-wrap select {
+  display: block;
+  min-height: 62px;
+  padding: 0 60px 0 18px;
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f4f2ec' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: calc(100% - 13px) center;
-  padding-right: 35px;
+  background: color-mix(in srgb, var(--contact-paper) 2%, transparent);
+  cursor: pointer;
 }
+
+.project-form__select-wrap:hover::before {
+  background: color-mix(in srgb, var(--contact-paper) 42%, transparent);
+}
+
+.project-form__select-wrap:focus-within::before {
+  background: color-mix(in srgb, var(--ll-orange) 70%, transparent);
+}
+
+.project-form__select-wrap:focus-within::after {
+  border-color: var(--ll-orange);
+  transform: translateY(-25%) rotate(225deg);
+}
+
 .project-form textarea { min-height: 154px; padding: 18px; line-height: 1.45; resize: vertical; }
 .project-form select option { background: var(--contact-ink); color: var(--contact-paper); }
 
@@ -357,12 +405,6 @@ html[data-theme="light"] .contact-background::after {
   border-color: color-mix(in srgb, var(--contact-paper) 74%, transparent);
   outline: 0;
   background: color-mix(in srgb, var(--contact-paper) 6%, transparent);
-}
-
-.project-form select:is(:hover, :focus) {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f4f2ec' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: calc(100% - 13px) center;
 }
 
 .project-form :is(input, textarea, select)[aria-invalid="true"] { border-color: var(--ll-orange); }
@@ -496,6 +538,7 @@ html[data-theme="light"] .contact-background::after {
   .project-form__progress button { display: grid; justify-content: start; text-align: left; }
   .project-form__options, .project-form__field-grid, .project-form__actions { grid-template-columns: 1fr; }
   .project-form__field-group--wide { grid-column: 1; }
+  .project-form__select-wrap select { min-height: 58px; }
   .project-form__question { font-size: clamp(34px, 11vw, 50px); }
 }
 
