@@ -2,9 +2,10 @@
 (function () {
   "use strict";
 
-  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+  var finePointer = window.matchMedia("(min-width: 821px) and (hover: hover) and (pointer: fine)");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (reduceMotion.matches || !document.body) return;
+  // Keep source images native on touch devices; the WebGL ripple is desktop-only.
+  if (reduceMotion.matches || !finePointer.matches || !document.body) return;
 
   var media = Array.prototype.slice.call(document.querySelectorAll(
     ".case-study .cs-story__media img, .case-study .cs-story__media video, " +

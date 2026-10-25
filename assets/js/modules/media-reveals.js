@@ -17,17 +17,18 @@
 
   if (!targets.length) return;
 
-  targets.forEach(function (target) {
-    target.classList.add("ll-media-reveal");
-  });
-
+  var finePointer = window.matchMedia && window.matchMedia("(min-width: 821px) and (hover: hover) and (pointer: fine)").matches;
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion || !("IntersectionObserver" in window)) {
+  if (!finePointer || reduceMotion || !("IntersectionObserver" in window)) {
     targets.forEach(function (target) {
-      target.classList.add("is-visible");
+      target.classList.add("ll-media-reveal", "is-visible");
     });
     return;
   }
+
+  targets.forEach(function (target) {
+    target.classList.add("ll-media-reveal");
+  });
 
   body.classList.add("ll-media-reveals-ready");
 
