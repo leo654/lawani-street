@@ -89,15 +89,19 @@ html[data-theme="light"] .contact-background::after {
 }
 
 .contact-intro h1 {
-  max-width: 12ch;
-  margin: clamp(56px, 9vh, 104px) 0 30px;
+  max-width: 100%;
+  margin: clamp(36px, 6vh, 72px) 0 24px;
   color: var(--contact-paper);
   font-family: var(--ll-sans);
-  font-size: clamp(48px, 5vw, 72px);
+  font-size: clamp(50px, 3.8vw, 58px);
   font-weight: 700;
   line-height: 0.94;
   letter-spacing: -0.075em;
   text-transform: none;
+}
+
+html body.ll-contact-page .contact-intro h1 {
+  font-size: clamp(50px, 3.8vw, 58px) !important;
 }
 
 .contact-intro h1::after {
@@ -262,11 +266,15 @@ html[data-theme="light"] .contact-background::after {
   max-width: 22ch;
   margin: 0;
   font-family: var(--ll-sans);
-  font-size: clamp(28px, 2.5vw, 42px);
+  font-size: clamp(27px, 2.35vw, 40px);
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.04em;
   text-transform: none;
+}
+
+html body.ll-contact-page .project-form__question {
+  font-size: clamp(27px, 2.35vw, 40px) !important;
 }
 
 .project-form__hint {
@@ -280,7 +288,7 @@ html[data-theme="light"] .contact-background::after {
 .project-form__options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-2);
+  gap: 0 var(--ll-grid-gap);
 }
 
 .project-form__option,
@@ -570,7 +578,8 @@ html[data-theme="light"] .contact-background::after {
   .contact-main { padding-top: 92px; }
   .contact-layout { gap: var(--space-6); }
   .contact-intro { display: block; }
-  .contact-intro h1 { max-width: 12ch; margin-block: 34px 22px; font-size: clamp(44px, 11vw, 54px); }
+  .contact-intro h1 { max-width: 100%; margin-block: 34px 22px; font-size: clamp(42px, 11vw, 50px); }
+  html body.ll-contact-page .contact-intro h1 { font-size: clamp(42px, 11vw, 50px) !important; }
   .contact-direct { margin-top: 26px; }
   .contact-availability { margin-top: 28px; }
   .project-form__progress { gap: var(--space-3); margin-bottom: var(--space-5); }
@@ -578,7 +587,8 @@ html[data-theme="light"] .contact-background::after {
   .project-form__options, .project-form__field-grid, .project-form__actions { grid-template-columns: 1fr; }
   .project-form__field-group--wide { grid-column: 1; }
   .project-form__select-wrap select { min-height: 58px; }
-  .project-form__question { font-size: clamp(26px, 7vw, 34px); }
+  .project-form__question { font-size: clamp(24px, 6.5vw, 32px); }
+  html body.ll-contact-page .project-form__question { font-size: clamp(24px, 6.5vw, 32px) !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
