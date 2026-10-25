@@ -1,8 +1,6 @@
 /* Contact / project intake */
 
 body.ll-contact-page {
-  --ll-sans: "Arial", "Helvetica Neue", sans-serif;
-  --ll-mono: "Arial", "Helvetica Neue", sans-serif;
   --contact-paper: #f4f2ec;
   --contact-ink: #080908;
   --contact-muted: rgba(244, 242, 236, 0.62);
@@ -12,7 +10,6 @@ body.ll-contact-page {
   background: #0b0d0c;
   color: var(--contact-paper);
   color-scheme: dark;
-  font-family: "Arial", "Helvetica Neue", sans-serif;
 }
 
 html[data-theme="light"] body.ll-contact-page {
@@ -95,7 +92,7 @@ html[data-theme="light"] .contact-background::after {
   max-width: 12ch;
   margin: clamp(56px, 9vh, 104px) 0 30px;
   color: var(--contact-paper);
-  font-family: "Arial", "Helvetica Neue", sans-serif !important;
+  font-family: var(--ll-sans);
   font-size: clamp(58px, 6vw, 86px);
   font-weight: 700;
   line-height: 0.94;
@@ -264,7 +261,7 @@ html[data-theme="light"] .contact-background::after {
 .project-form__question {
   max-width: 22ch;
   margin: 0;
-  font-family: "Arial", "Helvetica Neue", sans-serif !important;
+  font-family: var(--ll-sans);
   font-size: clamp(32px, 3vw, 54px);
   font-weight: 500;
   line-height: 1;
@@ -546,21 +543,6 @@ html[data-theme="light"] .contact-background::after {
   height: 1px;
   overflow: hidden;
 }
-
-/* Give the intake a calmer typographic voice than the site's pixel display font. */
-body.ll-contact-page #main-content :is(h1, h2, h3, p, a, button, label, input, textarea, select, span) {
-  font-family: "Arial", "Helvetica Neue", sans-serif !important;
-  font-weight: 400 !important;
-  text-transform: none !important;
-}
-
-body.ll-contact-page #main-content #contact-title { font-weight: 700 !important; }
-body.ll-contact-page #main-content .project-form__question { font-weight: 600 !important; }
-body.ll-contact-page #main-content .project-form__option,
-body.ll-contact-page #main-content .project-form__button { font-weight: 600 !important; }
-body.ll-contact-page #main-content .contact-kicker,
-body.ll-contact-page #main-content .contact-direct__label,
-body.ll-contact-page #main-content .project-form__label { text-transform: uppercase !important; }
 
 @media (max-width: 980px) {
   .contact-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
