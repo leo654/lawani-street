@@ -12,3 +12,46 @@
 @import "../button-system.css";
 
 @import "../menu-system.css";
+
+/* Keep the contact controls crisp on the light editorial surface. */
+html body.ll-contact-page {
+  --ll-glass-control-surface: transparent;
+  --ll-glass-control-line: rgba(23, 25, 22, 0.28);
+  --ll-glass-control-ink: #171916;
+  --ll-glass-control-hover: #171916;
+  --ll-glass-control-hover-line: #171916;
+  --ll-glass-control-hover-ink: #e8e7e1;
+  --ll-button-surface: transparent;
+  --ll-button-ink: #171916;
+  --ll-button-hover-surface: #171916;
+  --ll-button-hover-ink: #e8e7e1;
+}
+
+html body.ll-contact-page .project-form__option {
+  height: auto !important;
+  min-height: clamp(58px, 3.8vw, 68px) !important;
+  padding: 14px 20px !important;
+  background: transparent !important;
+  color: #171916 !important;
+  border-color: rgba(23, 25, 22, 0.28) !important;
+}
+
+html body.ll-contact-page .project-form__option::before {
+  background: #171916;
+}
+
+html body.ll-contact-page .project-form__button {
+  height: auto !important;
+  min-height: clamp(58px, 4vw, 68px) !important;
+  color: #171916;
+  border-color: rgba(23, 25, 22, 0.36);
+}
+
+html body.ll-contact-page .project-form__button:not(.project-form__button--secondary) {
+  background: #ff4f12 !important;
+  border-color: #ff4f12 !important;
+  color: #171916 !important;
+  --ll-glass-control-hover: #d83e0d;
+  --ll-glass-control-hover-line: #d83e0d;
+  --ll-glass-control-hover-ink: #171916;
+}

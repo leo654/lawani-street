@@ -599,3 +599,225 @@ html body.ll-contact-page .project-form__question {
   .project-form__progress li,
   .project-form__progress li::after { transition: none; }
 }
+
+/* Light, editorial contact layout: clear intro on the left, guided form on the right. */
+html body.ll-contact-page {
+  --contact-paper: #171916;
+  --contact-ink: #e8e7e1;
+  --contact-muted: rgba(23, 25, 22, 0.6);
+  --contact-line: rgba(23, 25, 22, 0.22);
+  min-height: 100svh;
+  background: #e8e7e1;
+  color: var(--contact-paper);
+  color-scheme: light;
+}
+
+html body.ll-contact-page .contact-background {
+  background: #e8e7e1;
+}
+
+html body.ll-contact-page .contact-background::after {
+  background: radial-gradient(ellipse at 85% 20%, rgba(23, 25, 22, 0.035), transparent 44%);
+}
+
+html body.ll-contact-page .contact-layout {
+  position: relative;
+  min-height: min(860px, calc(100svh - 180px));
+  padding-top: 0;
+  border-top: 0;
+}
+
+html body.ll-contact-page .contact-layout::after {
+  position: absolute;
+  top: clamp(88px, 6.5vh, 104px);
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--contact-line);
+  content: "";
+  pointer-events: none;
+}
+
+html body.ll-contact-page .contact-kicker,
+html body.ll-contact-page .contact-direct__label,
+html body.ll-contact-page .project-form__hint,
+html body.ll-contact-page .project-form__privacy-note,
+html body.ll-contact-page .project-form__label,
+html body.ll-contact-page .project-form__progress li {
+  color: var(--contact-muted);
+}
+
+html body.ll-contact-page .contact-intro h1 {
+  max-width: 6ch;
+  margin: clamp(112px, 11vh, 168px) 0 28px;
+  color: var(--ll-orange);
+  font-size: clamp(72px, 5.8vw, 140px) !important;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.96;
+  text-transform: uppercase;
+}
+
+html body.ll-contact-page .contact-intro h1::after {
+  color: var(--ll-orange);
+}
+
+html body.ll-contact-page .contact-intro__copy {
+  max-width: 54ch;
+  color: var(--contact-paper);
+  font-size: clamp(16px, 1.15vw, 21px);
+  line-height: 1.5;
+}
+
+html body.ll-contact-page .contact-direct {
+  margin-top: clamp(34px, 4vh, 60px);
+}
+
+html body.ll-contact-page .contact-direct a {
+  color: var(--contact-paper);
+  font-size: clamp(14px, 0.95vw, 18px);
+  text-decoration-color: transparent;
+}
+
+html body.ll-contact-page .project-form {
+  padding-top: clamp(220px, 19.2vh, 292px);
+}
+
+html body.ll-contact-page .project-form__progress {
+  position: absolute;
+  top: 0;
+  left: 42.5%;
+  width: 57.5%;
+  margin: 0;
+}
+
+html body.ll-contact-page .project-form__progress li[aria-current="step"],
+html body.ll-contact-page .project-form__progress li.is-complete {
+  color: var(--contact-paper);
+}
+
+html body.ll-contact-page .project-form__question {
+  max-width: 24ch;
+  color: var(--contact-paper);
+  font-size: clamp(34px, 3.15vw, 68px) !important;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+  text-transform: uppercase;
+}
+
+html body.ll-contact-page .project-form__hint {
+  max-width: 66ch;
+  margin: clamp(28px, 4vw, 56px) 0 clamp(22px, 1.5vw, 36px);
+  font-size: clamp(14px, 0.95vw, 18px);
+  line-height: 1.6;
+}
+
+html body.ll-contact-page .project-form__options {
+  gap: 10px;
+}
+
+html body.ll-contact-page .project-form__option {
+  min-height: clamp(58px, 3.8vw, 68px);
+  padding: 14px 20px;
+  border: 1px solid color-mix(in srgb, var(--contact-paper) 27%, transparent);
+  background: transparent;
+  color: var(--contact-paper);
+  font-size: clamp(12px, 0.85vw, 16px);
+  letter-spacing: 0.08em;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+html body.ll-contact-page .project-form__option::after {
+  color: var(--contact-muted);
+  content: "( + )";
+  font-family: var(--ll-mono);
+  font-size: 12px;
+}
+
+html body.ll-contact-page .project-form__option:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--contact-paper) 60%, transparent);
+  background: color-mix(in srgb, var(--contact-paper) 4%, transparent);
+}
+
+html body.ll-contact-page .project-form__option.selected {
+  border-color: var(--ll-orange);
+  background: color-mix(in srgb, var(--ll-orange) 9%, transparent);
+}
+
+html body.ll-contact-page .project-form__option.selected::after {
+  color: var(--contact-paper);
+  content: "( − )";
+}
+
+html body.ll-contact-page .project-form__actions {
+  gap: 12px;
+  margin-top: clamp(32px, 3.5vw, 48px);
+}
+
+html body.ll-contact-page .project-form__button {
+  min-height: clamp(58px, 4vw, 68px);
+  border-color: color-mix(in srgb, var(--contact-paper) 36%, transparent);
+  background: transparent;
+  color: var(--contact-paper);
+  transform: none;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+html body.ll-contact-page .project-form__button:not(.project-form__button--secondary) {
+  border-color: var(--ll-orange);
+  background: var(--ll-orange);
+  color: #151715;
+}
+
+html body.ll-contact-page .project-form__button:is(:hover, :focus-visible) {
+  border-color: var(--contact-paper);
+  background: var(--contact-paper);
+  color: var(--contact-ink);
+  transform: none;
+}
+
+html body.ll-contact-page .project-form__button:not(.project-form__button--secondary):is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--ll-orange) 78%, #151715);
+  background: color-mix(in srgb, var(--ll-orange) 78%, #151715);
+  color: #151715;
+}
+
+html body.ll-contact-page .project-form__privacy-note {
+  font-size: 11px;
+}
+
+@media (min-width: 981px) {
+  html body.ll-contact-page .contact-main {
+    padding-top: clamp(176px, 16.5vh, 248px);
+  }
+}
+
+@media (max-width: 980px) {
+  html body.ll-contact-page .contact-layout {
+    min-height: 0;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--contact-line);
+  }
+
+  html body.ll-contact-page .contact-layout::after { display: none; }
+  html body.ll-contact-page .project-form { padding-top: 0; }
+  html body.ll-contact-page .project-form__progress {
+    position: static;
+    width: 100%;
+    margin: 0 0 var(--space-6);
+  }
+
+  html body.ll-contact-page .contact-intro h1 {
+    margin-top: clamp(38px, 8vh, 90px);
+    font-size: clamp(64px, 10vw, 104px) !important;
+  }
+}
+
+@media (max-width: 680px) {
+  html body.ll-contact-page .contact-main { padding-top: 92px; }
+  html body.ll-contact-page .contact-intro h1 { margin-block: 34px 22px; font-size: clamp(56px, 16vw, 82px) !important; }
+  html body.ll-contact-page .project-form__question { font-size: clamp(30px, 9vw, 42px) !important; }
+  html body.ll-contact-page .project-form__hint { margin: 22px 0 30px; }
+  html body.ll-contact-page .project-form__option { min-height: 58px; padding: 12px 14px; }
+}
