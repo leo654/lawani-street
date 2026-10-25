@@ -303,7 +303,7 @@ html body:not(#global-square-corners) :is(
 /* Structural exceptions: nav items sit on one glass sheet; archive/skill rows and
    showreel controls keep their distinct row or text-only presentation. */
 html body :where(
-  button:not(.ll-nav-toggle, .ll-home-hero__media, .lwa-project__toggle, .ll-hero-showreel__control-row button, [data-skill-row]),
+  button:not(.ll-nav-toggle, .ll-home-hero__media, .lwa-project__toggle, .ll-hero-showreel__control-row button, [data-skill-row], [data-step-jump], .project-form__back),
   input[type="button"],
   input[type="submit"],
   input[type="reset"],
@@ -332,7 +332,7 @@ html body :where(
 }
 
 html body :where(
-  button:not(.ll-nav-toggle, .ll-home-hero__media, .lwa-project__toggle, .ll-hero-showreel__control-row button, [data-skill-row]),
+  button:not(.ll-nav-toggle, .ll-home-hero__media, .lwa-project__toggle, .ll-hero-showreel__control-row button, [data-skill-row], [data-step-jump], .project-form__back),
   input[type="button"],
   input[type="submit"],
   input[type="reset"],
