@@ -10,11 +10,14 @@ const projectArchiveRegion = /<!-- @include:project-archive:start -->[\s\S]*?<!-
 function sharedHtmlPartials() {
   return {
     name: "lawani-shared-html-partials",
-    async transformIndexHtml(html) {
-      if (!projectArchiveRegion.test(html)) return html;
-      if (typeof this.addWatchFile === "function") this.addWatchFile(projectArchivePath);
-      const archive = await readFile(projectArchivePath, "utf8");
-      return html.replace(projectArchiveRegion, archive.trim());
+    transformIndexHtml: {
+      order: "pre",
+      async handler(html) {
+        if (!projectArchiveRegion.test(html)) return html;
+        if (typeof this.addWatchFile === "function") this.addWatchFile(projectArchivePath);
+        const archive = await readFile(projectArchivePath, "utf8");
+        return html.replace(projectArchiveRegion, archive.trim());
+      },
     },
     configureServer(server) {
       server.watcher.add(projectArchivePath);
