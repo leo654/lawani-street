@@ -40,107 +40,6 @@
 
     <script type="module" src="./assets/js/site-entry.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/css/entries/home.css">
-    <style>
-      .ll-home-intro {
-        position: relative;
-        z-index: 10;
-        padding: clamp(76px, 10vw, 148px) var(--ll-page-gutter) clamp(64px, 8vw, 112px);
-        border-top: 1px solid var(--ll-theme-line);
-        background: var(--ll-theme-bg);
-        color: var(--ll-theme-ink);
-      }
-
-      .ll-home-intro__inner {
-        width: min(100%, 1440px);
-        margin-inline: auto;
-      }
-
-      .ll-home-intro__eyebrow,
-      .ll-home-intro__meta {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 24px;
-        color: var(--ll-theme-muted);
-        font-family: var(--ll-mono, "Gridlite", sans-serif);
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        line-height: 1.4;
-        text-transform: uppercase;
-      }
-
-      .ll-home-intro__eyebrow { margin: 0 0 clamp(34px, 5vw, 72px); }
-
-      .ll-home-intro__grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.7fr);
-        align-items: end;
-        gap: clamp(36px, 8vw, 120px);
-      }
-
-      .ll-home-intro__title {
-        max-width: 11ch;
-        margin: 0;
-        font-family: var(--ll-sans, "Gridlite", sans-serif);
-        font-size: clamp(42px, 7.1vw, 108px);
-        font-weight: 600;
-        letter-spacing: -0.045em;
-        line-height: 0.98;
-        text-transform: uppercase;
-        text-wrap: balance;
-      }
-
-      .ll-home-intro__aside { max-width: 430px; padding-bottom: 6px; }
-
-      .ll-home-intro__copy {
-        margin: 0 0 30px;
-        font-size: clamp(15px, 1.2vw, 18px);
-        line-height: 1.6;
-      }
-
-      .ll-home-intro__link {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        min-height: 44px;
-        border-bottom: 1px solid var(--ll-theme-line);
-        color: inherit;
-        font-family: var(--ll-mono, "Gridlite", sans-serif);
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        text-decoration: none;
-        text-transform: uppercase;
-        transition: border-color 180ms ease, color 180ms ease;
-      }
-
-      .ll-home-intro__link:hover,
-      .ll-home-intro__link:focus-visible { border-color: var(--ll-orange); color: var(--ll-orange); }
-
-      .ll-home-intro__meta {
-        justify-content: flex-start;
-        gap: clamp(24px, 5vw, 72px);
-        margin: clamp(48px, 7vw, 96px) 0 0;
-        padding-top: 18px;
-        border-top: 1px solid var(--ll-theme-line);
-      }
-
-      .ll-home-intro__meta span:last-child { margin-left: auto; }
-
-      @media (max-width: 760px) {
-        .ll-home-intro__grid { grid-template-columns: 1fr; gap: 30px; }
-        .ll-home-intro__title { max-width: 10ch; font-size: clamp(42px, 12vw, 72px); }
-        .ll-home-intro__aside { max-width: 520px; }
-        .ll-home-intro__meta { flex-wrap: wrap; row-gap: 10px; }
-        .ll-home-intro__meta span:last-child { margin-left: 0; }
-      }
-
-      @media (max-width: 480px) {
-        .ll-home-intro__eyebrow,
-        .ll-home-intro__meta { font-size: 9px; }
-        .ll-home-intro__eyebrow { margin-bottom: 40px; }
-        .ll-home-intro__meta { gap: 12px 24px; }
-      }
-    </style>
   </head>
 
   <body id="top" class="home-index">
@@ -321,20 +220,6 @@
             <p><span>[ </span><time data-ll-hero-current>0:00</time><span> ] </span><time data-ll-hero-duration>0:00</time></p>
             <button type="button" data-ll-hero-mute>Mute</button>
           </div>
-        </div>
-      </section>
-
-      <section class="ll-home-intro" aria-labelledby="ll-home-intro-title" data-ll-section-note="The studio">
-        <div class="ll-home-intro__inner">
-          <p class="ll-home-intro__eyebrow"><span>[ Independent creative practice ]</span><span>London · Working worldwide</span></p>
-          <div class="ll-home-intro__grid">
-            <h2 class="ll-home-intro__title" id="ll-home-intro-title">Good ideas deserve a sharper form.</h2>
-            <div class="ll-home-intro__aside">
-              <p class="ll-home-intro__copy">I bring strategy, identity and digital craft together to help ambitious ideas become distinctive brands and useful experiences.</p>
-              <a class="ll-home-intro__link" href="#work">Explore selected work <span aria-hidden="true">↘</span></a>
-            </div>
-          </div>
-          <p class="ll-home-intro__meta"><span>Brand strategy</span><span>Visual identity</span><span>Digital experiences</span><span>01 — 03</span></p>
         </div>
       </section>
 
