@@ -1,15 +1,18 @@
 /* Contact / project intake */
 
 body.ll-contact-page {
+  --ll-sans: "Arial", "Helvetica Neue", sans-serif;
+  --ll-mono: "Arial", "Helvetica Neue", sans-serif;
   --contact-paper: #f4f2ec;
   --contact-ink: #080908;
   --contact-muted: rgba(244, 242, 236, 0.62);
-  --contact-line: rgba(244, 242, 236, 0.22);
+  --contact-line: rgba(244, 242, 236, 0.16);
   min-height: 100svh;
   overflow-x: clip;
   background: #0b0d0c;
   color: var(--contact-paper);
   color-scheme: dark;
+  font-family: "Arial", "Helvetica Neue", sans-serif;
 }
 
 html[data-theme="light"] body.ll-contact-page {
@@ -26,10 +29,7 @@ html[data-theme="light"] body.ll-contact-page {
   inset: 0;
   z-index: -1;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 8% 12%, rgba(244, 242, 236, 0.08), transparent 32%),
-    radial-gradient(circle at 88% 84%, rgba(240, 75, 24, 0.12), transparent 30%),
-    linear-gradient(135deg, #171a18 0%, #0b0d0c 54%, #070807 100%);
+  background: linear-gradient(145deg, #11191d 0%, #0b0d0e 46%, #08090a 100%);
   pointer-events: none;
 }
 
@@ -47,9 +47,8 @@ html[data-theme="light"] .contact-background::after {
 .contact-background::after {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(currentColor 0.55px, transparent 0.7px);
-  background-size: 5px 5px;
-  color: rgba(244, 242, 236, 0.12);
+  background: radial-gradient(ellipse at 85% 20%, rgba(244, 242, 236, 0.035), transparent 44%);
+  color: transparent;
   content: "";
   -webkit-mask-image: linear-gradient(90deg, #000, transparent 62%);
   mask-image: linear-gradient(90deg, #000, transparent 62%);
@@ -95,13 +94,18 @@ html[data-theme="light"] .contact-background::after {
 .contact-intro h1 {
   max-width: 12ch;
   margin: clamp(56px, 9vh, 104px) 0 30px;
-  color: #e54810;
-  font-family: var(--ll-sans);
-  font-size: clamp(58px, 5.8vw, 94px);
+  color: var(--contact-paper);
+  font-family: "Arial", "Helvetica Neue", sans-serif !important;
+  font-size: clamp(58px, 6vw, 86px);
   font-weight: 700;
-  line-height: 0.88;
+  line-height: 0.94;
   letter-spacing: -0.075em;
   text-transform: none;
+}
+
+.contact-intro h1::after {
+  color: var(--ll-orange);
+  content: ".";
 }
 
 .contact-intro__copy {
@@ -260,7 +264,7 @@ html[data-theme="light"] .contact-background::after {
 .project-form__question {
   max-width: 22ch;
   margin: 0;
-  font-family: var(--ll-sans);
+  font-family: "Arial", "Helvetica Neue", sans-serif !important;
   font-size: clamp(32px, 3vw, 54px);
   font-weight: 500;
   line-height: 1;
@@ -310,27 +314,32 @@ html[data-theme="light"] .contact-background::after {
 }
 
 .project-form__option {
-  --ll-glass-control-surface: color-mix(in srgb, var(--contact-paper) 4%, transparent);
-  --ll-glass-control-line: color-mix(in srgb, var(--contact-paper) 24%, transparent);
-  --ll-glass-control-ink: var(--contact-paper);
-  --ll-glass-control-hover: var(--ll-orange);
-  --ll-glass-control-hover-line: var(--ll-orange);
-  --ll-glass-control-hover-ink: #070807;
+  min-height: 54px;
+  padding: 12px 4px;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--contact-paper) 24%, transparent);
+  background: transparent;
+  letter-spacing: 0;
 }
 
-.project-form__option::after { content: "( + )"; }
+.project-form__option::after {
+  color: var(--contact-muted);
+  content: "+";
+  font-size: 18px;
+  font-weight: 400;
+}
 
 .project-form__option:is(:hover, :focus-visible) {
-  border-color: color-mix(in srgb, var(--contact-paper) 74%, transparent);
+  border-bottom-color: var(--ll-orange);
 }
 
 .project-form__option.selected {
-  border-color: var(--ll-orange);
-  background: var(--ll-orange);
-  color: #070807;
+  border-bottom-color: var(--ll-orange);
+  background: transparent;
+  color: var(--ll-orange);
 }
 
-.project-form__option.selected::after { content: "( − )"; }
+.project-form__option.selected::after { color: var(--ll-orange); content: "−"; }
 .project-form__other-field { margin-top: 24px; }
 
 .project-form__field-grid {
@@ -538,6 +547,21 @@ html[data-theme="light"] .contact-background::after {
   overflow: hidden;
 }
 
+/* Give the intake a calmer typographic voice than the site's pixel display font. */
+body.ll-contact-page #main-content :is(h1, h2, h3, p, a, button, label, input, textarea, select, span) {
+  font-family: "Arial", "Helvetica Neue", sans-serif !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+}
+
+body.ll-contact-page #main-content #contact-title { font-weight: 700 !important; }
+body.ll-contact-page #main-content .project-form__question { font-weight: 600 !important; }
+body.ll-contact-page #main-content .project-form__option,
+body.ll-contact-page #main-content .project-form__button { font-weight: 600 !important; }
+body.ll-contact-page #main-content .contact-kicker,
+body.ll-contact-page #main-content .contact-direct__label,
+body.ll-contact-page #main-content .project-form__label { text-transform: uppercase !important; }
+
 @media (max-width: 980px) {
   .contact-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
   .contact-intro, .project-form { grid-column: 1; }
@@ -564,7 +588,7 @@ html[data-theme="light"] .contact-background::after {
   .contact-main { padding-top: 92px; }
   .contact-layout { gap: var(--space-6); }
   .contact-intro { display: block; }
-  .contact-intro h1 { max-width: 12ch; margin-block: 34px 22px; font-size: clamp(48px, 14vw, 72px); }
+  .contact-intro h1 { max-width: 12ch; margin-block: 34px 22px; font-size: clamp(48px, 12vw, 68px); }
   .contact-direct { margin-top: 26px; }
   .contact-availability { margin-top: 28px; }
   .project-form__progress { gap: var(--space-3); margin-bottom: var(--space-5); }
