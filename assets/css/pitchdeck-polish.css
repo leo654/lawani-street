@@ -98,3 +98,77 @@ html body.ll-deck-page #lets-talk .ll-world-clock__city.is-home [data-clock-offs
     font-size: 10px;
   }
 }
+
+/* Keep the résumé on the same page gutters as the other chapters. */
+@media (min-width: 981px) and (hover: hover) and (pointer: fine) {
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-resume {
+    right: var(--deck-page-x);
+    left: var(--deck-page-x);
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.7fr) minmax(0, 1.12fr);
+    column-gap: clamp(30px, 4vw, 56px);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-resume__portrait {
+    transform: none;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-resume__main {
+    left: 0;
+    width: auto;
+    grid-template-rows: repeat(4, max-content);
+    align-content: space-between;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-resume__expertise {
+    grid-template-rows: repeat(3, max-content);
+    align-content: space-between;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__arrow--previous {
+    left: var(--deck-page-x);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__arrow--next {
+    right: var(--deck-page-x);
+  }
+}
+
+/* Keep every mobile chapter label visible; the active chapter uses one underline. */
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  html body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters {
+    background: var(--deck-paper);
+    box-shadow: none;
+  }
+
+  html body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters button {
+    position: relative;
+    border-right-color: rgba(32, 34, 31, 0.12);
+    background: transparent !important;
+    color: var(--deck-ink) !important;
+    font-family: var(--ll-mono) !important;
+  }
+
+  html body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters button::before {
+    display: none !important;
+  }
+
+  html body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters button > span:not(.ll-deck__thumb) {
+    font-family: var(--ll-mono) !important;
+  }
+
+  html body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters button.is-active,
+  html body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters button:is(:hover, :focus-visible) {
+    background: transparent !important;
+    color: var(--deck-ink) !important;
+  }
+
+  html body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters button.is-active::after {
+    position: absolute;
+    right: 8px;
+    bottom: 4px;
+    left: 8px;
+    height: 2px;
+    background: var(--ll-orange);
+    content: "";
+  }
+}
