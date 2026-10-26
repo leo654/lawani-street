@@ -124,12 +124,44 @@ html body.ll-deck-page #lets-talk .ll-world-clock__city.is-home [data-clock-offs
     align-content: space-between;
   }
 
-  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__arrow--previous {
-    left: var(--deck-page-x);
+}
+
+/* Give service navigation a clear hit area outside the copy and controls. */
+@media (min-width: 981px) {
+  html body.ll-deck-page #what-i-do.ll-deck-slide .ll-service-shop__arrow {
+    width: 60px;
+    height: 60px;
+    border: 1px solid rgba(32, 34, 31, 0.48) !important;
+    background: #f4f2ec !important;
+    color: #20221f !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    z-index: 8;
   }
 
-  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__arrow--next {
-    right: var(--deck-page-x);
+  html body.ll-deck-page #what-i-do.ll-deck-slide .ll-service-shop__arrow svg {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+  }
+
+  html body.ll-deck-page #what-i-do.ll-deck-slide .ll-service-shop__arrow--previous {
+    left: clamp(18px, 1.4vw, 26px);
+  }
+
+  html body.ll-deck-page #what-i-do.ll-deck-slide .ll-service-shop__arrow--next {
+    right: clamp(18px, 1.4vw, 26px);
+  }
+
+  html body.ll-deck-page #what-i-do.ll-deck-slide .ll-service-shop__arrow:is(:hover, :focus-visible) {
+    border-color: var(--ll-orange) !important;
+    background: var(--ll-orange) !important;
+    color: #20221f !important;
   }
 }
 
