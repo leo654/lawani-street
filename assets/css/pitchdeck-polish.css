@@ -199,3 +199,10 @@ html body.ll-deck-page #lets-talk .ll-world-clock__city.is-home [data-clock-offs
     content: "";
   }
 }
+
+/* Remove the exposed page-colored seam between the open rail and its stage. */
+@media (min-width: 761px) {
+  html body.ll-deck-page .ll-deck.is-rail-open {
+    --deck-rail-gap: 0px;
+  }
+}
