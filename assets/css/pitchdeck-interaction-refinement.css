@@ -1,0 +1,92 @@
+/* Keep pitchdeck controls free of the shared gray glass hover wash. */
+html body.ll-deck-page ::selection {
+  background: rgba(32, 34, 31, 0.14);
+  color: inherit;
+}
+
+html body.ll-deck-page #what-i-do :is(
+  .ll-service-shop__tabs button,
+  .ll-service-product__stepper button,
+  .ll-service-product__cta,
+  .ll-service-shop__arrow,
+  .ll-service-shop__pagination button
+)::before,
+html body.ll-deck-page #lets-talk .ll-world-clock__format button::before {
+  content: none !important;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-shop__tabs button {
+  background: transparent !important;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-shop__tabs button:is(
+  .is-active,
+  :hover,
+  :focus-visible
+) {
+  background: transparent !important;
+  color: var(--service-shop-ink) !important;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-shop__tabs button:is(:hover, :focus-visible) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-product__stepper button:is(:hover, :focus-visible),
+html body.ll-deck-page #what-i-do .ll-service-shop__arrow:is(:hover, :focus-visible),
+html body.ll-deck-page #what-i-do .ll-service-shop__pagination button:is(:hover, :focus-visible, .is-active) {
+  background: transparent !important;
+}
+
+html body.ll-deck-page #what-i-do :is(
+  .ll-service-product__stepper button,
+  .ll-service-shop__arrow,
+  .ll-service-shop__pagination button
+),
+html body.ll-deck-page #lets-talk .ll-world-clock__format button {
+  background: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-product__stepper button:is(:hover, :focus-visible),
+html body.ll-deck-page #what-i-do .ll-service-shop__arrow:is(:hover, :focus-visible) {
+  color: var(--service-shop-ink) !important;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-product__cta {
+  background: var(--service-shop-ink) !important;
+  color: var(--deck-paper) !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-product__cta:is(:hover, :focus-visible) {
+  background: var(--ll-orange) !important;
+  color: var(--service-shop-ink) !important;
+}
+
+html body.ll-deck-page #lets-talk .ll-world-clock__format button {
+  background: transparent !important;
+  color: #111 !important;
+}
+
+html body.ll-deck-page #lets-talk .ll-world-clock__format button[aria-pressed="true"] {
+  background: #050505 !important;
+  color: #fff !important;
+}
+
+html body.ll-deck-page #what-i-do :is(
+  .ll-service-shop__tabs button,
+  .ll-service-product__stepper button,
+  .ll-service-product__cta,
+  .ll-service-shop__arrow,
+  .ll-service-shop__pagination button
+):focus-visible,
+html body.ll-deck-page #lets-talk .ll-world-clock__format button:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 3px;
+}
