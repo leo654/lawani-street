@@ -53,13 +53,9 @@ if (footers.length && "IntersectionObserver" in window) {
       const markTop = window.innerHeight - 96 - lineHeight;
       const x = Math.max(0, Math.min(1, pointer.clientX / Math.max(1, window.innerWidth)));
       const y = Math.max(0, Math.min(1, (pointer.clientY - markTop) / Math.max(1, lineHeight)));
-      const lightX = Math.max(-1, Math.min(1, (pointer.clientX - window.innerWidth / 2) / Math.max(1, window.innerWidth / 2)));
-      const lightY = Math.max(-1, Math.min(1, (pointer.clientY - (markTop + lineHeight / 2)) / Math.max(1, lineHeight / 2)));
 
       footer.style.setProperty("--footer-light-x", (x * 100) + "%");
       footer.style.setProperty("--footer-light-y", (y * 100) + "%");
-      footer.style.setProperty("--footer-bevel-x", (-lightX * 1.1).toFixed(2) + "px");
-      footer.style.setProperty("--footer-bevel-y", (-lightY * 1.1).toFixed(2) + "px");
     };
 
     const onPointerMove = (event) => {
@@ -74,8 +70,6 @@ if (footers.length && "IntersectionObserver" in window) {
       frame = 0;
       footer.style.removeProperty("--footer-light-x");
       footer.style.removeProperty("--footer-light-y");
-      footer.style.removeProperty("--footer-bevel-x");
-      footer.style.removeProperty("--footer-bevel-y");
     };
 
     footer.addEventListener("pointermove", onPointerMove, { passive: true });

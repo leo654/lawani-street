@@ -46,22 +46,25 @@
   bottom: 3.5%;
   left: -0.12em;
   overflow: hidden;
-  color: transparent;
+  color: rgba(244, 242, 236, 0.012);
   background: none;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 0.9px rgba(226, 230, 239, calc(0.22 + var(--footer-relight) * 0.22));
+  -webkit-text-fill-color: rgba(244, 242, 236, 0.012);
+  -webkit-text-stroke: 0.7px rgba(244, 242, 236, calc(0.035 + var(--footer-relight) * 0.04));
+  text-shadow:
+    -0.7px -0.7px 0 rgba(255, 255, 255, 0.035),
+    0.8px 0.8px 0 rgba(0, 0, 0, 0.68),
+    0 2px 3px rgba(0, 0, 0, 0.22);
   content: "LAWANI ST.";
-  font-family: "Gridlite", sans-serif;
-  font-size: clamp(360px, 48vw, 960px);
-  font-weight: 700;
-  letter-spacing: -0.07em;
+  font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(220px, 39vw, 760px);
+  font-weight: 900;
+  letter-spacing: -0.09em;
   line-height: 0.72;
   text-align: center;
   white-space: nowrap;
   clip-path: inset(50% 0 0);
   opacity: 0;
-  transition: --footer-relight 260ms ease, opacity 180ms ease, filter 180ms ease;
-  filter: none;
+  transition: --footer-relight 260ms ease, opacity 240ms ease, color 240ms ease, text-shadow 240ms ease;
   pointer-events: none;
 }
 
@@ -76,36 +79,37 @@
   color: transparent;
   background: none;
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 1.15px rgba(240, 243, 250, 0.78);
-  text-stroke: 1.15px rgba(240, 243, 250, 0.78);
+  -webkit-text-stroke: 1px rgba(255, 79, 18, 0.5);
+  text-stroke: 1px rgba(255, 79, 18, 0.5);
+  text-shadow: 0 0 1px rgba(255, 79, 18, 0.16);
   content: "LAWANI ST.";
-  font-family: "Gridlite", sans-serif;
-  font-size: clamp(360px, 48vw, 960px);
-  font-weight: 700;
-  letter-spacing: -0.07em;
+  font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(220px, 39vw, 760px);
+  font-weight: 900;
+  letter-spacing: -0.09em;
   line-height: 0.72;
   text-align: center;
   white-space: nowrap;
   clip-path: inset(50% 0 0);
   opacity: 0;
-  mask-image: radial-gradient(ellipse 20% 150% at var(--footer-light-x, 50%) var(--footer-light-y, 50%), #000 0%, rgba(0, 0, 0, 0.68) 46%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 20% 150% at var(--footer-light-x, 50%) var(--footer-light-y, 50%), #000 0%, rgba(0, 0, 0, 0.68) 46%, transparent 100%);
-  filter: drop-shadow(0 0 5px rgba(222, 231, 255, 0.24));
-  transition: opacity 160ms ease;
+  mask-image: radial-gradient(ellipse 24% 125% at var(--footer-light-x, 50%) var(--footer-light-y, 50%), #000 0%, rgba(0, 0, 0, 0.62) 44%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 24% 125% at var(--footer-light-x, 50%) var(--footer-light-y, 50%), #000 0%, rgba(0, 0, 0, 0.62) 44%, transparent 100%);
+  transition: opacity 240ms ease;
   pointer-events: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   :is(.ll-footer, .cs-footer, .lwa-footer):hover::before {
-    --footer-relight: 0.55;
+    --footer-relight: 0.45;
     opacity: 1;
-    filter:
-      drop-shadow(var(--footer-bevel-x, 0px) var(--footer-bevel-y, -1px) 0.7px rgba(255, 255, 255, 0.30))
-      drop-shadow(calc(var(--footer-bevel-x, 0px) * -1) calc(var(--footer-bevel-y, -1px) * -1) 0.9px rgba(0, 0, 0, 0.72));
+    text-shadow:
+      -0.7px -0.7px 0 rgba(255, 255, 255, 0.055),
+      0.8px 0.8px 0 rgba(0, 0, 0, 0.72),
+      0 2px 3px rgba(0, 0, 0, 0.26);
   }
 
   :is(.ll-footer, .cs-footer, .lwa-footer):hover::after {
-    opacity: 0.88;
+    opacity: 0.36;
   }
 }
 
