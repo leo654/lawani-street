@@ -143,6 +143,7 @@ html body.ll-deck-page #lets-talk .ll-world-clock__city.is-home [data-clock-offs
   html body.ll-deck-page #what-i-do.ll-deck-slide .ll-service-shop__arrow .ll-arrow-glyph {
     font-family: "Gridlite", sans-serif !important;
     font-size: 24px !important;
+    transform: translate(-0.5px, -4px);
   }
 
   html body.ll-deck-page #what-i-do.ll-deck-slide .ll-service-shop__arrow--previous {
