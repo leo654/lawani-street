@@ -795,7 +795,18 @@ body.case-study :is(.cs-related, .cs-footer) .ll-reveal {
   }
 
   .cs-hero__meta {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+  }
+
+  .cs-hero__meta .cs-tags {
+    min-width: 0;
+    flex-wrap: nowrap;
+  }
+
+  .cs-hero__meta .cs-tags li {
+    padding-inline: clamp(6px, 2.2vw, 11px);
+    white-space: nowrap;
   }
 
   .cs-jump {
@@ -1149,4 +1160,20 @@ html body.case-study .cs-footer__actions .ll-button:is(:hover, :focus-visible) >
     transition: none;
   }
 
+}
+
+/* Match Kicksjoint story labels and credits to the 14px story paragraph. */
+html body.case-study--kicksjoint #main-content .cs-story__copy :is(
+  .cs-story__label,
+  .cs-story__credits,
+  .cs-story__credits *
+) {
+  font-size: 14px;
+}
+
+html body.case-study--kicksjoint #main-content .cs-story__copy :is(
+  .cs-story__label,
+  .cs-story__credits > p
+) {
+  font-weight: 900 !important;
 }

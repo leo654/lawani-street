@@ -134,16 +134,8 @@
 
     function updateHeroState() {
       document.body.classList.toggle("is-past-home-hero", window.scrollY > hero.offsetHeight * (CONSTANTS.SCROLL?.HERO_PAST_THRESHOLD || 0.55));
-      var progress = 0;
-
-      if (!reduceMotion && window.innerWidth > (CONSTANTS.BREAKPOINT?.HERO_EFFECT || 820)) {
-        progress = Math.min(1, Math.max(0, window.scrollY / Math.max(1, hero.offsetHeight)));
-        hero.style.setProperty("--ll-hero-scroll", progress.toFixed(4));
-      } else {
-        hero.style.setProperty("--ll-hero-scroll", "0");
-      }
-
-      hero.style.setProperty("--ll-hero-line-scale", Math.max(CONSTANTS.SCROLL?.HERO_LINE_SCALE_MIN || 0.18, 1 - progress * (CONSTANTS.SCROLL?.HERO_LINE_SCALE_MAX || 0.82)).toFixed(4));
+      hero.style.setProperty("--ll-hero-scroll", "0");
+      hero.style.setProperty("--ll-hero-line-scale", "1");
     }
 
     function requestHeroUpdate() {

@@ -15,6 +15,6 @@
 @import "../footer-utility.css";
 @import "../nonstop-footer.css";
 
-@import "../button-system.css";
+@import "../button-system.css?v=20261026-back-to-top-rise";
 
 @import "../menu-system.css";

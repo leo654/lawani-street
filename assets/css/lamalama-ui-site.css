@@ -138,6 +138,7 @@ ul {
   border-radius:999px;
   background:#c96248;
   mix-blend-mode:normal;
+  overflow:visible;
   transition:width 220ms var(--ll-ease),height 220ms var(--ll-ease),margin 220ms var(--ll-ease),border-color 180ms ease,background-color 180ms ease,opacity 180ms ease
 }
 .elastic-cursor-icon {

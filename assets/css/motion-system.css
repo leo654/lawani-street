@@ -21,8 +21,8 @@
   --motion-reveal: 760ms;
   --motion-expand: 640ms;
   --motion-reveal-offset: 14px;
-  --motion-page-cover: 540ms;
-  --motion-page-reveal: 680ms;
+  --motion-page-cover: 420ms;
+  --motion-page-reveal: 520ms;
   --motion-page: var(--duration-slower);
   --motion-media-opacity: 600ms;
   --motion-media-scale: 800ms;

@@ -11,9 +11,9 @@
   var counter = loader.querySelector(".home-page-loader__counter");
   var count = loader.querySelector(".home-page-loader__count");
   var startedAt = performance.now();
-  var minimumDuration = 650;
-  var logoHoldDuration = 520;
-  var exitDuration = 560;
+  var minimumDuration = 480;
+  var logoHoldDuration = 360;
+  var exitDuration = 420;
   var finished = false;
   var pageLoaded = document.readyState === "complete";
 

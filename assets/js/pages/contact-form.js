@@ -4,260 +4,129 @@
   var form = document.querySelector("[data-project-form]");
   if (!form) return;
 
-  var steps = Array.prototype.slice.call(form.querySelectorAll("[data-step]"));
-  var progressItems = Array.prototype.slice.call(form.querySelectorAll("[data-progress-step]"));
-  var progressButtons = Array.prototype.slice.call(form.querySelectorAll("[data-step-jump]"));
-  var options = Array.prototype.slice.call(form.querySelectorAll("[data-project-type]"));
-  var projectTypesInput = form.querySelector("[data-project-types]");
-  var otherField = form.querySelector("[data-other-field]");
-  var otherInput = form.querySelector("[data-other-input]");
-  var selectionError = form.querySelector("[data-selection-error]");
-  var summary = form.querySelector("[data-project-summary]");
-  var description = form.querySelector("[data-project-description]");
-  var descriptionCount = form.querySelector("[data-description-count]");
-  var submitButton = form.querySelector("[data-submit-button]");
-  var formStatus = form.querySelector("[data-form-status]");
-  var selectedTypes = new Set();
-  var currentStep = 1;
-  var maxVisitedStep = 1;
-  var transitioning = false;
   var recipient = "talktolawanistreet@gmail.com";
-  var motion = window.LawaniMotion;
+  var status = form.querySelector("[data-form-status]");
+  var honeypot = form.querySelector('input[name="website"]');
+  var reasonSelect = form.querySelector('select[name="reason"]');
+  var select = form.querySelector("[data-contact-select]");
+  var selectTrigger = select && select.querySelector("[data-select-trigger]");
+  var selectValue = select && select.querySelector("[data-select-value]");
+  var selectMenu = select && select.querySelector('[role="listbox"]');
+  var selectOptions = select ? Array.from(select.querySelectorAll("[data-select-option]")) : [];
 
-  var labels = {
-    "brand-identity": "Brand identity",
-    website: "Website",
-    campaign: "Campaign",
-    product: "Digital product",
-    "creative-direction": "Creative direction",
-    other: "Something else"
-  };
-
-  function reducedMotion() {
-    return motion ? motion.reduced() : window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function selectedIndex() {
+    return selectOptions.findIndex(function (option) {
+      return option.getAttribute("aria-selected") === "true";
+    });
   }
 
-  function setError(input, message) {
-    if (!input) return;
-    input.setAttribute("aria-invalid", message ? "true" : "false");
-    var error = form.querySelector("#" + input.id + "Error");
-    if (error) error.textContent = message || "";
+  function closeSelect(returnFocus) {
+    if (!select || !selectMenu || !selectTrigger) return;
+    selectMenu.hidden = true;
+    selectTrigger.setAttribute("aria-expanded", "false");
+    if (returnFocus) selectTrigger.focus();
   }
 
-  function validationMessage(input) {
-    if (input.validity.typeMismatch) return "Enter a valid email address";
-    if (input.validity.tooShort) return "Add a little more detail";
-    if (input.validity.valueMissing) return "Complete this field";
-    return "Check this field";
+  function focusOption(index) {
+    if (!selectOptions.length) return;
+    var safeIndex = (index + selectOptions.length) % selectOptions.length;
+    selectOptions[safeIndex].focus();
   }
 
-  function validateStep(stepNumber) {
-    var step = form.querySelector('[data-step="' + stepNumber + '"]');
-    if (!step) return false;
+  function openSelect(index) {
+    if (!select || !selectMenu || !selectTrigger) return;
+    selectMenu.hidden = false;
+    selectTrigger.setAttribute("aria-expanded", "true");
+    focusOption(index >= 0 ? index : Math.max(selectedIndex(), 0));
+  }
 
-    if (stepNumber === 1) {
-      if (!selectedTypes.size) {
-        selectionError.textContent = "Select at least one service";
-        selectionError.hidden = false;
-        options[0].focus();
-        return false;
+  function chooseOption(value) {
+    if (!reasonSelect || !selectValue || !selectTrigger) return;
+    reasonSelect.value = value;
+    selectValue.textContent = value;
+    selectValue.removeAttribute("data-empty");
+    selectTrigger.removeAttribute("data-invalid");
+    selectOptions.forEach(function (option) {
+      option.setAttribute("aria-selected", String(option.getAttribute("data-select-option") === value));
+    });
+    reasonSelect.dispatchEvent(new Event("change", { bubbles: true }));
+    if (status) status.textContent = "";
+    closeSelect(true);
+  }
+
+  if (select && selectTrigger && selectMenu) {
+    selectValue.setAttribute("data-empty", "true");
+
+    selectTrigger.addEventListener("click", function () {
+      if (selectMenu.hidden) openSelect(selectedIndex());
+      else closeSelect(false);
+    });
+
+    selectTrigger.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        openSelect(selectedIndex() + (event.key === "ArrowDown" ? 1 : 0));
       }
-
-      if (selectedTypes.has("other") && !otherInput.value.trim()) {
-        selectionError.textContent = "Tell me what you need";
-        selectionError.hidden = false;
-        setError(otherInput, "Please specify the service");
-        otherInput.focus();
-        return false;
-      }
-
-      selectionError.hidden = true;
-      setError(otherInput, "");
-    }
-
-    var firstInvalid = null;
-    Array.prototype.slice.call(step.querySelectorAll("[required]")).forEach(function (input) {
-      var valid = input.checkValidity() && input.value.trim();
-      setError(input, valid ? "" : validationMessage(input));
-      if (!valid && !firstInvalid) firstInvalid = input;
     });
 
-    if (firstInvalid) {
-      firstInvalid.focus();
-      return false;
-    }
-    return true;
-  }
-
-  function updateProgress(stepNumber) {
-    progressItems.forEach(function (item) {
-      var itemStep = Number(item.getAttribute("data-progress-step"));
-      item.classList.toggle("is-complete", itemStep < stepNumber);
-      if (itemStep === stepNumber) item.setAttribute("aria-current", "step");
-      else item.removeAttribute("aria-current");
-    });
-
-    progressButtons.forEach(function (button) {
-      button.disabled = Number(button.getAttribute("data-step-jump")) > maxVisitedStep;
-    });
-  }
-
-  function focusStep(step) {
-    var target = step.querySelector("input:not([type=hidden]), textarea, select, button:not([data-back])");
-    if (!target) target = step.querySelector(".project-form__question");
-    if (!target) return;
-    if (!target.hasAttribute("tabindex") && target.matches("h2")) target.tabIndex = -1;
-    target.focus({ preventScroll: true });
-  }
-
-  function showStep(stepNumber) {
-    if (transitioning || stepNumber === currentStep) return;
-    var outgoing = form.querySelector('[data-step="' + currentStep + '"]');
-    var incoming = form.querySelector('[data-step="' + stepNumber + '"]');
-    if (!outgoing || !incoming) return;
-
-    transitioning = true;
-    var finish = function () {
-      outgoing.hidden = true;
-      outgoing.setAttribute("aria-hidden", "true");
-      // Release the exit effect so revisiting this step cannot retain opacity: 0.
-      if (animation) animation.cancel();
-      incoming.hidden = false;
-      incoming.setAttribute("aria-hidden", "false");
-      incoming.classList.remove("is-entering");
-      void incoming.offsetWidth;
-      incoming.classList.add("is-entering");
-
-      currentStep = stepNumber;
-      maxVisitedStep = Math.max(maxVisitedStep, stepNumber);
-      updateProgress(stepNumber);
-      if (stepNumber === 3) updateSummary();
-
-      window.requestAnimationFrame(function () {
-        focusStep(incoming);
-        transitioning = false;
+    selectOptions.forEach(function (option, index) {
+      option.addEventListener("click", function () {
+        chooseOption(option.getAttribute("data-select-option"));
       });
-    };
 
-    if (reducedMotion() || typeof outgoing.animate !== "function") {
-      finish();
-      return;
-    }
-
-    var animation = outgoing.animate(
-      [
-        { opacity: 1, transform: "translate3d(0,0,0)" },
-        { opacity: 0, transform: "translate3d(0,-12px,0)" }
-      ],
-      { duration: (window.LawaniConstants?.DURATION?.CONTROL || 240), easing: (window.LawaniConstants?.EASING?.IN_OUT || "cubic-bezier(0.65, 0, 0.35, 1)"), fill: "forwards" }
-    );
-    animation.finished.then(finish, finish);
-  }
-
-  function updateSummary() {
-    var values = Array.from(selectedTypes).map(function (value) { return labels[value]; });
-    if (selectedTypes.has("other") && otherInput.value.trim()) values.push(otherInput.value.trim());
-    summary.textContent = values.join(" / ");
-  }
-
-  function syncSelection() {
-    projectTypesInput.value = Array.from(selectedTypes).map(function (value) { return labels[value]; }).join(", ");
-    var hasOther = selectedTypes.has("other");
-    otherField.hidden = !hasOther;
-    otherInput.required = hasOther;
-    if (!hasOther) {
-      otherInput.value = "";
-      setError(otherInput, "");
-    }
-    selectionError.hidden = true;
-  }
-
-  options.forEach(function (button) {
-    button.addEventListener("click", function () {
-      var value = button.getAttribute("data-project-type");
-      if (selectedTypes.has(value)) selectedTypes.delete(value);
-      else selectedTypes.add(value);
-      var selected = selectedTypes.has(value);
-      button.classList.toggle("selected", selected);
-      button.setAttribute("aria-pressed", String(selected));
-      syncSelection();
+      option.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowDown") {
+          event.preventDefault();
+          focusOption(index + 1);
+        } else if (event.key === "ArrowUp") {
+          event.preventDefault();
+          focusOption(index - 1);
+        } else if (event.key === "Home") {
+          event.preventDefault();
+          focusOption(0);
+        } else if (event.key === "End") {
+          event.preventDefault();
+          focusOption(selectOptions.length - 1);
+        } else if (event.key === "Escape") {
+          event.preventDefault();
+          closeSelect(true);
+        } else if (event.key === "Tab") {
+          closeSelect(false);
+        }
+      });
     });
-  });
 
-  form.addEventListener("click", function (event) {
-    var next = event.target.closest("[data-next]");
-    var back = event.target.closest("[data-back]");
-    var jump = event.target.closest("[data-step-jump]");
-
-    if (next) {
-      if (validateStep(currentStep)) showStep(Number(next.getAttribute("data-next")));
-      return;
-    }
-
-    if (back) {
-      showStep(Number(back.getAttribute("data-back")));
-      return;
-    }
-
-    if (jump) {
-      var target = Number(jump.getAttribute("data-step-jump"));
-      if (target <= maxVisitedStep) showStep(target);
-    }
-  });
-
-  function setStatus(state, message, fallbackUrl) {
-    formStatus.setAttribute("data-state", state);
-    formStatus.replaceChildren(document.createTextNode(message || ""));
-    if (!fallbackUrl) return;
-    var link = document.createElement("a");
-    link.href = fallbackUrl;
-    link.textContent = " Email me directly";
-    formStatus.appendChild(link);
-  }
-
-  function buildMailto(formData, projectTypes) {
-    var lines = [
-      "PROJECT TYPE:\n" + projectTypes,
-      "NAME:\n" + formData.get("name"),
-      "EMAIL:\n" + formData.get("email"),
-      "COMPANY:\n" + (formData.get("company") || "N/A"),
-      "TIMELINE:\n" + (formData.get("timeline") || "Not specified"),
-      "BUDGET:\n" + (formData.get("budget") || "Not specified"),
-      "PROJECT:\n" + formData.get("projectDescription")
-    ];
-    if (selectedTypes.has("other") && otherInput.value.trim()) lines.splice(1, 0, "OTHER SERVICE:\n" + otherInput.value.trim());
-    return {
-      body: lines.join("\n\n"),
-      url: "mailto:" + recipient + "?subject=" + encodeURIComponent("Start a project: " + projectTypes) + "&body=" + encodeURIComponent(lines.join("\n\n"))
-    };
+    document.addEventListener("pointerdown", function (event) {
+      if (!select.contains(event.target)) closeSelect(false);
+    });
   }
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
-    if (form.getAttribute("data-state") === "success" || !validateStep(3)) return;
+    if (!form.reportValidity()) return;
+    if (honeypot && honeypot.value.trim()) return;
 
-    var formData = new FormData(form);
-    var projectTypes = Array.from(selectedTypes).map(function (value) { return labels[value]; }).join(", ");
-    var fallback = buildMailto(formData, projectTypes);
-    // GitHub Pages cannot run the PHP endpoint mentioned in older setup notes.
-    // Open the prefilled email directly instead of trying to fetch a mailto URL.
-    window.location.assign(fallback.url);
+    if (reasonSelect && !reasonSelect.value) {
+      if (selectTrigger) {
+        selectTrigger.setAttribute("data-invalid", "true");
+        selectTrigger.focus();
+      }
+      if (status) status.textContent = "PLEASE CHOOSE A PROJECT TYPE.";
+      return;
+    }
+
+    var data = new FormData(form);
+    var reason = String(data.get("reason") || "Project inquiry");
+    var body = [
+      "NAME: " + String(data.get("name") || ""),
+      "EMAIL: " + String(data.get("email") || ""),
+      "PHONE: " + String(data.get("phone") || "Not provided"),
+      "REASON: " + reason,
+      "MESSAGE:\n" + String(data.get("message") || "")
+    ].join("\n\n");
+    var url = "mailto:" + recipient + "?subject=" + encodeURIComponent("Project inquiry — " + reason) + "&body=" + encodeURIComponent(body);
+
+    if (status) status.textContent = "Opening a new email draft…";
+    window.location.assign(url);
   });
-
-  Array.prototype.slice.call(form.querySelectorAll("input, textarea, select")).forEach(function (input) {
-    input.addEventListener("input", function () {
-      setError(input, "");
-      if (form.getAttribute("data-state") === "error") setStatus("idle", "");
-    });
-  });
-
-  if (description && descriptionCount) {
-    description.addEventListener("input", function () {
-      descriptionCount.value = description.value.length + " / 4000";
-      descriptionCount.textContent = descriptionCount.value;
-    });
-  }
-
-  updateProgress(1);
-  syncSelection();
 })();

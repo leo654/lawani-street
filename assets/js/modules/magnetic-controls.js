@@ -4,7 +4,7 @@ const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const selector = ".ll-button:not(.ll-sound-toggle):not(.ll-home-hero__video-toggle), .ll-action-link";
 
 if (gsap && gsap.quickTo && finePointer.matches && !reducedMotion.matches) {
-  const controls = [...document.querySelectorAll(selector)];
+  const controls = [...document.querySelectorAll(selector)].filter((control) => !control.closest(".ll-home-hero"));
   const motions = controls.map((control) => {
     const x = gsap.quickTo(control, "x", { duration: 0.28, ease: "power3.out" });
     const y = gsap.quickTo(control, "y", { duration: 0.28, ease: "power3.out" });

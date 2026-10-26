@@ -5,8 +5,10 @@ const mobileViewport = window.matchMedia("(max-width: 820px), (pointer: coarse)"
 const glassTargetSelector = ".ll-nav-dock, .ll-contact-dock__primary";
 const hasGlassTargets = Boolean(document.querySelector(glassTargetSelector));
 const effects = [];
+let effectsGeneration = 0;
 
 function destroyEffects() {
+  effectsGeneration += 1;
   effects.splice(0).forEach((effect) => {
     if (Array.isArray(effect)) {
       effect.forEach((instance) => instance?.destroy?.());
@@ -19,11 +21,12 @@ function destroyEffects() {
 
 function createLens(target, zIndex, settings = {}) {
   if (!document.querySelector(target)) return;
+  const generation = effectsGeneration;
   const instances = liquidGL({
     target,
     snapshot: "body",
     engine: "auto",
-    resolution: 1.25,
+    resolution: 1,
     zIndex,
     refraction: 0.045,
     aberration: 0.02,
@@ -41,7 +44,9 @@ function createLens(target, zIndex, settings = {}) {
     ...settings,
     on: {
       init() {
-        if (!mobileViewport.matches) document.documentElement.classList.add("liquid-gl-ready");
+        if (generation === effectsGeneration && !mobileViewport.matches && !reduceMotion.matches) {
+          document.documentElement.classList.add("liquid-gl-ready");
+        }
       },
     },
   });
@@ -51,7 +56,10 @@ function createLens(target, zIndex, settings = {}) {
 
 function syncLiquidGlass() {
   destroyEffects();
-  if (reduceMotion.matches || !hasGlassTargets || mobileViewport.matches) return;
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const limitedMemory = navigator.deviceMemory && navigator.deviceMemory <= 2;
+  const limitedNetwork = connection && (connection.saveData || /(^|-)2g$/.test(connection.effectiveType || ""));
+  if (reduceMotion.matches || !hasGlassTargets || mobileViewport.matches || limitedMemory || limitedNetwork) return;
 
   try {
     createLens(glassTargetSelector, 100, {

@@ -49,6 +49,8 @@ async function loadMotionDependencies() {
 
 async function initialize() {
   try {
+    await import("./modules/feature-detection.js").catch((e) => console.warn("Feature detection failed to load:", e));
+
     if (hasSharedMotion) {
       await import("./modules/motion-system.js").catch((e) => console.warn("Motion system failed to load:", e));
     }
@@ -62,13 +64,12 @@ async function initialize() {
         console.warn("Media scroll reveals failed to load.", error);
       });
       await import("./modules/media-ripple.js").catch((error) => {
-        console.warn("Media ripple effect failed to load.", error);
+        console.warn("Media hover ripple failed to load.", error);
       });
     }
 
     await import("./modules/constants.js").catch((e) => console.warn("Constants failed to load:", e));
     await import("./modules/storage.js").catch((e) => console.warn("Storage module failed to load:", e));
-    await import("./modules/feature-detection.js").catch((e) => console.warn("Feature detection failed to load:", e));
     await import("./modules/sound-system.js").catch((e) => console.warn("Sound system failed to load:", e));
 
     if (page.caseStudy) {
@@ -80,8 +81,6 @@ async function initialize() {
         await import("./components/replay.js").catch((e) => console.warn("TYOL logo controls failed to load:", e));
       }
     }
-
-    if (usesGsap) await import("./modules/magnetic-controls.js").catch((e) => console.warn("Magnetic controls failed to load:", e));
 
     if (document.querySelector("svg.ll-icon[class*='ll-icon--arrow-'], .ll-button__icon-panel > svg")) {
       await import("./modules/gridlite-arrow-glyphs.js").catch((e) => console.warn("Arrow glyphs failed to load:", e));

@@ -7,6 +7,9 @@
   var scheduled = new Map();
   var frameId = 0;
   var smoothScroll = null;
+  var smoothScrollCleanup = null;
+  var smoothScrollGeneration = 0;
+  var smoothScrollLoading = false;
   var navigateToPage = null;
 
   function reduced() {
@@ -31,13 +34,17 @@
   }
 
   function initSmoothScroll() {
-    if (reduced() || !document.querySelector("main") || document.body.classList.contains("ll-deck-page")) return;
+    if (reduced() || smoothScroll || smoothScrollLoading || !document.querySelector("main") || document.body.classList.contains("ll-deck-page")) return;
+
+    smoothScrollLoading = true;
+    var generation = ++smoothScrollGeneration;
 
     import("lenis").then(function (lenisModule) {
-      if (smoothScroll || reduced()) return;
+      if (generation === smoothScrollGeneration) smoothScrollLoading = false;
+      if (generation !== smoothScrollGeneration || reduced() || document.body.classList.contains("ll-deck-page")) return;
 
       var Lenis = lenisModule.default;
-      smoothScroll = new Lenis({
+      var instance = new Lenis({
         autoRaf: false,
         allowNestedScroll: true,
         anchors: false,
@@ -45,8 +52,9 @@
         smoothWheel: true,
         wheelMultiplier: 0.9
       });
+      smoothScroll = instance;
 
-      smoothScroll.on("scroll", function () {
+      instance.on("scroll", function () {
         if (window.ScrollTrigger) window.ScrollTrigger.update();
       });
 
@@ -54,13 +62,12 @@
       var gsapTicker = null;
       if (window.gsap && window.gsap.ticker) {
         gsapTicker = function (time) {
-          smoothScroll.raf(time * 1000);
+          instance.raf(time * 1000);
         };
         window.gsap.ticker.add(gsapTicker);
-        window.gsap.ticker.lagSmoothing(0);
       } else {
         var raf = function (time) {
-          smoothScroll.raf(time);
+          instance.raf(time);
           rafId = window.requestAnimationFrame(raf);
         };
         rafId = window.requestAnimationFrame(raf);
@@ -75,8 +82,8 @@
           html.classList.contains("ll-page-leaving") ||
           body.style.overflow === "hidden" ||
           html.style.overflow === "hidden";
-        if (locked) smoothScroll.stop();
-        else smoothScroll.start();
+        if (locked || reduced() || document.hidden) instance.stop();
+        else instance.start();
       }
 
       var lockObserver = new MutationObserver(syncScrollLock);
@@ -86,26 +93,53 @@
 
       function handlePageShow(event) {
         if (event.persisted) {
-          smoothScroll.resize();
-          smoothScroll.scrollTo(window.scrollY, { immediate: true, force: true });
+          instance.resize();
+          instance.scrollTo(window.scrollY, { immediate: true, force: true });
         }
         syncScrollLock();
       }
 
-      window.addEventListener("pageshow", handlePageShow);
-      window.addEventListener("pagehide", function (event) {
-        smoothScroll.stop();
-        if (event.persisted) return;
-
+      function cleanup() {
         lockObserver.disconnect();
         window.removeEventListener("pageshow", handlePageShow);
-        if (gsapTicker) window.gsap.ticker.remove(gsapTicker);
+        window.removeEventListener("pagehide", handlePageHide);
+        document.removeEventListener("visibilitychange", syncScrollLock);
+        if (gsapTicker && window.gsap && window.gsap.ticker) window.gsap.ticker.remove(gsapTicker);
         if (rafId) window.cancelAnimationFrame(rafId);
-        smoothScroll.destroy();
-      }, { once: true });
+        instance.destroy();
+        if (smoothScroll === instance) smoothScroll = null;
+        if (smoothScrollCleanup === cleanup) smoothScrollCleanup = null;
+      }
+
+      function handlePageHide(event) {
+        instance.stop();
+        if (!event.persisted) cleanup();
+      }
+
+      window.addEventListener("pageshow", handlePageShow);
+      window.addEventListener("pagehide", handlePageHide);
+      document.addEventListener("visibilitychange", syncScrollLock);
+      smoothScrollCleanup = cleanup;
     }).catch(function () {
+      if (generation === smoothScrollGeneration) smoothScrollLoading = false;
       // Native scrolling remains available when Lenis is not bundled.
     });
+  }
+
+  function syncMotionPreference() {
+    if (reduced()) {
+      smoothScrollGeneration += 1;
+      smoothScrollLoading = false;
+      if (smoothScrollCleanup) smoothScrollCleanup();
+      return;
+    }
+    if (!reduced()) initSmoothScroll();
+  }
+
+  if (typeof motionPreference.addEventListener === "function") {
+    motionPreference.addEventListener("change", syncMotionPreference);
+  } else if (typeof motionPreference.addListener === "function") {
+    motionPreference.addListener(syncMotionPreference);
   }
 
   function observe(elements, onEnter, options) {

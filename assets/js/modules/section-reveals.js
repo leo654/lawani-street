@@ -185,8 +185,79 @@
 
 	}
 
+	function initHomeCinematicEntrances(gsap) {
+		if (!document.body || !document.body.classList.contains('home-index') || !gsap || !window.ScrollTrigger) return;
+
+		var scenes = [
+			{
+				section: '.ll-work',
+				groups: ['.ll-work-intro', '.lwa-project']
+			},
+			{
+				section: '.ll-capabilities',
+				groups: ['.ll-skill-sets__intro', '.ll-skill-category']
+			},
+			{
+				section: '.ll-client-strip',
+				groups: ['.ll-client-strip__marquee']
+			},
+			{
+				section: '.ll-manifesto',
+				groups: ['.ll-label', '.ll-manifesto__visual', '.ll-manifesto__content > h2', '.ll-manifesto__copy']
+			}
+		];
+
+		scenes.forEach(function(scene) {
+			var section = document.querySelector(scene.section);
+			if (!section || section.getAttribute('data-cinematic-ready') === '1') return;
+			var groups = scene.groups.map(function(selector) {
+				return Array.prototype.slice.call(section.querySelectorAll(selector)).filter(isVisibleNode);
+			}).filter(function(group) { return group.length; });
+			if (!groups.length) return;
+
+			section.setAttribute('data-cinematic-ready', '1');
+			groups.forEach(function(group) {
+				group.forEach(function(node) {
+					node.setAttribute('data-scroll-reveal-ready', '1');
+					if (node.classList.contains('ll-reveal')) node.style.transition = 'none';
+				});
+			});
+
+			var timeline = gsap.timeline({
+				scrollTrigger: {
+					trigger: section,
+					start: 'top bottom',
+					end: 'top 56%',
+					scrub: 0.7,
+					invalidateOnRefresh: true
+				}
+			});
+
+			groups.forEach(function(group, index) {
+				timeline.fromTo(group, {
+					autoAlpha: 0,
+					y: 84
+				}, {
+					autoAlpha: 1,
+					y: 0,
+					duration: 1,
+					stagger: 0.13,
+					ease: 'power3.out',
+					overwrite: 'auto',
+					onComplete: function() {
+						group.forEach(function(node) {
+							if (node.classList.contains('ll-reveal')) {
+								node.classList.add('is-visible');
+							}
+						});
+					}
+				}, index === 0 ? 0 : '>-0.3');
+			});
+		});
+	}
+
+
 	function init() {
-		initHomeScrollReveals();
 		addRevealGroups();
 		var revealTargets = getRevealTargets();
 		if (reduceMotion) {
@@ -203,6 +274,7 @@
 			var ScrollTrigger = window.ScrollTrigger;
 			var isHomeIndex = !!(document.body && document.body.classList.contains('home-index'));
 			gsap.registerPlugin(ScrollTrigger);
+			initHomeCinematicEntrances(gsap);
 			initScrollReveals(gsap);
 
 			var cards = Array.prototype.slice.call(document.querySelectorAll('.grid-item2 .wrap'));

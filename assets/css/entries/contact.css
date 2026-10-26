@@ -9,7 +9,7 @@
 @import "../cookie-consent.css";
 @import "../ui-polish.css";
 
-@import "../button-system.css";
+@import "../button-system.css?v=20261026-back-to-top-rise";
 
 @import "../menu-system.css";
 
@@ -52,4 +52,80 @@ html body.ll-contact-page .project-form__button:not(.project-form__button--secon
   --ll-glass-control-hover: var(--ll-orange);
   --ll-glass-control-hover-line: var(--ll-orange);
   --ll-glass-control-hover-ink: #171916;
+}
+
+/* Keep the contact card in the site's Gridlite type system and uppercase treatment. */
+html body.ll-contact-page .contact-card *:not(svg):not(path):not(.fa):not(.fas):not(.far):not(.fab):not(:is(
+  .ll-button,
+  .ll-action-link,
+  .cs-footer__actions a,
+  .ll-deck-contact a,
+  .ll-service-product__cta,
+  .ll-footer__project-cta > a,
+  .project-form__button,
+  .project-form__option,
+  .lwa-filter button,
+  .ll-button *,
+  .ll-action-link *,
+  .cs-footer__actions a *,
+  .ll-deck-contact a *,
+  .ll-service-product__cta *,
+  .ll-footer__project-cta > a *,
+  .project-form__button *,
+  .project-form__option *,
+  .lwa-filter button *
+)) {
+  font-family: "Gridlite", sans-serif !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+}
+
+/* Keep the primary action high-contrast against global button treatments. */
+html body.ll-contact-page .contact-card .contact-form__submit {
+  background: #f5f4ef !important;
+  color: #171815 !important;
+  border-color: #f5f4ef !important;
+}
+
+html body.ll-contact-page .contact-card .contact-form__submit:hover {
+  background: transparent !important;
+  color: #f5f4ef !important;
+}
+
+/* Prevent global action-button states from recoloring the custom select. */
+html body.ll-contact-page .contact-card .contact-form__select-trigger,
+html body.ll-contact-page .contact-card .contact-form__select-trigger:hover,
+html body.ll-contact-page .contact-card .contact-form__select-trigger:focus,
+html body.ll-contact-page .contact-card .contact-form__select-trigger:active {
+  background: transparent !important;
+  color: #f5f4ef !important;
+  border-color: rgba(245, 244, 239, 0.24) !important;
+  box-shadow: none !important;
+}
+
+html body.ll-contact-page .contact-card .contact-form__select-option,
+html body.ll-contact-page .contact-card .contact-form__select-option > span {
+  background: transparent !important;
+  color: #f5f4ef !important;
+  box-shadow: none !important;
+}
+
+html body.ll-contact-page .contact-card .contact-form__select-option:hover,
+html body.ll-contact-page .contact-card .contact-form__select-option:focus-visible,
+html body.ll-contact-page .contact-card .contact-form__select-option[aria-selected="true"],
+html body.ll-contact-page .contact-card .contact-form__select-option:hover > span,
+html body.ll-contact-page .contact-card .contact-form__select-option:focus-visible > span,
+html body.ll-contact-page .contact-card .contact-form__select-option[aria-selected="true"] > span {
+  background: #f5f4ef !important;
+  color: #171815 !important;
+}
+
+html body.ll-contact-page .contact-card .contact-form__select-option > span:last-child {
+  color: rgba(245, 244, 239, 0.48) !important;
+}
+
+html body.ll-contact-page .contact-card .contact-form__select-option:hover > span:last-child,
+html body.ll-contact-page .contact-card .contact-form__select-option:focus-visible > span:last-child,
+html body.ll-contact-page .contact-card .contact-form__select-option[aria-selected="true"] > span:last-child {
+  color: rgba(23, 24, 21, 0.58) !important;
 }

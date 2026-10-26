@@ -24,6 +24,10 @@
   var camera;
   var material;
   var geometry;
+  var contextUnavailable = false;
+  var visibilityObserver = null;
+  var loadObserver = null;
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function removeCanvas() {
     if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
@@ -44,7 +48,7 @@
   }
 
   function start() {
-    if (active || destroyed || document.hidden) return;
+    if (active || destroyed || contextUnavailable || document.hidden) return;
     active = true;
     lastFrame = 0;
     frame = window.requestAnimationFrame(render);
@@ -60,7 +64,7 @@
     if (!renderer || !uniforms) return;
     var width = Math.max(1, marquee.clientWidth);
     var height = Math.max(1, marquee.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1));
     renderer.setSize(width, height, false);
     uniforms.uResolution.value.set(
       renderer.domElement.width,
@@ -88,11 +92,32 @@
     stop();
     window.removeEventListener("resize", resize);
     document.removeEventListener("visibilitychange", onVisibilityChange);
-    window.removeEventListener("pagehide", dispose);
+    window.removeEventListener("pagehide", onPageHide);
+    window.removeEventListener("pageshow", onPageShow);
+    window.removeEventListener("scroll", checkNearFooter);
+    if (typeof reduceMotion.removeEventListener === "function") reduceMotion.removeEventListener("change", onMotionPreferenceChange);
+    else if (typeof reduceMotion.removeListener === "function") reduceMotion.removeListener(onMotionPreferenceChange);
     if (geometry) geometry.dispose();
     if (material) material.dispose();
     if (renderer) renderer.dispose();
+    if (visibilityObserver) visibilityObserver.disconnect();
+    if (loadObserver) loadObserver.disconnect();
     removeCanvas();
+  }
+
+  function onPageHide(event) {
+    stop();
+    if (!event.persisted) dispose();
+  }
+
+  function onPageShow(event) {
+    if (!event.persisted || document.hidden || !renderer || contextUnavailable) return;
+    var rect = marquee.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) start();
+  }
+
+  function onMotionPreferenceChange() {
+    if (reduceMotion.matches) dispose();
   }
 
   function onVisibilityChange() {
@@ -156,37 +181,38 @@
     resize();
     window.addEventListener("resize", resize, { passive: true });
     document.addEventListener("visibilitychange", onVisibilityChange);
-    window.addEventListener("pagehide", dispose, { once: true });
+    window.addEventListener("pagehide", onPageHide);
+    window.addEventListener("pageshow", onPageShow);
     canvas.addEventListener("webglcontextlost", function (event) {
       event.preventDefault();
+      contextUnavailable = true;
       stop();
+      removeCanvas();
       console.warn("Footer WebGL context was lost; the static footer background remains available.");
     });
 
     if ("IntersectionObserver" in window) {
-      var observer = new IntersectionObserver(function (entries) {
+      visibilityObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.target !== marquee) return;
           if (entry.isIntersecting) start();
           else stop();
         });
       }, { rootMargin: "240px 0px", threshold: 0 });
-      observer.observe(marquee);
-      window.addEventListener("pagehide", function () { observer.disconnect(); }, { once: true });
+      visibilityObserver.observe(marquee);
     } else {
       start();
     }
   }
 
   function loadThreeWhenNearFooter() {
-    if (threeLoading || destroyed) return;
+    if (threeLoading || destroyed || reduceMotion.matches) return;
     threeLoading = true;
     loadThree().then(initialize).catch(function (error) {
       console.warn("Three.js could not be loaded; keeping the static footer background.", error);
     });
   }
 
-  var loadObserver;
   function checkNearFooter() {
     var rect = marquee.getBoundingClientRect();
     if (rect.top > window.innerHeight + 360 || rect.bottom < -360) return;
@@ -208,9 +234,7 @@
   }
 
   window.addEventListener("scroll", checkNearFooter, { passive: true });
-  window.addEventListener("pagehide", function () {
-    if (loadObserver) loadObserver.disconnect();
-    window.removeEventListener("scroll", checkNearFooter);
-  }, { once: true });
+  if (typeof reduceMotion.addEventListener === "function") reduceMotion.addEventListener("change", onMotionPreferenceChange);
+  else if (typeof reduceMotion.addListener === "function") reduceMotion.addListener(onMotionPreferenceChange);
   window.setTimeout(checkNearFooter, 120);
 })();

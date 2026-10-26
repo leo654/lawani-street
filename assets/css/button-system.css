@@ -323,12 +323,12 @@ html body :where(
   .ll-service-product__cta
 ) {
   transition: var(--ll-button-transition);
-  border-color: var(--ll-glass-control-line) !important;
+  border-color: color-mix(in srgb, currentColor 6%, transparent) !important;
   background: var(--ll-glass-control-surface) !important;
   color: var(--ll-glass-control-ink) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(1.18) !important;
-  backdrop-filter: blur(12px) saturate(1.18) !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  backdrop-filter: blur(4px) !important;
 }
 
 html body :where(
@@ -351,7 +351,7 @@ html body :where(
   .ll-deck-contact a,
   .ll-service-product__cta
 ):is(:hover, :focus-visible, [aria-pressed="true"], [aria-expanded="true"], .is-active, .selected) {
-  border-color: var(--ll-glass-control-hover-line) !important;
+  border-color: color-mix(in srgb, currentColor 6%, transparent) !important;
   background: var(--ll-glass-control-hover) !important;
   color: var(--ll-glass-control-hover-ink) !important;
 }
@@ -388,7 +388,6 @@ html body :is(
   .ll-footer__back-to-top
 ) {
   --ll-glass-control-hover: var(--ll-orange);
-  --ll-glass-control-hover-line: var(--ll-orange);
   --ll-glass-control-hover-ink: var(--ll-brand-charcoal, #20221f);
 }
 
@@ -596,6 +595,17 @@ html body :is(
 ):is(:hover, :focus-visible, [aria-pressed="true"], [aria-expanded="true"], .is-active, .selected)::before {
   transform: scaleX(1);
   transform-origin: left center;
+}
+
+/* The footer back-to-top fill rises from the bottom; other controls wipe sideways. */
+html body .ll-footer__utility .ll-footer__back-to-top::before {
+  transform: scaleY(0) !important;
+  transform-origin: center bottom !important;
+}
+
+html body .ll-footer__utility .ll-footer__back-to-top:is(:hover, :focus-visible)::before {
+  transform: scaleY(1) !important;
+  transform-origin: center bottom !important;
 }
 
 html body :is(
@@ -865,4 +875,14 @@ html body :is(
   .ll-footer__back-to-top
 ):is(:hover, :focus-visible) :is(.ll-icon--arrow-up-right, .ll-icon--arrow-up, .ll-arrow-glyph) {
   translate: none !important;
+}
+
+/* Use the index CTA's fill color for theme-driven footer hover layers. */
+html body :is(
+  .cs-footer__actions .ll-button,
+  .ll-footer__actions .ll-button,
+  .lwa-footer__contact .ll-button
+) {
+  --ll-themed-action-hover: var(--ll-button-hover-surface, var(--ll-orange));
+  --ll-themed-action-hover-ink: var(--ll-button-hover-ink, var(--ll-brand-charcoal, #20221f));
 }

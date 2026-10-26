@@ -90,14 +90,28 @@
   }
 
   function detectWebGL() {
+    var contexts = [];
     try {
       var canvas = document.createElement("canvas");
       var gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
       features.webGL = !!gl;
-      features.webGL2 = !!(canvas.getContext("webgl2"));
+      if (gl) contexts.push(gl);
+
+      var canvas2 = document.createElement("canvas");
+      var gl2 = canvas2.getContext("webgl2");
+      features.webGL2 = !!gl2;
+      if (gl2) contexts.push(gl2);
     } catch (e) {
       features.webGL = false;
       features.webGL2 = false;
+    } finally {
+      // Capability checks should not keep hidden GPU contexts alive.
+      contexts.forEach(function (context) {
+        try {
+          var extension = context.getExtension("WEBGL_lose_context");
+          if (extension) extension.loseContext();
+        } catch (e) {}
+      });
     }
   }
 

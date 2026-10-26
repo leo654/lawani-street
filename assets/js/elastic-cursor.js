@@ -231,9 +231,11 @@
         var width = 0;
         var height = 0;
         var renderFrame = 0;
+        var contextUnavailable = false;
 
         function resize() {
-          pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+          if (contextUnavailable) return;
+          pixelRatio = Math.min(window.devicePixelRatio || 1, 1);
           width = Math.max(1, Math.round(window.innerWidth * pixelRatio));
           height = Math.max(1, Math.round(window.innerHeight * pixelRatio));
           if (canvas.width === width && canvas.height === height) return;
@@ -244,7 +246,7 @@
 
         function draw(now) {
           renderFrame = 0;
-          if (document.hidden) return;
+          if (document.hidden || contextUnavailable) return;
           resize();
           gl.disable(gl.SCISSOR_TEST);
           gl.clearColor(0, 0, 0, 0);
@@ -274,7 +276,15 @@
         }
 
         function render() {
-          if (!renderFrame) renderFrame = requestAnimationFrame(draw);
+          if (!contextUnavailable && !renderFrame) renderFrame = requestAnimationFrame(draw);
+        }
+
+        function onContextLost() {
+          contextUnavailable = true;
+          target.visible = false;
+          if (renderFrame) cancelAnimationFrame(renderFrame);
+          renderFrame = 0;
+          canvas.remove();
         }
 
         window.addEventListener("resize", render, { passive: true });
@@ -286,11 +296,7 @@
             render();
           }
         });
-        canvas.addEventListener("webglcontextlost", function (event) {
-          event.preventDefault();
-          if (renderFrame) cancelAnimationFrame(renderFrame);
-          renderFrame = 0;
-        });
+        canvas.addEventListener("webglcontextlost", onContextLost, false);
 
         return {
           canvas: canvas,
@@ -323,8 +329,17 @@
         icon.setAttribute("data-state", name);
       }
 
+      function canUseWebglCursor() {
+        var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (connection && (connection.saveData || /(^|-)2g$/.test(connection.effectiveType || ""))) return false;
+        if (navigator.deviceMemory && navigator.deviceMemory <= 2) return false;
+        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) return false;
+        return true;
+      }
+
       function getCursorIcon(target) {
         if (!target) return "dot";
+        if (target.matches("img, video")) return "dot";
         var explicit = target.getAttribute("data-cursor");
         if (explicit === "none") return "dot";
         if (explicit && cursorIcons[explicit]) return explicit;
@@ -352,7 +367,8 @@
         "translate3d(" + state.dotX + "px," + state.dotY + "px,0)";
       icon.style.transform =
         "translate3d(" + state.x + "px," + state.y + "px,0)";
-      webglCursor = createWebglCursor();
+      // The CSS/GSAP cursor remains available when GPU or network headroom is limited.
+      if (canUseWebglCursor()) webglCursor = createWebglCursor();
 
       var interactiveSelector = [
         "a[href]",
@@ -364,6 +380,8 @@
         "textarea",
         "select",
         "summary",
+        "img",
+        "video",
         "[role='button']",
         "[data-cursor]"
       ].join(",");
@@ -372,6 +390,10 @@
         if (!node || typeof node.closest !== "function") return null;
         var candidate = node.closest(interactiveSelector);
         if (!candidate) return null;
+        if (candidate.matches("img, video")) {
+          var mediaAction = candidate.closest("a[href], button, [role='button']");
+          if (mediaAction) candidate = mediaAction;
+        }
         if (candidate.closest("[data-cursor='none'], [data-disable-cursor='true']")) {
           return null;
         }

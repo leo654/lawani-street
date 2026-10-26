@@ -3,6 +3,7 @@
 
   var body = document.body;
   if (!body) return;
+  if (body.classList.contains("home-index")) return;
 
   var selector = [
     ".cs-gallery figure",

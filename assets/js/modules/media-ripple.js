@@ -53,6 +53,7 @@
   var frame = 0;
   var startTime = 0;
   var disposed = false;
+  var rendererUnavailable = false;
 
   function clearActiveRipple() {
     targetStrength = 0;
@@ -77,6 +78,7 @@
   }
 
   function initRenderer() {
+    if (rendererUnavailable) return false;
     if (gl) return true;
     gl = canvas.getContext("webgl", {
       alpha: true,
@@ -104,7 +106,7 @@
       "float falloff=1.0-smoothstep(0.0,0.34,d); " +
       "float wave=sin(d*58.0-uTime*7.2)*exp(-d*7.5)*falloff*uStrength; " +
       "vec2 direction=radial/max(d,0.0001); " +
-      "vec2 displacement=(direction*wave*0.018)/vec2(aspect,1.0); " +
+      "vec2 displacement=(direction*wave*0.009)/vec2(aspect,1.0); " +
       "vec2 uv=canvasUv+displacement; " +
       "uv=uUvOffset+uv*uUvScale; " +
       "vec4 color=texture2D(uTexture,clamp(uv,0.001,0.999)); " +
@@ -224,7 +226,7 @@
         var mediaStyle = getComputedStyle(activeMedia);
         canvas.style.filter = mediaStyle.filter;
         canvas.style.opacity = mediaStyle.opacity;
-        var scale = Math.min(1.5, window.devicePixelRatio || 1);
+        var scale = Math.min(1.25, window.devicePixelRatio || 1);
         var pixelWidth = Math.max(1, Math.round(rect.width * scale));
         var pixelHeight = Math.max(1, Math.round(rect.height * scale));
         if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
@@ -321,6 +323,7 @@
   }
 
   function activateAt(target, event) {
+    if (reduceMotion.matches || rendererUnavailable) return;
     if (document.body.classList.contains("ll-showreel-open")) {
       clearActiveRipple();
       return;
@@ -411,6 +414,7 @@
   window.addEventListener("scroll", stopRippleWhileScrolling, { passive: true });
 
   function onContextLost() {
+    rendererUnavailable = true;
     if (gl) gl = null;
     program = null;
     texture = null;
@@ -420,10 +424,24 @@
     targetStrength = 0;
     strength = 0;
     canvas.classList.remove("is-active");
+    canvas.remove();
     canvas.style.filter = "";
     canvas.style.opacity = "";
     if (frame) window.cancelAnimationFrame(frame);
     frame = 0;
+  }
+
+  function onMotionPreferenceChange() {
+    if (!reduceMotion.matches) return;
+    rendererUnavailable = true;
+    stopRippleWhileScrolling();
+    canvas.remove();
+  }
+
+  if (typeof reduceMotion.addEventListener === "function") {
+    reduceMotion.addEventListener("change", onMotionPreferenceChange);
+  } else if (typeof reduceMotion.addListener === "function") {
+    reduceMotion.addListener(onMotionPreferenceChange);
   }
   canvas.addEventListener("webglcontextlost", onContextLost, false);
 
