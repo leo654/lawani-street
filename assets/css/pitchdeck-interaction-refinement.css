@@ -1,9 +1,4 @@
 /* Keep pitchdeck controls free of the shared gray glass hover wash. */
-html body.ll-deck-page ::selection {
-  background: rgba(32, 34, 31, 0.14);
-  color: inherit;
-}
-
 html body.ll-deck-page #what-i-do :is(
   .ll-service-shop__tabs button,
   .ll-service-product__stepper button,
@@ -17,18 +12,18 @@ html body.ll-deck-page #lets-talk .ll-world-clock__format button::before {
 
 html body.ll-deck-page #what-i-do .ll-service-shop__tabs button {
   background: transparent !important;
+  color: var(--service-shop-ink) !important;
+  opacity: 1;
+  text-decoration: none;
+  user-select: none;
 }
 
 html body.ll-deck-page #what-i-do .ll-service-shop__tabs button:is(
   .is-active,
-  :hover,
-  :focus-visible
+  [aria-selected="true"]
 ) {
   background: transparent !important;
   color: var(--service-shop-ink) !important;
-}
-
-html body.ll-deck-page #what-i-do .ll-service-shop__tabs button:is(:hover, :focus-visible) {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -54,6 +49,18 @@ html body.ll-deck-page #lets-talk .ll-world-clock__format button {
 html body.ll-deck-page #what-i-do .ll-service-product__stepper button:is(:hover, :focus-visible),
 html body.ll-deck-page #what-i-do .ll-service-shop__arrow:is(:hover, :focus-visible) {
   color: var(--service-shop-ink) !important;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-product__stepper button,
+html body.ll-deck-page #what-i-do .ll-service-shop__arrow,
+html body.ll-deck-page #what-i-do .ll-service-shop__arrow span {
+  color: var(--service-shop-ink) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-shop__arrow span {
+  display: inline-block;
 }
 
 html body.ll-deck-page #what-i-do .ll-service-product__cta {
