@@ -19,6 +19,7 @@
     var previousButton = deck.querySelector("[data-deck-prev]");
     var nextButton = deck.querySelector("[data-deck-next]");
     var desktopRail = window.matchMedia("(min-width: 761px) and (hover: hover) and (pointer: fine)");
+    var persistentDesktopRail = window.matchMedia("(min-width: 981px)");
     var mobileDeck = "(max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px)";
     var horizontalDeck = window.matchMedia("(max-width: 980px), (hover: none) and (pointer: coarse) and (max-height: 560px)");
     var persistentMobileRail = window.matchMedia(mobileDeck);
@@ -123,7 +124,7 @@
 
     function setMenu(open, focusActive) {
       var shouldOpen = Boolean(open);
-      var keepChaptersAvailable = persistentMobileRail.matches;
+      var keepChaptersAvailable = persistentMobileRail.matches || persistentDesktopRail.matches;
       deck.classList.toggle("is-rail-open", shouldOpen);
       menuButton.setAttribute("aria-expanded", String(shouldOpen));
       menuLabel.textContent = shouldOpen ? "Close chapters" : "Open chapters";
@@ -177,6 +178,7 @@
 
       currentLabels.forEach(function (label) { label.textContent = format(index); });
       totalLabels.forEach(function (label) { label.textContent = String(slides.length).padStart(2, "0"); });
+      deck.style.setProperty("--deck-progress", (((index + 1) / slides.length) * 100) + "%");
       if (previousButton) previousButton.disabled = index === 0;
       if (nextButton) nextButton.disabled = index === slides.length - 1;
       deck.classList.toggle("is-dark-chapter", slides[index].matches(".ll-deck-slide--vibe"));
@@ -571,14 +573,14 @@
         event.preventDefault();
         goTo(slides.length - 1, { focusSlide: true });
       } else if (event.key === "Escape") {
-        if (deck.classList.contains("is-rail-open")) {
+        if (deck.classList.contains("is-rail-open") && !persistentDesktopRail.matches) {
           setMenu(false, false);
           menuButton.focus();
         } else {
           closeDeck(event);
         }
       } else if (event.key.toLowerCase() === "m") {
-        setMenu(!deck.classList.contains("is-rail-open"), true);
+        if (!persistentDesktopRail.matches) setMenu(!deck.classList.contains("is-rail-open"), true);
       }
     });
 
