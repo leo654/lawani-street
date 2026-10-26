@@ -46,19 +46,19 @@
   bottom: 3.5%;
   left: -0.12em;
   overflow: hidden;
-  color: rgba(244, 242, 236, 0.012);
+  color: transparent;
   background: none;
-  -webkit-text-fill-color: rgba(244, 242, 236, 0.012);
-  -webkit-text-stroke: 0.7px rgba(244, 242, 236, calc(0.035 + var(--footer-relight) * 0.04));
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.9px rgba(226, 230, 239, calc(0.15 + var(--footer-relight) * 0.12));
   text-shadow:
     -0.7px -0.7px 0 rgba(255, 255, 255, 0.035),
     0.8px 0.8px 0 rgba(0, 0, 0, 0.68),
     0 2px 3px rgba(0, 0, 0, 0.22);
   content: "LAWANI ST.";
-  font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif;
-  font-size: clamp(220px, 39vw, 760px);
-  font-weight: 900;
-  letter-spacing: -0.09em;
+  font-family: "Gridlite", sans-serif;
+  font-size: clamp(360px, 48vw, 960px);
+  font-weight: 700;
+  letter-spacing: -0.07em;
   line-height: 0.72;
   text-align: center;
   white-space: nowrap;
@@ -79,14 +79,14 @@
   color: transparent;
   background: none;
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 79, 18, 0.5);
-  text-stroke: 1px rgba(255, 79, 18, 0.5);
+  -webkit-text-stroke: 1.15px rgba(255, 79, 18, 0.5);
+  text-stroke: 1.15px rgba(255, 79, 18, 0.5);
   text-shadow: 0 0 1px rgba(255, 79, 18, 0.16);
   content: "LAWANI ST.";
-  font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif;
-  font-size: clamp(220px, 39vw, 760px);
-  font-weight: 900;
-  letter-spacing: -0.09em;
+  font-family: "Gridlite", sans-serif;
+  font-size: clamp(360px, 48vw, 960px);
+  font-weight: 700;
+  letter-spacing: -0.07em;
   line-height: 0.72;
   text-align: center;
   white-space: nowrap;
@@ -104,8 +104,7 @@
     opacity: 1;
     text-shadow:
       -0.7px -0.7px 0 rgba(255, 255, 255, 0.055),
-      0.8px 0.8px 0 rgba(0, 0, 0, 0.72),
-      0 2px 3px rgba(0, 0, 0, 0.26);
+      0.8px 0.8px 0 rgba(0, 0, 0, 0.72);
   }
 
   :is(.ll-footer, .cs-footer, .lwa-footer):hover::after {
