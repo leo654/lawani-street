@@ -903,7 +903,7 @@ html[data-theme="dark"] {
 /* Mobile hero rail: three balanced anchors on one shared baseline. */
 @media (max-width: 820px) {
   body.home-index .ll-home-hero__rail {
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-columns: auto minmax(0, 1fr) 64px;
     grid-template-rows: 24px;
     column-gap: 12px;
     row-gap: 0;
@@ -917,7 +917,7 @@ html[data-theme="dark"] {
   body.home-index .ll-home-hero__rail > .ll-theme-toggle--hero {
     grid-row: 1;
     align-self: center;
-    margin: 0;
+    margin: 0 !important;
   }
 
   body.home-index .ll-home-hero__rail > .ll-home-hero__stat {
@@ -932,10 +932,15 @@ html[data-theme="dark"] {
   }
 
   body.home-index .ll-home-hero__rail > .ll-home-hero__base {
+    grid-column: 2;
+    justify-self: center;
+    line-height: 24px;
+    text-align: center;
+  }
+
+  body.home-index .ll-home-hero__rail > .ll-theme-toggle--hero {
     grid-column: 3;
     justify-self: end;
-    line-height: 24px;
-    text-align: right;
   }
 
 }
@@ -1491,5 +1496,29 @@ html[data-theme="light"] body.home-index .ll-home-hero__rail .ll-theme-toggle--h
 @media (min-width: 921px) and (max-width: 1024px) {
   html body .ll-floating-header .ll-contact-dock {
     right: 16px;
+  }
+}
+
+/* Keep the hero sound control pinned to the rail's right edge. */
+@media (max-width: 820px) {
+  html[data-theme] body.home-index .ll-home-hero__rail > .ll-theme-toggle--hero {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    margin: 0 !important;
+  }
+}
+
+@media (min-width: 821px) {
+  html[data-theme] body.home-index .ll-home-hero__rail > .ll-theme-toggle--hero {
+    position: relative;
+    top: auto;
+    right: auto;
+    z-index: auto;
+    grid-column: 12;
+    align-self: center;
+    justify-self: end;
+    margin: 0 !important;
   }
 }

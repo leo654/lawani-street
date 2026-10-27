@@ -48,8 +48,8 @@
       COMPONENT: cssDuration("--motion-component", 420),
       REVEAL: cssDuration("--motion-reveal", 760),
       EXPAND: cssDuration("--motion-expand", 640),
-      PAGE_COVER: cssDuration("--motion-page-cover", 540),
-      PAGE_REVEAL: cssDuration("--motion-page-reveal", 680),
+      PAGE_COVER: cssDuration("--motion-page-cover", 440),
+      PAGE_REVEAL: cssDuration("--motion-page-reveal", 520),
       BUTTON_SCRAMBLE: 720,             // Button text scramble effect
       OVERLAY_EXIT: 520,                // Overlay exit animation
       OVERLAY_OPEN_DELAY: 400,           // Delay before overlay activation
@@ -76,7 +76,7 @@
     EASING: {
       OUT: cssEasing("--motion-ease-out", "cubic-bezier(0.16, 1, 0.3, 1)"),
       IN_OUT: cssEasing("--motion-ease-in-out", "cubic-bezier(0.65, 0, 0.35, 1)"),
-      SWEEP_IN: cssEasing("--motion-ease-sweep-in", "cubic-bezier(0.76, 0, 0.24, 1)"),
+      SWEEP_IN: cssEasing("--motion-ease-sweep-in", "cubic-bezier(0.65, 0, 0.35, 1)"),
       SWEEP_OUT: cssEasing("--motion-ease-sweep-out", "cubic-bezier(0.16, 1, 0.3, 1)"),
       GSAP_OUT: "power3.out",
       GSAP_IN_OUT: "power2.inOut",

@@ -21,7 +21,7 @@
   --motion-reveal: 760ms;
   --motion-expand: 640ms;
   --motion-reveal-offset: 14px;
-  --motion-page-cover: 420ms;
+  --motion-page-cover: 440ms;
   --motion-page-reveal: 520ms;
   --motion-page: var(--duration-slower);
   --motion-media-opacity: 600ms;
@@ -81,13 +81,10 @@ html.ll-page-leaving {
   display: block;
   overflow: hidden;
   background: #f04b18;
-  opacity: 0;
   pointer-events: none;
   transform: translate3d(0, 103%, 0);
-  transition:
-    transform var(--motion-page-cover) var(--motion-ease-sweep-in),
-    opacity var(--motion-page-cover) var(--motion-ease-out);
-  will-change: transform, opacity;
+  transition: transform var(--motion-page-cover) var(--motion-ease-sweep-in);
+  will-change: transform;
 }
 
 .ll-page-transition::before {
@@ -101,7 +98,6 @@ html.ll-page-leaving {
 
 html.ll-page-leaving .ll-page-transition,
 .ll-page-transition.is-covering {
-  opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 
@@ -115,11 +111,8 @@ html.ll-page-leaving .ll-page-transition::before,
 }
 
 .ll-page-transition.is-covering.is-revealing {
-  opacity: 0;
   transform: translate3d(0, -103%, 0);
-  transition:
-    transform var(--motion-page-reveal) var(--motion-ease-sweep-out),
-    opacity var(--motion-page-reveal) var(--motion-ease-out);
+  transition: transform var(--motion-page-reveal) var(--motion-ease-sweep-out);
 }
 
 /* Keep the centered navigation rail pinned to the layout viewport, not 100vw. */

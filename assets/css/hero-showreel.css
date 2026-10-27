@@ -186,7 +186,3 @@ html[data-theme="light"] body.home-index .ll-work .lwa-project__tags > span {
       );
   } */
 }
-
-body.home-index .ll-home-hero__play-cue {
-  display: none;
-}

@@ -3,3 +3,10 @@
 _site/
 dist/
 node_modules/
+.playwright-mcp/
+assets/build/
+assets/css/contact.css
+assets/css/home.css
+assets/css/work.css
+lawani-street-live-mirror/
+lawani-street-live-mirror.zip

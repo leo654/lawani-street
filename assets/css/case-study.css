@@ -199,7 +199,8 @@ body.case-study {
 
 .cs-story__credits dl > div {
   display: grid;
-  grid-template-columns: minmax(120px, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
   gap: 22px;
   padding: 0 0 18px;
   border-bottom: 1px solid var(--cs-line);
@@ -209,6 +210,10 @@ body.case-study {
 .cs-story__credits dd {
   font: inherit;
   text-transform: uppercase;
+}
+
+.cs-story__credits dd {
+  text-align: right;
 }
 
 .cs-story__media {
@@ -1162,8 +1167,8 @@ html body.case-study .cs-footer__actions .ll-button:is(:hover, :focus-visible) >
 
 }
 
-/* Match Kicksjoint story labels and credits to the 14px story paragraph. */
-html body.case-study--kicksjoint #main-content .cs-story__copy :is(
+/* Keep story labels and credits consistent across every project case study. */
+html body.case-study #main-content .cs-story__copy :is(
   .cs-story__label,
   .cs-story__credits,
   .cs-story__credits *
@@ -1171,7 +1176,7 @@ html body.case-study--kicksjoint #main-content .cs-story__copy :is(
   font-size: 14px;
 }
 
-html body.case-study--kicksjoint #main-content .cs-story__copy :is(
+html body.case-study #main-content .cs-story__copy :is(
   .cs-story__label,
   .cs-story__credits > p
 ) {

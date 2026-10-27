@@ -283,7 +283,12 @@
 }
 
 .cookie-privacy-page__brand {
-  display: inline-block;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: flex-end;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(32, 34, 31, 0.24);
   margin-bottom: clamp(48px, 10vh, 110px);
   color: inherit;
   font-family: "Gridlite", Arial, sans-serif;

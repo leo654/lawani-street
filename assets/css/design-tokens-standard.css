@@ -197,7 +197,7 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-snap: cubic-bezier(0.22, 0.75, 0.28, 1);
   --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-sweep-in: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-sweep-in: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-sweep-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Durations */
