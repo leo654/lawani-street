@@ -35,23 +35,31 @@
           console.warn("The page transition state could not be read.", error);
         }
         if (!entering) document.documentElement.classList.add("home-preloader-active");
+
+        window.setTimeout(function () {
+          var root = document.documentElement;
+          if (!root.classList.contains("home-preloader-active")) return;
+          root.classList.remove("home-preloader-active");
+          var loader = document.querySelector("[data-home-loader]");
+          if (loader) loader.remove();
+        }, 8000);
       })();
     </script>
 
-    <script type="module" src="./assets/js/site-entry.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/css/entries/home.css?v=20261027-hero-sound-desktop-align">
+    <script type="module" src="./assets/js/site-entry.js?v=20261028-no-media-liquid"></script>
+    <link rel="stylesheet" crossorigin href="./assets/css/entries/home.css?v=20261028-hero-clean-19">
+    <link rel="stylesheet" href="./assets/css/home-balance.css?v=20261028-interaction-polish">
   </head>
 
   <body id="top" class="home-index">
     <div class="home-page-loader" data-home-loader data-liquid-ignore aria-hidden="true">
       <div class="home-page-loader__frame">
         <div class="home-page-loader__top">
-          <span class="home-page-loader__brand">Hello</span>
+          <span class="home-page-loader__brand">'27</span>
           <span class="home-page-loader__edition">London / Everywhere</span>
         </div>
         <div class="home-page-loader__center">
           <span class="home-page-loader__counter">00%</span>
-          <span class="home-page-loader__mark">L</span>
         </div>
         <div class="home-page-loader__bottom">
           <span>All in or not at all</span>
@@ -162,9 +170,8 @@
             loop
             playsinline
           >
-            <source src="./assets/media/hero-Dwri7hyj.mp4" type="video/mp4">
+            <source src="./assets/media/hmm.mp4" type="video/mp4">
           </video>
-          <span class="ll-home-hero__play-cue" aria-hidden="true"><i></i><b>Play reel</b></span>
         </button>
        
         <div class="ll-home-hero__wash" aria-hidden="true"></div>
@@ -174,30 +181,30 @@
 
           <div class="ll-home-hero__message">
             <h1 id="ll-hero-title">
-              <span aria-hidden="true">L</span>
-              <span class="ll-visually-hidden">Lawani St — independent creative studio</span>
+              <span>Creative Portfolio</span>
+              <span>'26</span>
             </h1>
-            <p class="ll-home-hero__scroll-hint">Scroll down</p>
           </div>
 
           <div class="ll-home-hero__rail" aria-label="Studio information" >
             <span class="ll-home-hero__rail-line" aria-hidden="true"></span>
-            <span class="ll-home-hero__stat">200+ Projects</span>
-            <span class="ll-home-hero__base">London based</span>
+            <span class="ll-home-hero__stat">over 200+ Projects</span>
             <time datetime="" data-ll-clock>00 : 00 : 00</time>
-            <span class="ll-home-hero__follow">Let's connect</span>
-            <a class="ll-home-hero__social-link ll-home-hero__social-link--instagram" href="https://www.instagram.com/leonardlawani/" target="_blank" rel="noopener noreferrer">Instagram +</a>
-            <a class="ll-home-hero__social-link ll-home-hero__social-link--linkedin" href="https://www.linkedin.com/in/leonardlawani/" target="_blank" rel="noopener noreferrer">LinkedIn +</a>
-            <button
-              class="ll-theme-toggle ll-sound-toggle ll-theme-toggle--footer ll-theme-toggle--hero"
-              type="button"
-              aria-label="Sound Off. Turn sound on."
-              aria-pressed="false"
-              data-ll-sound-toggle >
-      <span class="ll-sound-toggle__choice ll-sound-toggle__choice--off" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="m17 9 5 6m0-6-5 6"></path></svg></span>
-              <span class="ll-sound-toggle__choice ll-sound-toggle__choice--on" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg></span>
-              <span class="ll-sound-toggle__indicator" aria-hidden="true"></span>
-            </button>
+            <div class="ll-home-hero__rail-actions">
+              <span class="ll-home-hero__follow">Let's connect</span>
+              <a class="ll-home-hero__social-link ll-home-hero__social-link--instagram" href="https://www.instagram.com/leonardlawani/" target="_blank" rel="noopener noreferrer">Instagram +</a>
+              <a class="ll-home-hero__social-link ll-home-hero__social-link--linkedin" href="https://www.linkedin.com/in/leonardlawani/" target="_blank" rel="noopener noreferrer">LinkedIn +</a>
+              <button
+                class="ll-theme-toggle ll-sound-toggle ll-theme-toggle--footer ll-theme-toggle--hero"
+                type="button"
+                aria-label="Sound Off. Turn sound on."
+                aria-pressed="false"
+                data-ll-sound-toggle >
+                <span class="ll-sound-toggle__choice ll-sound-toggle__choice--off" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="m17 9 5 6m0-6-5 6"></path></svg></span>
+                <span class="ll-sound-toggle__choice ll-sound-toggle__choice--on" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10v4h4l5 4V6l-5 4H4z"></path><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg></span>
+                <span class="ll-sound-toggle__indicator" aria-hidden="true"></span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -223,7 +230,8 @@
         </div>
       </section>
 
-      <section class="ll-work" id="work" aria-label="Featured work" data-ll-section-note="Cases with teeth"  >
+
+        <section class="ll-work" id="work" aria-label="Featured work" data-ll-section-note="Cases with teeth"  >
         <div class="ll-work-intro">
           <p class="ll-label">[ Featured work ]</p>
         </div>
@@ -257,10 +265,10 @@
               <span class="lwa-project__title">Ademi</span>
               <span class="lwa-project__tags"><span>Branding</span><span>Campaign</span><span>Experience</span></span>
               <span class="lwa-project__state" data-work-state>( + )</span>
-              <span class="lwa-project__rail" aria-hidden="true"><img src="./assets/media/ademi1-JCu3hbMF.png" alt="" loading="lazy" decoding="async" width="866" height="866"><img src="./assets/media/1-BE4PKmdI.webp" alt="" loading="lazy" decoding="async" width="1591" height="1591"><img src="./assets/media/ademi2-BXo_XvMc.webp" alt="" loading="lazy" decoding="async" width="1036" height="1035"><img src="./assets/media/ademi3-Jy-K9aFV.webp" alt="" loading="lazy" decoding="async" width="1766" height="989"></span>
+              <span class="lwa-project__rail" aria-hidden="true"><img src="./assets/media/1-BE4PKmdI.webp" alt="" loading="lazy" decoding="async" width="1591" height="1591"><img src="./assets/media/ademi2-BXo_XvMc.webp" alt="" loading="lazy" decoding="async" width="1036" height="1035"><img src="./assets/media/ademi3-Jy-K9aFV.webp" alt="" loading="lazy" decoding="async" width="1766" height="989"></span>
               <span class="lwa-project__summary-copy">An expressive identity system that gives Ademi a confident rhythm across campaigns, product moments, and digital storytelling.</span>
             </button>
-            <div class="lwa-project__detail" id="home-work-ademi" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="ademi.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="contact.html"><span>Start project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="Ademi project images"><figure><img src="./assets/media/ademi1-JCu3hbMF.png" alt="Ademi campaign artwork" loading="lazy" decoding="async" width="866" height="866"></figure><figure><img src="./assets/media/1-BE4PKmdI.webp" alt="Ademi identity artwork" loading="lazy" decoding="async" width="1591" height="1591"></figure><figure><img src="./assets/media/ademi2-BXo_XvMc.webp" alt="Ademi visual system" loading="lazy" decoding="async" width="1036" height="1035"></figure><figure><img src="./assets/media/ademi3-Jy-K9aFV.webp" alt="Ademi brand application" loading="lazy" decoding="async" width="1766" height="989"></figure></div></div></div>
+            <div class="lwa-project__detail" id="home-work-ademi" aria-hidden="true" data-work-detail><div class="lwa-project__detail-inner"><div class="lwa-project__summary"><div class="lwa-project__actions"><a class="ll-button" href="ademi.html"><span>View case</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a><a class="ll-button" href="contact.html"><span>Start project</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></div></div><div class="lwa-project__gallery" data-work-gallery tabindex="0" aria-label="Ademi project images"><figure><img src="./assets/media/1-BE4PKmdI.webp" alt="Ademi identity artwork" loading="lazy" decoding="async" width="1591" height="1591"></figure><figure><img src="./assets/media/ademi2-BXo_XvMc.webp" alt="Ademi visual system" loading="lazy" decoding="async" width="1036" height="1035"></figure><figure><img src="./assets/media/ademi3-Jy-K9aFV.webp" alt="Ademi brand application" loading="lazy" decoding="async" width="1766" height="989"></figure></div></div></div>
           </article>
 
           <article class="lwa-project" data-work-item data-categories="strategy branding digital">
@@ -320,9 +328,7 @@
         </div>
         <!-- @include:project-archive:end -->
       </section>
-
-
-      <section class="ll-capabilities ll-skill-sets" id="services" aria-labelledby="ll-services-title" data-ll-section-note="Expertise" data-no-scroll-reveal>
+   <section class="ll-capabilities ll-skill-sets" id="services" aria-labelledby="ll-services-title" data-ll-section-note="Expertise" data-no-scroll-reveal>
         <div class="ll-skill-sets__layout">
           <aside class="ll-skill-sets__intro">
             <h2 id="ll-services-title">My design<br>expertise</h2>
@@ -339,7 +345,9 @@
 
           <div class="ll-skill-sets__categories" role="group" aria-label="Areas of expertise">
             <section class="ll-skill-category" id="service-branding" aria-labelledby="service-branding-title" data-skill-category>
-              <h3 id="service-branding-title">Branding</h3>
+              <h3 id="service-branding-title">
+                <span>Branding</span>
+              </h3>
               <div class="ll-skill-category__content">
                 <p class="ll-skill-category__count">(06)</p>
                 <ol>
@@ -354,7 +362,7 @@
             </section>
 
             <section class="ll-skill-category" id="service-digital-design" aria-labelledby="service-digital-design-title" data-skill-category>
-              <h3 id="service-digital-design-title">Digital Design</h3>
+              <h3 id="service-digital-design-title"><span>Digital Design</span></h3>
               <div class="ll-skill-category__content">
                 <p class="ll-skill-category__count">(05)</p>
                 <ol>
@@ -368,7 +376,7 @@
             </section>
 
             <section class="ll-skill-category" id="service-marketing" aria-labelledby="service-marketing-title" data-skill-category>
-              <h3 id="service-marketing-title">Marketing</h3>
+              <h3 id="service-marketing-title"><span>Marketing</span></h3>
               <div class="ll-skill-category__content">
                 <p class="ll-skill-category__count">(05)</p>
                 <ol>
@@ -383,7 +391,8 @@
           </div>
         </div>
       </section>
-  <section class="ll-client-strip" aria-label="Selected client brands">
+
+  <!-- <section class="ll-client-strip" aria-label="Selected client brands">
         <div class="ll-client-strip__marquee">
           <div class="ll-client-strip__track">
             <ul class="ll-client-strip__logos">
@@ -406,7 +415,7 @@
             </ul>
           </div>
         </div>
-      </section>
+      </section> -->
       <section class="ll-manifesto" id="how-i-work" aria-labelledby="ll-manifesto-title" data-ll-section-note="How I get work done">
         <p class="ll-label" id="about">[ About Me ]</p>
         <div class="ll-manifesto__grid">

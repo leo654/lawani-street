@@ -87,6 +87,7 @@ html body.home-index #services.ll-skill-sets .ll-skill-sets__categories {
   display: grid;
   gap: clamp(64px, 7.5vw, 112px);
   min-width: 0;
+  margin-left: -9px;
 }
 
 html body.home-index #services.ll-skill-sets .ll-skill-category {
@@ -96,6 +97,7 @@ html body.home-index #services.ll-skill-sets .ll-skill-category {
 
 html body.home-index #services.ll-skill-sets .ll-skill-category h3 {
   margin: 0 0 clamp(32px, 3.2vw, 50px);
+  transform: translateX(-1.5px);
   color: #f4f2ec;
   font-family: var(--ll-sans, "Gridlite"), sans-serif !important;
   font-size: clamp(20px, 1.5vw, 25px) !important;
@@ -103,6 +105,11 @@ html body.home-index #services.ll-skill-sets .ll-skill-category h3 {
   letter-spacing: -0.06em !important;
   line-height: 1.08;
   text-transform: uppercase !important;
+}
+
+html body.home-index #services.ll-skill-sets .ll-skill-category h3 > span {
+  display: block;
+  width: 100%;
 }
 
 html body.home-index #services.ll-skill-sets .ll-skill-category__content {
@@ -239,6 +246,7 @@ html body.home-index #services.ll-skill-sets .ll-skill-sets__contact:focus-visib
     max-width: 100%;
     font-size: 14px;
     text-indent: 0 !important;
+    text-align: left;
   }
 
   html body.home-index #services.ll-skill-sets .ll-skill-sets__categories {

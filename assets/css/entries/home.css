@@ -1,27 +1,189 @@
-@import "../design-tokens.css";
-@import "../design-tokens-standard.css";
+@import "../design-tokens.css?v=20261028-scroll-solid";
+@import "../design-tokens-standard.css?v=20261028-scroll-solid";
 @import "../home-loader.css";
-@import "../lamalama-ui-site.css";
+@import "../lamalama-ui-site.css?v=20261028-scroll-solid";
 @import "../sound-toggle.css";
 @import "../hero-showreel.css";
-@import "../work-lama.css";
+@import "../work-lama.css?v=20261028-scroll-solid";
 @import "../benchmark-system.css";
-@import "../motion-system.css";
+@import "../motion-system.css?v=20261028-scroll-solid";
 @import "../pitchdeck-overlay.css";
 @import "../index-header-tray.css";
 @import "../theme-system.css";
 @import "../ascii-video.css";
-@import "../index-about-clients.css";
+@import "../index-about-clients.css?v=20261028-scroll-solid";
 @import "../index-polish.css";
 @import "../site-font.css";
-@import "../cookie-consent.css";
+@import "../cookie-consent.css?v=20261027-compact-notice";
 @import "../home-scroll-reveals.css";
 @import "../ui-polish.css";
 @import "../work-archive-theme.css";
 @import "../footer-utility.css";
 @import "../nonstop-footer.css";
-@import "../services-skill-sets.css";
+@import "../services-skill-sets.css?v=20261028-scroll-solid";
 
 @import "../button-system.css?v=20261026-back-to-top-rise";
 
 @import "../menu-system.css";
+
+@media (min-width: 821px) {
+  html body.home-index .ll-home-hero,
+  html body.home-index .ll-home-hero > .ll-home-hero__content {
+    height: 75svh;
+    min-height: 75svh;
+  }
+
+  html body.home-index .ll-home-hero > .ll-home-hero__media,
+  html body.home-index .ll-home-hero > .ll-home-hero__wash,
+  html body.home-index .ll-home-hero > .ll-home-hero__pulse {
+    height: 100svh;
+    min-height: 100svh;
+  }
+}
+
+body.home-index .ll-home-hero__rail > :not(.ll-home-hero__rail-line) {
+  color: #fff;
+  opacity: 1;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 55%);
+}
+
+body.home-index .ll-home-hero #ll-hero-title > span {
+  font-size: 30%;
+  letter-spacing: 0.02em;
+}
+
+body.home-index .ll-home-hero__rail > :not(.ll-home-hero__rail-line) {
+  font-size: 11px;
+  letter-spacing: 0.015em;
+}
+
+body.home-index .ll-home-hero__locale > span {
+  opacity: 0.8;
+}
+
+@media (max-width: 820px) {
+  body.home-index .ll-home-hero__rail > :not(.ll-home-hero__rail-line) {
+    font-size: 12px;
+  }
+}
+
+html body.home-index .ll-home-hero__message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: calc(100vw - 2 * clamp(18px, 3vw, 40px));
+  margin: 0;
+  transform: translate(-50%, -50%);
+}
+
+html body.home-index .ll-home-hero__message > #ll-hero-title {
+  display: flex;
+  width: 100%;
+  height: auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+  overflow: visible;
+  color: #fff;
+}
+
+html body.home-index .ll-home-hero__message > #ll-hero-title > span {
+  display: block;
+  width: auto;
+  flex: 0 1 auto;
+  font-family: var(--ll-mono);
+  font-size: clamp(16px, 2vw, 24px) !important;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-align: left;
+  text-shadow: 0 1px 12px rgb(0 0 0 / 32%);
+  white-space: nowrap;
+}
+
+html body.home-index .ll-home-hero > .ll-home-hero__content > .ll-home-hero__rail {
+  position: absolute;
+  right: clamp(0px, 0.5vw, 6px);
+  bottom: 0;
+  left: clamp(0px, 0.5vw, 6px);
+  width: auto;
+  height: 40px;
+  min-height: 40px;
+  margin: 0;
+  padding: 8px 0 0;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  column-gap: clamp(12px, 2vw, 24px);
+  align-content: start;
+  align-items: center;
+}
+
+html body.home-index .ll-home-hero__rail > :not(.ll-home-hero__rail-line) {
+  align-self: center;
+}
+
+html body.home-index .ll-home-hero__rail > .ll-home-hero__stat {
+  grid-column: 1;
+  justify-self: start;
+}
+
+html body.home-index .ll-home-hero__rail > time {
+  grid-column: 2;
+  justify-self: center;
+}
+
+html body.home-index .ll-home-hero__rail-actions {
+  display: flex;
+  min-width: 0;
+  grid-column: 3;
+  align-items: center;
+  justify-self: end;
+  gap: clamp(20px, 2vw, 28px);
+  white-space: nowrap;
+}
+
+html[data-theme] body.home-index .ll-home-hero__rail .ll-sound-toggle {
+  margin: 0 !important;
+  border-color: rgb(24 18 8 / 82%) !important;
+  background: rgb(93 67 18 / 82%) !important;
+  color: rgb(255 255 255 / 78%);
+}
+
+html body.home-index .ll-home-hero__rail .ll-sound-toggle__indicator {
+  background: rgb(18 14 8 / 90%);
+  opacity: 1;
+}
+
+html body.home-index .ll-home-hero__rail .ll-sound-toggle__choice {
+  color: rgb(255 255 255 / 66%);
+  opacity: 0.8;
+}
+
+html body.home-index .ll-home-hero__rail .ll-sound-toggle[data-sound-mode="off"] .ll-sound-toggle__choice--off,
+html body.home-index .ll-home-hero__rail .ll-sound-toggle[data-sound-mode="on"] .ll-sound-toggle__choice--on {
+  color: #ff4f12;
+  opacity: 1;
+}
+
+@media (min-width: 821px) and (max-width: 920px) {
+  html body.home-index .ll-home-hero__rail-actions {
+    gap: 8px;
+    font-size: 9px;
+  }
+
+  html body.home-index .ll-home-hero__rail-actions > :not(.ll-sound-toggle) {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 820px) {
+  html body.home-index .ll-home-hero__message > #ll-hero-title {
+    width: 100%;
+  }
+}
+
+html body.home-index .ll-home-hero,
+html body.home-index .ll-home-hero * {
+  text-shadow: none !important;
+}

@@ -46,8 +46,8 @@
       MICRO: cssDuration("--motion-fast", 180),
       CONTROL: cssDuration("--motion-control", 240),
       COMPONENT: cssDuration("--motion-component", 420),
-      REVEAL: cssDuration("--motion-reveal", 760),
-      EXPAND: cssDuration("--motion-expand", 640),
+      REVEAL: cssDuration("--motion-reveal", 560),
+      EXPAND: cssDuration("--motion-expand", 520),
       PAGE_COVER: cssDuration("--motion-page-cover", 440),
       PAGE_REVEAL: cssDuration("--motion-page-reveal", 520),
       BUTTON_SCRAMBLE: 720,             // Button text scramble effect
@@ -62,8 +62,8 @@
       HERO_MINIMUM: 650,                 // Minimum hero loader duration
       HERO_TIMEOUT: 1400,                // Hero loader timeout
       HERO_UPDATE_INTERVAL: 50,          // Hero update interval
-      REVEAL_DELAY_INCREMENT: 70,        // Incremental delay for reveal items
-      REVEAL_DELAY_MAX: 280,             // Maximum reveal delay
+      REVEAL_DELAY_INCREMENT: 50,        // Incremental delay for reveal items
+      REVEAL_DELAY_MAX: 180,             // Maximum reveal delay
       FOOTER_MARQUEE_DESKTOP: 280,       // Footer marquee parallax distance (desktop)
       FOOTER_MARQUEE_MOBILE: 160,        // Footer marquee parallax distance (mobile)
       FOOTER_COPY_STAGGER: 0.07,         // Footer copy stagger (seconds)

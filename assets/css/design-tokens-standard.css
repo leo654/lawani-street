@@ -127,7 +127,7 @@
   --space-4xl: var(--space-8);
 
   /* Component-specific spacing */
-  --space-gutter: clamp(var(--space-4), 2.5vw, var(--space-6));
+  --space-gutter: clamp(16px, 2.5vw, var(--space-6));
   --space-grid-gap: clamp(var(--space-3), 1.65vw, var(--space-5));
   --space-section: clamp(var(--space-7), 10vw, var(--space-8));
   --space-section-compact: clamp(var(--space-6), 6vw, var(--space-7));

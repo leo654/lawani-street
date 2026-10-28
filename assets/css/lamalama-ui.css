@@ -121,11 +121,14 @@ ul {
   outline-offset: var(--focus-offset);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  body.has-elastic-cursor,
-  body.has-elastic-cursor a,
-  body.has-elastic-cursor button {
+@media (hover: hover) and (pointer: fine) and (min-width: 561px) and (prefers-reduced-motion: no-preference) {
+  html.has-elastic-cursor,
+  html.has-elastic-cursor * {
     cursor: none !important;
+  }
+
+  html.has-elastic-cursor :is(input, textarea, [contenteditable="true"]) {
+    cursor: text !important;
   }
 }
 
@@ -149,9 +152,9 @@ ul {
   background: #c96248;
   mix-blend-mode: normal;
   transition:
-    width var(--duration-normal) var(--ease-out),
-    height var(--duration-normal) var(--ease-out),
-    margin var(--duration-normal) var(--ease-out),
+    width var(--duration-fast) var(--ease-out),
+    height var(--duration-fast) var(--ease-out),
+    margin var(--duration-fast) var(--ease-out),
     border-color var(--duration-fast) ease,
     background-color var(--duration-fast) ease,
     opacity var(--duration-fast) ease;
@@ -162,9 +165,9 @@ ul {
   top: 0;
   left: 0;
   z-index: 2147483647;
-  width: 54px;
-  height: 54px;
-  margin: -27px 0 0 -27px;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
   display: grid;
   place-items: center;
   opacity: 0;
@@ -172,13 +175,13 @@ ul {
   will-change: transform;
   mix-blend-mode: difference;
   scale: 0.72;
-  transition: opacity var(--duration-fast) ease, scale var(--duration-normal) var(--ease-out);
+  transition: opacity var(--duration-fast) ease, scale var(--duration-fast) var(--ease-out);
 }
 
 .elastic-cursor-icon svg {
   display: block;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   fill: #fff;
 }
 
@@ -198,9 +201,9 @@ body.cursor-visible .elastic-cursor-dot {
 }
 
 body.cursor-hover .elastic-cursor {
-  width: 54px;
-  height: 54px;
-  margin: -27px 0 0 -27px;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
   border-color: #fff;
   background: #c96248;
 }
@@ -215,18 +218,23 @@ body.cursor-hover .elastic-cursor-dot {
 }
 
 body.cursor-hover.cursor-tight .elastic-cursor {
-  width: 34px;
-  height: 34px;
-  margin: -17px 0 0 -17px;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
 }
 
 body.cursor-hover.cursor-tight .elastic-cursor-icon {
-  width: 34px;
-  height: 34px;
-  margin: -17px 0 0 -17px;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
 }
 
-@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+body.cursor-hover.cursor-tight .elastic-cursor-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce), (max-width: 560px) {
   .elastic-cursor,
   .elastic-cursor-dot,
   .elastic-cursor-icon {
@@ -925,35 +933,6 @@ body.home-index .ll-home-hero > .ll-home-hero__content :is(a, button) {
   text-align: left;
 }
 
-.home-index .ll-home-hero__play-cue {
-  position: absolute;
-  right: var(--ll-gutter);
-  bottom: 90px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--ll-mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  opacity: 0;
-  transform: translate3d(0, 8px, 0);
-  transition: opacity 220ms ease, transform 420ms var(--ll-ease);
-  padding-right: 2%;
-  margin-top: 20%;
-}
-
-.home-index .ll-home-hero__play-cue i {
-  width: 7px;
-  height: 7px;
-  background: currentColor;
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
-}
-
-.home-index .ll-home-hero__media:is(:hover, :focus-visible) .ll-home-hero__play-cue {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
-
 .home-index .ll-home-hero__content {
   pointer-events: none;
 }
@@ -1087,13 +1066,6 @@ body.ll-showreel-open {
 }
 
 @media (max-width: 820px) {
-  .home-index .ll-home-hero__play-cue {
-    right: var(--ll-gutter);
-    bottom: 83px;
-    opacity: 1;
-    transform: none;
-  }
-
   .ll-hero-showreel__video {
     object-fit: contain;
   }
@@ -1106,7 +1078,6 @@ body.ll-showreel-open {
 
 @media (prefers-reduced-motion: reduce) {
   .home-index .ll-home-hero__media video,
-  .home-index .ll-home-hero__play-cue,
   .ll-hero-showreel {
     transition: none;
   }
@@ -2651,7 +2622,7 @@ body.home-index:not(.is-past-home-hero) .ll-work-dock {
 
 @media (max-width: 820px) {
   :root {
-    --ll-page-gutter: var(--space-4);
+    --ll-page-gutter: clamp(16px, 2.5vw, var(--space-6));
     --ll-grid-gap: var(--space-3);
     --ll-section-space: clamp(var(--space-6), 12vw, var(--space-7));
     --ll-section-space-compact: clamp(var(--space-5), 7vw, var(--space-6));

@@ -447,7 +447,7 @@
       document.querySelectorAll(selector).forEach(function (group) {
         Array.prototype.slice.call(group.children).forEach(function (node, index) {
           node.classList.add("ll-reveal");
-          node.style.setProperty("--ll-reveal-delay", Math.min(index * 70, 280) + "ms");
+          node.style.setProperty("--ll-reveal-delay", Math.min(index * 50, 180) + "ms");
         });
       });
     });
@@ -460,7 +460,7 @@
   function loadSectionReveals() {
     if (window.__sectionRevealsInjected) return;
     window.__sectionRevealsInjected = true;
-    import("../modules/section-reveals.js").catch(function (error) {
+    import("../modules/section-reveals.js?v=20261028-scroll-solid").catch(function (error) {
       console.warn("Section reveals failed to load.", error);
     });
   }

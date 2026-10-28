@@ -386,3 +386,42 @@
     transition: none;
   }
 }
+
+/* Keep the consent notice easy to use without covering a large part of the page. */
+.cookie-consent {
+  inset: auto auto max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  width: min(296px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+}
+
+.cookie-consent__content {
+  gap: 8px;
+  padding: 14px;
+}
+
+#cookie-consent .cookie-consent__text {
+  line-height: 1.4 !important;
+  text-align: left;
+  text-justify: auto;
+}
+
+#cookie-consent .cookie-consent__button {
+  min-height: 38px;
+}
+
+@media (max-width: 560px) {
+  .cookie-consent {
+    inset: auto auto max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    width: min(296px, calc(100vw - 24px));
+    max-height: calc(100vh - 24px);
+  }
+
+  .cookie-consent__content {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  #cookie-consent .cookie-consent__button {
+    min-height: 40px;
+  }
+}

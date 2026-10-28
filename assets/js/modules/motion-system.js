@@ -48,9 +48,10 @@
         autoRaf: false,
         allowNestedScroll: true,
         anchors: false,
-        lerp: 0.085,
+        // Reduce the easing tail so wheel input feels direct without snapping.
+        lerp: 0.2,
         smoothWheel: true,
-        wheelMultiplier: 0.9
+        wheelMultiplier: 1
       });
       smoothScroll = instance;
 
@@ -60,11 +61,16 @@
 
       var rafId = 0;
       var gsapTicker = null;
+      var changedGsapLagSmoothing = false;
       if (window.gsap && window.gsap.ticker) {
         gsapTicker = function (time) {
           instance.raf(time * 1000);
         };
         window.gsap.ticker.add(gsapTicker);
+        if (typeof window.gsap.ticker.lagSmoothing === "function") {
+          window.gsap.ticker.lagSmoothing(0);
+          changedGsapLagSmoothing = true;
+        }
       } else {
         var raf = function (time) {
           instance.raf(time);
@@ -105,6 +111,9 @@
         window.removeEventListener("pagehide", handlePageHide);
         document.removeEventListener("visibilitychange", syncScrollLock);
         if (gsapTicker && window.gsap && window.gsap.ticker) window.gsap.ticker.remove(gsapTicker);
+        if (changedGsapLagSmoothing && window.gsap && window.gsap.ticker) {
+          window.gsap.ticker.lagSmoothing(500, 33);
+        }
         if (rafId) window.cancelAnimationFrame(rafId);
         instance.destroy();
         if (smoothScroll === instance) smoothScroll = null;
@@ -178,8 +187,7 @@
       if (!target) return;
 
       event.preventDefault();
-      if (smoothScroll && !reduced()) smoothScroll.scrollTo(target);
-      else target.scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" });
+      window.LawaniMotion.scrollTo(target);
       if (window.history && window.history.pushState) window.history.pushState(null, "", hash);
     });
   }
@@ -285,10 +293,31 @@
     observe: observe,
     reduced: reduced,
     scrollTo: function (target, options) {
-      if (smoothScroll) smoothScroll.scrollTo(target, options);
-      else if (target && typeof target.scrollIntoView === "function") {
-        target.scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" });
+      options = options || {};
+      if (smoothScroll) {
+        smoothScroll.scrollTo(target, options);
+        return;
       }
+
+      var offset = Number(options.offset) || 0;
+      var top = typeof target === "number" ? target : null;
+      if (typeof target === "string") {
+        if (["top", "start", "#"].indexOf(target) !== -1) top = 0;
+        else if (["bottom", "end"].indexOf(target) !== -1) {
+          top = document.documentElement.scrollHeight - window.innerHeight;
+        } else {
+          try { target = document.querySelector(target); } catch (error) { target = null; }
+        }
+      }
+      if (top === null && target && typeof target.getBoundingClientRect === "function") {
+        top = target.getBoundingClientRect().top + window.scrollY;
+      }
+      if (top === null || !Number.isFinite(top)) return;
+
+      window.scrollTo({
+        top: Math.max(0, top + offset),
+        behavior: reduced() || options.immediate ? "auto" : (options.behavior || "smooth")
+      });
     },
     navigateToPage: function (destination) {
       if (navigateToPage) navigateToPage(destination);

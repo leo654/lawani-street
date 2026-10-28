@@ -626,10 +626,10 @@ body.case-study {
 
 .case-study .ll-reveal {
   opacity: 0;
-  transform: translate3d(0, var(--motion-reveal-offset, 14px), 0);
+  transform: translate3d(0, var(--motion-reveal-offset, 10px), 0);
   transition:
-    opacity var(--motion-reveal, 760ms) var(--motion-ease-out, ease),
-    transform var(--motion-reveal, 760ms) var(--motion-ease-out, ease);
+    opacity var(--motion-reveal, 560ms) var(--motion-ease-out, ease),
+    transform var(--motion-reveal, 560ms) var(--motion-ease-out, ease);
   transition-delay: var(--ll-reveal-delay, 0ms);
 }
 
@@ -823,6 +823,10 @@ body.case-study :is(.cs-related, .cs-footer) .ll-reveal {
     padding: 34px var(--ll-page-gutter) var(--cs-media-gap);
   }
 
+  .case-study .cs-story__lead {
+    text-align: left;
+  }
+
   .cs-gallery {
     gap: var(--cs-media-gap);
     padding-inline: var(--ll-page-gutter);
@@ -1006,6 +1010,13 @@ body.case-study :is(.cs-related, .cs-footer) .ll-reveal {
 .case-study .cs-footer__copy {
   font-size: 14px;
   text-align: justify;
+}
+
+@media (max-width: 560px) {
+  .case-study .cs-story__lead,
+  .case-study .cs-footer__copy {
+    text-align: left !important;
+  }
 }
 
 .case-study :is(

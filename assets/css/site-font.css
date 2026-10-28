@@ -89,7 +89,7 @@ html body :is(
 html body {
   font-size: var(--ll-type-body);
   line-height: var(--ll-leading-body);
-  font-weight: 700;
+/*   font-weight: 700; */
 }
 
 html body,
@@ -113,7 +113,7 @@ html body *:not(svg):not(path):not(.fa):not(.fas):not(.far):not(.fab):not(:is(
   .project-form__option *,
   .lwa-filter button *
 )) {
-  font-weight: 700 !important;
+  /*! font-weight: 700 !important; */
   text-transform: uppercase !important;
 }
 

@@ -1,0 +1,21 @@
+/* Calm interaction finish for the homepage, with clear feedback and motion. */
+:root {
+  --ll-focus-blue: #9bc8ff;
+}
+
+/* A visible keyboard focus ring makes every control easy to locate and use. */
+body.home-index :is(a, button, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--ll-focus-blue);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 5px rgb(11 30 52 / 52%);
+}
+
+body.home-index :is(a, button, input, [tabindex]):active {
+  transition-duration: 90ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-index :is(a, button, input, [tabindex]) {
+    transition-duration: 0.01ms !important;
+  }
+}

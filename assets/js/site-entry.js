@@ -49,10 +49,14 @@ async function loadMotionDependencies() {
 
 async function initialize() {
   try {
+    if (page.home) {
+      await import("./pages/home-loader.js?v=20261027-loader-startup").catch((e) => console.warn("Home loader failed to load:", e));
+    }
+
     await import("./modules/feature-detection.js").catch((e) => console.warn("Feature detection failed to load:", e));
 
     if (hasSharedMotion) {
-      await import("./modules/motion-system.js").catch((e) => console.warn("Motion system failed to load:", e));
+      await import("./modules/motion-system.js?v=20261028-scroll-responsive").catch((e) => console.warn("Motion system failed to load:", e));
     }
 
     if (inSiteShell && document.querySelector(".ll-footer, .cs-footer, .lwa-footer")) {
@@ -63,12 +67,9 @@ async function initialize() {
       await import("./modules/media-reveals.js").catch((error) => {
         console.warn("Media scroll reveals failed to load.", error);
       });
-      await import("./modules/media-ripple.js").catch((error) => {
-        console.warn("Media hover ripple failed to load.", error);
-      });
     }
 
-    await import("./modules/constants.js").catch((e) => console.warn("Constants failed to load:", e));
+    await import("./modules/constants.js?v=20261028-scroll-solid").catch((e) => console.warn("Constants failed to load:", e));
     await import("./modules/storage.js").catch((e) => console.warn("Storage module failed to load:", e));
     await import("./modules/sound-system.js").catch((e) => console.warn("Sound system failed to load:", e));
 
@@ -97,7 +98,7 @@ async function initialize() {
         console.warn("Liquid glass failed to load; using the CSS fallback.", error);
       });
       if (inSiteShell || page.pitchdeck) {
-        await import("./elastic-cursor.js").catch((e) => console.warn("Elastic cursor failed to load:", e));
+        await import("./elastic-cursor.js?v=20261028-cursor-fallback").catch((e) => console.warn("Elastic cursor failed to load:", e));
       }
       if (inSiteShell) {
         await import("./modules/pitchdeck-overlay.js").catch((e) => console.warn("Pitchdeck overlay failed to load:", e));
@@ -108,14 +109,13 @@ async function initialize() {
       }
     }
 
-    if (hasCookieUI) await import("./cookie-consent.js").catch((e) => console.warn("Cookie consent failed to load:", e));
+    if (hasCookieUI) await import("./cookie-consent.js?v=20261027-compact-notice").catch((e) => console.warn("Cookie consent failed to load:", e));
 
     if (page.home) {
-      await import("./pages/home-loader.js").catch((e) => console.warn("Home loader failed to load:", e));
       await import("./pages/home-ui.js").catch((e) => console.warn("Home UI failed to load:", e));
       await import("./pages/home-footer-webgl.js").catch((e) => console.warn("Home footer WebGL failed to load:", e));
     }
-    if (hasWorkItems) await import("./pages/work-lama.js").catch((e) => console.warn("Work lama failed to load:", e));
+    if (hasWorkItems) await import("./pages/work-lama.js?v=20261028-scroll-solid").catch((e) => console.warn("Work lama failed to load:", e));
     if (page.contact) await import("./pages/contact-form.js").catch((e) => console.warn("Contact form failed to load:", e));
     if (page.pitchdeck) await import("./pages/pitchdeck.js").catch((e) => console.warn("Pitchdeck failed to load:", e));
   } catch (error) {

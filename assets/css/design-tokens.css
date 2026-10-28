@@ -41,7 +41,7 @@
   --space-7: 89px;
   --space-8: 144px;
   --space-9: 233px;
-  --ll-page-gutter: clamp(var(--space-4), 2.5vw, var(--space-6));
+  --ll-page-gutter: clamp(16px, 2.5vw, var(--space-6));
   --ll-gutter: var(--ll-page-gutter);
   --ll-grid-gap: clamp(var(--space-3), 1.65vw, var(--space-5));
   --ll-section-space: clamp(var(--space-7), 10vw, var(--space-8));

@@ -3,7 +3,10 @@
 
   if (!document.body) return;
 
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function reduceMotion() {
+    return (window.LawaniMotion && window.LawaniMotion.reduced()) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
 
   function scheduleMotionFrame(key, callback) {
     if (window.LawaniMotion && typeof window.LawaniMotion.scheduleFrame === "function") {
@@ -17,7 +20,7 @@
     var hero = document.querySelector(".lwa-hero");
     if (!hero) return;
     hero.classList.add("is-visible");
-    if (reduceMotion) return;
+    if (reduceMotion()) return;
 
     function render() {
       var bounds = hero.getBoundingClientRect();
@@ -146,6 +149,29 @@
     var observer = null;
     if (firstFeaturedProject) firstFeaturedProject.classList.add("is-visible");
 
+    function scrollOffset() {
+      var dock = document.querySelector(".ll-floating-header .ll-nav-dock, .ll-floating-header .ll-contact-dock");
+      var dockBottom = dock ? dock.getBoundingClientRect().bottom : 0;
+      return Math.max(24, Math.ceil(dockBottom + 16));
+    }
+
+    function scrollProjectIntoView(project) {
+      var offset = scrollOffset();
+      if (project.getBoundingClientRect().top >= offset) return;
+      if (window.LawaniMotion && typeof window.LawaniMotion.scrollTo === "function") {
+        window.LawaniMotion.scrollTo(project, { offset: -offset });
+        return;
+      }
+      var top = project.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: Math.max(0, top), behavior: reduceMotion() ? "auto" : "smooth" });
+    }
+
+    function transitionWait() {
+      var rawDuration = getComputedStyle(document.documentElement).getPropertyValue("--motion-expand").trim() || "520ms";
+      var duration = parseFloat(rawDuration) || 0;
+      return rawDuration.indexOf("ms") === -1 ? duration * 1000 : duration;
+    }
+
     function setExpanded(project, expanded, moveIntoView) {
       var toggle = project.querySelector("[data-work-toggle]");
       var detail = project.querySelector("[data-work-detail]");
@@ -156,6 +182,11 @@
         window.clearTimeout(scrollTimer);
         scrollTimer = 0;
       }
+
+      var projectIndex = projects.indexOf(project);
+      var hasExpandedProjectAbove = expanded && projects.some(function (other, index) {
+        return index < projectIndex && other.classList.contains("is-expanded");
+      });
 
       if (expanded) {
         detail.querySelectorAll('img[loading="lazy"]').forEach(function (image) {
@@ -174,13 +205,14 @@
       if (state) state.textContent = expanded ? "( - )" : "( + )";
 
       if (expanded && moveIntoView) {
+        var delay = hasExpandedProjectAbove && !reduceMotion() ? transitionWait() : 0;
         scrollTimer = window.setTimeout(function () {
           scrollTimer = 0;
           if (!project.classList.contains("is-expanded")) return;
-          var offset = window.innerWidth <= 820 ? 72 : 92;
-          var top = project.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top: Math.max(0, top), behavior: reduceMotion ? "auto" : "smooth" });
-        }, reduceMotion ? 0 : 160);
+          window.requestAnimationFrame(function () {
+            if (project.classList.contains("is-expanded")) scrollProjectIntoView(project);
+          });
+        }, delay);
       }
     }
 
@@ -222,7 +254,7 @@
       }
     });
 
-    if (reduceMotion || !("IntersectionObserver" in window)) {
+    if (reduceMotion() || !("IntersectionObserver" in window)) {
       projects.forEach(function (project) { project.classList.add("is-visible"); });
       return;
     }
@@ -279,7 +311,7 @@
 
         visible += 1;
         project.classList.add("is-visible");
-        if (wasHidden && !reduceMotion && typeof project.animate === "function") {
+        if (wasHidden && !reduceMotion() && typeof project.animate === "function") {
           var timing = window.LawaniConstants || {};
           var duration = (timing.DURATION && timing.DURATION.COMPONENT) || 420;
           var easing = (timing.EASING && timing.EASING.OUT) || "cubic-bezier(0.16, 1, 0.3, 1)";

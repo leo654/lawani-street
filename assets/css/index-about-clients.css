@@ -421,6 +421,7 @@ html[data-theme] body.home-index .ll-manifesto .ll-action-link.ll-button:is(:hov
 
   .home-index .ll-manifesto__copy > p {
     margin-bottom: var(--space-3);
+    text-align: left;
   }
 
   .ll-about-section__portrait {

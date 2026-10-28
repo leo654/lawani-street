@@ -10,9 +10,13 @@
 
   var counter = loader.querySelector(".home-page-loader__counter");
   var count = loader.querySelector(".home-page-loader__count");
+  if (counter) counter.textContent = "00%";
+  if (count) count.textContent = "00 / 100";
+  loader.style.setProperty("--home-loader-progress", "0");
+
   var startedAt = performance.now();
   var minimumDuration = 480;
-  var logoHoldDuration = 360;
+  var completionHoldDuration = 360;
   var exitDuration = 420;
   var finished = false;
   var pageLoaded = document.readyState === "complete";
@@ -35,12 +39,12 @@
     if (counter) counter.textContent = "100%";
     if (count) count.textContent = "100 / 100";
     loader.style.setProperty("--home-loader-progress", "1");
-    loader.classList.add("is-mark-visible");
+    loader.classList.add("is-complete");
 
     window.setTimeout(function () {
       loader.classList.add("is-exiting");
-    }, logoHoldDuration);
-    window.setTimeout(reveal, logoHoldDuration + exitDuration + 40);
+    }, completionHoldDuration);
+    window.setTimeout(reveal, completionHoldDuration + exitDuration + 40);
   }
 
   function update(now) {

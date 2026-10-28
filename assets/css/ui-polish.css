@@ -106,46 +106,6 @@ html body .ll-mobile-menu__actions > div {
   text-align: left;
 }
 
-html body.home-index .ll-home-hero__message > p.ll-home-hero__scroll-hint {
-  font-size: 10px !important;
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-@media (max-width: 820px) {
-  html body.home-index .ll-home-hero__message {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto;
-    align-content: end;
-    justify-content: center;
-    justify-items: center;
-    align-items: end;
-    column-gap: 0;
-    row-gap: 0;
-  }
-
-  html body.home-index .ll-home-hero__message > #ll-hero-title {
-    grid-column: 1;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-  }
-
-  html body.home-index .ll-home-hero__message > #ll-hero-title > span[aria-hidden="true"] {
-    display: none;
-  }
-
-  html body.home-index .ll-home-hero__message > .ll-home-hero__scroll-hint {
-    grid-column: 1;
-    max-width: none;
-    justify-self: center;
-    margin: 0 0 4px;
-    text-align: center;
-  }
-}
-
 /* Keep LiquidGL's full-size canvas from covering CSS-driven controls. */
 html body canvas[data-liquid-ignore] {
   display: none !important;

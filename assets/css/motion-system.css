@@ -4,7 +4,7 @@
  * One timing and easing contract for page, component and scroll choreography.
  *
  * Motion durations and easing are sourced from the shared design tokens.
- * Reveals use a longer 760ms transition; reduced-motion overrides are below.
+ * Reveals and expansions use concise shared timings; reduced-motion overrides are below.
  */
 
 :root {
@@ -18,9 +18,9 @@
   --motion-fast: var(--duration-fast);
   --motion-control: var(--duration-normal);
   --motion-component: var(--duration-slow);
-  --motion-reveal: 760ms;
-  --motion-expand: 640ms;
-  --motion-reveal-offset: 14px;
+  --motion-reveal: 560ms;
+  --motion-expand: 520ms;
+  --motion-reveal-offset: 10px;
   --motion-page-cover: 440ms;
   --motion-page-reveal: 520ms;
   --motion-page: var(--duration-slower);
@@ -80,7 +80,7 @@ html.ll-page-leaving {
   z-index: 2147483000;
   display: block;
   overflow: hidden;
-  background: #f04b18;
+  background: #172b45;
   pointer-events: none;
   transform: translate3d(0, 103%, 0);
   transition: transform var(--motion-page-cover) var(--motion-ease-sweep-in);

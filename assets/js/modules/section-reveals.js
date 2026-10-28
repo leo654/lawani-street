@@ -7,7 +7,9 @@
 	var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 	var gsapLoaderPromise = null;
 	var motionConfig = window.LawaniConstants || {};
-	var revealDuration = ((motionConfig.DURATION && motionConfig.DURATION.REVEAL) || 760) / 1000;
+	var revealDuration = ((motionConfig.DURATION && motionConfig.DURATION.REVEAL) || 560) / 1000;
+	var revealDelayStep = (motionConfig.DURATION && motionConfig.DURATION.REVEAL_DELAY_INCREMENT) || 50;
+	var revealDelayMax = (motionConfig.DURATION && motionConfig.DURATION.REVEAL_DELAY_MAX) || 180;
 	var revealEase = (motionConfig.EASING && motionConfig.EASING.GSAP_OUT) || 'power3.out';
 
 	function loadScriptOnce(src, markerAttr) {
@@ -73,7 +75,7 @@
 			Array.prototype.slice.call(document.querySelectorAll(selector)).forEach(function(group) {
 				Array.prototype.slice.call(group.children).forEach(function(node, index) {
 					node.classList.add('ll-reveal');
-					node.style.setProperty('--ll-reveal-delay', Math.min(index * 70, 280) + 'ms');
+					node.style.setProperty('--ll-reveal-delay', Math.min(index * revealDelayStep, revealDelayMax) + 'ms');
 				});
 			});
 		});
@@ -133,13 +135,13 @@
 		var targets = [];
 		[
 			{ selector: '.ll-services-breakdown', effect: 'rise' },
-			{ selector: '.ll-services-columns > section', effect: 'rise', stagger: 110 },
+			{ selector: '.ll-services-columns > section', effect: 'rise', stagger: 80 },
 			{ selector: '.ll-manifesto__visual', effect: 'rise' },
 			{ selector: '.ll-manifesto__copy', effect: 'rise' }
 		].forEach(function(group) {
 			Array.prototype.slice.call(document.querySelectorAll(group.selector)).forEach(function(node, index) {
 				node.setAttribute('data-home-reveal', group.effect);
-				if (group.stagger) node.style.setProperty('--home-reveal-delay', Math.min(index * group.stagger, 220) + 'ms');
+				if (group.stagger) node.style.setProperty('--home-reveal-delay', Math.min(index * group.stagger, 160) + 'ms');
 				targets.push(node);
 			});
 		});

@@ -33,13 +33,12 @@
       body.appendChild(cursor);
       body.appendChild(dot);
       body.appendChild(icon);
-      body.classList.add("has-elastic-cursor");
 
       var config = {
         spring: 0.24,
         drag: 0.64,
-        follow: 0.22,
-        dotFollow: 0.52,
+        follow: 0.42,
+        dotFollow: 1,
         stretchRate: 0.03,
         maxStretch: 0.48,
         hoverScaleBoost: 0.18,
@@ -123,15 +122,15 @@
         gsap.set(icon, { x: state.x, y: state.y, force3D: true });
 
         gsapMotion = {
-          cursorX: gsap.quickTo(cursor, "x", { duration: 0.42, ease: "power3.out" }),
-          cursorY: gsap.quickTo(cursor, "y", { duration: 0.42, ease: "power3.out" }),
-          iconX: gsap.quickTo(icon, "x", { duration: 0.42, ease: "power3.out" }),
-          iconY: gsap.quickTo(icon, "y", { duration: 0.42, ease: "power3.out" }),
-          dotX: gsap.quickTo(dot, "x", { duration: 0.16, ease: "power2.out" }),
-          dotY: gsap.quickTo(dot, "y", { duration: 0.16, ease: "power2.out" }),
-          rotation: gsap.quickTo(cursor, "rotation", { duration: 0.28, ease: "power2.out" }),
-          scaleX: gsap.quickTo(cursor, "scaleX", { duration: 0.2, ease: "power2.out" }),
-          scaleY: gsap.quickTo(cursor, "scaleY", { duration: 0.2, ease: "power2.out" })
+          cursorX: gsap.quickTo(cursor, "x", { duration: 0.07, ease: "power2.out" }),
+          cursorY: gsap.quickTo(cursor, "y", { duration: 0.07, ease: "power2.out" }),
+          iconX: gsap.quickTo(icon, "x", { duration: 0.05, ease: "power2.out" }),
+          iconY: gsap.quickTo(icon, "y", { duration: 0.05, ease: "power2.out" }),
+          dotX: gsap.quickSetter(dot, "x", "px"),
+          dotY: gsap.quickSetter(dot, "y", "px"),
+          rotation: gsap.quickTo(cursor, "rotation", { duration: 0.14, ease: "power2.out" }),
+          scaleX: gsap.quickTo(cursor, "scaleX", { duration: 0.14, ease: "power2.out" }),
+          scaleY: gsap.quickTo(cursor, "scaleY", { duration: 0.14, ease: "power2.out" })
         };
 
         if (frame) cancelAnimationFrame(frame);
@@ -442,6 +441,7 @@
           if (!body.classList.contains("cursor-disabled")) {
             body.classList.add("cursor-disabled");
             body.classList.remove("has-elastic-cursor");
+            document.documentElement.classList.remove("has-elastic-cursor");
             onLeaveWindow();
           }
           return;
@@ -450,6 +450,7 @@
         if (body.classList.contains("cursor-disabled")) {
           body.classList.remove("cursor-disabled");
           body.classList.add("has-elastic-cursor");
+          document.documentElement.classList.add("has-elastic-cursor");
         }
       }
 
@@ -543,10 +544,7 @@
 
       function startAnimation() {
         if (document.hidden || suspended) return;
-        if (gsapMotion) {
-          updateGsapPosition(state.tx, state.ty, performance.now());
-          return;
-        }
+        if (gsapMotion) return;
         if (!isAnimating) {
           isAnimating = true;
           lastMoveTime = performance.now();
@@ -658,6 +656,11 @@
         state: state,
         usesGsap: function () { return !!gsapMotion; }
       };
+
+      // Hide the native pointer only after the replacement cursor is fully
+      // initialized. If setup fails above, the browser cursor stays available.
+      body.classList.add("has-elastic-cursor");
+      document.documentElement.classList.add("has-elastic-cursor");
     } catch (err) {
       log("FATAL ERROR: " + (err && err.message ? err.message : String(err)));
     }
