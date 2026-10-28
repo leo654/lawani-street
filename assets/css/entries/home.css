@@ -1,28 +1,28 @@
-@import "../design-tokens.css?v=20261028-scroll-solid";
-@import "../design-tokens-standard.css?v=20261028-scroll-solid";
+@import "../design-tokens.css";
+@import "../design-tokens-standard.css";
 @import "../home-loader.css";
-@import "../lamalama-ui-site.css?v=20261028-scroll-solid";
+@import "../lamalama-ui-site.css";
 @import "../sound-toggle.css";
 @import "../hero-showreel.css";
-@import "../work-lama.css?v=20261028-scroll-solid";
+@import "../work-lama.css";
 @import "../benchmark-system.css";
-@import "../motion-system.css?v=20261028-scroll-solid";
+@import "../motion-system.css";
 @import "../pitchdeck-overlay.css";
 @import "../index-header-tray.css";
 @import "../theme-system.css";
 @import "../ascii-video.css";
-@import "../index-about-clients.css?v=20261028-scroll-solid";
+@import "../index-about-clients.css";
 @import "../index-polish.css";
 @import "../site-font.css";
-@import "../cookie-consent.css?v=20261027-compact-notice";
+@import "../cookie-consent.css";
 @import "../home-scroll-reveals.css";
 @import "../ui-polish.css";
 @import "../work-archive-theme.css";
 @import "../footer-utility.css";
 @import "../nonstop-footer.css";
-@import "../services-skill-sets.css?v=20261028-scroll-solid";
+@import "../services-skill-sets.css";
 
-@import "../button-system.css?v=20261026-back-to-top-rise";
+@import "../button-system.css";
 
 @import "../menu-system.css";
 

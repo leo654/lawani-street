@@ -1,9 +1,9 @@
-@import "../design-tokens.css?v=20261028-scroll-solid";
-@import "../design-tokens-standard.css?v=20261028-scroll-solid";
-@import "../lamalama-ui-site.css?v=20261028-scroll-solid";
+@import "../design-tokens.css";
+@import "../design-tokens-standard.css";
+@import "../lamalama-ui-site.css";
 @import "../site-font.css";
-@import "../motion-system.css?v=20261028-scroll-solid";
+@import "../motion-system.css";
 @import "../cookie-consent.css";
 @import "../ui-polish.css";
 
-@import "../button-system.css?v=20261026-back-to-top-rise";
+@import "../button-system.css";
