@@ -30,8 +30,49 @@ function sharedHtmlPartials() {
   };
 }
 
+
+// GitHub Pages serves 404.html at whatever (possibly nested) URL was missing, so its
+// relative asset and link URLs would resolve against that path and break. When
+// LAWANI_SITE_BASE is set (the Pages build), pin them to the site root with <base>.
+function pagesNotFoundBase() {
+  const siteBase = process.env.LAWANI_SITE_BASE;
+  return {
+    name: "lawani-pages-404-base",
+    apply: "build",
+    transformIndexHtml: {
+      order: "post",
+      handler(html, ctx) {
+        if (!siteBase || !/(^|\/)404\.html$/.test(ctx.filename || ctx.path || "")) return html;
+        return html.replace(/<head([^>]*)>/i, `<head$1>\n    <base href="${siteBase}">`);
+      },
+    },
+  };
+}
+
+// The pages carry ?v= cache keys on their CSS and JS links so a browser picks up edits while
+// developing locally. Vite cannot inline a CSS @import that has a query string (the import is
+// left as a broken URL in the build), and built files get content hashes anyway, so the
+// keys are stripped at build time.
+const cacheKey = /\?v=[\w.-]*/;
+function stripCacheKeys() {
+  return {
+    name: "lawani-strip-cache-keys",
+    apply: "build",
+    enforce: "pre",
+    transform(code, id) {
+      if (!/\.css(\?|$)/.test(id) || !cacheKey.test(code)) return null;
+      return { code: code.replace(/(@import\s+(?:url\()?["'][^"'?]+)\?v=[\w.-]*/g, "$1"), map: null };
+    },
+    transformIndexHtml: {
+      order: "pre",
+      handler(html) {
+        return html.replace(/((?:href|src|poster)=["'](?![a-z]+:|\/\/)[^"'?#]+)\?v=[\w.-]*/gi, "$1");
+      },
+    },
+  };
+}
+
 const htmlPages = {
-  '404-error': resolve(root, '404-error.html'),
   '404': resolve(root, '404.html'),
   'ademi': resolve(root, 'ademi.html'),
   'bpm': resolve(root, 'bpm.html'),
@@ -56,7 +97,7 @@ export default defineConfig({
   root,
   base: "./",
   publicDir: false,
-  plugins: [sharedHtmlPartials()],
+  plugins: [stripCacheKeys(), sharedHtmlPartials(), pagesNotFoundBase()],
   build: {
     outDir: process.env.LAWANI_OUTPUT_DIR || "dist",
     emptyOutDir: true,

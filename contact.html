@@ -2,35 +2,42 @@
 <html class="no-js" lang="en" data-theme-mode="light" data-theme="light">
   <head>
     <meta charset="UTF-8">
+    <script>(function(d){try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;var s=window.sessionStorage;d.classList.add("mk-intro-pending");if(s.getItem("ll-page-transition")==="1"){d.classList.add("mk-arriving");var c=s.getItem("ll-page-transition-colour");if(c)d.style.setProperty("--ll-arrive-colour",c);}else if(!s.getItem("mk-preloaded"))d.classList.add("mk-preloading");}catch(e){}window.setTimeout(function(){d.classList.remove("mk-preloading","mk-arriving","mk-intro-pending");},6000);})(document.documentElement);</script>
+    <style id="ll-first-paint">html::before{content:"";position:fixed;inset:0;z-index:2147483647;pointer-events:none;background:var(--ll-arrive-colour,#efeee8)}html.mk-preloading::before{background:#ff4f12}html.ll-css-failsafe::before{display:none}</style>
+    <script>window.setTimeout(function(){document.documentElement.classList.add("ll-css-failsafe")},3500);</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="Start a project with Lawani St. Share the ambition, scope, timeline, and what success should look like.">
     <meta name="theme-color" content="#0b0d0c">
     <meta name="robots" content="index, follow">
 
-    <title>Start a Project | Lawani St.</title>
+    <title>Start a Project | Lawani St</title>
     <link rel="canonical" href="https://leo654.github.io/lawani-street/contact.html">
-    <meta property="og:title" content="Start a Project | Lawani St.">
+    <meta property="og:title" content="Start a Project | Lawani St">
     <meta property="og:description" content="Tell me what you are building. I will reply with clear next steps.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://leo654.github.io/lawani-street/contact.html">
-    <meta property="og:image" content="https://leo654.github.io/lawani-street/assets/img/picture/kicksjoint/kjbg.png">
+    <meta property="og:image" content="https://leo654.github.io/lawani-street/assets/img/og-home.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Start a Project | Lawani St.">
+    <meta name="twitter:title" content="Start a Project | Lawani St">
     <meta name="twitter:description" content="Tell me what you are building. I will reply with clear next steps.">
-    <meta name="twitter:image" content="https://leo654.github.io/lawani-street/assets/img/picture/kicksjoint/kjbg.png">
+    <meta name="twitter:image" content="https://leo654.github.io/lawani-street/assets/img/og-home.jpg">
 
-    <link rel="apple-touch-icon" sizes="60x60" href="./assets/media/apple-touch-icon-CO_I9BEC.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/media/favicon-32x32-W3W6bYt6.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/media/favicon-16x16-CEw2wVgT.png">
-    <link rel="preload" href="./assets/media/GridlitePEVFWeb-All-yRipPUrG.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="apple-touch-icon" sizes="60x60" href="./assets/site/shared/images/apple-touch-icon-CO_I9BEC.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/site/shared/images/favicon-32x32-W3W6bYt6.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/site/shared/images/favicon-16x16-CEw2wVgT.png">
+    <link rel="preload" href="./assets/fonts/GridlitePEVFWeb-All.woff2" as="font" type="font/woff2" crossorigin>
 
-    <script type="module" src="./assets/js/site-entry.js?v=20261028-no-media-liquid"></script>
-    <link rel="stylesheet" crossorigin href="./assets/css/entries/contact.css?v=20261028-no-media-liquid">
+    <script type="module" src="./assets/js/site-entry.js?v=20261112-clean"></script>
+    <link rel="stylesheet" crossorigin href="./assets/css/entries/contact.css?v=20261112-clean">
+  
+    <link rel="shortcut icon" href="./assets/site/shared/images/fav-EAe0la2u.ico" type="image/x-icon">
+    <link rel="manifest" href="./assets/media/site-Bm5dm1HD.webmanifest">
   </head>
 
-  <body class="ll-contact-page">
+  <body class="ll-contact-page" id="top">
     <div class="contact-background" aria-hidden="true"></div>
-    <a class="ll-skip-link" href="#main-content">Skip to main content</a>
 
     <header class="ll-floating-header" data-ll-header>
       <div class="ll-nav-dock">
@@ -95,7 +102,7 @@
     <a class="ll-menu-reel" href="index.html#about" aria-label="Meet Leonard Lawani" data-ll-menu-reel>
       <span class="ll-menu-reel__media" aria-hidden="true">
         <video muted loop playsinline preload="none" data-ll-menu-reel-video>
-          <source src="./assets/media/stuff-DQVpiR1I.mp4" type="video/mp4">
+          <source src="./assets/site/shared/video/stuff-DQVpiR1I.mp4" type="video/mp4">
         </video>
       </span>
       <span class="ll-menu-reel__label">Lawani Street</span>
@@ -176,7 +183,7 @@
 
             <div class="contact-form__footer">
               <div class="contact-form__actions">
-                <button class="contact-form__submit" type="submit">Send details <span aria-hidden="true">→</span></button>
+                <button class="contact-form__submit ll-button ll-button--solid" type="submit"><span>Send details</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></button>
                 <p>No spam. I’ll reply personally.</p>
               </div>
               <p class="contact-form__privacy">This opens an email draft. Nothing sends until you do. <a href="privacy.html">Privacy policy</a></p>
@@ -186,6 +193,7 @@
         </div>
       </section>
     </main>
+
 
   </body>
 </html>

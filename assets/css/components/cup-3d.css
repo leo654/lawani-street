@@ -1,0 +1,32 @@
+/* Spinning line-art coffee cup (see assets/js/components/cup-3d.js).
+   Ink follows the theme text colour, the fill follows the page background. */
+.ll-cup {
+  --cup-paper: var(--ll-theme-bg, var(--ll-brand-cream));
+  --cup-font: var(--ll-sans, "Gridlite", monospace);
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  color: var(--ll-theme-ink, #1a1a1a);
+  pointer-events: none;
+}
+
+.ll-cup__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The cup can be grabbed and spun (see cup-3d.js). Vertical swipes on touch screens still scroll the page. */
+.ll-cup[data-cup-interactive] {
+  pointer-events: auto;
+  touch-action: pan-y;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ll-cup.is-dragging,
+.ll-cup.is-dragging * {
+  cursor: grabbing;
+}

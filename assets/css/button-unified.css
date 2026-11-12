@@ -1,0 +1,242 @@
+/* ==========================================================================
+   Unified button system (after Hayler's .button-wrap)
+   Loaded last on every site page, so it is the single source of truth for
+   button geometry, type and states. Older button rules elsewhere still paint
+   context colours (ink on dark or light sections); this layer decides shape,
+   size, type, hover and the arrow reveal.
+
+   Anatomy   <a class="ll-button [variant] [size]">
+               <span>Label</span>                ← rolls on hover (motion-kit)
+               <svg class="ll-icon ll-icon--arrow-up-right"> ← becomes the icon tile
+             </a>
+
+   Variants  (default)        outline: transparent, thin line in the text colour
+             --solid          filled cream, charcoal type (primary on dark sections)
+             --glass          frosted dark (over photos, video and the header)
+             --media          portrait tile + label (glass)
+             --square         icon-only square (header, deck): keeps its own design
+   Sizes     --sm 40px · (default) 50px · --lg 60px   (--compact / --large still work)
+
+   Spacing   One measure drives everything: the inset, (height − tile) ÷ 2.
+             The tile sits that far from the top, bottom and end; the side
+             padding is twice the inset; the gap between label and tile is
+             one inset. So every button is symmetrical:
+               plain   [pad] LABEL [pad]
+               arrow   [s] LABEL [s][tile][inset]          (hover, s = (pad + inset) ÷ 2;
+                        at rest the label sits centred in the same width, tile hidden)
+               media   [inset][tile][s] LABEL [s]          (mirror of arrow)
+
+   Behaviour (Hayler "reveal icon"): at rest an arrow button shows only its
+   label, centred. On hover it fills orange, the label slides over and a
+   charcoal icon tile with the arrow grows in.
+   ========================================================================== */
+
+:root {
+  --btn-h-sm: 40px;
+  --btn-h-md: 50px;
+  --btn-h-lg: 60px;
+  --btn-fs-sm: 11px;
+  --btn-fs-md: 13px;
+  --btn-fs-lg: 14px;
+  --btn-tile-sm: 24px;   /* inset 8, padding 16 */
+  --btn-tile-md: 30px;   /* inset 10, padding 20 */
+  --btn-tile-lg: 36px;   /* inset 12, padding 24 */
+  --btn-tracking: 0.08em;
+  --btn-weight: 600;
+  --btn-line: color-mix(in srgb, currentColor 42%, transparent);
+  --btn-hover-surface: var(--ll-brand-orange);
+  --btn-hover-ink: var(--ll-brand-charcoal);
+  --btn-tile-surface: var(--ll-brand-charcoal);
+  --btn-tile-ink: var(--ll-brand-orange);
+  --btn-dur: 0.3s;
+  --btn-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --------------------------------------------------------------------------
+   1. Base: every text button (not the square icon controls or the sound toggle)
+   -------------------------------------------------------------------------- */
+html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-sound-toggle, .ll-theme-toggle) {
+  --btn-h: var(--btn-h-md);
+  --btn-fs: var(--btn-fs-md);
+  --btn-tile: var(--btn-tile-md);
+  --btn-inset: calc((var(--btn-h) - var(--btn-tile)) / 2);
+  --btn-pad: calc(var(--btn-inset) * 2);
+  position: relative;
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  height: var(--btn-h);
+  min-height: var(--btn-h);
+  padding: 0 var(--btn-pad);
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-radius: 0;
+  font-size: var(--btn-fs) !important;
+  font-weight: var(--btn-weight) !important;
+  letter-spacing: var(--btn-tracking) !important;
+  line-height: 1 !important;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background-color var(--btn-dur) var(--btn-ease),
+    border-color var(--btn-dur) var(--btn-ease),
+    color var(--btn-dur) var(--btn-ease) !important;
+}
+
+/* Sizes */
+html body:not(#ll-buttons) .ll-button:is(.ll-button--sm, .ll-button--compact):not(.ll-button--square) {
+  --btn-h: var(--btn-h-sm);
+  --btn-fs: var(--btn-fs-sm);
+  --btn-tile: var(--btn-tile-sm);
+}
+
+html body:not(#ll-buttons) .ll-button:is(.ll-button--lg, .ll-button--large):not(.ll-button--square) {
+  --btn-h: var(--btn-h-lg);
+  --btn-fs: var(--btn-fs-lg);
+  --btn-tile: var(--btn-tile-lg);
+}
+
+/* The older tactile fill layer is replaced by the plain hover fill below. */
+html body:not(#ll-buttons) .ll-button:not(.ll-button--square)::before {
+  content: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. Variants (rest)
+   -------------------------------------------------------------------------- */
+/* Outline: the default for arrow buttons on plain sections. */
+html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-button--solid, .ll-button--glass, .ll-button--media, .ll-sound-toggle, .ll-theme-toggle, .ll-mobile-menu__cta, .ll-mobile-menu__pitch) {
+  border-color: var(--btn-line) !important;
+  background: transparent !important;
+  /* No surface of its own, so it takes the text colour of the section it sits in (charcoal on light, cream on dark). */
+  color: inherit !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* motion-kit.js tags each outline button with what it sits on, so the label always reads at full strength. */
+html body:not(#ll-buttons) .ll-button.is-on-light:not(:hover, :focus-visible) {
+  color: var(--ll-brand-charcoal) !important;
+}
+
+html body:not(#ll-buttons) .ll-button.is-on-dark:not(:hover, :focus-visible) {
+  color: var(--ll-brand-cream) !important;
+}
+
+/* Solid: filled cream with charcoal type (the menu calls to action, form submit, 404). */
+html body:not(#ll-buttons) .ll-button:is(.ll-button--solid, .ll-mobile-menu__cta, .ll-mobile-menu__pitch) {
+  border-color: var(--ll-brand-cream) !important;
+  background: var(--ll-brand-cream) !important;
+  color: var(--ll-brand-charcoal) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Glass and media keep the frosted surface the older rules give them; only their geometry is unified. */
+/* Media: [inset][portrait tile][s] LABEL [s], the mirror of an arrow button on hover. */
+html body:not(#ll-buttons) .ll-button.ll-button--media.ll-button--media {
+  --btn-s: calc((var(--btn-pad) + var(--btn-inset)) / 2);
+  gap: var(--btn-s) !important;
+  padding: 0 var(--btn-s) 0 calc(var(--btn-inset) - 1px) !important;
+}
+
+html body:not(#ll-buttons) .ll-button.ll-button--media.ll-button--media > :is(img, span:has(> img)) {
+  flex: 0 0 var(--btn-tile) !important;
+  width: var(--btn-tile) !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: var(--btn-tile) !important;
+  margin: 0 !important;
+}
+
+html body:not(#ll-buttons) .ll-button.ll-button--media > span:has(> img) > img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   3. Hover / focus: one fill for every text button
+   -------------------------------------------------------------------------- */
+html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-sound-toggle, .ll-theme-toggle):is(:hover, :focus-visible) {
+  border-color: var(--btn-hover-surface) !important;
+  background: var(--btn-hover-surface) !important;
+  color: var(--btn-hover-ink) !important;
+}
+
+html body:not(#ll-buttons) .ll-button:not(.ll-button--square):focus-visible {
+  outline: 2px solid var(--btn-hover-surface);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Arrow reveal (Hayler "reveal icon")
+   -------------------------------------------------------------------------- */
+/* The arrow button's own padding moves onto the label, so the label can slide while the width stays fixed. */
+html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-button--media):has(> .ll-arrow-glyph, > svg.ll-icon) {
+  padding-inline: 0;
+}
+
+/* Rest: the label is centred in the full width (tile hidden). */
+html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-button--media):has(> .ll-arrow-glyph, > svg.ll-icon) > :first-child {
+  --btn-side: calc((var(--btn-pad) + var(--btn-inset) * 2 + var(--btn-tile)) / 2);
+  padding-left: var(--btn-side);
+  padding-right: var(--btn-side);
+  transition: padding var(--btn-dur) var(--btn-ease);
+}
+
+/* The tile sits one inset from the top, bottom and end of the button. */
+html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-button--media) > :is(.ll-arrow-glyph, svg.ll-icon) {
+  position: absolute !important;
+  top: 50% !important;
+  right: calc(var(--btn-inset) - 1px) !important;
+  display: grid !important;
+  flex: none !important;
+  place-items: center;
+  width: var(--btn-tile) !important;
+  height: var(--btn-tile) !important;
+  min-width: 0 !important;
+  margin: calc(var(--btn-tile) / -2) 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: var(--btn-tile-surface) !important;
+  color: var(--btn-tile-ink) !important;
+  font-size: calc(var(--btn-fs) + 8px) !important;
+  line-height: 1 !important;
+  translate: none !important;
+  transform: scale(0);
+  transform-origin: 50% 50%;
+  transition: transform var(--btn-dur) var(--btn-ease) !important;
+}
+
+html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-button--media) > svg.ll-icon {
+  padding: 7px !important;
+  box-sizing: border-box;
+  stroke: currentColor;
+}
+
+html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-button--media):is(:hover, :focus-visible) > :is(.ll-arrow-glyph, svg.ll-icon) {
+  transform: scale(1);
+}
+
+/* Hover: [s] LABEL [s][tile][inset]: the label keeps equal space on both sides of it, the tile one inset from
+   the edge, and the button width does not change (s = (padding + inset) ÷ 2). */
+html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-button--media):has(> .ll-arrow-glyph, > svg.ll-icon):is(:hover, :focus-visible) > :first-child {
+  --btn-s: calc((var(--btn-pad) + var(--btn-inset)) / 2);
+  padding-left: var(--btn-s);
+  padding-right: calc(var(--btn-s) + var(--btn-tile) + var(--btn-inset));
+}
+
+/* The arrow keeps its up-right angle inside the tile; no extra nudge. */
+html body:not(#ll-buttons) .ll-button > .ll-arrow-glyph .ll-arrow-glyph__character {
+  translate: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body:not(#ll-buttons) .ll-button,
+  html body:not(#ll-buttons) .ll-button > * {
+    transition: none !important;
+  }
+}

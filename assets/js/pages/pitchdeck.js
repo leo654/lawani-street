@@ -27,8 +27,16 @@
     var overlayActive = !embedded;
     var activeIndex = 0;
     var resizeFrame = 0;
-    var wheelTotal = 0;
-    var wheelTimer = 0;
+    /* One wheel or trackpad gesture moves the deck exactly one slide. A trackpad
+       flick keeps sending decaying wheel events for a second or more, so once a
+       slide has changed the rest of that gesture is ignored until the slide has
+       landed and the gesture has really ended: the stream went quiet, the
+       direction reversed, or a fresh, harder push arrived on top of the tail. */
+    var WHEEL_THRESHOLD = 60;
+    var WHEEL_QUIET = 160;
+    var WHEEL_LOCK = 700;
+    var wheelDebug = new URLSearchParams(window.location.search).get("wheeldebug") === "1";
+    var wheel = { total: 0, direction: 0, timer: 0, lastAt: 0, lastDirection: 0, recent: [], locked: false, lockedUntil: 0 };
     var closing = false;
     var scrollFrame = 0;
     var scrollSettleTimer = 0;
@@ -531,21 +539,70 @@
       });
     }
 
-    viewport.addEventListener("wheel", function (event) {
+    function wheelDelta(event) {
+      if (event.deltaMode === 1) return event.deltaY * 40;
+      if (event.deltaMode === 2) return event.deltaY * viewport.clientHeight;
+      return event.deltaY;
+    }
+
+    function handleWheel(event) {
       if (closing) return;
       if (horizontalDeck.matches) {
         cancelNavigation();
         return;
       }
       event.preventDefault();
-      wheelTotal += event.deltaY;
-      window.clearTimeout(wheelTimer);
-      wheelTimer = window.setTimeout(function () { wheelTotal = 0; }, 180);
-      if (Math.abs(wheelTotal) < 300) return;
-      var direction = wheelTotal > 0 ? 1 : -1;
-      wheelTotal = 0;
+
+      var now = window.performance.now();
+      var delta = wheelDelta(event);
+      var size = Math.abs(delta);
+      var direction = delta > 0 ? 1 : delta < 0 ? -1 : 0;
+      var quiet = now - wheel.lastAt > WHEEL_QUIET;
+      var previousDirection = wheel.lastDirection;
+
+      // Sideways swipes and empty events carry no intent to change slide.
+      if (!direction || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      if (quiet) wheel.recent.length = 0;
+      var floor = wheel.recent.length ? Math.min.apply(null, wheel.recent) : 0;
+      wheel.recent.push(size);
+      if (wheel.recent.length > 4) wheel.recent.shift();
+      wheel.lastAt = now;
+      wheel.lastDirection = direction;
+
+      if (wheel.locked) {
+        // The fading tail of a flick only ever gets smaller. Once the slide has
+        // landed, a pause, a reversal or any clear rise in speed is a new gesture.
+        var settled = now >= wheel.lockedUntil;
+        var freshGesture = settled && (
+          quiet ||
+          (direction !== previousDirection && size >= 8) ||
+          (size >= 12 && size > floor * 1.4 + 6)
+        );
+        if (wheelDebug) console.log("[deck wheel]", Math.round(delta), settled ? (freshGesture ? "new gesture" : "tail") : "locked");
+        if (!freshGesture) return;
+        wheel.locked = false;
+        wheel.total = 0;
+      }
+
+      if (direction !== wheel.direction) {
+        wheel.direction = direction;
+        wheel.total = 0;
+      }
+      wheel.total += delta;
+      window.clearTimeout(wheel.timer);
+      wheel.timer = window.setTimeout(function () { wheel.total = 0; }, WHEEL_QUIET);
+      if (Math.abs(wheel.total) < WHEEL_THRESHOLD) return;
+
+      wheel.total = 0;
+      var before = activeIndex;
       move(direction);
-    }, { passive: false });
+      if (activeIndex !== before) {
+        wheel.locked = true;
+        wheel.lockedUntil = now + (reducedMotion() ? 300 : WHEEL_LOCK);
+      }
+    }
+
+    viewport.addEventListener("wheel", handleWheel, { passive: false });
 
     /* Mobile uses the browser's native horizontal snap. Settling from its
        scroll position keeps chapter state, media and URL in sync after a
@@ -558,12 +615,13 @@
       var tag = document.activeElement && document.activeElement.tagName;
       if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (document.activeElement && document.activeElement.isContentEditable)) return;
 
+      // A held key repeats quickly; it should move one slide, not run through the deck.
       if (event.key === "ArrowRight" || event.key === "ArrowDown" || event.key === "PageDown") {
         event.preventDefault();
-        move(1, true);
+        if (!event.repeat) move(1, true);
       } else if (event.key === "ArrowLeft" || event.key === "ArrowUp" || event.key === "PageUp") {
         event.preventDefault();
-        move(-1, true);
+        if (!event.repeat) move(-1, true);
       } else if (event.key === "Home") {
         event.preventDefault();
         goTo(0, { focusSlide: true });

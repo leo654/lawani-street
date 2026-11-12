@@ -116,7 +116,7 @@
       '<div class="cookie-consent__content">',
         '<h2 class="cookie-consent__title" id="cookie-consent-title">Cookies</h2>',
         '<p class="cookie-consent__text cookie-consent__notice-text" data-cookie-notice>',
-          'Optional analytics improve this site. Marketing stays off unless you opt in. Read our ',
+          'Analytics and marketing stay off unless you opt in. Your choice is saved on this device only. Read our ',
           '<a class="cookie-consent__link" href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy policy</a> or ',
           '<button class="cookie-consent__link cookie-consent__button--manage" type="button" data-cookie-action="manage">Customize</button>.',
         '</p>',
@@ -218,13 +218,13 @@
     });
 
     if (isPrivacyPage) {
-      var settingsLink = document.querySelector("[data-cookie-settings-link]");
-      if (settingsLink) {
+      // The page button and the footer "Cookie Preferences" link both open the dialog.
+      Array.prototype.forEach.call(document.querySelectorAll("[data-cookie-settings-link]"), function (settingsLink) {
         settingsLink.addEventListener("click", function (event) {
           event.preventDefault();
           openDialog(dialog, true);
         });
-      }
+      });
       if (window.location.hash === "#cookie-settings") openDialog(dialog, true);
       return;
     }

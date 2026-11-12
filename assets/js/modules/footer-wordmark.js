@@ -1,4 +1,4 @@
-const footers = Array.from(document.querySelectorAll(".ll-footer, .cs-footer, .lwa-footer"));
+const footers = Array.from(document.querySelectorAll(".ll-footer, .cs-footer:not(.cs-footer--talk), .lwa-footer"));
 const canRelight = matchMedia("(hover: hover) and (pointer: fine)").matches &&
   !matchMedia("(prefers-reduced-motion: reduce)").matches;
 const cleanups = [];
@@ -17,8 +17,12 @@ const updateParallax = () => {
   });
 };
 
+// Only measure while a footer is actually on screen (the IntersectionObserver
+// toggles is-mark-fixed), so normal page scrolling does no layout reads here.
 const scheduleParallax = () => {
-  if (canRelight && !parallaxFrame) parallaxFrame = requestAnimationFrame(updateParallax);
+  if (!canRelight || parallaxFrame) return;
+  if (!footers.some((footer) => footer.classList.contains("is-mark-fixed"))) return;
+  parallaxFrame = requestAnimationFrame(updateParallax);
 };
 
 if (footers.length && "IntersectionObserver" in window) {
@@ -30,6 +34,25 @@ if (footers.length && "IntersectionObserver" in window) {
   }, { threshold: 0 });
 
   if (canRelight) {
+    // Pull the bevel and glow shadows back while the page is moving (see nonstop-footer.css); they return
+    // once scrolling has been still for a moment.
+    // The flag sits on the footers that are on screen, not on <html>: flipping a class on the root made the
+    // browser restyle the whole page at the start and end of every scroll, a small hitch on long pages.
+    let settleTimer = 0;
+    let marked = [];
+    const markScrolling = () => {
+      if (!marked.length) {
+        marked = footers.filter((footer) => footer.classList.contains("is-mark-fixed"));
+        if (!marked.length) return;
+        marked.forEach((footer) => footer.classList.add("is-footer-scrolling"));
+      }
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(() => {
+        marked.forEach((footer) => footer.classList.remove("is-footer-scrolling"));
+        marked = [];
+      }, 150);
+    };
+    window.addEventListener("scroll", markScrolling, { passive: true });
     window.addEventListener("scroll", scheduleParallax, { passive: true });
     window.addEventListener("resize", scheduleParallax, { passive: true });
     scheduleParallax();
@@ -91,6 +114,7 @@ if (footers.length && "IntersectionObserver" in window) {
     if (parallaxFrame) cancelAnimationFrame(parallaxFrame);
     window.removeEventListener("scroll", scheduleParallax);
     window.removeEventListener("resize", scheduleParallax);
+    footers.forEach((footer) => footer.classList.remove("is-footer-scrolling"));
     cleanups.forEach((cleanup) => cleanup());
     footers.forEach((footer) => {
       footer.classList.remove("is-mark-fixed");

@@ -9,7 +9,7 @@ body.home-index .ll-home-hero > .ll-home-hero__media {
 body.home-index {
   --ll-home-hero-height: 100vh;
   --ll-hero-ink: #151917;
-  --ll-hero-paper: #f2f0e9;
+  --ll-hero-paper: var(--ll-brand-cream);
   --ll-hero-signal: #ff3838;
 }
 
@@ -23,12 +23,12 @@ body.home-index .ll-home-hero {
   --ll-hero-x: 0px;
   --ll-hero-y: 0px;
   background: var(--ll-hero-ink);
-  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
+  transition: background-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease);
 }
 
 html[data-theme="light"] body.home-index {
   --ll-hero-ink: #e8e7e1;
-  --ll-hero-paper: #171917;
+  --ll-hero-paper: var(--ll-brand-charcoal);
 }
 
 /* Keep the hero and its fixed media layers at the same full-viewport height. */
@@ -63,7 +63,7 @@ body.home-index .ll-home-hero > .ll-home-hero__media {
 body.home-index .ll-home-hero > .ll-home-hero__wash {
   pointer-events: none;
   background: none;
-  transition: opacity var(--motion-component, 420ms) var(--motion-ease-out, ease);
+  transition: opacity var(--motion-component, var(--ll-dur-medium)) var(--motion-ease-out, ease);
 }
 
 body.home-index .ll-home-hero > .ll-home-hero__content {
@@ -90,25 +90,6 @@ body.home-index .ll-home-hero > .ll-home-hero__content :is(a, button) {
   pointer-events: auto;
 }
 
-body.home-index .ll-home-hero__video-toggle {
-  position: fixed;
-  right: var(--ll-gutter);
-  bottom: 54px;
-  z-index: 3;
-  padding: 8px 0;
-  border: 0;
-  background: transparent;
-  color: var(--ll-white);
-  font: 10px/1 var(--ll-mono);
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-body.home-index .ll-home-hero__video-toggle:focus-visible {
-  outline: 1px solid currentColor;
-  outline-offset: 5px;
-}
-
 body.home-index .ll-home-hero__rail time {
   background: radial-gradient(circle at 14px 50%, var(--ll-hero-signal) 0 3px, transparent 3.5px);
 }
@@ -118,18 +99,16 @@ body.home-index .ll-home-hero__rail-line {
   background: currentColor;
 }
 
+/* The poster frame is the same as the film's first frame, so the video can stay visible:
+   if playback is blocked or slow (autoplay policy, reduced motion, a codec the browser
+   lacks) the still shows instead of an empty hero. */
 body.home-index .ll-home-hero__media video {
   filter: none;
-  opacity: 0;
-  transition: opacity var(--motion-component, 420ms) var(--motion-ease-out, ease);
-}
-
-body.home-index .ll-home-hero.is-video-ready .ll-home-hero__media video {
   opacity: 1;
 }
 
 body.home-index .ll-home-hero:not(.is-video-ready) :is(#ll-hero-title, .ll-home-hero__rail, .ll-home-hero__content) {
-  color: #171917;
+  color: var(--ll-brand-charcoal);
   text-shadow: none;
 }
 
@@ -138,7 +117,7 @@ body.home-index .ll-work-intro,
 body.home-index .ll-work .lwa-archive {
   background: var(--ll-hero-ink);
   color: var(--ll-hero-paper);
-  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), border-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
+  transition: background-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), border-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease);
 }
 
 body.home-index .ll-work-intro {
@@ -150,18 +129,18 @@ body.home-index .ll-work .lwa-archive {
   --lwa-fg: var(--ll-hero-paper);
   --lwa-muted: color-mix(in srgb, var(--ll-hero-paper) 60%, transparent);
   --lwa-line: color-mix(in srgb, var(--ll-hero-paper) 18%, transparent);
-  --lwa-panel: color-mix(in srgb, var(--ll-hero-ink) 88%, #000);
+  --lwa-panel: color-mix(in srgb, var(--ll-hero-ink) 88%, var(--ll-brand-black));
 }
 
 html[data-theme="light"] body.home-index .ll-work-intro,
 html[data-theme="light"] body.home-index .ll-work .lwa-archive {
   background: #e8e7e1;
-  color: #171917;
+  color: var(--ll-brand-charcoal);
 }
 
 html[data-theme="light"] body.home-index .ll-work .lwa-project__tags > span {
-  background: #171917;
-  color: #f2f0e9;
+  background: var(--ll-brand-charcoal);
+  color: var(--ll-brand-cream);
 }
 
 @media (max-width: 820px) {

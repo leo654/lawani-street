@@ -117,13 +117,56 @@
   }
 
   function initCaseReveals() {
+    var storyCopy = document.querySelector(".cs-story__copy");
+    if (storyCopy) storyCopy.classList.remove("ll-reveal");
     var targets = Array.prototype.slice.call(
       document.querySelectorAll(".case-study .ll-reveal:not(.cs-story__media)")
-    );
-    var storyCopy = document.querySelector(".cs-story__copy");
-    var observer = null;
-    if (storyCopy) storyCopy.style.setProperty("--ll-reveal-delay", "40ms");
+    ).filter(function (target) {
+      return !target.closest(".cs-related, .cs-footer") && target !== storyCopy;
+    });
     if (!targets.length) return;
+
+    var gsap = window.gsap;
+    var ScrollTrigger = window.ScrollTrigger;
+    if (!reduceMotion && gsap && ScrollTrigger) {
+      document.body.classList.add("cs-reveals-ready", "cs-reveals-gsap");
+
+      var context = gsap.context(function () {
+        targets.forEach(function (target) {
+          var timeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: target,
+              start: "top 90%",
+              once: true
+            },
+            onComplete: function () {
+              target.classList.add("is-visible");
+            }
+          });
+
+          timeline.fromTo(target, {
+            autoAlpha: 0,
+            y: 14
+          }, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.68,
+            delay: (parseFloat(window.getComputedStyle(target).getPropertyValue("--ll-reveal-delay")) || 0) / 1000,
+            ease: "expo.out",
+            overwrite: "auto"
+          }, 0);
+
+        });
+      }, document.body);
+
+      ScrollTrigger.refresh();
+      window.addEventListener("pagehide", function (event) {
+        if (!event.persisted) context.revert();
+      }, { once: true });
+      return;
+    }
+
+    var observer = null;
 
     function reveal(target) {
       if (target.classList.contains("ll-reveal")) target.classList.add("is-visible");
@@ -180,9 +223,23 @@
     });
   }
 
+  /* Tiles fade and sharpen in as each image arrives, instead of popping in. */
+  function initMediaLoad() {
+    Array.prototype.slice.call(document.querySelectorAll(".cs-split__media img")).forEach(function (image) {
+      if (image.complete && image.naturalWidth > 0) return;
+      image.classList.add("cs-media", "cs-media-pending");
+      function done() {
+        window.requestAnimationFrame(function () { image.classList.remove("cs-media-pending"); });
+      }
+      image.addEventListener("load", done, { once: true });
+      image.addEventListener("error", done, { once: true });
+    });
+  }
+
   function ready() {
     document.body.classList.add("cs-motion-ready", "cs-intro-complete");
     initCaseStudyEffects();
+    initMediaLoad();
     initGalleryLayout();
     initVideoPlayback();
     initCaseReveals();

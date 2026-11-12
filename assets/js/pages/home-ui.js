@@ -85,6 +85,61 @@
     });
   }
 
+  // Runs `retry` once, on the first real user gesture. Used when autoplay is refused.
+  function retryOnFirstGesture(retry) {
+    var events = ["pointerdown", "keydown", "touchend"];
+    function fire() {
+      events.forEach(function (name) { document.removeEventListener(name, fire, true); });
+      retry();
+    }
+    events.forEach(function (name) { document.addEventListener(name, fire, { capture: true, passive: true }); });
+  }
+
+  // Looping background videos in the About section. They load only when they are about to
+  // scroll into view: starting them with the page competed with the scripts for the browser's
+  // connection slots (Safari on an HTTP/1.1 server held the page's scripts back for ~14 s).
+  function initAboutVideos() {
+    var videos = Array.prototype.slice.call(document.querySelectorAll("video[data-lazy-autoplay]"));
+    if (!videos.length) return;
+    var gestureArmed = false;
+
+    function start(video) {
+      video.muted = true;
+      if (video.preload !== "auto") video.preload = "auto";
+      var attempt = video.play();
+      if (!attempt || typeof attempt.catch !== "function") return;
+      attempt.catch(function (error) {
+        if (!error || error.name !== "NotAllowedError" || gestureArmed) return;
+        // Autoplay refused (Firefox "Block Audio and Video", iOS Low Power Mode): the poster
+        // stays on screen and the films start on the first click, key press or touch.
+        gestureArmed = true;
+        retryOnFirstGesture(function () {
+          gestureArmed = false;
+          videos.forEach(function (item) {
+            if (item.dataset.inView === "true") start(item);
+          });
+        });
+      });
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      window.addEventListener("load", function () {
+        videos.forEach(function (video) { video.dataset.inView = "true"; start(video); });
+      }, { once: true });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var video = entry.target;
+        video.dataset.inView = entry.isIntersecting ? "true" : "false";
+        if (entry.isIntersecting) start(video);
+        else video.pause();
+      });
+    }, { rootMargin: "400px 0px" });
+    videos.forEach(function (video) { observer.observe(video); });
+  }
+
   function initHomeHero() {
     var hero = document.querySelector("[data-ll-home-hero]");
     if (!hero) return;
@@ -94,13 +149,27 @@
     var heroVisible = true;
     var heroObserver = null;
     function markHeroVideoReady() {
-      if (video && video.readyState >= 2) hero.classList.add("is-video-ready");
+      hero.classList.add("is-video-ready");
     }
 
     if (video) {
       video.addEventListener("loadeddata", markHeroVideoReady);
       video.addEventListener("playing", markHeroVideoReady);
-      markHeroVideoReady();
+      if (video.readyState >= 2) {
+        markHeroVideoReady();
+      } else {
+        // The poster is already a valid hero image: let the page text switch to its
+        // on-image colours as soon as that image is available, not only once the film is.
+        var posterUrl = video.getAttribute("poster");
+        if (posterUrl) {
+          var posterProbe = new Image();
+          posterProbe.onload = markHeroVideoReady;
+          posterProbe.onerror = function () {};
+          posterProbe.src = posterUrl;
+        } else {
+          markHeroVideoReady();
+        }
+      }
     }
 
     var heroVideoSuppressed = function (userInitiated) {
@@ -114,21 +183,18 @@
 
     function playHeroVideo(userInitiated) {
       if (!video || heroVideoSuppressed(userInitiated)) return;
-      video.play().catch(function (error) {
-        if (error.name === "AbortError") return;
-        console.warn("The hero film could not be played.", error);
-
-        // Fallback: show poster image if video fails
-        var poster = video.getAttribute("poster");
-        if (poster && !video.dataset.fallbackShown) {
-          video.dataset.fallbackShown = "true";
-          video.style.display = "none";
-          var fallbackImg = document.createElement("img");
-          fallbackImg.src = poster;
-          fallbackImg.alt = "Hero image";
-          fallbackImg.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;";
-          video.parentNode.insertBefore(fallbackImg, video);
+      var attempt = video.play();
+      if (!attempt || typeof attempt.catch !== "function") return;
+      attempt.catch(function (error) {
+        if (error && error.name === "AbortError") return;
+        // Some browsers (Firefox with "Block Audio and Video" autoplay, for one) refuse
+        // even muted autoplay until the visitor interacts. The poster stays on screen
+        // meanwhile; start the film on the first click, key press or touch.
+        if (error && error.name === "NotAllowedError") {
+          retryOnFirstGesture(function () { playHeroVideo(); });
+          return;
         }
+        console.warn("The hero film could not be played.", error);
       });
     }
 
@@ -191,65 +257,11 @@
     }, { once: true });
   }
 
-  function initFooterParallax() {
-    var footer = document.querySelector(".ll-footer");
-    var marquee = footer && footer.querySelector(".ll-footer__marquee");
-    if (!footer || !marquee || reduceMotion) return;
-
-    var footerCopy = Array.prototype.slice.call(footer.querySelectorAll(
-      ".ll-footer__studio, .ll-footer__project-cta, .ll-footer__year"
-    ));
-
-    Promise.resolve(Boolean(window.gsap && window.ScrollTrigger)).then(function (loaded) {
-      if (!loaded || !window.gsap || !window.ScrollTrigger) {
-        console.warn("GSAP footer animation is unavailable; the footer remains static.");
-        return;
-      }
-
-      window.gsap.registerPlugin(window.ScrollTrigger);
-      var timeline = window.gsap.timeline({
-        scrollTrigger: {
-          trigger: footer,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1,
-          invalidateOnRefresh: true,
-          onUpdate: function (self) {
-            window.__lawaniFooterScrollProgress = self.progress;
-          }
-        }
-      });
-
-      function getParallaxTravel() {
-        return Math.min(Math.round(marquee.clientHeight * 0.18), 170);
-      }
-
-      timeline.fromTo(marquee, {
-        "--ll-footer-parallax-y": function () { return getParallaxTravel() + "px"; }
-      }, {
-        "--ll-footer-parallax-y": function () { return -getParallaxTravel() + "px"; },
-        ease: "none",
-        duration: 1
-      }, 0);
-
-      if (footerCopy.length) {
-        window.gsap.set(footerCopy, { autoAlpha: 0, y: 28 });
-        timeline.to(footerCopy, {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.22,
-          stagger: 0.07,
-          ease: "power2.out",
-        }, 0.06);
-      }
-    });
-  }
-
   function ready() {
     initServiceLinkState();
     initSkillRowSelection();
     initHomeHero();
-    initFooterParallax();
+    initAboutVideos();
   }
 
   if (document.readyState === "loading") {

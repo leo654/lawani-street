@@ -15,7 +15,10 @@ This project is a multi-page static site. HTML pages remain at the repository ro
 | `assets/js/modules/` | Behavior shared across multiple route families |
 | `assets/js/pages/` | Behavior owned by a page or route family |
 | `assets/js/components/` | Behavior owned by a discrete interactive component |
-| `assets/media/` | Source images, video, fonts, icons, and web manifest |
+| `assets/projects/<project>/` | Images and video used by one case study (`images/`, `video/`) |
+| `assets/site/` | Media used by the home, work, resume pages or shared by several pages (`home/`, `work/`, `pitchdeck/`, `shared/`) |
+| `assets/_source/` | Unreferenced originals grouped by project; not published |
+| `assets/media/` | Fonts and the web manifest only |
 | `assets/build/` | Vite-generated production assets only |
 
 ## Route ownership
@@ -38,7 +41,7 @@ The homepage and work archive share `assets/partials/project-archive.html`. The 
 
 Keep a component's CSS and JavaScript under the same component name. CSS owns the visual treatment, focus/disabled states, and keyframes. JavaScript owns input handling, state changes, and preference-aware initialization. The page entry imports a component only on routes that contain it.
 
-For example, the TYOL logo replay control is implemented in `assets/css/components/replay.css` and `assets/js/components/replay.js`. Shared button geometry and focus treatment remain in `assets/css/button-system.css`.
+For example, the TYOL logo replay control is implemented in `assets/css/components/replay.css` and `assets/js/components/replay.js`. Buttons share one system: `assets/css/button-unified.css` is imported last by every site entry and owns button geometry, type, sizes (`--sm` 40px, default 50px, `--lg` 60px), variants (outline by default, `--solid`, `--glass`, `--media`, `--square`), the orange hover fill and the Hayler-style arrow reveal. Its header documents the anatomy and the symmetric spacing rule (one inset drives padding, gap and the icon tile). `button-system.css` still supplies context colours for older surfaces.
 
 Use native buttons for actions and links for navigation. Give toggle buttons an accessible name and state (`aria-expanded`, `aria-pressed`, or `disabled`) that reflects what the control does. Any animation must have a reduced-motion behavior; do not leave a visible control active after its behavior has been disabled.
 
@@ -55,10 +58,21 @@ Use native buttons for actions and links for navigation. Give toggle buttons an 
 
 JavaScript reads the computed CSS tokens through `assets/js/modules/constants.js`. Keep the longer media, hero, and presentation-slide timings separate where they support deliberate artwork or navigation. Keep entrance distances restrained and use the shared easing for UI and reveal motion. Every animated path must continue to respect `prefers-reduced-motion`.
 
+### Motion kit
+
+`assets/js/modules/motion-kit.js` and `assets/css/motion-kit.css` own the expressive motion language, loaded on every route right after `motion-system.js`:
+
+- **Macro:** first-visit preloader (once per session), page intros after the preloader or the 4-panel page cover, home hero clip-and-scale entrance plus scroll parallax, clip-reveal + parallax media, stripe edges where light sections meet the dark footers. Every footer (home, work, project pages) behaves the same: stripe edge plus the wordmark reveal; the scroll-snap and content lift are opt-in via `data-mk-snap` and `data-mk-footer-lift`.
+- **Micro:** headings split into characters that roll in from random order, paragraphs that rise line by line, lead copy that brightens word by word as you scroll, labels that decode from random glyphs, hover letter shuffles on menu, footer and related-work links, letter rolls on buttons, drawn rules, underlines, contextual cursor after Hayler (a small orange square that trails the real pointer, a faint highlight behind text links, word tags such as Play, Drag, View, Copy, and it fades over buttons), a scroll-velocity client marquee you can drag, drag-to-scroll project galleries, a related-work image follower, and copy-to-clipboard on visible email addresses.
+
+The kit targets existing classes, so new markup usually needs nothing. To tune a single element use `data-mk-text="chars|lines|opacity|fill|decode|none"`, `data-cursor="Label"`, `data-mk-media`, `data-mk-rule`, `data-mk-stripes`, `data-mk-drag`, `data-mk-marquee`, `data-mk-spin="360"` or `data-mk-off`. Each page head carries a tiny inline script that adds `mk-preloading`, `mk-arriving` and `mk-intro-pending` so nothing flashes before the kit runs; the kit (or a 6 s failsafe) removes them.
+
+The kit replaces `home-loader.js`, `elastic-cursor.js`, `scroll-text-reveals.js`, `media-reveals.js`, `button-text-rolls.js`, `section-reveals.js` and the scramble in `lamalama-ui.js`. Those files are no longer loaded; retired files are kept in `_archive/unused-code/` (the 2026-11-12 cleanup moved `page-footer.css`, `media-reveals.css`, `button-text-rolls.js` and `error-dots.js` there).
+
 ## Build and media rules
 
 - Edit route and component sources. Do not edit content-hashed assets in `dist/assets/build/` or `_site/assets/build/`.
-- Keep source media in `assets/media/`. Vite rewrites route references and emits the production copy into `assets/build/` inside the selected output folder.
+- Put a new image or video in `assets/projects/<project>/images|video/` (or `assets/site/...` if it is not tied to one project) and keep the original export in `assets/_source/<project>/`. Vite rewrites route references and emits the production copy into `assets/build/` inside the selected output folder.
 - `npm run build` creates `dist/` for local production review.
 - `npm run build:pages` creates the clean `_site/` artifact and copies `sitemap.xml` and `robots.txt` into it.
 - Add a route to `vite.config.mjs` and assign it a CSS entry before publishing it.

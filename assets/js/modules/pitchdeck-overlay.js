@@ -19,6 +19,8 @@
   var inertNodes = [];
   var pendingNavigation = "";
   var pausedVideos = [];
+  var openGate = null;
+  var openGateTimer = 0;
 
   function reducedMotion() {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -189,10 +191,23 @@
     root.classList.add("is-visible");
     root.setAttribute("aria-hidden", "false");
 
-    window.requestAnimationFrame(function () {
-      if (!root || !open) return;
+    // Fade in once the deck has loaded, so it never pops in after the fade has started
+    // (the deck is preloaded, so this is normally immediate; 1.2s is the safety limit).
+    function begin() {
+      openGate = null;
+      window.clearTimeout(openGateTimer);
+      if (!root || !open || root.classList.contains("is-open")) return;
       root.classList.add("is-open");
       scheduleDeckActivation();
+    }
+    window.requestAnimationFrame(function () {
+      if (!root || !open) return;
+      if (ready || reducedMotion()) {
+        begin();
+        return;
+      }
+      openGate = begin;
+      openGateTimer = window.setTimeout(begin, 1200);
     });
   }
 
@@ -225,6 +240,8 @@
     options = options || {};
     open = false;
     closing = true;
+    openGate = null;
+    window.clearTimeout(openGateTimer);
     window.clearTimeout(activationTimer);
     window.clearTimeout(focusTimer);
     postToDeck("lawani:pitchdeck-deactivate");
@@ -270,7 +287,8 @@
     if (event.data.type === "lawani:pitchdeck-ready") {
       ready = true;
       root.classList.add("is-ready");
-      if (open) scheduleDeckActivation();
+      if (open && openGate) openGate();
+      else if (open) scheduleDeckActivation();
       else postToDeck("lawani:pitchdeck-deactivate");
     }
     if (event.data.type === "lawani:pitchdeck-close") hide({ updateHistory: true });
@@ -297,6 +315,21 @@
   function init() {
     createShell();
     if (window.location.hash === DECK_HASH) show(null, { updateHistory: false });
+    if (!root) return;
+
+    // Preload the deck once the page is idle, or as soon as someone shows intent (hover / touch).
+    function preload() { loadDeck(); }
+    function whenIdle() {
+      if ("requestIdleCallback" in window) window.requestIdleCallback(preload, { timeout: 4000 });
+      else window.setTimeout(preload, 2500);
+    }
+    if (document.readyState === "complete") whenIdle();
+    else window.addEventListener("load", whenIdle, { once: true });
+    ["pointerenter", "touchstart", "focusin"].forEach(function (type) {
+      document.addEventListener(type, function (event) {
+        if (event.target && event.target.closest && isDeckLink(event.target.closest("a[href]"))) preload();
+      }, { passive: true, capture: true });
+    });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });

@@ -2,14 +2,14 @@
 .ll-pitch-overlay {
   position: fixed;
   inset: 0;
-  z-index: 2147482000;
+  z-index: var(--ll-z-overlay);
   overflow: hidden;
   visibility: hidden;
-  background: #070807;
+  background: var(--ll-brand-black);
   opacity: 0;
   pointer-events: none;
   will-change: opacity;
-  transition: opacity 600ms cubic-bezier(.76, 0, .24, 1);
+  transition: opacity var(--ll-dur-medium) var(--ll-ease-in-out);
 }
 
 .ll-pitch-overlay.is-visible {
@@ -22,7 +22,7 @@
 }
 
 .ll-pitch-overlay.is-closing {
-  transition-duration: 440ms;
+  transition-duration: var(--ll-dur-medium);
 }
 
 .ll-pitch-overlay__surface,
@@ -35,19 +35,19 @@
 .ll-pitch-overlay__surface {
   position: relative;
   overflow: hidden;
-  background: #070807;
+  background: var(--ll-brand-black);
 }
 
 .ll-pitch-overlay__deck {
   border: 0;
-  background: #070807;
+  background: var(--ll-brand-black);
 }
 
 body.ll-pitch-overlay-open {
   overscroll-behavior: none;
 }
 
-body.ll-pitch-overlay-open :is(.elastic-cursor, .elastic-cursor-dot) {
+body.ll-pitch-overlay-open :is(.elastic-cursor, .elastic-cursor-dot, .mk-cursor) {
   opacity: 0 !important;
   visibility: hidden !important;
 }

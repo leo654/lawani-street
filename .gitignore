@@ -10,3 +10,8 @@ assets/css/home.css
 assets/css/work.css
 lawani-street-live-mirror/
 lawani-street-live-mirror.zip
+
+# Local-only folders (backups, retired code, original source files)
+_archive/
+tmp/
+assets/_source/

@@ -1,7 +1,7 @@
 /* Shared finishing details for controls and inline icon alignment. */
 :root {
-  --ll-ui-motion-duration: var(--motion-control, 240ms);
-  --ll-ui-motion-easing: var(--motion-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+  --ll-ui-motion-duration: var(--motion-control, var(--ll-dur-base));
+  --ll-ui-motion-easing: var(--motion-ease-out, var(--ll-ease-out));
   --ll-ui-motion: var(--ll-ui-motion-duration) var(--ll-ui-motion-easing);
 }
 
@@ -25,15 +25,11 @@
   transition: transform var(--ll-ui-motion);
 }
 
-.ll-icon--plus {
-  stroke-width: 1.4;
-}
-
 /* Keep footer social and booking icons in step with the inverse link hover. */
 html body :is(.cs-footer, .lwa-footer, .ll-footer) .ll-footer__utility nav.ll-footer__social-links a:is(:hover, :focus-visible) {
   border-color: var(--ll-brand-charcoal, #20221f);
   background: var(--ll-brand-charcoal, #20221f);
-  color: #f4f2ec;
+  color: var(--ll-brand-cream) !important;
 }
 
 html body :is(.cs-footer, .lwa-footer, .ll-footer) .ll-footer__utility nav.ll-footer__social-links .ll-footer__linkedin-bg,
@@ -109,4 +105,54 @@ html body .ll-mobile-menu__actions > div {
 /* Keep LiquidGL's full-size canvas from covering CSS-driven controls. */
 html body canvas[data-liquid-ignore] {
   display: none !important;
+}
+
+/* Touch targets: on phones and tablets every small link gets at least a 44px-tall hit area.
+   The extra area is an invisible pseudo-element centred on the link, so nothing moves on screen. */
+@media (max-width: 900px), (pointer: coarse) {
+  html body :is(
+    .ll-footer__social-links a,
+    .cs-next__head a,
+    .cookie-consent__text .cookie-consent__link,
+    .contact-form__privacy a,
+    .contact-email-alternative a,
+    .cookie-privacy-page__content a[href^="mailto:"]
+  ) {
+    position: relative;
+  }
+
+  html body :is(
+    .ll-footer__social-links a,
+    .cs-next__head a,
+    .cookie-consent__text .cookie-consent__link,
+    .contact-form__privacy a,
+    .contact-email-alternative a,
+    .cookie-privacy-page__content a[href^="mailto:"]
+  )::before {
+    content: "";
+    position: absolute;
+    top: calc(50% - 22px);
+    right: -4px;
+    bottom: calc(50% - 22px);
+    left: -4px;
+  }
+
+  /* Footer social links are a single row of chips: they grow to 44px tall rather than overlap the legal links below. */
+  html body:not(#ll-touch) .ll-footer__social-links a {
+    min-height: 44px;
+  }
+
+  /* Back-to-top square clips its hover fill (overflow: hidden), so it grows to 44px on touch screens. */
+  html body:not(#ll-touch) .ll-footer__utility .ll-footer__back-to-top {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+  }
+
+  /* Resume contact rows sit 4px apart, so they grow to 44px instead of overlapping hit areas. */
+  html body.ll-deck-page .ll-deck-resume__identity-copy .ll-deck-resume__contact a {
+    min-height: 44px;
+    align-items: center;
+  }
 }

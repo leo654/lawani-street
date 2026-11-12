@@ -1,3 +1,11 @@
+/* The head of every page paints a plain cover (html::before, inline style) so that a browser which paints before this
+   stylesheet has arrived (Firefox does) never shows the page unstyled. This rule lifts it the moment the stylesheet applies;
+   the extra specificity beats the inline html.mk-preloading::before colour. */
+html:root:root::before {
+  content: none;
+  display: none;
+}
+
 :root {
   color-scheme: dark;
 
@@ -5,33 +13,39 @@
   --ll-brand-orange: #ff4f12;
   --ll-brand-charcoal: #20221f;
   --ll-brand-black: #070807;
+  --ll-brand-cream: #f4f2ec;
+  /* Fixed brand values (never theme-inverted, unlike --ll-white / --ll-black). RGB triplets are for rgba(var(--x-rgb), alpha). */
+  --ll-brand-cream-rgb: 244, 242, 236;
+  --ll-brand-black-rgb: 7, 8, 7;
+  --ll-brand-charcoal-rgb: 32, 34, 31;
+  --ll-brand-orange-rgb: 255, 79, 18;
   --ll-orange: var(--ll-brand-orange);
   --ll-ink: var(--ll-brand-charcoal);
   --ll-black: var(--ll-brand-black);
   --ll-paper: #d2d0ca;
   --ll-white: #f4f2ec;
   --ll-light-muted: rgba(244, 242, 236, 0.62);
-  --ll-dark-muted: rgba(7, 8, 7, 0.58);
   --ll-light-line: rgba(244, 242, 236, 0.18);
-  --ll-dark-line: rgba(7, 8, 7, 0.22);
 
   /* Default theme values; theme-system.css owns light/dark overrides. */
   --ll-theme-bg: var(--ll-brand-black);
-  --ll-theme-ink: #f2f0e9;
-  --ll-theme-muted: rgba(242, 240, 233, 0.62);
-  --ll-theme-line: rgba(242, 240, 233, 0.2);
-  --ll-action-surface: rgba(244, 242, 236, 0.035);
-  --ll-action-line: rgba(244, 242, 236, 0.34);
-  --ll-action-ink: #f4f2ec;
-  --ll-action-hover: #f4f2ec;
-  --ll-action-hover-ink: var(--ll-brand-black);
+  --ll-theme-ink: var(--ll-brand-cream);
+  --ll-theme-muted: rgba(var(--ll-brand-cream-rgb), 0.62);
+  --ll-theme-line: rgba(var(--ll-brand-cream-rgb), 0.2);
   --ll-menu-surface: rgba(0, 0, 0, 0.94);
   --ll-menu-ink: #f4f2ec;
   --ll-menu-line: rgba(244, 242, 236, 0.06);
 
+  /* Motion: four durations and three curves. CSS transitions use these instead of one-off values. */
+  --ll-dur-fast: 160ms;
+  --ll-dur-base: 240ms;
+  --ll-dur-medium: 420ms;
+  --ll-dur-slow: 800ms;
+  --ll-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ll-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ll-ease-spring: cubic-bezier(0.2, 1.33, 0.25, 1);
+
   /* Spacing */
-  --ll-golden-ratio: 1.618;
-  --ll-golden-ratio-inverse: 0.618;
   --space-1: 5px;
   --space-2: 8px;
   --space-3: 13px;
@@ -46,13 +60,9 @@
   --ll-grid-gap: clamp(var(--space-3), 1.65vw, var(--space-5));
   --ll-section-space: clamp(var(--space-7), 10vw, var(--space-8));
   --ll-section-space-compact: clamp(var(--space-6), 6vw, var(--space-7));
+  --ll-hero-top: clamp(112px, 18vh, 160px); /* space above the first heading, clears the floating header */
+  --ll-hero-bottom: var(--space-5);
   --ll-header-top: max(var(--space-3), env(safe-area-inset-top));
-  --ll-space-xs: var(--space-1);
-  --ll-space-sm: var(--space-2);
-  --ll-space-md: var(--space-3);
-  --ll-space-lg: var(--space-4);
-  --ll-space-xl: var(--space-5);
-  --ll-space-2xl: var(--space-6);
 
   /* Typography */
   --ll-sans: "Gridlite", sans-serif;
@@ -64,45 +74,73 @@
   --ll-type-h4: clamp(1.25rem, 1.8vw, 1.5rem);
   --ll-type-body: clamp(1rem, 0.15vw + 0.95rem, 1.125rem);
   --ll-type-body-small: 0.875rem;
+  /* Small-text scale: the fixed sizes used for labels, metadata and UI text. */
+  --ll-text-8: 8px;
+  --ll-text-9: 9px;
+  --ll-text-10: 10px;
+  --ll-text-11: 11px;
+  --ll-text-12: 12px;
+  --ll-text-13: 13px;
+  --ll-text-14: 14px;
+  --ll-text-15: 15px;
+  --ll-text-16: 16px;
   --ll-type-body-large: clamp(1.125rem, 1.4vw, 1.375rem);
   --ll-type-button: 0.875rem;
   --ll-type-project-title: clamp(1.75rem, 2.125vw, 2.125rem);
-  --ll-type-service-statement: clamp(16px, 3.35vw, 18px);
   --ll-type-compact-metadata: 0.75rem;
-  --ll-type-pitch-heading: clamp(3rem, 8vw, 6rem);
+  --ll-text-measure: 600px; /* default maximum width of body copy */
   --ll-leading-display: 0.98;
   --ll-leading-h1: 1.04;
   --ll-leading-h2: 1.1;
   --ll-leading-h3: 1.18;
   --ll-leading-h4: 1.25;
   --ll-leading-body: 1.55;
+  --ll-leading-body-large: 1.55;
   --ll-leading-small: 1.45;
   --ll-leading-label: 1.25;
   --ll-leading-button: 1.1;
   --ll-ls-tight: -0.035em;
   --ll-ls-normal: 0;
   --ll-ls-wide: 0.08em;
-  --ll-ls-wider: 0.12em;
+
+  /* Stacking layers, back to front. Values match what the site already used, so swapping a raw number for its
+     token changes nothing. Local stacking inside a component (1, 2, 3 …) stays as plain numbers. */
+  --ll-z-menu-scrim: 98;
+  --ll-z-menu: 99;
+  --ll-z-header: 100;
+  --ll-z-filter: 110;
+  --ll-z-header-raised: 120;
+  --ll-z-back-link: 121;
+  --ll-z-progress: 150;
+  --ll-z-showreel: 900;
+  --ll-z-hover-preview: 9998;
+  --ll-z-overlay: 90200;
+  --ll-z-overlay-high: 90300;
+  --ll-z-preloader: 90360;
+  --ll-z-toast: 90364;
+  --ll-z-cursor: 90365;
+  --ll-z-transition: 90366;
+  --ll-z-top: 90367;
+  /* Keep these short (5 digits). CSS minifiers store numbers as 32-bit floats and print about 6 significant digits,
+     which cannot tell apart values near 2,147,483,647 (or even 9,003,646 from 9,003,647): the old tokens
+     (2147482000 ... 2147483647) all came out of the production build as 2147480000, so the curtain, the cookie notice and
+     the top layer tied and DOM order decided who was in front. Order, low to high:
+     overlay < overlay-high (cookie notice) < 90360 (first-paint cover) < 90364 (toast) <
+     90365 (cursor) < transition (page curtain) < top (preloader, cursor dots). */
 
   /* Motion */
-  --ll-ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --ll-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ll-ease-smooth: cubic-bezier(0.65, 0, 0.35, 1);
-  --ll-ease-press: cubic-bezier(0.22, 0.75, 0.28, 1);
-  --ll-duration-micro: 180ms;
-  --ll-duration-label: 240ms;
-  --ll-duration-control: 240ms;
-  --ll-duration-component: 420ms;
-  --ll-duration-transform: 500ms;
+  --ll-ease: var(--ll-ease-out);
+  --ll-ease-out-expo: var(--ll-ease-out);
+  --ll-duration-micro: var(--ll-dur-fast);
+  --ll-duration-label: var(--ll-dur-base);
+  --ll-duration-control: var(--ll-dur-base);
+  --ll-duration-component: var(--ll-dur-medium);
 
   /* Shared control geometry */
   --ll-control-height: 50px;
   --ll-radius: 0px;
   --ll-control-radius: var(--ll-radius);
   --ll-dock-radius: 0px;
-  --lawani-grid-radius: 0px;
-  --work-bar-radius: 0px;
-  --liquid-btn-radius: 0px;
   --ll-control-padding-x: 16px;
   --ll-icon-size: 16px;
 }

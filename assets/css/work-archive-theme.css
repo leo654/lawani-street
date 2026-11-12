@@ -1,9 +1,9 @@
 /* One visual source for the shared work archive on home and work pages. */
 :is(body.home-index, body.work-index) .ll-work .lwa-archive {
   --lwa-bg: var(--ll-brand-black);
-  --lwa-fg: #f2f0e9;
-  --lwa-muted: rgba(242, 240, 233, 0.68);
-  --lwa-line: rgba(242, 240, 233, 0.18);
+  --lwa-fg: var(--ll-brand-cream);
+  --lwa-muted: rgba(var(--ll-brand-cream-rgb), 0.68);
+  --lwa-line: rgba(var(--ll-brand-cream-rgb), 0.18);
   --lwa-panel: var(--ll-theme-raised);
   --lwa-action-hover-bg: var(--ll-paper);
   --lwa-action-hover-fg: var(--ll-brand-charcoal);
@@ -18,7 +18,7 @@
 :is(body.home-index, body.work-index) .ll-work .lwa-project__tags > span {
   border-color: var(--lwa-line);
   background: var(--ll-brand-black);
-  color: #f2f0e9;
+  color: var(--ll-brand-cream);
 }
 
 :is(body.home-index, body.work-index) .ll-work .lwa-project__actions .ll-button {
@@ -32,20 +32,20 @@
 
 html[data-theme="light"] :is(body.home-index, body.work-index) .ll-work .lwa-archive {
   --lwa-bg: #e8e7e1;
-  --lwa-fg: #171917;
-  --lwa-muted: rgba(23, 25, 23, 0.68);
-  --lwa-line: rgba(23, 25, 23, 0.18);
-  --lwa-panel: #f2f0e9;
+  --lwa-fg: var(--ll-brand-charcoal);
+  --lwa-muted: rgba(var(--ll-brand-charcoal-rgb), 0.68);
+  --lwa-line: rgba(var(--ll-brand-charcoal-rgb), 0.18);
+  --lwa-panel: var(--ll-brand-cream);
   --lwa-action-hover-bg: var(--ll-orange);
   --lwa-action-hover-fg: var(--ll-brand-charcoal);
 }
 
 html[data-theme="light"] :is(body.home-index, body.work-index) .ll-work .lwa-project__toggle {
-  color: #171917;
+  color: var(--ll-brand-charcoal);
 }
 
 html[data-theme="light"] :is(body.home-index, body.work-index) .ll-work .lwa-project__tags > span {
-  border-color: rgba(23, 25, 23, 0.18);
-  background: #171917;
-  color: #f2f0e9;
+  border-color: rgba(var(--ll-brand-charcoal-rgb), 0.18);
+  background: var(--ll-brand-charcoal);
+  color: var(--ll-brand-cream);
 }

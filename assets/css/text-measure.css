@@ -1,0 +1,6 @@
+/* Default text width: body paragraphs never run wider than --ll-text-measure (600px).
+   :where() keeps this at zero specificity, so any component that sets its own, narrower
+   max-width (most do, in ch units) still wins; it is only the fallback and the cap. */
+:where(main p, footer p) {
+  max-width: var(--ll-text-measure);
+}

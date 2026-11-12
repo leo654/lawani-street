@@ -1,0 +1,2354 @@
+/* Pitch deck / resume: mobile layout, motion and artboard layout.
+   Merged from: pitchdeck-mobile.css, pitchdeck-motion-refinement.css, pitchdeck-artboard-layout.css (same order as before, so the cascade is unchanged). */
+
+/* ---- pitchdeck-mobile.css ---- */
+/* Mobile pitchdeck owner.
+   The shared stylesheet owns the desktop deck; this file owns only the
+   compact horizontal presentation and its persistent chapter navigator. */
+
+.ll-deck__mobile-meta {
+  display: none;
+}
+
+@media (max-width: 980px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  body.ll-deck-page .ll-deck__slides {
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    touch-action: pan-x pan-y;
+  }
+
+  body.ll-deck-page .ll-deck-slide {
+    width: 100%;
+    min-width: 100%;
+    height: 100%;
+    flex: 0 0 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  body.ll-deck-page .ll-deck-slide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  .ll-deck-page.ll-pitch-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--ll-brand-charcoal);
+  }
+
+  body.ll-deck-page .ll-deck {
+    --deck-gutter: 12px;
+    --deck-control-size: 44px;
+    --deck-mobile-nav-height: 64px;
+    inset: 12px;
+    background: var(--ll-brand-black);
+  }
+
+  body.ll-deck-page .ll-deck__backdrop {
+    background: var(--ll-brand-charcoal);
+  }
+
+  body.ll-deck-page .ll-deck__stage {
+    inset: 12px 12px calc(var(--deck-mobile-nav-height) + 32px);
+    border-radius: 8px;
+    transform: none;
+    filter: none;
+    transition: filter var(--ll-dur-base) ease;
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__stage {
+    left: 8px;
+    transform: none;
+    filter: brightness(0.26);
+    pointer-events: none;
+  }
+
+  body.ll-deck-page .ll-deck__slides {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    touch-action: pan-x pan-y;
+  }
+
+  body.ll-deck-page .ll-deck-slide,
+  body.ll-deck-page .ll-deck-slide:not(.ll-deck-slide--welcome) {
+    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    height: 100%;
+    flex: 0 0 100%;
+    border-radius: 8px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 16px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  body.ll-deck-page .ll-deck-slide::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-deck__menu-toggle,
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__menu-toggle {
+    top: 20px;
+    right: auto;
+    bottom: auto;
+    left: 20px;
+    width: var(--deck-control-size);
+    height: var(--deck-control-size);
+    border-color: rgba(var(--ll-brand-black-rgb), 0.2);
+    background: rgba(var(--ll-brand-cream-rgb), 0.86);
+    color: var(--ll-brand-black);
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  body.ll-deck-page .ll-deck__menu-toggle {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-deck__menu-icon {
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+
+  body.ll-deck-page .ll-deck__menu-icon path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    transition: transform var(--ll-dur-medium) var(--ll-ease-out-expo);
+    transform-origin: center;
+  }
+
+  body.ll-deck-page .ll-deck__close {
+    top: 20px;
+    right: 20px;
+    width: var(--deck-control-size);
+    height: var(--deck-control-size);
+    border-color: rgba(var(--ll-brand-black-rgb), 0.2);
+    background: rgba(var(--ll-brand-cream-rgb), 0.86);
+    color: var(--ll-brand-black);
+  }
+
+  body.ll-deck-page .ll-deck__close svg {
+    width: 22px;
+    stroke-width: 2;
+  }
+
+  body.ll-deck-page .ll-deck__rail {
+    inset: 0;
+    width: 100%;
+    overflow: visible;
+    background: transparent;
+    pointer-events: none;
+  }
+
+  body.ll-deck-page .ll-deck__chapters,
+  body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters {
+    inset: auto 0 0;
+    z-index: 12;
+    display: flex;
+    width: 100%;
+    height: var(--deck-mobile-nav-height);
+    min-height: var(--deck-mobile-nav-height);
+    flex-direction: row;
+    gap: 6px;
+    padding: 6px 0 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-top: 1px solid rgba(var(--ll-brand-cream-rgb), 0.14);
+    background: var(--ll-brand-charcoal);
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    scroll-padding-inline: 12px;
+    scrollbar-width: none;
+  }
+
+  body.ll-deck-page .ll-deck__chapters::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-deck__chapters button {
+    min-width: min(72vw, 320px);
+    min-height: 52px;
+    height: 52px;
+    flex: 0 0 min(72vw, 320px);
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 14px;
+    padding: 6px 16px;
+    border: 0;
+    border-radius: 6px;
+    background: #202220;
+    color: var(--ll-brand-cream);
+    font-size: var(--ll-text-11);
+    transform: none;
+  }
+
+  body.ll-deck-page .ll-deck__chapters button:first-child {
+    margin-left: 12px;
+  }
+
+  body.ll-deck-page .ll-deck__chapters button:last-child {
+    margin-right: 12px;
+  }
+
+  body.ll-deck-page .ll-deck__chapters button::before {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-deck__chapters button.is-active {
+    background: var(--deck-paper);
+    color: var(--deck-ink);
+  }
+
+  body.ll-deck-page .ll-deck__chapters button b {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-deck__thumb {
+    width: 36px;
+    height: 36px;
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__rail {
+    width: 100%;
+    background: rgba(var(--ll-brand-black-rgb), 0.96);
+    pointer-events: auto;
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters {
+    inset: 80px 12px 12px;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 0;
+    border-radius: 8px;
+    background: var(--ll-brand-black);
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button {
+    width: 100%;
+    min-width: 0;
+    min-height: 60px;
+    flex: 0 0 60px;
+    margin-inline: 0;
+  }
+
+  body.ll-deck-page .ll-deck__mobile-meta {
+    position: absolute;
+    right: calc(var(--deck-gutter) + 20px);
+    bottom: calc(var(--deck-mobile-nav-height) + 5px);
+    left: calc(var(--deck-gutter) + 20px);
+    z-index: 6;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2px 12px;
+    overflow: visible;
+    color: rgba(var(--ll-brand-cream-rgb), 0.62);
+    font-family: var(--ll-mono);
+    font-size: var(--ll-text-10);
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  body.ll-deck-page .ll-deck.is-contact-chapter .ll-deck__mobile-meta {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-deck-slide--services {
+    display: block;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  body.ll-deck-page .ll-deck-slide--services > h2 {
+    position: absolute;
+    top: 12%;
+    left: 20px;
+    z-index: 2;
+    font-family: var(--ll-sans) !important;
+    font-size: clamp(28px, 8vw, 42px);
+    font-weight: 800;
+    letter-spacing: -0.055em;
+    line-height: 0.92;
+  }
+
+  body.ll-deck-page .ll-deck-slide--services > figure {
+    display: none;
+  }
+
+  /* General slide content mobile fixes */
+  body.ll-deck-page .ll-deck-slide h1 {
+    font-size: clamp(24px, 7vw, 36px);
+    line-height: 0.95;
+  }
+
+  body.ll-deck-page .ll-deck-slide h2 {
+    font-size: clamp(20px, 6vw, 28px);
+    line-height: 1.1;
+  }
+
+  body.ll-deck-page .ll-deck-slide p {
+    font-size: clamp(14px, 4vw, 16px);
+    line-height: 1.5;
+  }
+
+  body.ll-deck-page .ll-deck-kicker {
+    font-size: clamp(10px, 3vw, 12px);
+  }
+}
+
+@media (max-width: 380px), (max-height: 680px) {
+  body.ll-deck-page .ll-deck-slide--services > h2 {
+    top: 10%;
+    font-size: clamp(24px, 7vw, 32px);
+  }
+
+  body.ll-deck-page .ll-deck__chapters button {
+    min-width: min(78vw, 300px);
+    font-size: var(--ll-text-10);
+  }
+}
+
+/* Landscape mobile improvements */
+@media (max-width: 760px) and (orientation: landscape) {
+  body.ll-deck-page .ll-deck {
+    --deck-mobile-nav-height: 56px;
+    inset: 8px;
+  }
+
+  body.ll-deck-page .ll-deck__stage {
+    inset: 8px 8px calc(var(--deck-mobile-nav-height) + 32px);
+  }
+
+  body.ll-deck-page .ll-deck-slide {
+    padding: 12px;
+  }
+
+  body.ll-deck-page .ll-deck-slide--services > h2 {
+    top: 8%;
+    font-size: clamp(20px, 4vw, 28px);
+  }
+}
+
+/* Safe area support for notched devices */
+@media (max-width: 760px) {
+  body.ll-deck-page .ll-deck {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  body.ll-deck-page .ll-deck__menu-toggle {
+    top: calc(28px + env(safe-area-inset-top));
+    left: calc(28px + env(safe-area-inset-left));
+  }
+
+  body.ll-deck-page .ll-deck__close {
+    top: calc(20px + env(safe-area-inset-top));
+    right: calc(20px + env(safe-area-inset-right));
+  }
+
+  body.ll-deck-page .ll-deck__mobile-meta {
+    bottom: calc(var(--deck-mobile-nav-height) + 5px + env(safe-area-inset-bottom));
+  }
+
+  /* Improve touch targets */
+  body.ll-deck-page .ll-deck__chapters button {
+    min-height: 52px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body.ll-deck-page .ll-deck__menu-toggle,
+  body.ll-deck-page .ll-deck__close {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent zoom on form inputs */
+  body.ll-deck-page input,
+  body.ll-deck-page textarea,
+  body.ll-deck-page select {
+    font-size: var(--ll-text-16);
+  }
+
+  /* Typography improvements for mobile */
+  body.ll-deck-page .ll-deck-slide h1 {
+    font-size: clamp(28px, 8vw, 48px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+
+  body.ll-deck-page .ll-deck-slide h2 {
+    font-size: clamp(22px, 6vw, 36px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  body.ll-deck-page .ll-deck-slide h3 {
+    font-size: clamp(16px, 4.5vw, 24px);
+    line-height: 1.2;
+  }
+
+  body.ll-deck-page .ll-deck-slide p,
+  body.ll-deck-page .ll-deck-slide li {
+    font-size: clamp(14px, 4vw, 17px);
+    line-height: 1.5;
+  }
+
+  body.ll-deck-page .ll-deck-kicker {
+    font-size: clamp(10px, 3vw, 13px);
+    letter-spacing: 0.08em;
+  }
+
+  /* Grid layout improvements */
+  body.ll-deck-page .ll-deck-slide > * {
+    max-width: 100%;
+  }
+
+  /* Image responsiveness */
+  body.ll-deck-page .ll-deck-slide img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Button improvements */
+  body.ll-deck-page .ll-button {
+    min-height: 44px;
+    padding: 12px 20px;
+    font-size: var(--ll-text-14);
+  }
+
+  body.ll-deck-page .ll-deck__slides {
+    scroll-behavior: auto;
+  }
+
+  /* Prevent horizontal overflow */
+  body.ll-deck-page .ll-deck-slide {
+    overflow-x: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.ll-deck-page .ll-deck__chapters,
+  body.ll-deck-page .ll-deck__stage,
+  body.ll-deck-page .ll-deck__menu-icon path {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}
+
+/* ---- pitchdeck-motion-refinement.css ---- */
+/*
+ * Editorial motion pass for the pitch deck.
+ * A fixed outer frame and a measured rail expansion keep every chapter
+ * aligned while the content arrives after the physical page movement.
+ */
+
+body.ll-deck-page .ll-deck {
+  --deck-gutter: clamp(16px, 1.15vw, 22px);
+  --deck-rail-width: clamp(168px, 12vw, 230px);
+  --deck-control-size: clamp(48px, 3.35vw, 64px);
+  --deck-page-x: clamp(72px, 6.4vw, 126px);
+  --deck-page-top: clamp(84px, 8.6vh, 118px);
+  --deck-page-bottom: clamp(56px, 9.4vh, 88px);
+  --deck-motion: var(--motion-ease-out, var(--ll-ease-out));
+  inset: var(--deck-gutter);
+  border-radius: 4px;
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition: opacity var(--ll-duration-control) var(--deck-motion), transform var(--ll-duration-component) var(--deck-motion);
+}
+
+body.ll-deck-page.is-deck-ready .ll-deck {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+body.ll-deck-page .ll-deck.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, -8px, 0);
+  transition-duration: var(--ll-duration-control);
+}
+
+/* The parent overlay owns the embedded deck fade. */
+html.ll-deck-embedded body.ll-deck-page .ll-deck,
+html.ll-deck-embedded body.ll-deck-page .ll-deck.is-leaving {
+  inset: var(--deck-gutter);
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  transition: none;
+}
+
+body.ll-deck-page .ll-deck__stage,
+body.ll-deck-page .ll-deck-slide {
+  border-radius: 4px;
+}
+
+body.ll-deck-page .ll-deck__stage {
+  will-change: left;
+  transition: left var(--ll-duration-component) var(--deck-motion);
+}
+
+@media (min-width: 761px) {
+
+  body.ll-deck-page .ll-deck__rail {
+    background: transparent;
+    transition: background-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), -webkit-backdrop-filter var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), backdrop-filter var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease);
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__rail {
+    background: var(--ll-brand-black);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__stage {
+    left: calc(var(--deck-rail-width) + var(--deck-rail-gap));
+  }
+
+  body.ll-deck-page .ll-deck__menu-toggle {
+    border-radius: 4px;
+    visibility: visible;
+    transition: visibility 0s linear, opacity var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), background-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), border-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), transform var(--motion-control, var(--ll-dur-base)) var(--deck-motion);
+  }
+
+  /* The reference removes the left trigger completely once the chapter rail takes over. */
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__menu-toggle {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(-18px, 0, 0);
+    transition: visibility 0s linear var(--motion-control, var(--ll-dur-base)), opacity var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), background-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), border-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), transform var(--motion-control, var(--ll-dur-base)) var(--deck-motion);
+  }
+
+  body.ll-deck-page .ll-deck__chapters {
+    transition: opacity var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease) var(--ll-dur-fast), transform var(--motion-component, var(--ll-dur-medium)) var(--deck-motion);
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters {
+    inset: 0;
+  }
+
+  body.ll-deck-page .ll-deck__chapters button {
+    opacity: 0;
+    transform: translate3d(-10px, 0, 0);
+    transition: opacity var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), transform var(--motion-component, var(--ll-dur-medium)) var(--deck-motion), background-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease);
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(1) { transition-delay: 50ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(2) { transition-delay: 80ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(3) { transition-delay: 110ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(4) { transition-delay: 140ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(5) { transition-delay: 170ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(6) { transition-delay: 200ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(7) { transition-delay: 230ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(8) { transition-delay: 260ms; }
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:nth-child(9) { transition-delay: 290ms; }
+
+  @media (hover: hover) {
+    body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters button:is(:hover, :focus-visible) {
+      transform: translate3d(2px, 0, 0);
+    }
+  }
+}
+
+body.ll-deck-page .ll-deck__slides {
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.ll-deck-page .ll-deck,
+  body.ll-deck-page .ll-deck__stage,
+  body.ll-deck-page .ll-deck__rail,
+  body.ll-deck-page .ll-deck__menu-toggle,
+  body.ll-deck-page .ll-deck__chapters,
+  body.ll-deck-page .ll-deck__chapters button,
+  body.ll-deck-page .ll-deck__menu-icon path {
+    transition: none !important;
+  }
+
+}
+
+/* ---- pitchdeck-artboard-layout.css ---- */
+/*
+ * Desktop artboard alignment — slides 01, 02, 05 and 06.
+ * The references use a deliberately quiet, percentage-based editorial grid.
+ * This final layer keeps the source content, assets and interactions intact.
+ */
+
+ @media (min-width: 981px) {
+
+  /* Slide 05 — retain the correct column structure; restore the artboard's top anchor. */
+  body.ll-deck-page .ll-deck-resume {
+    top: clamp(25px, 3.7vh, 25px);
+    right: 8.6%;
+    bottom: auto;
+    left: 10.8%;
+    height: clamp(520px, 66vh, 732px);
+  }
+
+  body.ll-deck-page .ll-deck-resume__identity {
+    padding-top: 0;
+  }
+
+  body.ll-deck-page .ll-deck-resume__portrait {
+    width: min(100%, clamp(206px, 15vw, 310px));
+    aspect-ratio: auto;
+  }
+}
+
+/* Slide 06 — on the single-column layout, facts share the story's left edge. */
+
+body.ll-deck-page .ll-deck-slide--contact {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  background: #e9e9e9;
+  color: #090909;
+}
+
+body.ll-deck-page .ll-world-clock {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-rows: minmax(0, 0.88fr) 1px minmax(0, 1fr);
+  padding: clamp(72px, 8vh, 92px) var(--deck-page-x) var(--deck-page-bottom);
+  background: #e9e9e9;
+  color: #090909;
+}
+
+body.ll-deck-page .ll-world-clock__hero {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+body.ll-deck-page .ll-world-clock__eyebrow,
+body.ll-deck-page .ll-world-clock__meta,
+body.ll-deck-page .ll-world-clock__heading,
+body.ll-deck-page .ll-world-clock__city {
+  font-family: var(--ll-sans) !important;
+}
+
+body.ll-deck-page .ll-world-clock__eyebrow {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  color: #777;
+  font-size: var(--ll-text-11);
+  letter-spacing: 0.015em;
+}
+
+body.ll-deck-page .ll-world-clock__time {
+  display: block;
+  color: var(--ll-brand-black);
+  font-family: var(--ll-sans);
+  font-size: clamp(104px, 16vw, 288px);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.085em;
+  line-height: 0.82;
+  white-space: nowrap;
+}
+
+body.ll-deck-page .ll-world-clock__meta {
+  display: grid;
+  grid-template-columns: calc(50% - 10px) minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 20px;
+  padding-bottom: clamp(18px, 2.6vh, 30px);
+  color: #777;
+  font-size: var(--ll-text-11);
+}
+
+body.ll-deck-page .ll-world-clock__date {
+  display: grid;
+  gap: 4px;
+  color: #191919;
+}
+
+body.ll-deck-page .ll-world-clock__date span:last-child {
+  color: #777;
+}
+
+body.ll-deck-page .ll-world-clock__format {
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 999px;
+  background: #fff;
+}
+
+body.ll-deck-page .ll-world-clock__format button {
+  min-width: 42px;
+  min-height: 32px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ll-brand-charcoal);
+  font-family: var(--ll-sans);
+  font-size: var(--ll-text-11);
+  cursor: pointer;
+}
+
+body.ll-deck-page .ll-world-clock__format button[aria-pressed="true"] {
+  background: var(--ll-brand-black);
+  color: #fff;
+}
+
+body.ll-deck-page .ll-world-clock__rule {
+  width: calc(100% + (2 * var(--deck-page-x)));
+  margin-left: calc(-1 * var(--deck-page-x));
+  background: rgba(0, 0, 0, 0.12);
+}
+
+body.ll-deck-page .ll-world-clock__locations {
+  display: grid;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(22px, 3.2vh, 38px);
+  padding-top: clamp(24px, 4.5vh, 52px);
+}
+
+body.ll-deck-page .ll-world-clock__heading {
+  display: grid;
+  /* Snap the second column to the deck's center line, like the date above. */
+  grid-template-columns: calc(50% - 12px) minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 24px;
+}
+
+body.ll-deck-page .ll-world-clock__heading h2 {
+  margin: 0;
+  color: #0a0a0a;
+  font-family: var(--ll-sans) !important;
+  font-size: clamp(32px, 4.2vw, 58px);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1.08;
+}
+
+body.ll-deck-page .ll-world-clock__heading p {
+  margin: 0;
+  color: #858585;
+  font-size: clamp(11px, 1.1vw, 14px);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+body.ll-deck-page .ll-world-clock__heading > span {
+  padding-bottom: 3px;
+  color: #333;
+  font-size: var(--ll-text-11);
+  white-space: nowrap;
+}
+
+body.ll-deck-page .ll-world-clock__cities {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-self: end;
+  gap: 8px;
+}
+
+body.ll-deck-page .ll-world-clock__city {
+  display: flex;
+  min-width: 0;
+  min-height: clamp(118px, 17vh, 164px);
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(14px, 1.8vw, 24px);
+  border: 1px solid rgba(255, 255, 255, 0.96);
+  border-radius: 18px;
+  color: #171717;
+}
+
+body.ll-deck-page .ll-world-clock__city > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+body.ll-deck-page .ll-world-clock__city h3 {
+  margin: 0;
+  color: inherit;
+  font-family: var(--ll-sans) !important;
+  font-size: clamp(12px, 1.1vw, 16px);
+  font-weight: 400;
+}
+
+body.ll-deck-page .ll-world-clock__city [data-clock-offset] {
+  color: #8a8a8a;
+  font-size: clamp(9px, 0.8vw, 12px);
+  white-space: nowrap;
+}
+
+body.ll-deck-page .ll-world-clock__city time {
+  color: inherit;
+  font-family: var(--ll-sans) !important;
+  font-size: clamp(28px, 3.4vw, 46px);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+body.ll-deck-page .ll-world-clock__daypart {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #858585;
+  font-size: clamp(9px, 0.8vw, 12px);
+  white-space: nowrap;
+}
+
+body.ll-deck-page .ll-world-clock__daypart [data-clock-icon] {
+  color: #e4b728;
+  font-family: var(--ll-sans);
+  font-size: var(--ll-text-15);
+}
+
+body.ll-deck-page .ll-world-clock__city.is-home {
+  border-color: var(--ll-brand-black);
+  background: var(--ll-brand-black);
+  color: #fff;
+}
+
+body.ll-deck-page .ll-world-clock__city.is-home [data-clock-offset] {
+  color: #c8c8c8;
+}
+
+@media (max-width: 980px) and (min-width: 761px) {
+  body.ll-deck-page .ll-world-clock {
+    grid-template-rows: minmax(0, 0.72fr) 1px minmax(0, 1fr);
+  }
+
+  body.ll-deck-page .ll-world-clock__time {
+    font-size: clamp(88px, 12vw, 120px);
+  }
+
+  body.ll-deck-page .ll-world-clock__heading {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  }
+
+  body.ll-deck-page .ll-world-clock__heading > span {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-world-clock__city {
+    min-height: 124px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  body.ll-deck-page .ll-deck-slide--contact {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scrollbar-width: none;
+  }
+
+  body.ll-deck-page .ll-deck-slide--contact::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-world-clock {
+    height: auto;
+    min-height: 100%;
+    grid-template-rows: auto 1px auto;
+    padding: 84px var(--deck-page-x) 28px;
+  }
+
+  body.ll-deck-page .ll-world-clock__hero {
+    min-height: 260px;
+  }
+
+  body.ll-deck-page .ll-world-clock__eyebrow {
+    gap: 12px;
+    font-size: var(--ll-text-9);
+    white-space: nowrap;
+  }
+
+  body.ll-deck-page .ll-world-clock__eyebrow > span {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-world-clock__time {
+    font-size: clamp(42px, 13vw, 88px);
+    letter-spacing: -0.08em;
+  }
+
+  body.ll-deck-page .ll-world-clock__meta {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "current format" "date format";
+    gap: 8px 12px;
+    padding-bottom: 20px;
+    font-size: var(--ll-text-9);
+  }
+
+  body.ll-deck-page .ll-world-clock__meta > span {
+    grid-area: current;
+  }
+
+  body.ll-deck-page .ll-world-clock__date {
+    grid-area: date;
+    gap: 2px;
+  }
+
+  body.ll-deck-page .ll-world-clock__format {
+    grid-area: format;
+  }
+
+  body.ll-deck-page .ll-world-clock__format button {
+    min-width: 36px;
+    min-height: 30px;
+    padding-inline: 8px;
+    font-size: var(--ll-text-10);
+  }
+
+  body.ll-deck-page .ll-world-clock__rule {
+    width: calc(100% + 40px);
+    margin-left: -20px;
+  }
+
+  body.ll-deck-page .ll-world-clock__locations {
+    grid-template-rows: auto auto;
+    gap: 20px;
+    padding-top: 26px;
+  }
+
+  body.ll-deck-page .ll-world-clock__heading {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 10px;
+  }
+
+  body.ll-deck-page .ll-world-clock__heading h2 {
+    font-size: clamp(34px, 9vw, 44px);
+  }
+
+  body.ll-deck-page .ll-world-clock__heading p br {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-world-clock__heading > span {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-world-clock__cities {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  body.ll-deck-page .ll-world-clock__city {
+    min-width: 0;
+    min-height: 124px;
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  body.ll-deck-page .ll-world-clock__city h3 {
+    font-size: var(--ll-text-10);
+    white-space: nowrap;
+  }
+
+  body.ll-deck-page .ll-world-clock__city [data-clock-offset],
+  body.ll-deck-page .ll-world-clock__daypart {
+    font-size: var(--ll-text-8);
+  }
+
+  body.ll-deck-page .ll-world-clock__city time {
+    font-size: clamp(16px, 5vw, 22px);
+  }
+}
+
+@media (max-width: 420px) {
+  body.ll-deck-page .ll-world-clock__city > div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  html body.ll-deck-page #lets-talk .ll-world-clock__city h3 {
+    font-size: var(--ll-text-10);
+    white-space: normal;
+  }
+}
+
+/* Slide 06 — sharper notification hierarchy while its orange frame stays still. */
+body.ll-deck-page .ll-deck-slide.ll-deck-slide--work {
+  background-image:
+    linear-gradient(rgba(255, 91, 36, 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 91, 36, 0.11) 1px, transparent 1px);
+}
+
+/* Desktop: retain the full notification composition, at one third scale. */
+
+/* Mobile surface: keep the fixed deck usable around browser chrome, notches,
+   vertical slide content and the persistent chapter strip. */
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  body.ll-deck-page.ll-pitch-page {
+    height: 100dvh;
+    min-height: 0;
+  }
+
+  body.ll-deck-page .ll-deck {
+    inset:
+      max(8px, env(safe-area-inset-top))
+      max(8px, env(safe-area-inset-right))
+      max(8px, env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
+  }
+
+  body.ll-deck-page .ll-deck__stage {
+    inset: 8px 8px calc(var(--deck-mobile-nav-height) + 32px + env(safe-area-inset-bottom)) 8px;
+  }
+
+  body.ll-deck-page .ll-deck__slides {
+    touch-action: pan-x pan-y;
+    overscroll-behavior: contain;
+  }
+
+  body.ll-deck-page .ll-deck-slide {
+    overscroll-behavior: contain;
+  }
+
+  /* These chapters have more information than a phone-height frame. Keep
+     their horizontal deck position fixed while their own content scrolls. */
+  body.ll-deck-page .ll-deck-slide:is(
+    .ll-deck-slide--profile,
+    .ll-deck-slide--services,
+    .ll-deck-slide--vibe,
+    .ll-deck-slide--resume,
+    .ll-deck-slide--belief,
+    .ll-deck-slide--recognition,
+    .ll-deck-slide--awards,
+    .ll-deck-slide--clients,
+    .ll-deck-slide--contact
+  ) {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  body.ll-deck-page .ll-deck-slide:is(
+    .ll-deck-slide--profile,
+    .ll-deck-slide--services,
+    .ll-deck-slide--vibe,
+    .ll-deck-slide--resume,
+    .ll-deck-slide--belief,
+    .ll-deck-slide--recognition,
+    .ll-deck-slide--awards,
+    .ll-deck-slide--clients,
+    .ll-deck-slide--contact
+  )::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--services {
+    padding: 78px 18px 84px;
+  }
+
+  /* The desktop contact column must not constrain the stacked phone layout. */
+  body.ll-deck-page .ll-deck-slide--contact > .ll-deck-kicker {
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+  }
+
+  body.ll-deck-page .ll-deck-slide--contact .ll-deck-contact {
+    width: 100%;
+    min-width: 0;
+    margin-top: var(--space-5);
+    gap: var(--space-2);
+  }
+
+  body.ll-deck-page .ll-deck-contact > p {
+    margin-bottom: var(--space-3);
+  }
+
+  body.ll-deck-page .ll-deck-contact a {
+    padding-inline: var(--space-4);
+  }
+
+  body.ll-deck-page .ll-deck-slide--contact > figure {
+    margin-top: var(--space-5);
+  }
+
+  /* Reset a late legacy top padding rule that otherwise consumes the entire
+     58px bottom chapter strip. */
+  body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters {
+    height: var(--deck-mobile-nav-height);
+    min-height: var(--deck-mobile-nav-height);
+    padding: 4px !important;
+    scroll-snap-type: x proximity;
+  }
+
+  body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters button {
+    scroll-snap-align: center;
+  }
+
+  body.ll-deck-page :is(.ll-deck__menu-toggle, .ll-deck__close, .ll-deck__chapters button) {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  body.ll-deck-page .ll-deck.is-rail-open .ll-deck__chapters {
+    inset: 76px 8px 8px;
+    padding: 8px !important;
+  }
+}
+
+/* The note card remains compact on a phone, without sacrificing its copy. */
+
+/* Shared horizontal safe area.
+   Slide 03 is the reference: every chapter's content now uses the same
+   left and right inset while full-bleed media remains full bleed. */
+body.ll-deck-page .ll-deck {
+  --deck-page-x: clamp(78px, 7.5vw, 136px);
+}
+
+@media (min-width: 761px) {
+  body.ll-deck-page .ll-service-shop__header,
+  body.ll-deck-page .ll-service-product {
+    right: var(--deck-page-x);
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-service-product {
+    top: var(--deck-page-x);
+    bottom: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-vibe-subject {
+    top: 8%;
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-slide__vibe-copy {
+    right: var(--deck-page-x);
+    left: var(--deck-page-x);
+    width: auto;
+  }
+
+  @media (min-width: 761px) and (max-height: 600px) {
+    body.ll-deck-page .ll-deck-vibe-subject {
+      top: 5%;
+    }
+  }
+
+  body.ll-deck-page .ll-deck-resume {
+    right: var(--deck-page-x);
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-vibe-subject {
+    left: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-vibe-number {
+    right: var(--deck-page-x);
+  }
+
+  body.ll-deck-page .ll-deck-vibe-grid {
+    right: var(--deck-page-x);
+    left: var(--deck-page-x);
+  }
+}
+
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  body.ll-deck-page .ll-deck {
+    --deck-page-x: 18px;
+  }
+
+  body.ll-deck-page .ll-deck-slide:is(
+    .ll-deck-slide--profile,
+    .ll-deck-slide--services,
+    .ll-deck-slide--vibe,
+    .ll-deck-slide--resume,
+    .ll-deck-slide--clients,
+    .ll-deck-slide--contact
+  ) {
+    padding-right: var(--deck-page-x);
+    padding-left: var(--deck-page-x);
+  }
+}
+
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  body.ll-deck-page .ll-service-shop__breadcrumb {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+body.ll-deck-page .ll-deck-slide.ll-deck-slide--work {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  overflow: hidden;
+  background: #fff;
+  color: #161817;
+}
+
+body.ll-deck-page .ll-culture-board {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 0;
+  padding: 25px var(--deck-page-x) 25px !important;
+  overflow: hidden;
+  background: #fff;
+  color: #161817;
+  font-family: var(--ll-sans);
+}
+
+body.ll-deck-page .ll-culture-board__topline,
+body.ll-deck-page .ll-culture-board__navigation,
+body.ll-deck-page .ll-culture-board__navigation > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+body.ll-deck-page .ll-culture-board__topline {
+  min-height: 16px;
+  margin-bottom: clamp(48px, 6.5vh, 64px);
+  color: #5f625f;
+  font-family: var(--ll-mono);
+  font-size: clamp(8px, .62vw, 10px);
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+body.ll-deck-page .ll-culture-board__brand {
+  color: var(--ll-brand-charcoal);
+  font-family: var(--ll-sans);
+  font-size: clamp(10px, .7vw, 12px);
+  font-weight: 700;
+  letter-spacing: .01em;
+  text-decoration: none;
+  text-transform: none;
+}
+
+body.ll-deck-page .ll-culture-board__heading {
+  display: grid;
+  justify-items: start;
+  gap: clamp(12px, 1.7vh, 18px);
+  margin-bottom: clamp(34px, 4.8vh, 48px);
+}
+
+body.ll-deck-page .ll-culture-board__heading h2 {
+  margin: 0;
+  color: var(--ll-brand-charcoal);
+  font-family: var(--ll-sans) !important;
+  font-size: clamp(24px, 2vw, 34px);
+  font-weight: 500;
+  line-height: .95;
+  letter-spacing: -.055em;
+}
+
+body.ll-deck-page .ll-culture-board__heading nav {
+  display: flex;
+  gap: clamp(18px, 2.8vw, 42px);
+  color: #686b66;
+  font-family: var(--ll-sans) !important;
+  font-size: clamp(8px, .62vw, 10px);
+  white-space: nowrap;
+}
+
+body.ll-deck-page .ll-culture-board__projects {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-content: start;
+  gap: clamp(18px, 3.5vw, 56px);
+}
+
+body.ll-deck-page .ll-culture-card {
+  display: grid;
+  min-width: 0;
+  grid-template-rows: auto auto minmax(54px, 1fr) auto;
+  align-content: start;
+  color: var(--ll-brand-charcoal);
+}
+
+body.ll-deck-page .ll-culture-card__image {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 1.78 / 1;
+  margin-bottom: clamp(12px, 1.4vh, 18px);
+  border-radius: 3px;
+  overflow: hidden;
+  background: #ececea;
+}
+
+body.ll-deck-page .ll-culture-card__image img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+body.ll-deck-page .ll-culture-card__image:focus-visible {
+  outline: 2px solid #3159bd;
+  outline-offset: 3px;
+}
+
+body.ll-deck-page .ll-culture-card h3 {
+  margin: 0 0 clamp(10px, 1.4vh, 16px);
+  color: var(--ll-brand-charcoal);
+  font-family: var(--ll-sans) !important;
+  font-size: clamp(13px, 1vw, 18px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -.025em;
+}
+
+body.ll-deck-page .ll-culture-card__copy {
+  max-width: 42ch;
+  margin: 0;
+  color: #62665f;
+  font-family: var(--ll-sans) !important;
+  font-size: clamp(10px, .76vw, 13px);
+  line-height: 1.65;
+}
+
+body.ll-deck-page .ll-culture-card__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: clamp(16px, 2.2vh, 26px);
+  padding-top: clamp(10px, 1.2vh, 14px);
+  border-top: 1px solid #e5e6e3;
+}
+
+body.ll-deck-page .ll-culture-card__read {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  color: #262825;
+  font-family: var(--ll-sans) !important;
+  font-size: clamp(10px, .72vw, 12px);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+body.ll-deck-page .ll-culture-card__read .ll-icon {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 12px;
+  opacity: .65;
+  transition: transform var(--ll-dur-base) ease, opacity var(--ll-dur-base) ease;
+}
+
+body.ll-deck-page .ll-culture-card__read:is(:hover, :focus-visible) .ll-icon {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
+body.ll-deck-page .ll-culture-card__share {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ll-brand-charcoal);
+  cursor: pointer;
+}
+
+body.ll-deck-page .ll-culture-card__share svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+body.ll-deck-page .ll-culture-card__share svg path {
+  fill: none;
+}
+
+body.ll-deck-page .ll-culture-card__share:focus-visible {
+  outline: 2px solid #3159bd;
+  outline-offset: 2px;
+}
+
+body.ll-deck-page .ll-culture-card__read:is(:hover, :focus-visible),
+body.ll-deck-page .ll-culture-card__share:is(:hover, :focus-visible) {
+  color: #3159bd;
+}
+
+body.ll-deck-page .ll-culture-board__navigation {
+  min-height: 18px;
+  gap: 16px;
+  color: #343734;
+  font-family: var(--ll-mono);
+  font-size: clamp(8px, .62vw, 10px);
+}
+
+body.ll-deck-page .ll-culture-board__navigation a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+body.ll-deck-page .ll-culture-board__navigation a:is(:hover, :focus-visible),
+body.ll-deck-page .ll-culture-board__brand:is(:hover, :focus-visible),
+body.ll-deck-page .ll-culture-card__read:is(:hover, :focus-visible) {
+  color: #3159bd;
+}
+
+body.ll-deck-page .ll-culture-board__count {
+  color: #555a59;
+}
+
+body.ll-deck-page .ll-culture-board__count b {
+  color: #3159bd;
+  font-family: var(--ll-sans);
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+body.ll-deck-page .ll-culture-board__navigation > div {
+  gap: clamp(12px, 2vw, 28px);
+}
+
+@media (min-width: 761px) and (max-width: 980px) {
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--work {
+    display: block;
+    padding: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scrollbar-width: none;
+  }
+
+  body.ll-deck-page .ll-deck-slide--work::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-culture-board {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    grid-template-rows: auto auto auto auto;
+    gap: 22px;
+    padding-right: var(--deck-page-x) !important;
+    padding-left: var(--deck-page-x) !important;
+    overflow: visible;
+  }
+
+  body.ll-deck-page .ll-culture-board__projects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  body.ll-deck-page .ll-culture-board__navigation {
+    margin-top: 18px;
+  }
+}
+
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--work {
+    display: block;
+    padding: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scrollbar-width: none;
+  }
+
+  body.ll-deck-page .ll-deck-slide--work::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-culture-board {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 0;
+    padding: 16px var(--deck-page-x) 16px !important;
+    overflow: visible;
+  }
+
+  body.ll-deck-page .ll-culture-board__topline {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-culture-board__heading {
+    display: grid;
+    gap: 10px;
+    margin: 64px 0 16px;
+  }
+
+  body.ll-deck-page .ll-culture-board__heading h2 {
+    font-size: 30px;
+  }
+
+  body.ll-deck-page .ll-culture-board__heading nav {
+    justify-content: flex-start;
+    gap: 9px;
+    font-size: var(--ll-text-8);
+  }
+
+  body.ll-deck-page .ll-culture-board__projects {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  body.ll-deck-page .ll-culture-card__image {
+    aspect-ratio: 1.78 / 1;
+    margin-bottom: 10px;
+  }
+
+  body.ll-deck-page .ll-culture-card h3 {
+    margin-bottom: 8px;
+    font-size: var(--ll-text-15);
+  }
+
+  body.ll-deck-page .ll-culture-card__copy {
+    font-size: var(--ll-text-12);
+  }
+
+  body.ll-deck-page .ll-culture-board__navigation {
+    flex-wrap: wrap;
+    row-gap: 14px;
+    font-size: var(--ll-text-8);
+  }
+
+  body.ll-deck-page .ll-culture-board__count {
+    order: 3;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  body.ll-deck-page .ll-culture-board__heading nav {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    column-gap: 9px;
+    row-gap: 4px;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 980px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  body.ll-deck-page .ll-deck__slides {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    touch-action: pan-x pan-y;
+  }
+
+  body.ll-deck-page .ll-deck__slides::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 980px) {
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--services {
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  body.ll-deck-page .ll-deck-slide--services::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__header {
+    top: 24px;
+    right: var(--deck-page-x);
+    left: var(--deck-page-x);
+    height: 96px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs > span {
+    margin: 0 4px 0 0;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs button {
+    min-width: 0;
+    min-height: 36px;
+  }
+
+  body.ll-deck-page .ll-service-shop__breadcrumb {
+    top: 15%;
+  }
+
+  body.ll-deck-page .ll-service-product {
+    top: 22%;
+    right: var(--deck-page-x);
+    bottom: 8%;
+    left: var(--deck-page-x);
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-rows: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 12px 4vw;
+  }
+
+  body.ll-deck-page .ll-service-product__copy {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  body.ll-deck-page .ll-service-product__copy h3 {
+    font-size: clamp(36px, 5vw, 52px);
+  }
+
+  body.ll-deck-page .ll-service-product__description {
+    text-align: left;
+  }
+
+  body.ll-deck-page .ll-service-product__visual {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    height: min(54vh, 520px);
+    min-height: 0;
+  }
+
+  body.ll-deck-page .ll-service-product__buy {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  body.ll-deck-page .ll-service-product__details {
+    margin-top: 16px;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 980px) and (max-height: 600px) {
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--services {
+    padding: 78px var(--deck-page-x) 36px;
+  }
+
+  body.ll-deck-page .ll-service-shop__header {
+    position: static;
+    display: grid;
+    height: auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs,
+  body.ll-deck-page .ll-service-shop__brand,
+  body.ll-deck-page .ll-service-shop__meta,
+  body.ll-deck-page .ll-service-shop__breadcrumb,
+  body.ll-deck-page .ll-service-shop__panels,
+  body.ll-deck-page .ll-service-product {
+    position: static;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs {
+    display: flex;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    align-items: center;
+    gap: 8px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs > span {
+    margin: 0 4px 0 0;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs button {
+    min-width: 0;
+    min-height: 36px;
+    flex: 0 0 auto;
+  }
+
+  body.ll-deck-page .ll-service-shop__brand {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta {
+    display: flex;
+    grid-column: 2;
+    grid-row: 2;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    border: 0;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta span {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__breadcrumb {
+    margin-top: 22px;
+    transform: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__panels {
+    margin-top: 22px;
+  }
+
+  body.ll-deck-page .ll-service-product {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    gap: 16px 28px;
+  }
+
+  body.ll-deck-page .ll-service-product__copy {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  body.ll-deck-page .ll-service-product__visual {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    width: 100%;
+    height: clamp(200px, 56vh, 320px);
+    margin: 0;
+  }
+
+  body.ll-deck-page .ll-service-product__buy {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  body.ll-deck-page .ll-service-product__details {
+    margin-top: 12px;
+  }
+
+  body.ll-deck-page .ll-service-shop__arrow {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__pagination {
+    position: static;
+    justify-content: center;
+    margin-top: 16px;
+    transform: none;
+  }
+}
+
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--services {
+    padding: 78px 18px 92px;
+  }
+
+  body.ll-deck-page .ll-service-shop__header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs {
+    display: flex;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs > span {
+    margin: 0 6px 0 0;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs button {
+    min-width: 0;
+    min-height: 36px;
+    flex: 0 0 auto;
+    padding: 7px 10px;
+    border: 1px solid var(--service-shop-line);
+    text-decoration: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs button.is-active {
+    background: var(--service-shop-ink);
+    color: var(--deck-paper);
+  }
+
+  body.ll-deck-page .ll-service-shop__brand {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+  }
+
+  body.ll-deck-page .ll-service-shop__brand h2 {
+    font-size: clamp(20px, 6vw, 25px);
+  }
+
+  body.ll-deck-page .ll-service-shop__meta {
+    display: flex;
+    grid-column: 2;
+    grid-row: 2;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    border: 0;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta a {
+    min-height: 36px;
+    align-content: center;
+    font-size: var(--ll-text-10);
+    white-space: nowrap;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta span {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta output {
+    font-size: var(--ll-text-10);
+    white-space: nowrap;
+  }
+
+  body.ll-deck-page .ll-service-shop__breadcrumb {
+    margin-top: 22px;
+    font-size: var(--ll-text-10);
+  }
+
+  body.ll-deck-page .ll-service-shop__panels {
+    margin-top: 22px;
+  }
+
+  body.ll-deck-page .ll-service-product__copy > .ll-deck-kicker {
+    margin-bottom: 12px;
+    font-size: var(--ll-text-10);
+  }
+
+  body.ll-deck-page .ll-service-product__copy h3 {
+    font-size: clamp(36px, 10vw, 46px);
+  }
+
+  body.ll-deck-page .ll-service-product__line,
+  body.ll-deck-page .ll-service-product__scope {
+    margin-top: 12px;
+  }
+
+  body.ll-deck-page .ll-service-product__line {
+    font-size: var(--ll-text-13);
+  }
+
+  body.ll-deck-page .ll-service-product__scope {
+    font-size: var(--ll-text-12);
+  }
+
+  body.ll-deck-page .ll-service-product__description {
+    max-width: 48ch;
+    margin-top: 16px;
+    font-size: var(--ll-text-13);
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  body.ll-deck-page .ll-service-product__visual {
+    height: clamp(180px, 30svh, 260px);
+    margin: 20px 0;
+    overflow: hidden;
+  }
+
+  body.ll-deck-page .ll-service-product__visual img,
+  body.ll-deck-page #service-branding .ll-service-product__visual img,
+  body.ll-deck-page #service-digital .ll-service-product__visual img,
+  body.ll-deck-page #service-marketing .ll-service-product__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  body.ll-deck-page .ll-service-product__buy {
+    grid-template-columns: 126px minmax(0, 1fr);
+    align-items: end;
+    gap: 12px;
+  }
+
+  body.ll-deck-page .ll-service-product__stepper {
+    width: 126px;
+    margin: 0;
+  }
+
+  body.ll-deck-page .ll-service-product__select {
+    min-width: 0;
+    gap: 5px;
+    font-size: var(--ll-text-10);
+  }
+
+  body.ll-deck-page .ll-service-product__select select {
+    height: 38px;
+    font-size: var(--ll-text-12);
+  }
+
+  body.ll-deck-page .ll-service-product__cta,
+  body.ll-deck-page .ll-service-product__details {
+    grid-column: 1 / -1;
+  }
+
+  body.ll-deck-page .ll-service-product__cta {
+    min-height: 46px;
+    margin-top: 0;
+  }
+
+  body.ll-deck-page .ll-service-product__details {
+    margin-top: 8px;
+  }
+
+  body.ll-deck-page .ll-service-product__details summary {
+    padding-block: 12px;
+    font-size: var(--ll-text-12);
+  }
+
+  body.ll-deck-page .ll-service-product__details details p {
+    font-size: var(--ll-text-12);
+  }
+
+  body.ll-deck-page .ll-service-shop__pagination {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  body.ll-deck-page .ll-service-shop__tabs > span {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs {
+    gap: 5px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs button {
+    padding-inline: 8px;
+    font-size: var(--ll-text-10);
+  }
+
+  body.ll-deck-page .ll-service-shop__meta {
+    gap: 5px;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta a,
+  body.ll-deck-page .ll-service-shop__meta output {
+    font-size: var(--ll-text-9);
+  }
+
+  body.ll-deck-page .ll-service-product__buy {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  body.ll-deck-page .ll-service-product__stepper {
+    width: 112px;
+    grid-template-columns: 34px 44px 34px;
+  }
+}
+
+/* On compact screens, keep the service content and conversion controls while
+   removing labels and controls already represented elsewhere. */
+@media (max-width: 760px), (min-width: 761px) and (max-width: 980px) and (max-height: 600px) {
+  body.ll-deck-page .ll-deck-slide.ll-deck-slide--services {
+    padding: 78px var(--deck-page-x) 92px;
+    overflow-y: auto;
+  }
+
+  body.ll-deck-page .ll-service-shop__header {
+    position: static;
+    display: grid;
+    height: auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs,
+  body.ll-deck-page .ll-service-shop__brand,
+  body.ll-deck-page .ll-service-shop__meta,
+  body.ll-deck-page .ll-service-shop__breadcrumb,
+  body.ll-deck-page .ll-service-shop__panels,
+  body.ll-deck-page .ll-service-product {
+    position: static;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  body.ll-deck-page .ll-service-shop__tabs > span,
+  body.ll-deck-page .ll-service-shop__meta,
+  body.ll-deck-page .ll-service-shop__breadcrumb,
+  body.ll-deck-page .ll-service-product__copy > .ll-deck-kicker,
+  body.ll-deck-page .ll-service-product__scope,
+  body.ll-deck-page .ll-service-product__stepper,
+  body.ll-deck-page .ll-service-product__details {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__brand {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+    transform: none;
+  }
+
+  body.ll-deck-page .ll-service-shop__meta {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  body.ll-deck-page .ll-service-shop__panels {
+    margin: 10px 0 0;
+  }
+
+  body.ll-deck-page .ll-service-product {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "visual"
+      "copy"
+      "buy";
+    align-items: start;
+    gap: 0;
+  }
+
+  body.ll-deck-page .ll-service-product[hidden] {
+    display: none;
+  }
+
+  body.ll-deck-page .ll-service-product__visual {
+    grid-area: visual;
+    width: 100%;
+    height: clamp(150px, 27svh, 220px);
+    margin: 0 0 14px;
+    overflow: hidden;
+    background: #e7e5dd;
+  }
+
+  body.ll-deck-page .ll-service-product__visual img,
+  body.ll-deck-page #service-branding .ll-service-product__visual img,
+  body.ll-deck-page #service-digital .ll-service-product__visual img,
+  body.ll-deck-page #service-marketing .ll-service-product__visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  body.ll-deck-page .ll-service-product__copy {
+    grid-area: copy;
+    align-self: start;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--service-shop-line);
+  }
+
+  body.ll-deck-page .ll-service-product__copy h3 {
+    font-size: clamp(32px, 8vw, 42px);
+  }
+
+  body.ll-deck-page .ll-service-product__line {
+    margin-top: 6px;
+    font-size: var(--ll-text-13);
+  }
+
+  body.ll-deck-page .ll-service-product__description {
+    max-width: 52ch;
+    margin-top: 10px;
+    font-size: var(--ll-text-12);
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  body.ll-deck-page .ll-service-product__buy {
+    grid-area: buy;
+    grid-template-columns: 112px minmax(0, 1fr);
+    align-items: end;
+    gap: 10px;
+    justify-self: stretch;
+    width: 100%;
+    padding-top: 12px;
+  }
+
+  body.ll-deck-page .ll-service-product__select {
+    min-width: 0;
+    gap: 5px;
+    font-size: var(--ll-text-9);
+  }
+
+  body.ll-deck-page .ll-service-product__select select {
+    height: 38px;
+    font-size: var(--ll-text-11);
+  }
+
+  body.ll-deck-page .ll-service-product__cta,
+  body.ll-deck-page .ll-service-product__details {
+    grid-column: 1 / -1;
+  }
+
+  body.ll-deck-page .ll-service-product__cta {
+    min-height: 44px;
+    margin-top: 2px;
+  }
+
+  body.ll-deck-page .ll-service-product__details {
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 380px) {
+  body.ll-deck-page .ll-service-shop__breadcrumb {
+    margin-top: 14px;
+  }
+
+  body.ll-deck-page .ll-service-product__buy {
+    grid-template-columns: 102px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  body.ll-deck-page .ll-service-product__stepper {
+    width: 102px;
+    grid-template-columns: 30px 42px 30px;
+  }
+}
+
+html body.ll-deck-page {
+  --deck-type-primary: clamp(38px, 4.8vw, 64px);
+  --deck-type-heading: clamp(16px, 1.4vw, 20px);
+  --deck-type-body: 14px;
+  --deck-type-label: 10px;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-shop__brand h2,
+html body.ll-deck-page #lets-talk .ll-world-clock__heading h2,
+html body.ll-deck-page #the-work .ll-culture-board__heading h2,
+html body.ll-deck-page #what-i-do .ll-service-product__copy h3,
+html body.ll-deck-page #my-vibe .ll-deck-slide__vibe-copy h2 {
+  font-size: var(--deck-type-primary);
+  line-height: 1;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume__identity-copy h2,
+html body.ll-deck-page #resume .ll-deck-resume__identity-copy h3,
+html body.ll-deck-page #resume .ll-deck-resume section h2,
+html body.ll-deck-page #resume .ll-deck-resume section h3,
+html body.ll-deck-page #the-work .ll-culture-card h3,
+html body.ll-deck-page #lets-talk .ll-world-clock__city h3 {
+  font-size: var(--deck-type-heading);
+  line-height: 1.2;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-product__line,
+html body.ll-deck-page #what-i-do .ll-service-product__description,
+html body.ll-deck-page #what-i-do .ll-service-product__details details p,
+html body.ll-deck-page #my-vibe .ll-deck-slide__vibe-copy > p,
+html body.ll-deck-page #the-work .ll-culture-card__copy,
+html body.ll-deck-page #lets-talk .ll-world-clock__heading p {
+  font-size: var(--deck-type-body);
+  line-height: 1.5;
+}
+
+html body.ll-deck-page #what-i-do .ll-service-shop__tabs button,
+html body.ll-deck-page #what-i-do .ll-service-shop__meta,
+html body.ll-deck-page #what-i-do .ll-service-shop__breadcrumb,
+html body.ll-deck-page #what-i-do .ll-service-product__copy > .ll-deck-kicker,
+html body.ll-deck-page #what-i-do .ll-service-product__scope,
+html body.ll-deck-page #what-i-do .ll-service-product__stepper,
+html body.ll-deck-page #what-i-do .ll-service-product__select,
+html body.ll-deck-page #what-i-do .ll-service-product__select select,
+html body:not(#global-square-corners).ll-deck-page #what-i-do .ll-service-product__cta,
+html body.ll-deck-page #what-i-do .ll-service-product__details summary,
+html body.ll-deck-page #my-vibe .ll-deck-vibe-subject,
+html body.ll-deck-page #my-vibe .ll-deck-vibe-number,
+html body.ll-deck-page #my-vibe .ll-deck-vibe-grid figcaption,
+html body.ll-deck-page #the-work .ll-culture-board__topline,
+html body.ll-deck-page #the-work .ll-culture-board__heading nav,
+html body.ll-deck-page #the-work .ll-culture-card__read,
+html body.ll-deck-page #the-work .ll-culture-board__navigation,
+html body.ll-deck-page #lets-talk .ll-world-clock__eyebrow,
+html body.ll-deck-page #lets-talk .ll-world-clock__meta,
+html body.ll-deck-page #lets-talk .ll-world-clock__city [data-clock-offset],
+html body.ll-deck-page #lets-talk .ll-world-clock__daypart,
+html body.ll-deck-page #lets-talk .ll-world-clock__format button,
+html body.ll-deck-page #lets-talk .ll-world-clock__heading > span {
+  font-size: var(--deck-type-label);
+}
+
+html body:not(#global-square-corners).ll-deck-page #what-i-do .ll-service-product__cta {
+  font-size: calc(var(--deck-type-label) - 2px);
+}
+
+@media (max-width: 980px), (hover: none) and (pointer: coarse) and (max-height: 600px) {
+  html body.ll-deck-page #what-i-do,
+  html body.ll-deck-page #my-vibe,
+  html body.ll-deck-page #the-work,
+  html body.ll-deck-page #lets-talk {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  html body.ll-deck-page {
+    --deck-type-primary: clamp(32px, 8vw, 42px);
+    --deck-type-heading: 16px;
+    --deck-type-body: 13px;
+    --deck-type-label: 10px;
+  }
+}
+
+/* Resume slide: use a clear identity > section title > supporting copy rhythm. */
+html body.ll-deck-page #resume .ll-deck-resume__identity-copy h2 {
+  margin: 0;
+  font-size: clamp(18px, 1.55vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume__identity-copy > p {
+  margin-top: 10px;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume section h2 {
+  margin: 0 0 8px;
+  line-height: 1.15;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume section p,
+html body.ll-deck-page #resume .ll-deck-resume section li {
+  line-height: 1.5;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume__education ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume__education li {
+  display: grid;
+  gap: 2px;
+}
+
+html body.ll-deck-page #resume .ll-deck-resume__education strong {
+  font-weight: 600;
+}
+
+@media (min-width: 981px) {
+  html body.ll-deck-page #resume .ll-deck-resume {
+    top: 8%;
+    right: 8.6%;
+    bottom: 18%;
+    left: 10.8%;
+    height: auto;
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__identity {
+    padding-top: clamp(42px, 8vh, 72px);
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__portrait {
+    box-sizing: border-box;
+    width: min(100%, clamp(170px, 16vw, 210px));
+    aspect-ratio: 0.78;
+    padding: 8px 8px 24px;
+    background: var(--ll-brand-cream);
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__portrait img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__identity-copy {
+    margin-top: clamp(44px, 10vh, 88px);
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__identity-copy address {
+    gap: 4px;
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__identity-copy address > span {
+    margin-bottom: clamp(8px, 1.4vh, 12px);
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__main {
+    display: grid;
+    grid-template-rows: minmax(0, 40fr) minmax(0, 25fr) minmax(0, 23fr) minmax(0, 12fr);
+    padding-left: clamp(10px, 1.1vw, 18px);
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__main section,
+  html body.ll-deck-page #resume .ll-deck-resume__expertise section {
+    position: static;
+  }
+
+  html body.ll-deck-page #resume .ll-deck-resume__expertise {
+    display: grid;
+    grid-template-rows: minmax(0, 42fr) minmax(0, 27fr) minmax(0, 31fr);
+  }
+}

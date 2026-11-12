@@ -31,7 +31,7 @@
 .case-study--tyol .tyol-logo-animation .g {
   display: none;
   fill: none;
-  stroke: #010101;
+  stroke: var(--ll-brand-black);
   stroke-width: 0.7;
 }
 
@@ -49,22 +49,22 @@
 }
 
 .case-study--tyol .tyol-logo-stage.is-armed .logo {
-  fill: rgba(1, 1, 1, 0);
-  stroke: #010101;
+  fill: rgba(var(--ll-brand-black-rgb), 0);
+  stroke: var(--ll-brand-black);
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
 }
 
 .case-study--tyol .tyol-logo-stage.is-playing .g {
   animation:
-    tyol-draw 1.05s cubic-bezier(0.16, 1, 0.3, 1) var(--d) forwards,
+    tyol-draw 1.05s var(--ll-ease-out) var(--d) forwards,
     tyol-gfade 0.55s ease 2.5s forwards;
 }
 
 .case-study--tyol .tyol-logo-stage.is-playing .logo {
   animation:
-    tyol-draw 1.45s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards,
-    tyol-paint 3.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    tyol-draw 1.45s var(--ll-ease-out) 0.65s forwards,
+    tyol-paint 3.65s var(--ll-ease-out) forwards;
 }
 
 .case-study--tyol .tyol-logo-animation .g--01 { --d: 0.22s; }
@@ -88,16 +88,16 @@
 }
 
 @keyframes tyol-paint {
-  0% { fill: rgba(1, 1, 1, 0); stroke: #010101; }
+  0% { fill: rgba(var(--ll-brand-black-rgb), 0); stroke: var(--ll-brand-black); }
   38% {
-    fill: rgba(1, 1, 1, 0);
-    stroke: #010101;
+    fill: rgba(var(--ll-brand-black-rgb), 0);
+    stroke: var(--ll-brand-black);
     animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }
-  58% { fill: #010101; stroke: #010101; }
+  58% { fill: var(--ll-brand-black); stroke: var(--ll-brand-black); }
   66% {
-    fill: #010101;
-    stroke: #010101;
+    fill: var(--ll-brand-black);
+    stroke: var(--ll-brand-black);
     animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
   100% { fill: #f3b724; stroke: #f3b724; }

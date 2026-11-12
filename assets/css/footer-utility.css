@@ -1,7 +1,7 @@
 /* Compact utility row shared by non-home page footers. */
 :is(.cs-footer, .lwa-footer) .ll-footer__utility {
   display: grid;
-  grid-template-columns: auto auto minmax(12px, 1fr) auto auto 36px;
+  grid-template-columns: auto auto minmax(12px, 1fr) auto auto;
   align-items: center;
   gap: clamp(12px, 2vw, 28px);
   margin-top: clamp(56px, 9vw, 110px);
@@ -9,7 +9,7 @@
   border-top: 1px solid currentColor;
   color: inherit;
   font-family: var(--ll-mono, monospace);
-  font-size: 10px;
+  font-size: var(--ll-text-10);
   line-height: 1.4;
   text-transform: uppercase;
 }
@@ -39,7 +39,7 @@
   gap: 10px;
   padding: 7px 12px;
   border: 1px dashed currentColor;
-  transition: color var(--motion-control, 240ms) var(--motion-ease-out, ease), background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), border-color var(--motion-control, 240ms) var(--motion-ease-out, ease);
+  transition: color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), background-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), border-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease);
 }
 
 :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a:is(:hover, :focus-visible) {
@@ -111,7 +111,7 @@
 
 @media (max-width: 900px) {
   :is(.cs-footer, .lwa-footer) .ll-footer__utility {
-    grid-template-columns: minmax(0, 1fr) auto 36px;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 14px 10px;
   }
 
@@ -147,7 +147,7 @@
     min-height: 40px;
     gap: 8px;
     padding: 6px 9px;
-    font-size: 9px;
+    font-size: var(--ll-text-9);
   }
 
   :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links svg {

@@ -54,10 +54,6 @@
     createGlyph(svg, "→", "ll-icon ll-icon--arrow-up-right ll-arrow-glyph--up-right");
   });
 
-  document.querySelectorAll(".cs-related-row__view > svg.ll-icon:not([class*='ll-icon--arrow-'])").forEach(function (svg) {
-    createGlyph(svg, "→", "ll-icon--arrow-up-right ll-arrow-glyph--up-right");
-  });
-
   document.querySelectorAll("svg.ll-nav-toggle__icon").forEach(function (svg) {
     var lines = Array.from(svg.querySelectorAll(".ll-icon__menu-line"));
     if (lines.length !== 3) return;

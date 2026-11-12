@@ -13,8 +13,13 @@ html/
 │   │   ├── modules/          # Shared behavior
 │   │   ├── pages/            # Page-family behavior
 │   │   └── libs/             # Runtime libraries
-│   ├── media/                # Source media and fonts
-│   └── ...                   # Other shared assets
+│   ├── projects/<project>/   # images/ and video/ used by that case study
+│   ├── site/                 # home/, work/, pitchdeck/, shared/ media
+│   ├── _source/<project>/    # unused originals, not published
+│   ├── img/og/               # social share images (public URLs)
+│   ├── media/                # fonts and web manifest
+│   └── ...                   # favicons, fonts, partials
+├── _archive/                 # retired mirror snapshot and orphaned code
 ├── docs/                     # Architecture and audit notes
 ├── *.html                    # Public routes and standalone experiments
 ├── vite.config.mjs           # Production route allowlist

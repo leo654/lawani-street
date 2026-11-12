@@ -1,8 +1,8 @@
 body.case-study {
   --cs-bg: #1a1d1b;
-  --cs-ink: #f4f2ec;
-  --cs-muted: rgba(244, 242, 236, 0.58);
-  --cs-line: rgba(244, 242, 236, 0.18);
+  --cs-ink: var(--ll-brand-cream);
+  --cs-muted: rgba(var(--ll-brand-cream-rgb), 0.58);
+  --cs-line: rgba(var(--ll-brand-cream-rgb), 0.18);
   --cs-media-gap: clamp(12px, 1.6vw, 24px);
   margin: 0;
   overflow-x: clip;
@@ -12,14 +12,14 @@ body.case-study {
 }
 
 .case-study .ll-floating-header {
-  z-index: 120;
+  z-index: var(--ll-z-header-raised);
 }
 
 .cs-back {
   position: fixed;
   top: 22px;
   left: var(--ll-page-gutter);
-  z-index: 121;
+  z-index: var(--ll-z-back-link);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -31,7 +31,7 @@ body.case-study {
   color: var(--ll-white);
   font-family: var(--ll-mono);
   text-transform: uppercase;
-  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
+  transition: background-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease);
 }
 
 .cs-back:hover,
@@ -44,7 +44,7 @@ body.case-study {
   --cs-hero-progress: 0;
   --ll-type-h1: clamp(28px, 4.45vw, 34px);
   display: flex;
-  padding: clamp(132px, 18vh, 190px) var(--ll-page-gutter) 34px;
+  padding: var(--ll-hero-top) var(--ll-page-gutter) var(--ll-hero-bottom);
   flex-direction: column;
   justify-content: flex-end;
 }
@@ -56,7 +56,7 @@ body.case-study {
   letter-spacing: var(--ll-ls-wide);
   text-transform: uppercase;
   transform: translate3d(0, calc(var(--cs-hero-progress) * -46px), 0);
-  transition: transform 120ms linear;
+  transition: transform var(--ll-dur-fast) linear;
   will-change: transform;
 }
 
@@ -65,10 +65,10 @@ body.case-study {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 150;
+  z-index: var(--ll-z-progress);
   height: 2px;
   overflow: hidden;
-  background: rgba(244, 242, 236, 0.08);
+  background: rgba(var(--ll-brand-cream-rgb), 0.08);
   pointer-events: none;
 }
 
@@ -135,7 +135,7 @@ body.case-study {
   border-radius: var(--ll-control-radius);
   font-family: var(--ll-mono);
   text-transform: uppercase;
-  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
+  transition: background-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease);
 }
 
 .cs-jump:hover,
@@ -166,7 +166,7 @@ body.case-study {
   position: static;
   max-width: 58ch;
   margin: 0;
-  font-size: 14px;
+  font-size: var(--ll-text-14);
   font-weight: 600;
   line-height: var(--ll-leading-body);
   letter-spacing: var(--ll-ls-normal);
@@ -221,7 +221,7 @@ body.case-study {
   min-height: 0;
   margin: 0;
   overflow: hidden;
-  background: #050505;
+  background: var(--ll-brand-black);
 }
 
 .cs-story__media::after {
@@ -271,10 +271,6 @@ body.case-study {
 
 .cs-gallery__row--feature-pair {
   grid-template-columns: minmax(0, 1fr);
-}
-
-.cs-gallery__row--mixed {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.586fr);
 }
 
 .cs-gallery figure {
@@ -356,115 +352,6 @@ body.case-study {
   border: 0;
 }
 
-.cs-related {
-  --ll-type-h2: clamp(16px, 2.35vw, 20px);
-  padding: 86px var(--ll-page-gutter) 0;
-  /*! border-top: 1px solid var(--cs-line); */
-  content-visibility: auto;
-  contain-intrinsic-size: 680px;
-}
-
-.cs-related__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 52px;
-  font-family: var(--ll-mono);
-  text-transform: uppercase;
-}
-
-.cs-related__head a {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.cs-related-list {
-  border-top: 1px solid var(--cs-line);
-}
-
-.cs-related-row {
-  position: relative;
-  display: grid;
-  min-height: clamp(58px, 15vw, 130px);
-  grid-template-columns: minmax(0, 1fr) auto auto;
-  gap: 28px;
-  align-items: center;
-  padding: 24px 0;
-  overflow: hidden;
-  border-bottom: 1px solid var(--cs-line);
-  isolation: isolate;
-}
-
-.cs-related-row h2 {
-  position: relative;
-  z-index: 2;
-  margin: 0;
-  font-family: var(--ll-sans);
-  font-weight: 700;
-  letter-spacing: var(--ll-ls-normal);
-  text-transform: uppercase;
-  transition: color var(--motion-control, 240ms) var(--motion-ease-out, ease), transform var(--motion-component, 420ms) var(--motion-ease-out, ease);
-}
-
-.cs-related-row > .cs-tags,
-.cs-related-row__view {
-  position: relative;
-  z-index: 2;
-  transition: opacity var(--motion-control, 240ms) var(--motion-ease-out, ease), transform var(--motion-component, 420ms) var(--motion-ease-out, ease);
-}
-
-.cs-related-row__view {
-  font-family: var(--ll-mono);
-  text-transform: uppercase;
-}
-
-.cs-related-row__rail {
-  position: absolute;
-  top: 20px;
-  right: 0;
-  bottom: 20px;
-  left: 52%;
-  z-index: 1;
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  opacity: 0;
-  transform: translate3d(32px, 0, 0);
-  transition: opacity var(--motion-control, 240ms) var(--motion-ease-out, ease), transform var(--motion-component, 420ms) var(--motion-ease-out, ease);
-  pointer-events: none;
-}
-
-.cs-related-row__rail img {
-  width: clamp(96px, 11vw, 180px);
-  height: 100%;
-  object-fit: cover;
-}
-
-.cs-related-row__rail img:nth-child(2) {
-  width: clamp(72px, 8vw, 132px);
-}
-
-.cs-related-row:hover h2,
-.cs-related-row:focus-visible h2 {
-  transform: translate3d(10px, 0, 0);
-}
-
-.cs-related-row:hover > .cs-tags,
-.cs-related-row:hover > .cs-related-row__view,
-.cs-related-row:focus-visible > .cs-tags,
-.cs-related-row:focus-visible > .cs-related-row__view {
-  opacity: 0;
-  transform: translate3d(-12px, 0, 0);
-}
-
-.cs-related-row:hover .cs-related-row__rail,
-.cs-related-row:focus-visible .cs-related-row__rail {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
-
 .cs-footer {
   display: flex;
   min-height: 80svh;
@@ -472,8 +359,6 @@ body.case-study {
   flex-direction: column;
   background: var(--cs-bg);
   color: var(--cs-ink);
-  content-visibility: auto;
-  contain-intrinsic-size: 100svh;
 }
 
 .cs-footer__main {
@@ -522,7 +407,7 @@ body.case-study {
   color: var(--cs-ink);
   font-family: var(--ll-mono);
   text-transform: uppercase;
-  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
+  transition: background-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease);
 }
 
 .cs-footer__contact-card:hover,
@@ -588,7 +473,7 @@ body.case-study {
   border-radius: var(--ll-control-radius);
   font-family: var(--ll-mono);
   text-transform: uppercase;
-  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), border-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
+  transition: background-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), border-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease);
 }
 
 .cs-footer__actions a:hover,
@@ -609,27 +494,12 @@ body.case-study {
   text-transform: uppercase;
 }
 
-.cs-footer__socials {
-  display: flex;
-  justify-content: flex-end;
-  gap: clamp(18px, 2.4vw, 34px);
-}
-
-.cs-footer__socials a {
-  transition: color var(--motion-control, 240ms) var(--motion-ease-out, ease);
-}
-
-.cs-footer__socials a:hover,
-.cs-footer__socials a:focus-visible {
-  color: var(--ll-orange);
-}
-
 .case-study .ll-reveal {
   opacity: 0;
   transform: translate3d(0, var(--motion-reveal-offset, 10px), 0);
   transition:
-    opacity var(--motion-reveal, 560ms) var(--motion-ease-out, ease),
-    transform var(--motion-reveal, 560ms) var(--motion-ease-out, ease);
+    opacity var(--motion-reveal, var(--ll-dur-medium)) var(--motion-ease-out, ease),
+    transform var(--motion-reveal, var(--ll-dur-medium)) var(--motion-ease-out, ease);
   transition-delay: var(--ll-reveal-delay, 0ms);
 }
 
@@ -722,7 +592,7 @@ body.case-study :is(.cs-related, .cs-footer) .ll-reveal {
   .cs-story__copy {
     position: static;
     align-self: start;
-    max-width: 680px;
+    max-width: var(--ll-text-measure);
     text-align: left;
   }
 
@@ -774,29 +644,16 @@ body.case-study :is(.cs-related, .cs-footer) .ll-reveal {
     grid-area: clock;
   }
 
-  .cs-footer__socials {
-    grid-area: social;
-    justify-content: flex-start;
-  }
-
-  .cs-footer .ll-theme-toggle--footer {
-    grid-area: theme;
-  }
-
   .cs-footer__bottom > :last-child {
     grid-area: language;
     justify-self: end;
-  }
-
-  .cs-related-row__rail {
-    left: 44%;
   }
 }
 
 @media (max-width: 560px) {
   .cs-hero {
     min-height: 68svh;
-    padding: 112px var(--ll-page-gutter) 24px;
+    padding: var(--ll-hero-top) var(--ll-page-gutter) var(--ll-hero-bottom);
   }
 
   .cs-hero__meta {
@@ -833,50 +690,13 @@ body.case-study :is(.cs-related, .cs-footer) .ll-reveal {
   }
 
   .cs-gallery__row,
-  .cs-gallery__row--pair,
-  .cs-gallery__row--mixed {
+.cs-gallery__row--pair {
     grid-template-columns: 1fr;
     gap: var(--cs-media-gap);
   }
 
   .cs-gallery figure::after {
     height: 58px;
-  }
-
-  .cs-related {
-    padding: 68px var(--ll-page-gutter) 0;
-  }
-
-  .cs-related__head {
-    margin-bottom: 34px;
-  }
-
-  .cs-related-row {
-    min-height: 0;
-    grid-template-columns: 1fr auto;
-    gap: 18px;
-    padding: 28px 0 18px;
-  }
-
-  .cs-related-row > .cs-tags {
-    display: none;
-  }
-
-  .cs-related-row__rail {
-    position: relative;
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
-    grid-column: 1 / -1;
-    height: 25vw;
-    opacity: 1;
-    transform: none;
-  }
-
-  .cs-related-row__rail img,
-  .cs-related-row__rail img:nth-child(2) {
-    width: calc((100% - 16px) / 3);
   }
 
   .cs-footer {
@@ -949,19 +769,8 @@ body.case-study :is(.cs-related, .cs-footer) .ll-reveal {
     grid-area: clock;
   }
 
-  .cs-footer__socials {
-    grid-area: social;
-    flex-wrap: wrap;
-    gap: 14px 20px;
-  }
-
   .cs-footer__bottom > :last-child {
     grid-area: language;
-  }
-
-  .cs-footer .ll-theme-toggle--footer {
-    grid-area: theme;
-    justify-self: start;
   }
 }
 
@@ -973,10 +782,7 @@ body.case-study :is(.cs-related, .cs-footer) .ll-reveal {
     transition: none;
   }
 
-  .cs-gallery img,
-  .cs-related-row,
-  .cs-related-row h2,
-  .cs-related-row__rail {
+  .cs-gallery img {
     transition: none;
   }
 
@@ -1008,14 +814,14 @@ body.case-study :is(.cs-related, .cs-footer) .ll-reveal {
 }
 
 .case-study .cs-footer__copy {
-  font-size: 14px;
+  font-size: var(--ll-text-14);
   text-align: justify;
 }
 
 @media (max-width: 560px) {
   .case-study .cs-story__lead,
   .case-study .cs-footer__copy {
-    text-align: left !important;
+    text-align: left;
   }
 }
 
@@ -1028,7 +834,7 @@ body.case-study :is(.cs-related, .cs-footer) .ll-reveal {
   .cs-footer__label,
   .cs-footer__bottom
 ) {
-  font-size: 10px;
+  font-size: var(--ll-text-10);
   line-height: var(--ll-leading-label);
 }
 
@@ -1064,7 +870,7 @@ html body.case-study :is(
   .cs-footer__contact-card,
   .cs-footer__actions a
 ) {
-  font-family: "Gridlite", sans-serif !important;
+  font-family: "Gridlite", sans-serif;
 }
 
 html body.case-study :is(
@@ -1073,22 +879,20 @@ html body.case-study :is(
   .cs-footer__contact-card,
   .cs-footer__actions a
 ) *:not(svg):not(path) {
-  font-family: "Gridlite", sans-serif !important;
+  font-family: "Gridlite", sans-serif;
 }
 
-html[data-theme="dark"] body.case-study .cs-footer__contact-card,
 html[data-theme="light"] body.case-study .cs-footer__contact-card {
   border-color: var(--ll-theme-line);
   background: var(--ll-theme-raised);
   color: var(--ll-theme-ink);
   transition:
-    background-color 420ms var(--ll-ease),
-    border-color 420ms var(--ll-ease),
-    color 320ms ease,
-    transform 240ms var(--ll-ease);
+    background-color var(--ll-dur-medium) var(--ll-ease),
+    border-color var(--ll-dur-medium) var(--ll-ease),
+    color var(--ll-dur-base) ease,
+    transform var(--ll-dur-base) var(--ll-ease);
 }
 
-html[data-theme="dark"] body.case-study .cs-footer__contact-card:is(:hover, :focus-visible),
 html[data-theme="light"] body.case-study .cs-footer__contact-card:is(:hover, :focus-visible) {
   border-color: var(--ll-orange);
   background: var(--ll-orange);
@@ -1123,7 +927,7 @@ html body.case-study .cs-footer__actions .ll-button:is(:hover, :focus-visible) >
 .cs-tags li {
   position: relative;
   overflow: hidden;
-  transition: background-color var(--motion-control, 240ms) var(--motion-ease-out, ease), color var(--motion-control, 240ms) var(--motion-ease-out, ease);
+  transition: background-color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease), color var(--motion-control, var(--ll-dur-base)) var(--motion-ease-out, ease);
 }
 
 .cs-tags li::after {
@@ -1134,35 +938,12 @@ html body.case-study .cs-footer__actions .ll-button:is(:hover, :focus-visible) >
   content: "";
   transform: scaleX(0);
   transform-origin: right center;
-  transition: transform 360ms var(--ll-ease);
+  transition: transform var(--ll-dur-medium) var(--ll-ease);
 }
 
 .cs-tags li:hover::after {
   transform: scaleX(1);
   transform-origin: left center;
-}
-
-.cs-related-row__view {
-  display: inline-flex;
-  min-width: 74px;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.cs-related-row:hover .cs-related-row__view,
-.cs-related-row:focus-visible .cs-related-row__view {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
-
-.cs-related-row__view > .ll-icon--arrow-up-right {
-  flex: 0 0 14px;
-}
-
-.cs-related-row:hover .cs-related-row__view > .ll-icon--arrow-up-right,
-.cs-related-row:focus-visible .cs-related-row__view > .ll-icon--arrow-up-right {
-  transform: translate3d(2px, -2px, 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1184,12 +965,15 @@ html body.case-study #main-content .cs-story__copy :is(
   .cs-story__credits,
   .cs-story__credits *
 ) {
-  font-size: 14px;
+  font-size: var(--ll-text-14);
 }
 
 html body.case-study #main-content .cs-story__copy :is(
   .cs-story__label,
   .cs-story__credits > p
 ) {
-  font-weight: 900 !important;
+  font-weight: 700;
 }
+
+/* "View all work" is a small standalone link: give it a larger touch area on phones and tablets. */
+

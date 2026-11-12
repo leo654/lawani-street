@@ -1,6 +1,5 @@
 /* Typography and shared controls; use design-tokens.css for foundation values. */
 @import "../css/button-system.css";
-@import "../css/media-reveals.css";
 
 @font-face {
   font-family: "Gridlite";
@@ -113,7 +112,7 @@ html body *:not(svg):not(path):not(.fa):not(.fas):not(.far):not(.fab):not(:is(
   .project-form__option *,
   .lwa-filter button *
 )) {
-  /*! font-weight: 700 !important; */
+  font-weight: 700 !important;
   text-transform: uppercase !important;
 }
 
@@ -156,10 +155,6 @@ html body.case-study h1.cs-title {
   font-size: var(--ll-type-project-title) !important;
 }
 
-html body.case-study .cs-related-row h2 {
-  font-size: var(--ll-type-h4) !important;
-}
-
 html body :is(p, li, dd, dt, blockquote, figcaption) {
   font-weight: 700;
 }
@@ -180,7 +175,7 @@ html body :is(button, input[type="button"], input[type="submit"], input[type="re
   place-items: center;
   overflow: visible;
   font-family: "Gridlite", sans-serif !important;
-  font-size: 10px;
+  font-size: var(--ll-text-10);
   letter-spacing: 0;
   line-height: 1;
   text-align: center;

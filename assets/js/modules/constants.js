@@ -39,6 +39,7 @@
       CASE_REVEAL_ROOT_MARGIN: "0px 0px -10% 0px", // Root margin for case study reveals
       HERO_SCROLL_THRESHOLD: 0.72,      // Percentage for hero scroll effect
       HERO_ROTATION_THRESHOLD: 0.92,    // Threshold for hero rotation effect
+      SECTION_PARALLAX_PERCENT: 7,      // Subtle outgoing section drift
     },
 
     // Animation durations (ms)
@@ -78,7 +79,7 @@
       IN_OUT: cssEasing("--motion-ease-in-out", "cubic-bezier(0.65, 0, 0.35, 1)"),
       SWEEP_IN: cssEasing("--motion-ease-sweep-in", "cubic-bezier(0.65, 0, 0.35, 1)"),
       SWEEP_OUT: cssEasing("--motion-ease-sweep-out", "cubic-bezier(0.16, 1, 0.3, 1)"),
-      GSAP_OUT: "power3.out",
+      GSAP_OUT: "expo.out",
       GSAP_IN_OUT: "power2.inOut",
     },
 

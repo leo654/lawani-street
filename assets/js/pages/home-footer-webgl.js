@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var footer = document.querySelector(".home-index .ll-footer");
+  var footer = document.querySelector(".ll-site-footer-page .ll-footer");
   var marquee = footer && footer.querySelector(".ll-footer__marquee");
   if (!marquee || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   if (navigator.deviceMemory && navigator.deviceMemory <= 2) return;
@@ -18,7 +18,6 @@
   var active = false;
   var destroyed = false;
   var threeLoading = false;
-  var lastFrame = 0;
   var uniforms;
   var scene;
   var camera;
@@ -50,7 +49,6 @@
   function start() {
     if (active || destroyed || contextUnavailable || document.hidden) return;
     active = true;
-    lastFrame = 0;
     frame = window.requestAnimationFrame(render);
   }
 
@@ -76,12 +74,9 @@
     frame = 0;
     if (!active || destroyed || document.hidden) return;
 
-    if (timestamp - lastFrame >= 32) {
-      lastFrame = timestamp;
-      uniforms.uTime.value = timestamp * 0.001;
-      uniforms.uScroll.value = window.__lawaniFooterScrollProgress || 0;
-      renderer.render(scene, camera);
-    }
+    uniforms.uTime.value = timestamp * 0.001;
+    uniforms.uScroll.value = window.__lawaniFooterScrollProgress || 0;
+    renderer.render(scene, camera);
 
     frame = window.requestAnimationFrame(render);
   }
@@ -134,8 +129,7 @@
       renderer = new THREE.WebGLRenderer({
         canvas: canvas,
         alpha: true,
-        antialias: false,
-        powerPreference: "low-power"
+        antialias: false
       });
     } catch (error) {
       console.warn("Footer WebGL is unavailable; keeping the static footer background.", error);

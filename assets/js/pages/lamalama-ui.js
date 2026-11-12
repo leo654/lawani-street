@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  if (!document.body || !document.body.matches(".home-index, .case-study, .work-index, .ll-contact-page")) return;
+  if (!document.body || !document.body.matches(".home-index, .case-study, .work-index, .ll-contact-page, .cookie-privacy-page, .ll-error-page")) return;
 
   var reduceMotion = (window.LawaniFeatures && window.LawaniFeatures.get("reducedMotion")) ||
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -92,14 +92,33 @@
     var sections = Array.prototype.slice.call(document.querySelectorAll("[data-ll-section-note]"));
     if (!header && (!note || !sections.length)) return;
 
+    // Section tops are cached and re-measured only on resize/height changes, so the
+    // scroll handler never forces a layout read right after GSAP writes transforms.
+    var sectionTops = [];
+    function measureSections() {
+      var scrollY = window.scrollY;
+      sectionTops = sections.map(function (section) {
+        return section.getBoundingClientRect().top + scrollY;
+      });
+    }
+    measureSections();
+    if ("ResizeObserver" in window) {
+      var measureTimer = 0;
+      new ResizeObserver(function () {
+        window.clearTimeout(measureTimer);
+        measureTimer = window.setTimeout(function () { measureSections(); updateNote(); }, 150);
+      }).observe(document.body);
+    }
+    window.addEventListener("load", measureSections, { once: true });
+
     function updateNote() {
       if (!note || !sections.length) return;
 
       var active = sections[0];
-      var threshold = window.innerHeight * (CONSTANTS.SCROLL?.NAV_NOTE_THRESHOLD || 0.46);
+      var threshold = window.scrollY + window.innerHeight * (CONSTANTS.SCROLL?.NAV_NOTE_THRESHOLD || 0.46);
 
-      sections.forEach(function (section) {
-        if (section.getBoundingClientRect().top <= threshold) active = section;
+      sections.forEach(function (section, index) {
+        if (sectionTops[index] <= threshold) active = section;
       });
 
       var nextNote = active.getAttribute("data-ll-section-note");
@@ -128,7 +147,10 @@
 
     update();
     window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate, { passive: true });
+    window.addEventListener("resize", function () {
+      measureSections();
+      requestUpdate();
+    }, { passive: true });
   }
 
   function initMenu() {
@@ -418,7 +440,7 @@
 
     function getControl(event) {
       var control = event.target.closest(".ll-button, .ll-menu-row, .ll-footer__bottom nav a");
-      if (control && document.body.classList.contains("home-index") && control.classList.contains("ll-button")) return null;
+      if (control && control.classList.contains("ll-button")) return null;
       return control && document.documentElement.contains(control) ? control : null;
     }
 
@@ -452,7 +474,7 @@
       });
     });
 
-    document.querySelectorAll(".home-index .ll-footer .ll-reveal").forEach(function (node) {
+    document.querySelectorAll(".ll-site-footer-page .ll-footer .ll-reveal").forEach(function (node) {
       node.classList.add("is-visible");
     });
   }
@@ -460,7 +482,7 @@
   function loadSectionReveals() {
     if (window.__sectionRevealsInjected) return;
     window.__sectionRevealsInjected = true;
-    import("../modules/section-reveals.js?v=20261028-scroll-solid").catch(function (error) {
+    import("../modules/section-reveals.js?v=20261112-clean").catch(function (error) {
       console.warn("Section reveals failed to load.", error);
     });
   }
@@ -598,9 +620,11 @@
     initMenu();
     initDockPreviews();
     initControlFeedback();
-    initButtonScramble();
+    // Hover shuffles and section reveals now come from modules/motion-kit.js.
+    if (!(window.MotionKit && window.MotionKit.active)) initButtonScramble();
     initReveals();
-    if (!document.body.classList.contains("case-study")) loadSectionReveals();
+    if (window.MotionKit && window.MotionKit.active) window.MotionKit.revealBlocks();
+    else if (!document.body.classList.contains("case-study")) loadSectionReveals();
     initHeroShowreel();
   }
 

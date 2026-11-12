@@ -1,0 +1,778 @@
+/* ==========================================================================
+   Lawani St. motion kit
+   Macro: preloader, arrival cover, stripe edges, parallax media, footer lift.
+   Micro: split text, shuffles, letter rolls, underlines, cursor, magnetics.
+   Behaviour lives in assets/js/modules/motion-kit.js.
+   ========================================================================== */
+
+:root {
+  --mk-accent: var(--ll-orange, var(--ll-brand-orange));
+  --mk-ink: var(--ll-brand-black);
+  --mk-paper: var(--ll-brand-cream);
+  --mk-ease-expo: var(--ll-ease-in-out);
+  --mk-ease-out: var(--ll-ease-out);
+  --mk-roll-duration: var(--ll-dur-slow);
+}
+
+/* --------------------------------------------------------------------------
+   First-paint covers (set by the inline head script before CSS-driven paint)
+   -------------------------------------------------------------------------- */
+html.mk-preloading::after,
+html.mk-arriving::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: var(--ll-z-preloader);
+  background: var(--mk-accent);
+  pointer-events: none;
+}
+
+/* Arrivals start under the page-coloured bands of the transition */
+html.mk-arriving::after {
+  background: var(--ll-arrive-colour, var(--ll-brand-cream));
+}
+
+/* The page headline waits for its intro instead of flashing in first */
+html.mk-intro-pending main h1 {
+  visibility: hidden;
+}
+
+html.mk-preloading,
+html.mk-preloading body {
+  overflow: hidden !important;
+}
+
+/* --------------------------------------------------------------------------
+   Preloader
+   -------------------------------------------------------------------------- */
+.mk-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ll-z-top);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(18px, 2.4vw, 34px);
+  color: var(--mk-ink);
+  font-family: var(--ll-sans, "Gridlite", sans-serif);
+  pointer-events: none;
+  isolation: isolate;
+}
+
+.mk-preloader__columns {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.mk-preloader__columns > span {
+  display: block;
+  height: 100%;
+  background: var(--mk-accent);
+  transform-origin: 50% 0%;
+  will-change: transform;
+}
+
+.mk-preloader__columns > span + span {
+  box-shadow: inset 1px 0 0 rgb(7 8 7 / 16%);
+}
+
+.mk-preloader__top,
+.mk-preloader__bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  font-size: var(--ll-text-12);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.mk-preloader__top { align-items: flex-start; }
+
+.mk-preloader__mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+
+.mk-preloader__mask > span {
+  display: block;
+}
+
+.mk-preloader__counter {
+  font-size: clamp(88px, 17vw, 260px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.82;
+  font-variant-numeric: tabular-nums;
+}
+
+.mk-preloader__track {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: rgb(7 8 7 / 14%);
+}
+
+.mk-preloader__track > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--mk-ink);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+/* --------------------------------------------------------------------------
+   Page transition bands (motion-system.js)
+   -------------------------------------------------------------------------- */
+/* Hayler-style page bands. motion-system.js animates them with Web Animations (transform only), so
+   they stay on the compositor and keep their pace while the page behind them is busy.
+   .is-covering = held fully closed (the new page waiting to reveal); .is-leaving = sweeping closed. */
+.ll-page-transition {
+  display: flex;
+}
+
+.ll-page-transition.is-covering,
+.ll-page-transition.is-leaving {
+  pointer-events: all;
+}
+
+.ll-page-band {
+  display: block;
+  flex: 1 1 0;
+  height: 100%;
+  margin-right: -1px;
+  background: var(--ll-band-colour, var(--ll-brand-cream));
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  backface-visibility: hidden;
+}
+
+.ll-page-transition.is-covering .ll-page-band {
+  transform: scaleY(1);
+}
+
+.ll-page-transition.is-covering .ll-page-band,
+.ll-page-transition.is-leaving .ll-page-band {
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   Split text
+   -------------------------------------------------------------------------- */
+.mk-split {
+  font-kerning: none;
+}
+
+.mk-split .mk-word,
+.mk-word {
+  display: inline-block !important;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.mk-mask {
+  display: inline-block;
+  overflow: hidden;
+  /* room for descenders without clipping them */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  vertical-align: top;
+}
+
+.mk-split .mk-char,
+.mk-split .mk-line-inner,
+.mk-char,
+.mk-line-inner {
+  display: inline-block !important;
+  width: auto !important;
+}
+
+.mk-fill {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+/* Hayler .has-slide: two stacked copies per letter */
+.mk-slide .mk-char {
+  position: relative;
+}
+
+.mk-split .mk-char__a,
+.mk-split .mk-char__b {
+  display: block !important;
+}
+
+.mk-split .mk-char__b {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+/* the lower copy only exists while a roll is in progress */
+.mk-slide:not(.is-rolling) .mk-char__b {
+  visibility: hidden;
+}
+
+/* Elements waiting for their reveal stay hidden only once the kit is running */
+.mk-ready [data-mk-pending] {
+  visibility: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Letter roll on buttons
+   -------------------------------------------------------------------------- */
+.mk-roll {
+  display: inline-flex;
+  overflow: hidden;
+  line-height: 1.15;
+  vertical-align: middle;
+}
+
+/* Hayler .button-text span: lifts 150% with a slight overshoot while the copy rises */
+.mk-roll__text {
+  position: relative;
+  display: inline-flex;
+  white-space: pre;
+  transition: transform var(--ll-dur-slow) var(--ll-ease-spring);
+}
+
+.mk-roll__text::before {
+  content: attr(data-hover);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(150%);
+}
+
+:is(a, button):is(:hover, :focus-visible) > .mk-roll .mk-roll__text,
+.mk-roll-trigger:is(:hover, :focus-visible) .mk-roll .mk-roll__text {
+  transform: translateY(-150%);
+}
+
+/* --------------------------------------------------------------------------
+   Underlines that draw in and wipe out
+   -------------------------------------------------------------------------- */
+.mk-underline {
+  position: relative;
+  text-decoration: none !important;
+}
+
+.mk-underline::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -0.12em;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 100% 50%;
+  /* Hayler .clone-underline easing */
+  transition: transform var(--ll-dur-slow) var(--ll-ease-in-out);
+  pointer-events: none;
+}
+
+.mk-underline:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+  transform-origin: 0% 50%;
+}
+
+/* --------------------------------------------------------------------------
+   Drawn rules
+   -------------------------------------------------------------------------- */
+.mk-rule-host {
+  position: relative;
+}
+
+.mk-rule {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--mk-rule-color, currentColor);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+.mk-rule--top { top: 0; }
+.mk-rule--bottom { bottom: 0; }
+
+/* --------------------------------------------------------------------------
+   Media reveal + parallax
+   -------------------------------------------------------------------------- */
+.mk-media {
+  overflow: hidden;
+}
+
+.mk-media > :is(img, video, picture),
+.mk-media > a > :is(img, video, picture) {
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   Stripe edge rising out of dark sections
+   -------------------------------------------------------------------------- */
+.mk-stripes-host {
+  position: relative;
+}
+
+.mk-stripes,
+:is(.ll-footer, .cs-footer, .lwa-footer) > .mk-stripes {
+  position: absolute;
+  top: -1px;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  height: clamp(120px, 22vh, 240px);
+  pointer-events: none;
+}
+
+.mk-stripes > span {
+  flex: 1 1 0;
+  height: 100%;
+  margin-right: -1px;
+  background: var(--mk-stripe-color, var(--mk-paper));
+  transform-origin: 50% 0%;
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   Marquee driven by JS
+   -------------------------------------------------------------------------- */
+.mk-marquee-driven {
+  animation: none !important;
+  will-change: transform;
+}
+
+.mk-draggable {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Mouse galleries are scrolled by the drag script; CSS snapping fights it. Touch keeps snapping. */
+.lwa-project__gallery.mk-draggable {
+  scroll-snap-type: none;
+}
+
+.mk-draggable.is-dragging,
+.mk-draggable.is-dragging * {
+  cursor: grabbing;
+}
+
+.mk-draggable img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* --------------------------------------------------------------------------
+   Cursor (after Hayler): a small orange square that trails the real pointer.
+     default   → 14px solid orange square
+     stick     → thin orange ring parked on a control's icon (or round a square icon button)
+     highlight → 80px faint orange square behind text links and menu rows
+     label / drag / solid → word tag centred on the pointer (View, Next, Drag, Copy, Play)
+     icon      → 40px blurred square with + / − (work rows)
+     hidden    → fades out over fields and embeds
+   -------------------------------------------------------------------------- */
+.mk-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--ll-z-cursor);
+  pointer-events: none;
+  transition: opacity var(--ll-dur-base) ease;
+}
+
+.mk-cursor__pos {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  will-change: transform;
+}
+
+/* Size, radius and transforms are driven by GSAP (motion-kit.js); CSS only paints each state. */
+html body .mk-cursor .mk-cursor__ball:not(#global-square-corners) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  overflow: hidden;
+  border: 1.5px solid var(--ll-brand-orange);
+  border-radius: 2px;
+  background-color: var(--ll-brand-orange);
+  color: var(--ll-brand-cream);
+  will-change: transform, width, height;
+  transition:
+    background-color var(--ll-dur-base) ease,
+    border-color var(--ll-dur-base) ease,
+    opacity var(--ll-dur-base) ease,
+    backdrop-filter var(--ll-dur-base) ease;
+}
+
+/* Stick: a thin orange ring parked on the control's icon. */
+
+/* Highlight: a large faint orange square behind text links (Hayler's highlight). */
+html body .mk-cursor.is-highlight .mk-cursor__ball:not(#global-square-corners) {
+  border-color: transparent;
+  background-color: rgba(var(--ll-brand-orange-rgb), 0.18);
+}
+
+/* Label: a blurred dark pill with a word. */
+html body .mk-cursor:is(.is-label, .is-drag) .mk-cursor__ball:not(#global-square-corners) {
+  border-color: rgba(var(--ll-brand-cream-rgb), 0.16);
+  background-color: rgba(var(--ll-brand-black-rgb), 0.62);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* Solid: the project-card tag, in brand orange with cream type and an arrow. */
+html body .mk-cursor.is-solid .mk-cursor__ball:not(#global-square-corners) {
+  border-color: var(--ll-brand-orange);
+  background-color: var(--ll-brand-orange);
+  color: var(--ll-brand-cream);
+}
+
+/* Icon: a small blurred square holding + / − (work rows). */
+html body .mk-cursor.is-icon .mk-cursor__ball:not(#global-square-corners) {
+  border-color: rgba(var(--ll-brand-cream-rgb), 0.18);
+  background-color: rgba(var(--ll-brand-black-rgb), 0.56);
+  color: var(--ll-brand-cream);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* Loading: an orange ring with one bright quarter, spinning while the next page loads.
+   It spins with the separate `rotate` property so GSAP's transform on the ball is left alone. */
+html body .mk-cursor.is-loading .mk-cursor__ball:not(#global-square-corners) {
+  border: 2px solid rgba(var(--ll-brand-orange-rgb), 0.22);
+  border-top-color: var(--ll-brand-orange);
+  background-color: transparent;
+  animation: mk-cursor-spin 0.7s linear infinite;
+}
+
+@keyframes mk-cursor-spin {
+  to { rotate: 360deg; }
+}
+
+.mk-cursor__icon {
+  display: none;
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.mk-cursor:is(.is-solid, .is-icon) .mk-cursor__icon {
+  display: block;
+}
+
+.mk-cursor.is-solid .mk-cursor__icon {
+  width: 13px;
+  height: 13px;
+  margin-left: 8px;
+}
+
+.mk-cursor__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: square;
+}
+
+
+.mk-cursor__text {
+  position: relative;
+  font-family: var(--ll-sans, "Gridlite", sans-serif);
+  font-size: var(--ll-text-11);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.mk-cursor:not(.is-label, .is-drag, .is-solid) .mk-cursor__text {
+  position: absolute;
+  visibility: hidden;
+}
+
+/* Drag gets ‹ › either side of the word. */
+.mk-cursor.is-drag .mk-cursor__text::before,
+.mk-cursor.is-drag .mk-cursor__text::after {
+  position: absolute;
+  top: 50%;
+  font-size: var(--ll-text-14);
+  translate: 0 -50%;
+}
+
+.mk-cursor.is-drag .mk-cursor__text::before {
+  content: "\2039";
+  right: calc(100% + 12px);
+}
+
+.mk-cursor.is-drag .mk-cursor__text::after {
+  content: "\203A";
+  left: calc(100% + 12px);
+}
+
+.mk-cursor.is-out {
+  opacity: 0;
+}
+
+/* The real pointer stays visible (as on Hayler); the square is an accent that trails it. */
+
+/* Retired elastic cursor never shows alongside the kit cursor */
+
+html.ll-page-leaving .lwa-hover-preview {
+  opacity: 0;
+  transition: opacity var(--ll-dur-base) ease;
+}
+
+/* --------------------------------------------------------------------------
+   Copy-to-clipboard toast for email links
+   -------------------------------------------------------------------------- */
+.mk-toast {
+  position: fixed;
+  bottom: clamp(18px, 3vw, 32px);
+  left: 50%;
+  z-index: var(--ll-z-toast);
+  padding: 10px 16px;
+  background: var(--mk-ink);
+  color: var(--mk-paper);
+  font-family: var(--ll-sans, "Gridlite", sans-serif);
+  font-size: var(--ll-text-12);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: translate(-50%, 160%);
+  transition: transform var(--ll-dur-medium) var(--mk-ease-expo);
+  pointer-events: none;
+}
+
+.mk-toast.is-visible {
+  transform: translate(-50%, 0);
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion: everything readable, nothing moving
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html.mk-preloading::after,
+  html.mk-arriving::after,
+  .mk-preloader,
+  .mk-stripes,
+  .mk-cursor {
+    display: none !important;
+  }
+
+  .mk-roll__text,
+  .mk-underline::after {
+    transition: none !important;
+  }
+
+  .mk-ready [data-mk-pending] {
+    visibility: visible;
+  }
+}
+
+/* The pixel page transition sits above every floating UI (cookie notice, docks). */
+.ll-page-transition {
+  z-index: var(--ll-z-transition);
+}
+
+/* --------------------------------------------------------------------------
+   One owner per animation. The kit drives these hero entrances and scroll
+   offsets with GSAP, so the older CSS keyframes, transitions and
+   variable-driven transforms on the same elements are retired. Running
+   both makes them fight (stutter, double entrances, lagging parallax).
+   -------------------------------------------------------------------------- */
+html.mk-ready .case-study .cs-title {
+  clip-path: none !important;
+  opacity: 1 !important;
+  transform: none;
+  transition: none !important;
+  animation: none !important;
+}
+
+html.mk-ready .case-study .cs-hero__meta {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+html.mk-ready .lwa-hero > *,
+html.mk-ready .lwa-hero.is-visible > * {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* Animated split text never inherits a transform transition from its host */
+html.mk-ready .mk-split,
+html.mk-ready .mk-split :is(.mk-word, .mk-char, .mk-line-inner) {
+  transition-property: color, background-color, opacity;
+}
+
+/* Magnetic controls move on the independent translate property */
+
+/* …and their text or icon drifts a little further, so the control feels held by the pointer. */
+
+/* Scrolling buttons sit on solid surfaces, where a backdrop blur is invisible
+   but still re-rendered on every scroll frame. Only fixed chrome keeps it. */
+html.mk-ready body :is(main, footer) :is(
+  .ll-button,
+  .cs-footer__actions a,
+  .ll-footer__actions a,
+  .ll-footer__back-to-top,
+  .ll-footer__project-cta > a,
+  .lwa-footer__contact .ll-button,
+  .ll-action-link,
+  .cs-back,
+  .cs-jump,
+  .ll-service-product__cta,
+  .ll-deck-contact a,
+  .ll-theme-toggle
+) {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* The fixed hero film stops compositing once the hero has scrolled away. */
+html.mk-ready body.home-index .ll-home-hero.mk-offscreen > .ll-home-hero__media {
+  visibility: hidden;
+}
+
+/* Work rows: rail thumbnails are static on hover (no zoom, filter or stagger). */
+html body .lwa-project .lwa-project__rail img,
+html body .lwa-project.is-hovered .lwa-project__rail img {
+  transform: none !important;
+  transition: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Hayler library additions
+   -------------------------------------------------------------------------- */
+
+/* .reveal-stripes-top / -bottom section transitions */
+.mk-stripes-section {
+  position: relative;
+}
+
+html body .mk-section-stripes:not(#global-square-corners) {
+  position: absolute !important;
+  right: 0 !important;
+  left: 0 !important;
+  z-index: 3;
+  display: flex !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  grid-column: 1 / -1;
+  height: clamp(110px, 22vh, 240px);
+  pointer-events: none;
+}
+
+.mk-section-stripes--top { top: -1px; }
+.mk-section-stripes--bottom { bottom: -1px; }
+
+.mk-section-stripes > span {
+  flex: 1 1 0;
+  margin-right: -1px;
+  background: var(--mk-stripe-color);
+}
+
+.mk-section-stripes--top > span { transform-origin: 50% 0; }
+.mk-section-stripes--bottom > span { transform-origin: 50% 100%; transform: scaleY(0); }
+
+/* .increment-counter */
+.mk-count {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.mk-count__sizer {
+  visibility: hidden;
+}
+
+.mk-count__inner {
+  position: absolute;
+  inset: 0;
+}
+
+.mk-count span {
+  transition: none !important;
+}
+
+.mk-count__inner > span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.mk-count__plain {
+  display: inline-block;
+  vertical-align: top;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mk-section-stripes { display: none !important; }
+}
+
+/* Menu timeline: GSAP owns the item entrances, so the old CSS stagger stands down */
+html.mk-ready .ll-mobile-menu.mk-menu :is(.ll-menu-row, .ll-mobile-menu__cta, .ll-mobile-menu__footer, .ll-mobile-menu__actions > *, .ll-menu-group__items a) {
+  opacity: 1;
+  transform: none;
+  animation: none !important;
+  transition-property: background-color, color, border-color !important;
+}
+
+/* Hayler nav-intro stretch: words spread across the row as it scrolls in */
+html body .mk-stretch:not(#global-square-corners) {
+  display: flex;
+  width: 100%;
+  max-width: none;
+  column-gap: 0.2em;
+  justify-content: flex-start;
+}
+
+html body .mk-stretch > .mk-word {
+  display: flex !important;
+  flex: 0 0 auto;
+  justify-content: center;
+}
+
+html body .mk-stretch > .mk-word:first-child {
+  justify-content: flex-start;
+}
+
+html body .mk-stretch > .mk-word:last-child {
+  justify-content: flex-end;
+}

@@ -18,17 +18,20 @@
   --motion-fast: var(--duration-fast);
   --motion-control: var(--duration-normal);
   --motion-component: var(--duration-slow);
-  --motion-reveal: 560ms;
-  --motion-expand: 520ms;
+  --motion-reveal: var(--ll-dur-medium);
+  --motion-expand: var(--ll-dur-medium);
   --motion-reveal-offset: 10px;
-  --motion-page-cover: 440ms;
-  --motion-page-reveal: 520ms;
+  /* Page transitions and the hero title run longer than the four shared durations on purpose. */
+  --motion-page-cover: 1000ms;
+  --motion-page-reveal: 1000ms;
+  --motion-page-ease-cover: var(--ll-ease-in-out);
+  --motion-page-ease-reveal: var(--ll-ease-in-out);
   --motion-page: var(--duration-slower);
-  --motion-media-opacity: 600ms;
-  --motion-media-scale: 800ms;
-  --motion-slide-duration: 900ms;
+  --motion-media-opacity: var(--ll-dur-medium);
+  --motion-media-scale: var(--ll-dur-slow);
+  --motion-slide-duration: var(--ll-dur-slow);
   --motion-hero-title: 950ms;
-  --motion-hero-meta: 760ms;
+  --motion-hero-meta: var(--ll-dur-slow);
 
   /* Legacy aliases (for backward compatibility) */
   --ll-ease: var(--ease-out);
@@ -43,13 +46,17 @@ html {
   scrollbar-gutter: stable both-edges;
 }
 
+/* Desktop: no rubber-band at the ends of the page. The footer is clipped and its wordmark is
+   fixed, so the elastic overscroll made the footer visibly jump and bounce at the very end. */
+@media (hover: hover) and (pointer: fine) {
+  html {
+    overscroll-behavior-y: none;
+  }
+}
+
 html.lenis,
 html.lenis body {
   height: auto;
-}
-
-.lenis:not(.lenis-autoToggle).lenis-stopped {
-  overflow: clip;
 }
 
 .lenis [data-lenis-prevent],
@@ -60,59 +67,35 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-}
-
-.lenis.lenis-autoToggle {
-  transition-property: overflow;
-  transition-duration: 1ms;
-  transition-behavior: allow-discrete;
-}
-
+/* Scroll is already stopped (Lenis) and the cover swallows input; hiding overflow here
+   removed the scrollbar and shifted the whole page sideways at the moment of the click. */
 html.ll-page-leaving {
-  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+/* The page holds perfectly still while the curtain closes over it: CSS animations pause here, and
+   motion-system.js puts GSAP's ticker to sleep and pauses videos (the curtain itself runs on the Web
+   Animations API, which this rule does not touch). */
+html.ll-page-leaving *,
+html.ll-page-leaving *::before,
+html.ll-page-leaving *::after {
+  animation-play-state: paused !important;
 }
 
 .ll-page-transition {
   position: fixed;
   inset: 0;
-  z-index: 2147483000;
-  display: block;
+  z-index: var(--ll-z-overlay-high);
+  display: flex;
   overflow: hidden;
-  background: #172b45;
+  background: transparent;
   pointer-events: none;
-  transform: translate3d(0, 103%, 0);
-  transition: transform var(--motion-page-cover) var(--motion-ease-sweep-in);
-  will-change: transform;
 }
 
-.ll-page-transition::before {
-  position: absolute;
-  inset: 0;
-  background: #0b0d0c;
-  content: "";
-  transform: translate3d(0, 10%, 0);
-  transition: transform var(--motion-page-cover) var(--motion-ease-sweep-out);
-}
+/* The curtain itself (four bands) is built and animated by motion-system.js; band styles live in motion-kit.css. */
 
-html.ll-page-leaving .ll-page-transition,
-.ll-page-transition.is-covering {
-  transform: translate3d(0, 0, 0);
-}
-
-html.ll-page-leaving .ll-page-transition::before,
-.ll-page-transition.is-covering::before {
-  transform: translate3d(0, 0, 0);
-}
-
-.ll-page-transition.is-covering {
-  transition: none;
-}
-
-.ll-page-transition.is-covering.is-revealing {
-  transform: translate3d(0, -103%, 0);
-  transition: transform var(--motion-page-reveal) var(--motion-ease-sweep-out);
+@media (prefers-reduced-motion: reduce) {
+  .ll-page-transition { display: none; }
 }
 
 /* Keep the centered navigation rail pinned to the layout viewport, not 100vw. */
@@ -140,16 +123,8 @@ html.ll-page-leaving .ll-page-transition::before,
   will-change: auto;
 }
 
-.ll-contact-dock__preview-media img,
-.ll-contact-dock__preview:hover .ll-contact-dock__preview-media img,
-.ll-contact-dock__preview:focus-visible .ll-contact-dock__preview-media img {
-  filter: grayscale(1) contrast(1.08);
-  transform: none;
+.case-study.cs-reveals-gsap .ll-reveal {
   transition: none;
-}
-
-:is(.ll-button, .ll-menu-row, .ll-action-link, .lwa-filter button) {
-  transition-timing-function: var(--motion-ease-out);
 }
 
 @media (prefers-reduced-motion: reduce) {

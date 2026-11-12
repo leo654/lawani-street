@@ -108,7 +108,7 @@ body.ll-deck-page .ll-culture-board__count b {
     border-radius: 0;
     background: transparent;
     color: var(--deck-ink);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--ll-sans, "Gridlite", sans-serif);
     font-size: clamp(8px, 2.4vw, 10px);
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -131,7 +131,7 @@ body.ll-deck-page .ll-culture-board__count b {
     grid-row: 1;
     color: rgba(32, 34, 31, 0.8);
     font-family: var(--ll-mono);
-    font-size: 8px;
+    font-size: var(--ll-text-8);
     font-weight: 400;
     line-height: 1;
     opacity: 1;
@@ -140,7 +140,7 @@ body.ll-deck-page .ll-culture-board__count b {
   body.ll-deck-page .ll-deck:not(.is-rail-open) .ll-deck__chapters button > span:not(.ll-deck__thumb) {
     grid-row: 2;
     overflow: hidden;
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: var(--ll-sans, "Gridlite", sans-serif) !important;
     font-size: clamp(7px, 2vw, 9px) !important;
     letter-spacing: 0 !important;
     text-overflow: ellipsis;

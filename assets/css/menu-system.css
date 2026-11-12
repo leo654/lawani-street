@@ -5,18 +5,18 @@ html[data-theme] {
   --ll-menu-height: 50px;
   --ll-menu-gutter: 14px;
   --ll-menu-surface: rgba(0, 0, 0, 0.6);
-  --ll-menu-ink: #f4f2ec;
-  --ll-menu-line: rgba(244, 242, 236, 0.06);
-  --ll-menu-hover: rgba(244, 242, 236, 0.08);
+  --ll-menu-ink: var(--ll-brand-cream);
+  --ll-menu-line: rgba(var(--ll-brand-cream-rgb), 0.06);
+  --ll-menu-hover: rgba(var(--ll-brand-cream-rgb), 0.08);
   --ll-menu-header-top: max(13px, env(safe-area-inset-top));
-  --ll-menu-motion-duration: 280ms;
-  --ll-menu-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ll-menu-motion-duration: var(--ll-dur-base);
+  --ll-menu-motion-ease: var(--ll-ease-out);
 }
 
 html body .ll-floating-header .ll-nav-dock {
   top: var(--ll-menu-header-top) !important;
-  right: auto !important;
-  left: 50% !important;
+  right: 0 !important;
+  left: 0 !important;
   display: grid !important;
   grid-template-columns: var(--ll-menu-height) minmax(0, 1fr) var(--ll-menu-height) !important;
   align-items: center !important;
@@ -25,7 +25,8 @@ html body .ll-floating-header .ll-nav-dock {
   height: var(--ll-menu-height) !important;
   min-height: var(--ll-menu-height) !important;
   max-height: var(--ll-menu-height) !important;
-  margin: 0 !important;
+  /* Centred by auto margins, not a transform, so the page-intro drop (GSAP) can own transform. */
+  margin: 0 auto !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
   border: 1px solid var(--ll-menu-line) !important;
@@ -33,7 +34,8 @@ html body .ll-floating-header .ll-nav-dock {
   background: var(--ll-menu-surface) !important;
   color: var(--ll-menu-ink) !important;
   box-shadow: none !important;
-  transform: translateX(-50%) !important;
+  transform: none;
+  translate: none;
   -webkit-backdrop-filter: blur(4px) !important;
   backdrop-filter: blur(4px) !important;
 }
@@ -104,7 +106,7 @@ html body .ll-floating-header .ll-nav-toggle__line {
   flex: 0 0 2px;
   border-radius: 0;
   background: currentColor;
-  transition: transform var(--ll-menu-motion-duration) var(--ll-menu-motion-ease), opacity 140ms ease;
+  transition: transform var(--ll-menu-motion-duration) var(--ll-menu-motion-ease), opacity var(--ll-dur-fast) ease;
 }
 
 html body .ll-floating-header .ll-nav-toggle[aria-expanded="true"] .ll-nav-toggle__line--1 {
@@ -167,7 +169,7 @@ html[data-theme] body .ll-mobile-menu {
   transform: translate(-50%, -8px) !important;
   -webkit-backdrop-filter: blur(4px) !important;
   backdrop-filter: blur(4px) !important;
-  transition: visibility 0s linear var(--ll-menu-motion-duration), opacity 200ms ease, transform var(--ll-menu-motion-duration) var(--ll-menu-motion-ease);
+  transition: visibility 0s linear var(--ll-menu-motion-duration), opacity var(--ll-dur-fast) ease, transform var(--ll-menu-motion-duration) var(--ll-menu-motion-ease);
 }
 
 html body .ll-mobile-menu.is-open {
@@ -177,7 +179,7 @@ html body .ll-mobile-menu.is-open {
 
 html body .ll-mobile-menu .ll-menu-row {
   min-height: 50px !important;
-  border-color: rgba(244, 242, 236, 0.14) !important;
+  border-color: rgba(var(--ll-brand-cream-rgb), 0.14) !important;
   background: transparent !important;
   color: var(--ll-menu-ink) !important;
 }
@@ -189,7 +191,7 @@ html body .ll-mobile-menu .ll-menu-row[aria-current="page"] {
 }
 
 html body .ll-mobile-menu .ll-menu-row > span:first-child {
-  transition: transform 220ms var(--ll-menu-motion-ease);
+  transition: transform var(--ll-dur-base) var(--ll-menu-motion-ease);
 }
 
 html body .ll-mobile-menu .ll-menu-row:is(:hover, :focus-visible) > span:first-child {
@@ -197,12 +199,12 @@ html body .ll-mobile-menu .ll-menu-row:is(:hover, :focus-visible) > span:first-c
 }
 
 html body .ll-mobile-menu .ll-menu-group__items {
-  background: rgba(244, 242, 236, 0.04) !important;
+  background: rgba(var(--ll-brand-cream-rgb), 0.04) !important;
   color: var(--ll-menu-ink) !important;
 }
 
 html body .ll-mobile-menu .ll-menu-group__items a {
-  border-color: rgba(244, 242, 236, 0.12) !important;
+  border-color: rgba(var(--ll-brand-cream-rgb), 0.12) !important;
   color: var(--ll-menu-ink) !important;
 }
 
@@ -212,16 +214,16 @@ html body .ll-mobile-menu .ll-menu-group__items a:is(:hover, :focus-visible) {
 
 html body .ll-mobile-menu :is(.ll-mobile-menu__pitch.ll-button, .ll-mobile-menu__cta.ll-button) {
   display: flex !important;
-  min-height: 50px !important;
+  min-height: var(--ll-control-height) !important;
   align-items: center !important;
   justify-content: center !important;
   border: 1px solid var(--ll-menu-ink) !important;
   border-radius: 0 !important;
   background: var(--ll-menu-ink) !important;
-  color: #070807 !important;
+  color: var(--ll-brand-black) !important;
   box-shadow: none !important;
   font-family: var(--ll-sans);
-  font-size: 10px;
+  font-size: var(--ll-text-10);
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1.2;
@@ -232,7 +234,7 @@ html body .ll-mobile-menu :is(.ll-mobile-menu__pitch.ll-button, .ll-mobile-menu_
 html body .ll-mobile-menu :is(.ll-mobile-menu__pitch.ll-button, .ll-mobile-menu__cta.ll-button):is(:hover, :focus-visible) {
   border-color: var(--ll-orange) !important;
   background: var(--ll-orange) !important;
-  color: #070807 !important;
+  color: var(--ll-brand-black) !important;
 }
 
 html body .ll-mobile-menu__actions,
@@ -241,7 +243,7 @@ html body .ll-mobile-menu__actions > div {
 }
 
 html body .ll-mobile-menu :is(.ll-menu-row, .ll-mobile-menu__pitch, .ll-mobile-menu__cta, .ll-mobile-menu__footer) {
-  transition: opacity 180ms ease, transform 260ms var(--ll-menu-motion-ease), background-color 180ms ease, color 180ms ease;
+  transition: opacity var(--ll-dur-fast) ease, transform var(--ll-dur-base) var(--ll-menu-motion-ease), background-color var(--ll-dur-fast) ease, color var(--ll-dur-fast) ease;
 }
 
 @media (max-width: 820px) {
@@ -255,7 +257,7 @@ html body .ll-mobile-menu :is(.ll-menu-row, .ll-mobile-menu__pitch, .ll-mobile-m
   html body .ll-mobile-menu .ll-menu-row {
     height: 50px;
     padding-inline: 16px;
-    font-size: 14px;
+    font-size: var(--ll-text-14);
   }
 
   html body .ll-mobile-menu .ll-mobile-menu__cta.ll-button {
@@ -279,4 +281,18 @@ html body .ll-mobile-menu :is(.ll-menu-row, .ll-mobile-menu__pitch, .ll-mobile-m
   html body .ll-mobile-menu :is(.ll-menu-row, .ll-mobile-menu__pitch, .ll-mobile-menu__cta, .ll-mobile-menu__footer) {
     transition: none !important;
   }
+}
+
+/* One header geometry on every page: the designer dock sits level with the nav pill and the
+   sound control, and keeps the compact label whether the page is Home or Work. */
+html body:not(#global-square-corners) .ll-floating-header .ll-contact-dock {
+  top: var(--ll-menu-header-top);
+  width: max-content;
+}
+
+html body:not(#global-square-corners) .ll-floating-header .ll-contact-dock__primary.ll-button {
+  width: max-content;
+  padding-inline: 8px;
+  font-size: var(--ll-text-11);
+  line-height: 12px;
 }

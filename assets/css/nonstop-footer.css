@@ -19,7 +19,7 @@
 /* Oversized, embossed studio signature with a compact lower footer bar. */
 :is(.ll-footer, .cs-footer, .lwa-footer) {
   --footer-ink: #c5c5c7;
-  --footer-utility-bg: #efeee8;
+  --footer-utility-bg: var(--ll-brand-cream);
   --footer-utility-ink: #20221f;
   --footer-utility-pad-top: 18px;
   --footer-utility-pad-bottom: 20px;
@@ -28,9 +28,9 @@
   isolation: isolate;
   overflow: hidden;
   clip-path: inset(0);
-  background: #050505 !important;
+  background: var(--ll-brand-black) !important;
   color: var(--footer-ink) !important;
-  transition: --footer-light-x 140ms ease-out, --footer-light-y 140ms ease-out;
+  transition: --footer-light-x var(--ll-dur-fast) ease-out, --footer-light-y var(--ll-dur-fast) ease-out;
 }
 
 /* content-visibility containment makes fixed descendants behave like local content. */
@@ -60,7 +60,7 @@
   white-space: nowrap;
   clip-path: inset(50% 0 0);
   opacity: 0;
-  transition: --footer-relight 260ms ease, opacity 180ms ease, filter 180ms ease;
+  transition: --footer-relight var(--ll-dur-base) ease, opacity var(--ll-dur-fast) ease, filter var(--ll-dur-fast) ease;
   filter: none;
   pointer-events: none;
 }
@@ -88,11 +88,29 @@
   white-space: nowrap;
   clip-path: inset(50% 0 0);
   opacity: 0;
-  mask-image: radial-gradient(ellipse 20% 150% at var(--footer-light-x, 50%) var(--footer-light-y, 50%), #000 0%, rgba(0, 0, 0, 0.68) 46%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 20% 150% at var(--footer-light-x, 50%) var(--footer-light-y, 50%), #000 0%, rgba(0, 0, 0, 0.68) 46%, transparent 100%);
+  mask-image: radial-gradient(ellipse 20% 150% at var(--footer-light-x, 50%) var(--footer-light-y, 50%), var(--ll-brand-black) 0%, rgba(0, 0, 0, 0.68) 46%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 20% 150% at var(--footer-light-x, 50%) var(--footer-light-y, 50%), var(--ll-brand-black) 0%, rgba(0, 0, 0, 0.68) 46%, transparent 100%);
   filter: drop-shadow(0 0 3px rgba(222, 231, 255, 0.24));
-  transition: opacity 160ms ease;
+  transition: opacity var(--ll-dur-fast) ease, filter var(--ll-dur-fast) ease;
   pointer-events: none;
+}
+
+/*
+ * The bevel and glow are blurred shadows on a full-width line of huge type, and the type drifts with the page
+ * (parallax), so while the page is moving they would be re-rendered on every frame. footer-wordmark.js sets
+ * is-footer-scrolling on each visible footer while the page scrolls: the shadows drop out at once and ease back in
+ * about 150ms after scrolling stops. The outlined wordmark itself never changes.
+ */
+html :is(.ll-footer, .cs-footer, .lwa-footer).is-footer-scrolling::before,
+html :is(.ll-footer, .cs-footer, .lwa-footer).is-footer-scrolling:hover::before {
+  filter: none;
+  transition: --footer-relight var(--ll-dur-base) ease, opacity var(--ll-dur-fast) ease, filter 0s;
+}
+
+html :is(.ll-footer, .cs-footer, .lwa-footer).is-footer-scrolling::after,
+html :is(.ll-footer, .cs-footer, .lwa-footer).is-footer-scrolling:hover::after {
+  filter: none;
+  transition: opacity var(--ll-dur-fast) ease, filter 0s;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -196,7 +214,7 @@ body.home-index .ll-footer__utility {
   left: 0;
   display: grid;
   box-sizing: border-box;
-  grid-template-columns: auto auto minmax(12px, 1fr) auto auto 36px;
+  grid-template-columns: auto auto minmax(12px, 1fr) auto auto;
   align-items: center;
   gap: 12px clamp(12px, 2vw, 28px);
   margin: 0 !important;
@@ -205,7 +223,7 @@ body.home-index .ll-footer__utility {
   background: var(--footer-utility-bg);
   color: var(--footer-utility-ink) !important;
   font-family: var(--ll-mono, monospace);
-  font-size: 10px;
+  font-size: var(--ll-text-10);
   font-weight: 400;
   line-height: 1.4;
   text-transform: uppercase;
@@ -299,7 +317,7 @@ body.home-index .ll-footer__utility :where(a, p) {
 
 body.home-index .ll-footer__utility a:hover,
 body.home-index .ll-footer__utility a:focus-visible {
-  color: #d85a3f !important;
+  color: var(--ll-brand-orange) !important;
 }
 
 :is(.cs-footer, .lwa-footer) {
@@ -309,7 +327,8 @@ body.home-index .ll-footer__utility a:focus-visible {
 :is(.cs-footer, .lwa-footer) .ll-footer__utility {
   position: relative;
   z-index: 2;
-  grid-template-columns: auto auto minmax(12px, 1fr) auto auto 36px;
+  min-height: 64px;
+  grid-template-columns: auto auto minmax(12px, 1fr) auto auto;
   gap: 12px clamp(12px, 2vw, 28px);
   margin: clamp(42px, 7vw, 88px) calc(0px - var(--ll-page-gutter, var(--ll-gutter))) 0 !important;
   padding: var(--footer-utility-pad-top) var(--ll-gutter) var(--footer-utility-pad-bottom) !important;
@@ -317,7 +336,7 @@ body.home-index .ll-footer__utility a:focus-visible {
   background: var(--footer-utility-bg);
   color: var(--footer-utility-ink) !important;
   font-family: var(--ll-mono, monospace);
-  font-size: 10px;
+  font-size: var(--ll-text-10);
   font-weight: 400;
   line-height: 1.4;
   text-transform: uppercase;
@@ -327,18 +346,25 @@ body.home-index .ll-footer__utility a:focus-visible {
 :is(.cs-footer, .lwa-footer) .ll-footer__utility nav[aria-label="Legal"] {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 18px;
+  gap: 8px;
+}
+
+:is(.cs-footer, .lwa-footer) .ll-footer__utility nav[aria-label="Legal"] {
+  gap: 6px clamp(14px, 2vw, 28px);
 }
 
 :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a {
   display: inline-flex;
   min-height: var(--footer-utility-control-height);
   align-items: center;
+  justify-content: flex-start;
   gap: 0;
   padding: 7px 12px;
   border: 1px dashed currentColor;
   background: transparent;
   font: inherit;
+  font-size: var(--ll-text-12);
+  letter-spacing: 0;
 }
 
 :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links svg {
@@ -392,12 +418,14 @@ body.home-index .ll-footer__utility a:focus-visible {
 
 :is(.cs-footer, .lwa-footer) .ll-footer__utility :where(a, p) {
   color: inherit !important;
+  letter-spacing: 0.055em;
+  line-height: 1.5;
   text-decoration: none;
 }
 
 :is(.cs-footer, .lwa-footer) .ll-footer__utility a:hover,
 :is(.cs-footer, .lwa-footer) .ll-footer__utility a:focus-visible {
-  color: #d85a3f !important;
+  color: var(--ll-brand-orange) !important;
 }
 
 @media (max-width: 640px) {
@@ -411,7 +439,7 @@ body.home-index .ll-footer__utility a:focus-visible {
   }
 
   body.home-index .ll-footer__utility {
-    grid-template-columns: minmax(0, 1fr) auto 36px;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 12px 10px;
     padding: 14px var(--ll-gutter) !important;
   }
@@ -430,7 +458,7 @@ body.home-index .ll-footer__utility a:focus-visible {
     min-height: 36px;
     justify-content: center;
     padding: 5px 6px;
-    font-size: 9px !important;
+    font-size: var(--ll-text-9) !important;
     white-space: nowrap;
   }
 
@@ -461,16 +489,41 @@ body.home-index .ll-footer__utility a:focus-visible {
     left: 0;
   }
 
+  /* Same compact strip on case studies and the work archive. */
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility {
+    padding: 14px var(--ll-gutter) !important;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links {
+    display: grid;
+    grid-template-columns: max-content max-content minmax(0, 1fr);
+    gap: 6px;
+    width: 100%;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a {
+    min-width: 0;
+    min-height: 36px;
+    justify-content: center;
+    padding: 5px 6px;
+    font-size: var(--ll-text-9);
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 360px) {
-  body.home-index .ll-footer__utility nav.ll-footer__social-links {
+  :is(body.home-index, .cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links {
     gap: 4px;
   }
 
   body.home-index .ll-footer__utility nav.ll-footer__social-links a {
     padding-inline: 4px;
-    font-size: 8px !important;
+    font-size: var(--ll-text-8) !important;
+  }
+
+  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a {
+    padding-inline: 4px;
+    font-size: var(--ll-text-8);
   }
 }
 
@@ -506,7 +559,7 @@ body.home-index .ll-footer__utility a:focus-visible {
 
 @media (min-width: 641px) and (max-width: 900px) {
   body.home-index .ll-footer__utility {
-    grid-template-columns: minmax(0, 1fr) auto 36px;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 12px 10px;
   }
 
@@ -538,8 +591,8 @@ body.home-index .ll-footer__utility a:focus-visible {
 
 @media (max-width: 900px) {
   :is(.cs-footer, .lwa-footer) .ll-footer__utility {
-    grid-template-columns: minmax(0, 1fr) auto 36px;
-    gap: 14px 10px;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 12px 10px;
   }
 
   :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links {
@@ -565,21 +618,6 @@ body.home-index .ll-footer__utility a:focus-visible {
   :is(.cs-footer, .lwa-footer) .ll-footer__back-to-top {
     grid-column: 3;
     grid-row: 3;
-  }
-}
-
-@media (max-width: 560px) {
-  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links a {
-    min-height: 40px;
-    gap: 8px;
-    padding: 6px 9px;
-    font-size: 9px;
-  }
-
-  :is(.cs-footer, .lwa-footer) .ll-footer__utility nav.ll-footer__social-links svg {
-    width: 20px;
-    height: 20px;
-    flex-basis: 20px;
   }
 }
 
@@ -632,12 +670,6 @@ body.work-index .lwa-footer {
   border-top: 0;
 }
 
-body.work-index .lwa-footer__grid {
-  width: 100%;
-  margin: auto 0;
-  align-items: center;
-}
-
 body.work-index .lwa-footer .ll-footer__utility {
   flex: 0 0 auto;
   margin: 0 calc(0px - var(--ll-gutter)) !important;
@@ -648,8 +680,23 @@ body.work-index .lwa-footer .ll-footer__utility {
     min-height: 0;
     padding-top: 72px;
   }
+}
 
-  body.work-index .lwa-footer__grid {
-    margin: 64px 0 72px;
+/* Small text links in the footer get a larger touch area on phones and tablets. The look does not change:
+   the extra area is an invisible ::before, so the underline and the row spacing stay where they are. */
+@media (max-width: 900px), (pointer: coarse) {
+  .ll-footer__utility nav:not(.ll-footer__social-links) a,
+  .ll-footer__utility .ll-footer__credits {
+    position: relative;
+  }
+
+  .ll-footer__utility nav:not(.ll-footer__social-links) a::before,
+  .ll-footer__utility .ll-footer__credits::before {
+    content: "";
+    position: absolute;
+    top: calc(50% - 22px);
+    right: -4px;
+    bottom: calc(50% - 22px);
+    left: -4px;
   }
 }

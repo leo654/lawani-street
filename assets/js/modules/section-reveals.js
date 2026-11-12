@@ -10,7 +10,7 @@
 	var revealDuration = ((motionConfig.DURATION && motionConfig.DURATION.REVEAL) || 560) / 1000;
 	var revealDelayStep = (motionConfig.DURATION && motionConfig.DURATION.REVEAL_DELAY_INCREMENT) || 50;
 	var revealDelayMax = (motionConfig.DURATION && motionConfig.DURATION.REVEAL_DELAY_MAX) || 180;
-	var revealEase = (motionConfig.EASING && motionConfig.EASING.GSAP_OUT) || 'power3.out';
+	var revealEase = (motionConfig.EASING && motionConfig.EASING.GSAP_OUT) || 'expo.out';
 
 	function loadScriptOnce(src, markerAttr) {
 		return new Promise(function(resolve) {
@@ -64,11 +64,7 @@
 
 	function addRevealGroups() {
 		var revealGroups = [
-			'.ll-services-columns',
-			'.cs-related__head',
-			'.cs-related-list',
-			'.cs-footer__main',
-			'.cs-footer__bottom'
+			'.ll-services-columns'
 		];
 
 		revealGroups.forEach(function(selector) {
@@ -84,7 +80,7 @@
 	function getRevealTargets() {
 		var targets = Array.prototype.slice.call(document.querySelectorAll('.ll-reveal'))
 			.filter(function(node) {
-				return !node.closest('.home-index .ll-footer') &&
+				return !node.closest('footer') &&
 					node.getAttribute('data-home-reveal') === null &&
 					isVisibleNode(node);
 			});
@@ -153,18 +149,14 @@
 
 	function initScrollReveals(gsap) {
 		var targets = getRevealTargets();
+		var observer;
+		var originalTransitions = new WeakMap();
 
-		targets.forEach(function(node) {
-			if (node.getAttribute('data-scroll-reveal-ready') === '1') return;
-			node.setAttribute('data-scroll-reveal-ready', '1');
-			var originalTransition = node.style.transition;
-			node.style.transition = 'none';
+		if (!targets.length) return;
 
+		function playReveal(node) {
 			var delay = parseFloat(window.getComputedStyle(node).getPropertyValue('--ll-reveal-delay')) || 0;
-			gsap.fromTo(node, {
-				autoAlpha: 0,
-				y: 14
-			}, {
+			gsap.to(node, {
 				autoAlpha: 1,
 				y: 0,
 				duration: revealDuration,
@@ -173,18 +165,47 @@
 				overwrite: 'auto',
 				onComplete: function() {
 					node.classList.add('is-visible');
-					node.style.transition = originalTransition;
-				},
-				scrollTrigger: {
-					trigger: node,
-					start: 'top 90%',
-					toggleActions: 'play none none none',
-					once: true,
-					invalidateOnRefresh: true
+					node.style.transition = originalTransitions.get(node) || '';
 				}
 			});
-		});
+		}
 
+		// One-shot reveals do not need a persistent ScrollTrigger each. Let the
+		// browser's intersection observer wake GSAP only as each target enters.
+		if ('IntersectionObserver' in window) {
+			observer = new IntersectionObserver(function(entries) {
+				entries.forEach(function(entry) {
+					if (!entry.isIntersecting) return;
+					observer.unobserve(entry.target);
+					playReveal(entry.target);
+				});
+			}, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+
+			targets.forEach(function(node) {
+				if (node.getAttribute('data-scroll-reveal-ready') === '1') return;
+				node.setAttribute('data-scroll-reveal-ready', '1');
+				originalTransitions.set(node, node.style.transition);
+				node.style.transition = 'none';
+				gsap.set(node, { autoAlpha: 0, y: 14 });
+				observer.observe(node);
+			});
+			return;
+		}
+
+		// Keep ScrollTrigger as the fallback for browsers without IntersectionObserver.
+		targets.forEach(function(node) {
+			if (node.getAttribute('data-scroll-reveal-ready') === '1') return;
+			node.setAttribute('data-scroll-reveal-ready', '1');
+			var originalTransition = node.style.transition;
+			node.style.transition = 'none';
+			var delay = parseFloat(window.getComputedStyle(node).getPropertyValue('--ll-reveal-delay')) || 0;
+			gsap.fromTo(node, { autoAlpha: 0, y: 14 }, {
+				autoAlpha: 1, y: 0, duration: revealDuration, delay: delay / 1000,
+				ease: revealEase, overwrite: 'auto',
+				onComplete: function() { node.classList.add('is-visible'); node.style.transition = originalTransition; },
+				scrollTrigger: { trigger: node, start: 'top 90%', toggleActions: 'play none none none', once: true }
+			});
+		});
 	}
 
 	function initHomeCinematicEntrances(gsap) {
@@ -244,7 +265,7 @@
 					y: 0,
 					duration: 1,
 					stagger: 0.13,
-					ease: 'power3.out',
+					ease: 'expo.out',
 					overwrite: 'auto',
 					onComplete: function() {
 						group.forEach(function(node) {
@@ -254,6 +275,106 @@
 						});
 					}
 				}, index === 0 ? 0 : '>-0.3');
+			});
+		});
+	}
+
+	function getSectionBackdrop(section) {
+		var node = section;
+		while (node && node !== document.documentElement) {
+			var color = window.getComputedStyle(node).backgroundColor;
+			if (color && color !== 'transparent' && color !== 'rgba(0, 0, 0, 0)') return color;
+			node = node.parentElement;
+		}
+		return '#101010';
+	}
+
+	function initHomeSectionTransitions(gsap) {
+		if (!document.body || !document.body.classList.contains('home-index') || !gsap || !window.ScrollTrigger) return;
+		var panelCount = 4;
+		var sectionDrift = motionConfig.SCROLL && motionConfig.SCROLL.SECTION_PARALLAX_PERCENT || 7;
+
+		var hosts = Array.prototype.slice.call(document.querySelectorAll(
+			'.ll-work, .ll-capabilities, .ll-manifesto, .ll-footer'
+		)).filter(isVisibleNode);
+
+		hosts.forEach(function(section) {
+			if (section.getAttribute('data-section-transition-ready') === '1') return;
+			section.setAttribute('data-section-transition-ready', '1');
+			section.classList.add('ll-section-transition-host');
+
+			var curtain = document.createElement('span');
+			curtain.className = 'll-section-transition-curtain';
+			curtain.setAttribute('aria-hidden', 'true');
+			curtain.style.setProperty('--ll-section-curtain-color', getSectionBackdrop(section));
+
+			var panels = [];
+			for (var index = 0; index < panelCount; index += 1) {
+				var panel = document.createElement('span');
+				panel.className = 'll-section-transition-curtain__panel';
+				curtain.appendChild(panel);
+				panels.push(panel);
+			}
+			section.appendChild(curtain);
+
+			gsap.set(panels, { scaleY: 1, transformOrigin: 'top center' });
+			gsap.to(panels, {
+				scaleY: 0,
+				duration: revealDuration,
+				stagger: { each: revealDelayStep / 1000, from: 'start' },
+				ease: (motionConfig.EASING && motionConfig.EASING.GSAP_IN_OUT) || 'power2.inOut',
+				overwrite: 'auto',
+				scrollTrigger: {
+					trigger: section,
+					start: 'top bottom',
+					end: 'top 62%',
+					scrub: revealDuration,
+					invalidateOnRefresh: true
+				}
+			});
+		});
+
+		function refreshCurtainColors() {
+			hosts.forEach(function(section) {
+				var curtain = section.querySelector('.ll-section-transition-curtain');
+				if (curtain) curtain.style.setProperty('--ll-section-curtain-color', getSectionBackdrop(section));
+			});
+		}
+		refreshCurtainColors();
+
+		if (window.MutationObserver) {
+			if (window.__lawaniSectionThemeObserver) window.__lawaniSectionThemeObserver.disconnect();
+			window.__lawaniSectionThemeObserver = new MutationObserver(refreshCurtainColors);
+			window.__lawaniSectionThemeObserver.observe(document.documentElement, {
+				attributes: true,
+				attributeFilter: ['data-theme']
+			});
+		}
+
+		// Keep section seams alive while scrolling through the page: the active
+		// section eases upward as its successor arrives, like Hayler's parallax rows.
+		var outgoing = [
+			{ section: '.ll-home-hero', target: '.ll-home-hero__media' },
+			{ section: '.ll-work', target: '.ll-work-intro' },
+			{ section: '.ll-capabilities', target: '.ll-skill-sets__intro' },
+			{ section: '.ll-manifesto', target: '.ll-manifesto__grid' }
+		];
+
+		outgoing.forEach(function(scene) {
+			var section = document.querySelector(scene.section);
+			var target = section && section.querySelector(scene.target);
+			if (!section || !target || section.getAttribute('data-section-exit-ready') === '1') return;
+			section.setAttribute('data-section-exit-ready', '1');
+			gsap.to(target, {
+				yPercent: -sectionDrift,
+				ease: 'none',
+				scrollTrigger: {
+					trigger: section,
+					start: 'top top',
+					end: 'bottom top',
+					scrub: revealDuration * 1.4,
+					invalidateOnRefresh: true
+				}
 			});
 		});
 	}
@@ -275,8 +396,8 @@
 			var gsap = window.gsap;
 			var ScrollTrigger = window.ScrollTrigger;
 			var isHomeIndex = !!(document.body && document.body.classList.contains('home-index'));
-			gsap.registerPlugin(ScrollTrigger);
 			initHomeCinematicEntrances(gsap);
+			initHomeSectionTransitions(gsap);
 			initScrollReveals(gsap);
 
 			var cards = Array.prototype.slice.call(document.querySelectorAll('.grid-item2 .wrap'));

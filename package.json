@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "vite build && cp sitemap.xml robots.txt docs/THIRD_PARTY_NOTICES.md dist/",
-    "build:pages": "LAWANI_OUTPUT_DIR=_site vite build && cp sitemap.xml robots.txt docs/THIRD_PARTY_NOTICES.md _site/"
+    "build": "vite build && cp sitemap.xml robots.txt docs/THIRD_PARTY_NOTICES.md dist/ && mkdir -p dist/assets/img && cp assets/img/og-home.jpg dist/assets/img/ && cp -r assets/img/og dist/assets/img/",
+    "build:pages": "LAWANI_OUTPUT_DIR=_site LAWANI_SITE_BASE=/lawani-street/ vite build && cp sitemap.xml robots.txt docs/THIRD_PARTY_NOTICES.md _site/ && mkdir -p _site/assets/img && cp assets/img/og-home.jpg _site/assets/img/ && cp -r assets/img/og _site/assets/img/"
   },
   "devDependencies": {
     "vite": "^8.3.4"
