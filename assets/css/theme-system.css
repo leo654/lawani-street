@@ -475,6 +475,41 @@ body.work-index :is(.cs-hero, .cs-story, .cs-gallery, .cs-related, .cs-footer) {
     line-height: 24px;
   }
 
+  /* Solid down triangle at the right end of the rail: a scroll cue to the featured work. */
+  body.home-index .ll-home-hero__rail > .ll-home-hero__scroll-cue {
+    position: relative;
+    display: flex;
+    grid-column: 3;
+    grid-row: 1;
+    align-self: center;
+    justify-self: end;
+    align-items: center;
+    justify-content: flex-end;
+    width: 24px;
+    height: 24px;
+    color: #fff;
+  }
+
+  body.home-index .ll-home-hero__scroll-cue svg {
+    display: block;
+    width: 13px;
+    height: 10.5px;
+    fill: currentColor;
+  }
+
+  /* 44px tap area without moving the triangle. */
+  body.home-index .ll-home-hero__scroll-cue::before {
+    content: "";
+    position: absolute;
+    inset: -10px -8px;
+  }
+}
+
+/* The triangle is a phone and tablet cue only. */
+@media (min-width: 821px) {
+  body.home-index .ll-home-hero__scroll-cue {
+    display: none;
+  }
 }
 
 @media (max-width: 380px) {
