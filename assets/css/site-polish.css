@@ -1,0 +1,252 @@
+/* ==========================================================================
+   Site polish (loaded last on every page)
+   Small finishing fixes found in the November site audit. Each block fixes
+   one thing that broke or read poorly at a specific screen size; none of
+   them change the design itself.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Project rows (home + work): show whole thumbnails only.
+   The desktop rail fits four thumbnails. A project with more than four
+   showed a thin cut-off sliver of the extra image at the left edge, so the
+   rail keeps the last four (the ones that were already fully visible).
+   Phones scroll the rail sideways, so every image stays there.
+   -------------------------------------------------------------------------- */
+@media (min-width: 821px) {
+  html body:not(#ll-polish) .lwa-project__rail > img:nth-last-child(n + 5) {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. Case study title tags on phones: one line, nothing cut.
+   At 14px, three tags (Branding / Experience / Commerce) did not fit, so
+   each word lost its last letters. On phones the tags now use 12px, the
+   same size they have in the desktop sidebar, which fits all of them on
+   one line.
+   -------------------------------------------------------------------------- */
+@media (max-width: 820px) {
+  html body.case-study:not(#ll-polish) .cs-hero__meta .cs-tags:not(.cs-project-date) li {
+    font-size: 12px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. "Next project" card: one line, the project name always in full.
+   On laptop widths both the name and its tags were cut off ("Doorstep
+   Logis… Product / Expe…"). The name now never shrinks; the tags take the
+   space left and still end in "…" if they run out of room, and where the
+   card is too narrow for both (around 960–1050px wide screens) only the
+   name shows.
+   -------------------------------------------------------------------------- */
+html body.case-study:not(#ll-polish) .cs-next__text {
+  container-type: inline-size;
+}
+
+html body.case-study:not(#ll-polish) .cs-next__title {
+  flex-shrink: 0;
+}
+
+html body.case-study:not(#ll-polish) .cs-next__tags {
+  min-width: 0;
+}
+
+@container (max-width: 279px) {
+  html body.case-study:not(#ll-polish) .cs-next__tags {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Footer copyright on one line.
+   Between about 960px and 1100px "© 2026 Lawani St." broke over two or
+   three lines while the links beside it stayed on one.
+   -------------------------------------------------------------------------- */
+html body:not(#ll-polish) .ll-footer__utility > p {
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   5. Phones: larger header tagline, one size on every page.
+   The tagline goes from 9px to 15px and no longer changes size while
+   scrolling. Every page uses the same size; only very narrow phones step
+   down a little (14px under 390px, 13px under 375px, 11.5px under 340px)
+   so the longest
+   20-character taglines ("Start a conversation") stay clear of the logo
+   and the menu button.
+   To give the tagline the same room everywhere, the case study header on
+   phones uses the same 50px logo and menu buttons as the other pages
+   (it was 67px); it keeps its 20px side margin, which lines it up with the
+   case study content.
+   The longer taglines use a shorter phone wording, set in
+   assets/js/pages/lamalama-ui.js: case studies drop "/ Case 0X" and the
+   contact page shows "Start something".
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  html body.case-study:not(#ll-polish) {
+    --ll-menu-height: 50px;
+  }
+
+  html body:not(#ll-polish) .ll-floating-header .ll-nav-dock__note {
+    font-size: 15px !important;
+  }
+}
+
+@media (max-width: 389px) {
+  html body:not(#ll-polish) .ll-floating-header .ll-nav-dock__note {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 374px) {
+  html body:not(#ll-polish) .ll-floating-header .ll-nav-dock__note {
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 339px) {
+  html body:not(#ll-polish) .ll-floating-header .ll-nav-dock__note {
+    font-size: 11.5px !important;
+  }
+}
+
+/* The résumé chapter tabs were 7.8px; 8.5px is the most that still fits
+   "Let's talk" in its tab. */
+@media (max-width: 760px) {
+  html body.ll-deck-page:not(#ll-polish) .ll-deck:not(.is-rail-open) .ll-deck__chapters button > span:not(.ll-deck__thumb) {
+    font-size: 8.5px !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. Phone tap areas on the résumé deck.
+   The Home / Prev / Next links and "Read more" were about 16px tall. An
+   invisible area around each makes them 44px tall without moving anything.
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px), (pointer: coarse) {
+  html body.ll-deck-page:not(#ll-polish) :is(.ll-culture-board__navigation a, .ll-culture-card__read) {
+    position: relative;
+  }
+
+  html body.ll-deck-page:not(#ll-polish) :is(.ll-culture-board__navigation a, .ll-culture-card__read)::after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 22px);
+    right: -4px;
+    bottom: calc(50% - 22px);
+    left: -4px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. One gutter on phones and tablets.
+   On phones the header bar sat 14px from the screen edges while all page
+   content starts 16px in, so its edges were 2px off the content below. It
+   now uses the content gutter on every side, top included (the case
+   studies already did this with their 20px gutter).
+   On case studies the footer used the site's 16px gutter (19px on
+   tablets) under content set 20px in; it now follows the 20px case study
+   gutter.
+   -------------------------------------------------------------------------- */
+@media (max-width: 469px) {
+  html body:not(.case-study):not(#ll-polish) {
+    --ll-menu-gutter: var(--ll-gutter);
+    --ll-menu-header-top: max(var(--ll-gutter), env(safe-area-inset-top));
+  }
+}
+
+@media (max-width: 820px) {
+  html body.case-study:not(#ll-polish) .cs-footer {
+    --ll-gutter: var(--cs-gutter, 20px);
+    --ll-page-gutter: var(--cs-gutter, 20px);
+  }
+}
+
+/* Home hero: the rule, "Over 200+ projects" and the links under the video
+   started 6px inside the gutter (2px on phones), out of line with
+   "Creative portfolio" above them and the work list below. */
+html body.home-index:not(#ll-polish) .ll-home-hero > .ll-home-hero__content > .ll-home-hero__rail {
+  right: 0;
+  left: 0;
+}
+
+/* Project rows on phones: the picture rail scrolls sideways and was cut at
+   the gutter, which left a 4px sliver of the next picture against the
+   edge. The rail now runs to the screen edge, so the next picture shows as
+   a clear 20px peek, and it still stops on the gutter when scrolled to the
+   end. */
+@media (max-width: 820px) {
+  html body:not(#ll-polish) .lwa-project__rail {
+    margin-right: calc(-1 * var(--ll-gutter));
+    padding-right: var(--ll-gutter);
+  }
+}
+
+/* Case studies on desktop: the header bar sat 13px from the top while the
+   gallery and the project sidebar start 12px down; it now starts on the
+   same 12px line. */
+@media (min-width: 961px) {
+  html body.case-study:not(#ll-polish) {
+    --ll-menu-header-top: max(var(--cs-gutter, 12px), env(safe-area-inset-top));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. The work list's "View project" preview never shows on small screens.
+   The preview follows the mouse over the work list and is only styled for
+   screens wider than 820px. On a mouse-driven browser window narrower than
+   that, it was still created but had no styles, so its picture box and
+   "View project" label sat at the very bottom of the page under the footer.
+   -------------------------------------------------------------------------- */
+@media (max-width: 820px), (hover: none), (pointer: coarse) {
+  html body:not(#ll-polish) .lwa-hover-preview {
+    display: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9. Footer wordmark: its own band, just above the footer bar.
+   The pixel wordmark sat 96px up from the bottom of the screen at every
+   width. On desktop that left a ~100px gap above the footer bar and pushed
+   the wordmark up behind "Send direct mail", "Start project" and "Schedule
+   call" on the work and case study footers. Up to 900px wide the bar wraps
+   onto three lines (156px, 166px from 641px), so it covered the
+   wordmark's bottom row instead. The wordmark now ends 24px above the bar
+   at every width, and on the work and case study footers the content
+   above keeps a clear band for it, so nothing overlaps.
+   -------------------------------------------------------------------------- */
+html body:not(#ll-polish) :is(.ll-footer, .cs-footer, .lwa-footer)::before,
+html body:not(#ll-polish) :is(.ll-footer, .cs-footer, .lwa-footer)::after {
+  bottom: 22px !important;
+}
+
+@media (max-width: 900px) {
+  html body:not(#ll-polish) :is(.ll-footer, .cs-footer, .lwa-footer)::before,
+  html body:not(#ll-polish) :is(.ll-footer, .cs-footer, .lwa-footer)::after {
+    bottom: 162px !important;
+  }
+
+  html body:not(#ll-polish) .cs-footer .cs-footer__main {
+    margin-bottom: calc(clamp(360px, 48vw, 960px) * 0.28 + 24px);
+  }
+}
+
+@media (max-width: 640px) {
+  html body:not(#ll-polish) :is(.ll-footer, .cs-footer, .lwa-footer)::before,
+  html body:not(#ll-polish) :is(.ll-footer, .cs-footer, .lwa-footer)::after {
+    bottom: 152px !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   10. Work page filter bar on phones and tablets: on the page gutter.
+   The floating filter bar sat 8px from the screen edges, out of line with
+   the header bar and the project list (16px on phones, 19px on tablets).
+   -------------------------------------------------------------------------- */
+@media (max-width: 820px) {
+  html body:not(#ll-polish) .lwa-filter {
+    right: var(--ll-gutter);
+    bottom: max(var(--ll-gutter), env(safe-area-inset-bottom));
+    left: var(--ll-gutter);
+  }
+}

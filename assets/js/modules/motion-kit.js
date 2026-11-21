@@ -711,10 +711,15 @@
   }
 
   // Colour of whatever sits directly above a section: walk down the last children of the previous sibling.
+  // Only blocks that span the section's full width count. Buttons, links and other smaller things are
+  // not the backdrop; on the 404 page the walk used to end on the "Back home" button's arrow tile and
+  // painted a charcoal band over the top of the footer.
   function colourAbove(section) {
     var node = section.previousElementSibling;
     var found = null;
+    var minWidth = section.getBoundingClientRect().width - 2;
     for (var depth = 0; node && depth < 4; depth += 1) {
+      if (node.matches("a, button, [role='button']") || node.getBoundingClientRect().width < minWidth) break;
       found = opaque(window.getComputedStyle(node).backgroundColor) || found;
       node = node.lastElementChild;
     }
@@ -1085,19 +1090,8 @@
     });
   }
 
-  /* ---------------------------------------------------------------------
-     Letter roll buttons (replaces button-text-rolls.js)
-     --------------------------------------------------------------------- */
-  var ROLL_SELECTOR = [
-    ".ll-button:not(.ll-button--square, .ll-theme-toggle, .ll-sound-toggle, .ll-button--media)",
-    ".cs-footer__actions a",
-    ".ll-deck-contact a",
-    ".ll-service-product__cta",
-    ".project-form__button",
-    ".contact-form__submit",
-    ".ll-footer__project-cta > a",
-    "[data-mk-roll]"
-  ].join(",");
+  /* Letter rolls are opt-in so standard button labels stay still on hover. */
+  var ROLL_SELECTOR = "[data-mk-roll]";
 
   // Hayler .button-text: the whole label lifts out while its copy (data-hover) rises from below.
   function buildRoll(text) {
@@ -1395,7 +1389,9 @@
        label     → a word tag centred on the pointer (View, Next, Drag, Copy, Play)
        icon      → a small blurred square with + / − (the expandable work rows)
        hide      → fades out (fields, embeds, the work-list previews)
-       loading   → an orange ring that spins while the next page loads
+     There is no loading state: links that open in place (the résumé deck,
+     cookie settings) never leave the page, so a "page is loading" spinner
+     stayed on the pointer and kept spinning.
      No stretch, squash or ripple: the motion stays quiet so the hand leads.
      --------------------------------------------------------------------- */
   var cursor = null;
@@ -1425,7 +1421,8 @@
     var HIDE = "input, textarea, select, iframe, [data-cursor-hide]";
     var ROW = ".lwa-project__toggle";
     var CARD = ".cs-next__card, [data-cursor-solid]";
-    var CONTROL = ".ll-button, .ll-nav-toggle, .ll-sound-wave, .ll-footer__back-to-top, .ll-hero-showreel__close, .ll-deck__menu-toggle, .ll-deck__close, .ll-footer__social-links a, [data-cursor-wrap]";
+    // Every button the square steps aside for (it would sit on top of the button's own orange hover).
+    var CONTROL = ".ll-button, .ll-nav-toggle, .ll-sound-wave, .ll-footer__back-to-top, .ll-hero-showreel__close, .ll-deck__menu-toggle, .ll-deck__close, .ll-footer__social-links a, .lwa-filter button, .cookie-consent__button, .cookie-privacy-page__settings, .ll-service-product__cta, .ll-service-shop__arrow, .ll-world-clock__format button, [data-cursor-wrap]";
     var HIGHLIGHT = "a, button, [role='button'], label, summary";
     var LABEL_WORDS = /^(view|drag|copy|copied|spin|play|pause|open|close|read|scroll|next|visit)$/i;
     var SOLID_WORDS = /^(view|next|visit)$/i;
@@ -1575,28 +1572,6 @@
       if (mode === "icon") window.setTimeout(function () { update(document.elementFromPoint(event.clientX, event.clientY)); }, 30);
     });
 
-    // Leaving for another page: the square becomes a spinning orange ring on the pointer until the page goes.
-    document.addEventListener("click", function (event) {
-      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      var link = event.target.closest && event.target.closest("a[href]");
-      if (!link || link.target === "_blank" || link.hasAttribute("download")) return;
-      var url;
-      try { url = new URL(link.href, window.location.href); } catch (error) { return; }
-      if (url.origin !== window.location.origin) return;
-      if (url.pathname === window.location.pathname && url.search === window.location.search) return;
-      element.classList.remove.apply(element.classList, STATES);
-      element.classList.add("is-loading");
-      mode = "loading";
-      loading = true;
-      morph({ width: 40, height: 40, borderRadius: "50%", opacity: 1 });
-    });
-    window.addEventListener("pageshow", function () {
-      if (!loading) return;
-      loading = false;
-      element.classList.remove("is-loading");
-      mode = "";
-      setMode("", null);
-    });
     document.documentElement.addEventListener("pointerleave", function () { element.classList.add("is-out"); });
     window.addEventListener("blur", function () { element.classList.add("is-out"); });
 

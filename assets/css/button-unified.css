@@ -179,12 +179,15 @@ html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-button--media)
   padding-inline: 0;
 }
 
-/* Rest: the label is centred in the full width (tile hidden). */
+/* Rest: the label is centred in the full width (tile hidden). On hover it slides with `translate`, not padding:
+   padding re-ran layout on every frame and moved the text in whole-pixel steps, while a translate is drawn by the
+   compositor and glides on sub-pixels. */
 html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-button--media):has(> .ll-arrow-glyph, > svg.ll-icon) > :first-child {
   --btn-side: calc((var(--btn-pad) + var(--btn-inset) * 2 + var(--btn-tile)) / 2);
   padding-left: var(--btn-side);
   padding-right: var(--btn-side);
-  transition: padding var(--btn-dur) var(--btn-ease);
+  translate: 0 0;
+  transition: translate var(--btn-dur) var(--btn-ease);
 }
 
 /* The tile sits one inset from the top, bottom and end of the button. */
@@ -222,11 +225,10 @@ html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-button--media)
 }
 
 /* Hover: [s] LABEL [s][tile][inset]: the label keeps equal space on both sides of it, the tile one inset from
-   the edge, and the button width does not change (s = (padding + inset) ÷ 2). */
+   the edge, and the button width does not change (s = (padding + inset) ÷ 2). The label's box keeps its rest
+   padding and moves left by (tile + inset) ÷ 2, which puts the text exactly where that padding would. */
 html body:not(#ll-buttons) .ll-button:not(.ll-button--square, .ll-button--media):has(> .ll-arrow-glyph, > svg.ll-icon):is(:hover, :focus-visible) > :first-child {
-  --btn-s: calc((var(--btn-pad) + var(--btn-inset)) / 2);
-  padding-left: var(--btn-s);
-  padding-right: calc(var(--btn-s) + var(--btn-tile) + var(--btn-inset));
+  translate: calc((var(--btn-tile) + var(--btn-inset)) / -2) 0 !important; /* over button-system's "no nudge" rule */
 }
 
 /* The arrow keeps its up-right angle inside the tile; no extra nudge. */
@@ -234,9 +236,158 @@ html body:not(#ll-buttons) .ll-button > .ll-arrow-glyph .ll-arrow-glyph__charact
   translate: none !important;
 }
 
+html body .ll-footer__project-cta > a > :first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   5. Every other button: the same hover as the work list buttons
+   Buttons that are not .ll-button (filters, footer links, cookie buttons,
+   the résumé deck's controls, the showreel close) used their own hovers: a
+   cream or dark fill, a 2px lift, different timings. They now all do what
+   the work list buttons do: a flat orange fill with charcoal type, in the
+   same 0.3s ease, and nothing moves. Selected states (the active filter,
+   the chosen clock format) keep their own look.
+   -------------------------------------------------------------------------- */
+html body:not(#ll-buttons) :is(
+  .lwa-filter button:not(.is-active, [aria-pressed="true"]),
+  .ll-footer__social-links a,
+  .cookie-consent__button,
+  .cookie-privacy-page__settings,
+  .ll-hero-showreel__close,
+  .ll-footer__back-to-top,
+  .ll-service-product__cta,
+  .ll-service-shop__arrow,
+  .ll-world-clock__format button:not([aria-pressed="true"], .is-active),
+  .ll-deck__close
+) {
+  transition:
+    background-color var(--btn-dur) var(--btn-ease),
+    border-color var(--btn-dur) var(--btn-ease),
+    color var(--btn-dur) var(--btn-ease) !important;
+}
+
+html body:not(#ll-buttons) :is(
+  .lwa-filter button:not(.is-active, [aria-pressed="true"]),
+  .ll-footer__social-links a,
+  .cookie-consent__button,
+  .cookie-privacy-page__settings,
+  .ll-hero-showreel__close,
+  .ll-footer__back-to-top,
+  .ll-service-product__cta,
+  .ll-service-shop__arrow,
+  .ll-world-clock__format button:not([aria-pressed="true"], .is-active),
+  .ll-deck__menu-toggle,
+  .ll-deck__close
+):is(:hover, :focus-visible) {
+  border-color: var(--btn-hover-surface) !important;
+  border-style: solid !important;
+  background: var(--btn-hover-surface) !important;
+  color: var(--btn-hover-ink) !important;
+  box-shadow: none !important;
+}
+
+html body:not(#ll-buttons) :is(
+  .lwa-filter button,
+  .ll-footer__social-links a,
+  .cookie-consent__button,
+  .cookie-privacy-page__settings,
+  .ll-hero-showreel__close,
+  .ll-footer__back-to-top,
+  .ll-service-shop__arrow,
+  .ll-world-clock__format button,
+  .ll-deck__menu-toggle,
+  .ll-deck__close
+):is(:hover, :focus-visible) > :is(span, svg, .ll-icon) {
+  color: inherit !important;
+}
+
+/* Some of these paint their hover on a ::before layer (a cream wash over
+   the filters); the fill now comes from the button itself. */
+html body:not(#ll-buttons) :is(
+  .lwa-filter button,
+  .ll-footer__social-links a,
+  .cookie-consent__button,
+  .cookie-privacy-page__settings,
+  .ll-hero-showreel__close,
+  .ll-footer__back-to-top,
+  .ll-service-product__cta,
+  .ll-service-shop__arrow,
+  .ll-world-clock__format button,
+  .ll-deck__menu-toggle,
+  .ll-deck__close
+):is(:hover, :focus-visible)::before {
+  opacity: 0 !important;
+}
+
+/* Nothing moves: the deck's chapter button lifted 2px on hover, the close
+   cross shrank, and deck buttons shrank a little when pressed. */
+html body:not(#ll-buttons) .ll-deck__menu-toggle:is(:hover, :focus-visible) {
+  transform: none !important;
+  translate: none !important;
+}
+
+html body:not(#ll-buttons) .ll-deck__close:is(:hover, :focus-visible) svg {
+  transform: none !important;
+}
+
+html body:not(#ll-buttons) :is(
+  .ll-service-product__cta,
+  .ll-world-clock__format button,
+  .ll-deck__menu-toggle,
+  .ll-deck__close
+).is-pressed {
+  transform: none !important;
+}
+
+/* "Add to brief" gets the work list arrow: hidden at rest, then a charcoal
+   tile with the orange arrow grows in at the right end on hover. */
+html body:not(#ll-buttons) .ll-service-product__cta {
+  position: relative;
+}
+
+html body:not(#ll-buttons) .ll-service-product__cta > :is(.ll-arrow-glyph, svg.ll-icon) {
+  position: absolute !important;
+  top: 50% !important;
+  right: 9px !important;
+  display: grid !important;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--btn-tile-md) !important;
+  height: var(--btn-tile-md) !important;
+  margin: calc(var(--btn-tile-md) / -2) 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: var(--btn-tile-surface) !important;
+  color: var(--btn-tile-ink) !important;
+  font-size: calc(var(--btn-fs-md) + 8px) !important;
+  line-height: 1 !important;
+  translate: none !important;
+  transform: scale(0) !important;
+  transform-origin: 50% 50%;
+  transition: transform var(--btn-dur) var(--btn-ease) !important;
+}
+
+html body:not(#ll-buttons) .ll-service-product__cta > svg.ll-icon {
+  padding: 7px !important;
+  stroke: currentColor;
+}
+
+html body:not(#ll-buttons) .ll-service-product__cta:is(:hover, :focus-visible) > :is(.ll-arrow-glyph, svg.ll-icon) {
+  color: var(--btn-tile-ink) !important;
+  transform: scale(1) !important;
+}
+
+html body:not(#ll-buttons) .ll-service-product__cta > .ll-arrow-glyph .ll-arrow-glyph__character {
+  translate: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html body:not(#ll-buttons) .ll-button,
-  html body:not(#ll-buttons) .ll-button > * {
+  html body:not(#ll-buttons) .ll-button > *,
+  html body:not(#ll-buttons) .ll-service-product__cta > :is(.ll-arrow-glyph, svg.ll-icon) {
     transition: none !important;
   }
 }

@@ -10,7 +10,12 @@
   pointer-events: none;
 }
 
+/* The canvas is laid over its box instead of sitting in it, so the size the script gives the canvas can never feed
+   back into the size of the box (box grows, canvas is resized to match, box grows again: the page ran to
+   millions of pixels tall on Retina screens whenever the layout CSS was missing). */
 .ll-cup__canvas {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;

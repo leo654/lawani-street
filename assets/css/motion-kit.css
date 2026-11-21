@@ -251,14 +251,14 @@ html.mk-preloading body {
 .mk-roll__text::before {
   content: attr(data-hover);
   position: absolute;
-  top: 0;
+  top: 100%;
   left: 0;
-  transform: translateY(150%);
+  transform: none;
 }
 
 :is(a, button):is(:hover, :focus-visible) > .mk-roll .mk-roll__text,
 .mk-roll-trigger:is(:hover, :focus-visible) .mk-roll .mk-roll__text {
-  transform: translateY(-150%);
+  transform: translateY(-100%);
 }
 
 /* --------------------------------------------------------------------------

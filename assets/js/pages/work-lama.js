@@ -201,9 +201,14 @@
     }
 
     function transitionWait() {
-      var rawDuration = getComputedStyle(document.documentElement).getPropertyValue("--motion-expand").trim() || "520ms";
-      var duration = parseFloat(rawDuration) || 0;
-      return rawDuration.indexOf("ms") === -1 ? duration * 1000 : duration;
+      var detail = document.querySelector(".lwa-project__detail");
+      if (!detail) return 0;
+
+      return getComputedStyle(detail).transitionDuration.split(",").reduce(function (longest, value) {
+        var duration = parseFloat(value);
+        if (!Number.isFinite(duration)) return longest;
+        return Math.max(longest, value.trim().endsWith("ms") ? duration : duration * 1000);
+      }, 0);
     }
 
     function setExpanded(project, expanded, moveIntoView) {
@@ -223,10 +228,6 @@
       });
 
       if (expanded) {
-        detail.querySelectorAll('img[loading="lazy"]').forEach(function (image) {
-          image.loading = "eager";
-        });
-
         projects.forEach(function (other) {
           if (other !== project && other.classList.contains("is-expanded")) setExpanded(other, false, false);
         });

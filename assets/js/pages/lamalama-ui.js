@@ -7,6 +7,27 @@
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var CONSTANTS = window.LawaniConstants || {};
 
+  // Header tagline wording. The full wording is kept in data-ll-note-full;
+  // phones show a shorter form of the longest taglines.
+  var phoneNotes = window.matchMedia ? window.matchMedia("(max-width: 600px)") : null;
+  var SHORT_NOTES = { "Start something worth building": "Start something" };
+
+  function noteLabel(text) {
+    if (!text || !phoneNotes || !phoneNotes.matches) return text;
+    if (SHORT_NOTES[text]) return SHORT_NOTES[text];
+    return text.replace(/\s*\/\s*Case\s+\d+\s*$/i, "");
+  }
+
+  function getNoteText(note) {
+    return note.getAttribute("data-ll-note-full") || note.textContent.trim();
+  }
+
+  function setNoteText(note, text) {
+    note.setAttribute("data-ll-note-full", text);
+    var label = noteLabel(text);
+    if (note.textContent !== label) note.textContent = label;
+  }
+
   function scheduleMotionFrame(key, callback) {
     if (window.LawaniMotion && typeof window.LawaniMotion.scheduleFrame === "function") {
       window.LawaniMotion.scheduleFrame(key, callback);
@@ -122,9 +143,9 @@
       });
 
       var nextNote = active.getAttribute("data-ll-section-note");
-      if (!nextNote || note.textContent === nextNote) return;
+      if (!nextNote || getNoteText(note) === nextNote) return;
 
-      note.textContent = nextNote;
+      setNoteText(note, nextNote);
       if (!reduceMotion && typeof note.animate === "function") {
         note.animate(
           [
@@ -187,10 +208,10 @@
       if (label) label.textContent = open ? "Close" : "Menu";
       if (note) {
         if (open) {
-          previousNote = note.textContent;
-          note.textContent = "Cases with teeth";
+          previousNote = getNoteText(note);
+          setNoteText(note, "Cases with teeth");
         } else if (previousNote) {
-          note.textContent = previousNote;
+          setNoteText(note, previousNote);
         }
       }
       if (main) main.inert = open;
@@ -613,11 +634,25 @@
     });
   }
 
+  // Phones show the header tagline at one fixed size (site-polish.css), so the
+  // longest taglines get a shorter phone wording to fit beside the logo and menu.
+  function initNoteLabels() {
+    var note = document.querySelector("[data-ll-nav-note]");
+    if (!note) return;
+    setNoteText(note, getNoteText(note));
+    if (phoneNotes && phoneNotes.addEventListener) {
+      phoneNotes.addEventListener("change", function () {
+        setNoteText(note, getNoteText(note));
+      });
+    }
+  }
+
   function ready() {
     initMotionReady();
     initClock();
     initViewportState();
     initMenu();
+    initNoteLabels();
     initDockPreviews();
     initControlFeedback();
     // Hover shuffles and section reveals now come from modules/motion-kit.js.

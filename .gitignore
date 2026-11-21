@@ -15,3 +15,9 @@ lawani-street-live-mirror.zip
 _archive/
 tmp/
 assets/_source/
+
+# Local work files and archived material
+tmp/
+_archive/
+assets/_source/
+Leonard_Lawani_CV.docx

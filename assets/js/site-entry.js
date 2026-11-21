@@ -62,7 +62,7 @@ async function initialize() {
     }
 
     // Preloader, page intros, split text, cursor, parallax and the rest of the motion language.
-    await import("./modules/motion-kit.js?v=20261112-clean").catch((e) => {
+    await import("./modules/motion-kit.js?v=20261118-cursor3").catch((e) => {
       console.warn("Motion kit failed to load:", e);
       document.documentElement.classList.remove("mk-preloading", "mk-arriving", "mk-intro-pending");
     });
@@ -95,8 +95,8 @@ async function initialize() {
       // cause of scroll jank on the home page); the CSS glass fallback is used instead.
       // Privacy and 404 carry the same nav dock + menu as the rest of the site, so they load the menu code too.
       if (inSiteShell || hasMenu) {
-        await import("./modules/pitchdeck-overlay.js?v=20261112-clean").catch((e) => console.warn("Pitchdeck overlay failed to load:", e));
-        if (hasMenu) await import("./pages/lamalama-ui.js?v=20261112-clean").catch((e) => console.warn("Lamalama UI failed to load:", e));
+        await import("./modules/pitchdeck-overlay.js?v=20261118-smooth1").catch((e) => console.warn("Pitchdeck overlay failed to load:", e));
+        if (hasMenu) await import("./pages/lamalama-ui.js?v=20261117-note115").catch((e) => console.warn("Lamalama UI failed to load:", e));
       }
       // The 404 page fades its own content in with CSS, tied to the page intro, so only the privacy page needs this.
       if (page.privacy) {

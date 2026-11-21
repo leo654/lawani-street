@@ -318,8 +318,17 @@
     if (!root) return;
 
     // Preload the deck once the page is idle, or as soon as someone shows intent (hover / touch).
+    // The deck brings about 15MB of pictures and film with it. Phones and tablets (and anyone on Save-Data or a
+    // slow connection) only load it on intent: a touch on a résumé link starts it before the tap lands, so it
+    // still opens promptly, without every page spending that data in the background.
     function preload() { loadDeck(); }
+    function idlePreloadAllowed() {
+      var connection = window.navigator.connection;
+      if (connection && (connection.saveData || /(^|-)(2g|3g)$/.test(connection.effectiveType || ""))) return false;
+      return !window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    }
     function whenIdle() {
+      if (!idlePreloadAllowed()) return;
       if ("requestIdleCallback" in window) window.requestIdleCallback(preload, { timeout: 4000 });
       else window.setTimeout(preload, 2500);
     }

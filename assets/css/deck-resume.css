@@ -1,0 +1,287 @@
+/* ==========================================================================
+   Résumé deck, chapter 01: CV layout
+   Portrait on the left, set on its own in open space with the name above it
+   and the contact lines under it; the CV on the right as a ruled list of
+   sections (intro, education, skills, experience, impact), each a two-column
+   table of label and detail. Layout only: the deck's font, colours and
+   chapter transitions are unchanged. Loaded after deck-polish.css.
+   ========================================================================== */
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv {
+  --cv-ink: var(--deck-ink, #20221f);
+  --cv-muted: rgba(32, 34, 31, 0.56);
+  --cv-rule: rgba(32, 34, 31, 0.16);
+  --cv-body: clamp(10.8px, 0.75vw, 13px);
+  --cv-line: 1.55;
+  --cv-head: clamp(13px, 0.9vw, 16px);
+  --cv-title: clamp(15px, 1.05vw, 19px);
+  --cv-label: clamp(150px, 10.5vw, 210px);
+  --cv-space: clamp(10px, 2.2vh, 24px);
+  --cv-portrait: clamp(170px, 15vw, 260px);
+
+  display: grid;
+  grid-template-columns: minmax(0, 38fr) minmax(0, 62fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  color: var(--cv-ink);
+  font-family: var(--ll-sans);
+  font-size: var(--cv-body);
+  line-height: var(--cv-line);
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv :is(h2, h3, p, dl, dt, dd, ul, li, figure, figcaption, address) {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: inherit;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv ul {
+  list-style: none;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv a {
+  color: inherit;
+  text-decoration: none;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv a:is(:hover, :focus-visible) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Profile: name, portrait, contact ------------------------------------------ */
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__profile {
+  display: grid;
+  grid-column: 1;
+  grid-row: 1 / -1;
+  align-self: center;
+  justify-self: center;
+  width: var(--cv-portrait);
+  gap: 10px;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__name {
+  font-size: var(--cv-head);
+  line-height: 1.2;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__portrait {
+  aspect-ratio: 1122 / 1402;
+  overflow: hidden;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__contact {
+  display: grid;
+  justify-items: end;
+  color: var(--cv-muted);
+  text-align: right;
+}
+
+/* Body: intro and ruled sections ------------------------------------------- */
+/* Spare height is shared out evenly: every rule gets the same space above
+   and below it, the intro stays on the top row and the last section ends on
+   the bottom row. */
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__body {
+  display: flex;
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume :is(.ll-deck-cv__intro, .ll-deck-cv__section) {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__intro {
+  flex-grow: 0.5;
+  justify-content: flex-start;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section:last-child {
+  flex-grow: 0.5;
+  justify-content: flex-end;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__intro h3 {
+  font-size: var(--cv-title);
+  line-height: 1.3;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__intro p {
+  color: var(--cv-muted);
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__intro h3 + p {
+  margin-top: 0.9em;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__intro p + p {
+  margin-top: 0.6em;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section {
+  margin-top: var(--cv-space);
+  padding-top: var(--cv-space);
+  border-top: 1px solid var(--cv-rule);
+}
+
+/* Inside a section the heading and its table stay together. */
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section > * {
+  flex: none;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section h3 {
+  font-size: var(--cv-head);
+  line-height: 1.3;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section h3 + * {
+  margin-top: 10px;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section > p {
+  margin-left: var(--cv-label);
+  color: var(--cv-muted);
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section dl {
+  display: grid;
+  gap: 6px;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section dl > div {
+  display: grid;
+  grid-template-columns: var(--cv-label) minmax(0, 1fr);
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section dt {
+  padding-right: 16px;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section dd {
+  color: var(--cv-muted);
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section dd strong {
+  display: block;
+  color: var(--cv-ink);
+  font-weight: 400;
+}
+
+/* Folio: chapter number in the corner, like a page number. */
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__folio {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+  margin-top: var(--cv-space);
+  color: var(--ll-brand-orange, #e8532a);
+  font-size: var(--cv-body);
+  line-height: 1;
+}
+
+html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__folio span {
+  margin-right: 0.6em;
+}
+
+/* --------------------------------------------------------------------------
+   Desktop: the CV fills the chapter frame (top row to bottom row).
+   -------------------------------------------------------------------------- */
+@media (min-width: 981px) {
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv {
+    position: absolute;
+    top: var(--deck-row);
+    right: var(--deck-page-x);
+    bottom: calc(var(--deck-row-bottom) - 7px);
+    left: var(--deck-page-x);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tablets: the same two columns inside the tablet frame (78px sides, top
+   row on the centre line of the menu buttons, bottom row 37px up).
+   -------------------------------------------------------------------------- */
+@media (min-width: 761px) and (max-width: 980px) and (min-height: 601px) {
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv {
+    --cv-label: 112px;
+    --cv-portrait: clamp(150px, 22vw, 200px);
+
+    position: absolute;
+    top: calc(var(--deck-row) + 1px);
+    right: 78px;
+    bottom: calc(var(--deck-row-bottom) - 7px);
+    left: 78px;
+    grid-template-columns: minmax(0, 36fr) minmax(0, 64fr);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Phones (and phones held sideways): one column that scrolls. The profile
+   comes first, then the CV; the label column narrows to fit.
+   -------------------------------------------------------------------------- */
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv {
+    --cv-label: 96px;
+    --cv-space: 22px;
+    --cv-portrait: min(64%, 240px);
+
+    position: static;
+    display: block;
+    padding-bottom: 16px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__profile {
+    width: var(--cv-portrait);
+    padding-top: 4px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__body {
+    margin-top: 40px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #resume :is(.ll-deck-cv__intro, .ll-deck-cv__section) {
+    display: block;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section dl > div {
+    grid-template-columns: var(--cv-label) minmax(0, 1fr);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__folio {
+    margin-top: 32px;
+    text-align: right;
+  }
+}
+
+/* Short laptop screens (under 700px of browser height, or under 760px on
+   narrow 981–1100px windows): tighter spacing and a slightly smaller text
+   size, so the whole CV still fits the frame. */
+@media (min-width: 981px) and (max-height: 700px), (min-width: 981px) and (max-width: 1100px) and (max-height: 760px) {
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv {
+    --cv-body: 10px;
+    --cv-line: 1.45;
+    --cv-space: 9px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section dl {
+    gap: 3px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #resume .ll-deck-cv__section h3 + * {
+    margin-top: 6px;
+  }
+}

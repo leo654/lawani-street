@@ -1,5 +1,4 @@
 /* Typography and shared controls; use design-tokens.css for foundation values. */
-@import "../css/button-system.css";
 
 @font-face {
   font-family: "Gridlite";

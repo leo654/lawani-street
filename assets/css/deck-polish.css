@@ -1,0 +1,379 @@
+/* ==========================================================================
+   Résumé deck (pitchdeck.html): one frame for every chapter
+   Loaded last on the deck. Layout only: no animation, transition or
+   interaction is changed here.
+
+   Every chapter now shares the same frame, taken from chapter 04 (Thoughts).
+   Chapter 01's CV layout has its own file, deck-resume.css, and uses the
+   same frame:
+     side margin   --deck-page-x   content starts and ends on the same lines
+     top row       --deck-row      small meta text ("Lawani St.", "Context")
+     title row     --deck-title    the chapter title / clock
+     bottom row    --deck-row      last line of content, nav and dots
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Desktop and laptop
+   -------------------------------------------------------------------------- */
+@media (min-width: 981px) {
+  /* The side margin never drops below 100px, so content keeps clear of the
+     60px menu and close buttons on 1024–1280px screens (it touched them). */
+  html body.ll-deck-page.ll-pitch-page .ll-deck {
+    --deck-page-x: clamp(100px, 7.5vw, 136px);
+    --deck-row: 25px;
+    --deck-title: calc(var(--deck-row) + 16px + clamp(48px, 6.5vh, 64px));
+    /* The bottom row is the baseline of the chapter 04 nav: 31px up from the
+       slide edge. Images and cards end on it too. */
+    --deck-row-bottom: 31px;
+  }
+
+  /* Chapter 04's top line is exactly 16px tall, so its title row is the same
+     on every screen and the other chapters can share it. */
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board__topline {
+    height: 16px;
+    min-height: 16px;
+  }
+
+  /* 02 Expertise: header on the top row, dots on the bottom row. */
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__header {
+    top: var(--deck-row) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__meta {
+    padding-top: 2px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__pagination {
+    bottom: calc(var(--deck-row-bottom) - 15px) !important;
+  }
+
+  /* 03 My vibe: "Context: My vibe" on the top row, the title on the title
+     row (the slide number's orange rule starts level with it), and the
+     moodboard down to the bottom row. */
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-subject {
+    top: var(--deck-row) !important;
+    display: flex;
+    width: auto;
+    gap: 0.6em;
+    padding-top: 0;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-slide__vibe-copy {
+    top: var(--deck-title) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-number {
+    top: calc(var(--deck-title) + 0.22 * clamp(24px, 2vw, 34px)) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid {
+    top: 42% !important;
+    bottom: var(--deck-row-bottom) !important;
+  }
+
+  /* 05 Let's talk: "Lawani St." on the top row, the clock on the title row,
+     the city clocks down to the bottom row. */
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock {
+    padding-top: var(--deck-row) !important;
+    padding-bottom: var(--deck-row-bottom) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__hero {
+    justify-content: flex-start;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__eyebrow {
+    min-height: 16px;
+    align-items: center;
+  }
+
+  /* + 2.5px lines the top of the digits up with the other chapter titles. */
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__time {
+    margin-top: calc(clamp(48px, 6.5vh, 64px) + 2.5px);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__meta {
+    margin-top: auto;
+  }
+}
+
+/* Small laptops (981–1199px): "London, United Kingdom" took three lines
+   and the city cards ran out of room ("Los Angeles" broke in two and
+   "Night" pushed past the card edge). The heading and the card clocks are
+   a little smaller here, and city names stay on one line. */
+@media (min-width: 981px) and (max-width: 1199px) {
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__heading h2 {
+    font-size: clamp(32px, 3.9vw, 58px);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city {
+    padding: 14px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city h3 {
+    white-space: nowrap;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city time {
+    font-size: clamp(26px, 2.7vw, 46px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tablet (761–980px wide): the same frame, sized for the 48px buttons.
+   Top row     small meta text sits on the centre line of the menu and
+               close buttons (ink 37–43px from the top).
+   Title row   chapter titles, the clock and EXPERTISE share one line.
+   Bottom row  last line of content, nav and dots end 37px above the edge.
+   Side margin stays at 78px, as before.
+   -------------------------------------------------------------------------- */
+@media (min-width: 761px) and (max-width: 980px) and (min-height: 601px) {
+  html body.ll-deck-page.ll-pitch-page .ll-deck {
+    --deck-row: 34px;
+    --deck-title: calc(var(--deck-row) + 16px + clamp(48px, 6vh, 64px));
+    --deck-row-bottom: 37px;
+  }
+
+  /* 02 Expertise: tabs and "Start a brief" on the top row, EXPERTISE on the
+     title row (it sat on top of the tabs), the dots on the bottom row. */
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__header {
+    top: var(--deck-row) !important;
+    height: auto;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tabs {
+    top: -10px;
+    align-items: center;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__brand {
+    top: calc(var(--deck-title) - var(--deck-row));
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__breadcrumb {
+    top: calc(var(--deck-title) + 66px) !important;
+  }
+
+  /* The product sits in the middle of the space between the breadcrumb and
+     the dots (on tall tablets it hung from the top with a gap below). */
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product {
+    top: calc(var(--deck-title) + 128px) !important;
+    grid-template-rows: auto auto;
+    align-content: safe center;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__pagination {
+    bottom: calc(var(--deck-row-bottom) - 15px) !important;
+  }
+
+  /* 03 My vibe: same three rows as desktop. */
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-subject {
+    top: var(--deck-row) !important;
+    display: flex;
+    width: auto;
+    gap: 0.6em;
+    padding-top: 0;
+    line-height: 16px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-slide__vibe-copy {
+    top: var(--deck-title) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-number {
+    top: calc(var(--deck-title) + 5px) !important;
+  }
+
+  /* The paragraph uses 16px, as it does on phones and desktop (it was
+     13px here), and stops short of the slide number. */
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-slide__vibe-copy > p:last-child {
+    max-width: 46ch;
+    font-size: var(--ll-text-16);
+    line-height: 1.42;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid {
+    bottom: var(--deck-row-bottom) !important;
+  }
+
+  /* 04 Thoughts: the reference chapter. The cards take the free space, so
+     the nav always sits on the bottom row and the slide no longer scrolls
+     by a few pixels on 1024px-tall tablets. */
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board {
+    padding-top: calc(var(--deck-row) + 1px) !important;
+    padding-bottom: calc(var(--deck-row-bottom) - 5px) !important;
+    grid-template-rows: auto auto 1fr auto;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board__topline {
+    height: 16px;
+    min-height: 16px;
+    margin-bottom: calc(var(--deck-title) - var(--deck-row) - 1px - 16px - 22px);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board__heading {
+    margin-bottom: 26px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board__navigation {
+    margin-top: 0;
+    align-self: end;
+  }
+
+  /* 05 Let's talk: "Lawani St." on the top row, the clock on the title row,
+     the city clocks down to the bottom row. */
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock {
+    padding-top: var(--deck-row) !important;
+    padding-bottom: var(--deck-row-bottom) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__hero {
+    justify-content: flex-start;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__eyebrow {
+    min-height: 16px;
+    align-items: center;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__time {
+    margin-top: calc(var(--deck-title) - var(--deck-row) - 16px + 4px);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__meta {
+    margin-top: auto;
+  }
+}
+
+/* Portrait tablets and narrow windows: wider screens or landscape use more
+   columns so nothing has to wrap or scroll. */
+@media (min-width: 761px) and (max-width: 900px) and (min-height: 601px) {
+  /* Four city clocks did not fit across ("Los Angeles" broke over two
+     lines and "Day" ran out of its card), so they sit two by two. */
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__cities {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city {
+    min-height: 104px;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 980px) and (min-height: 601px) and (min-aspect-ratio: 1 / 1) {
+  /* Landscape: the three articles side by side, as on desktop, so the
+     chapter fits without scrolling. */
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board__projects {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Portrait tablets: the moodboard keeps its order and stagger, but on six
+   columns instead of eight (06 moves above 04 and 05), so the pictures are
+   wider than the 75px slivers they were and the board fills more of the
+   tall screen. */
+@media (min-width: 761px) and (max-width: 980px) and (min-height: 601px) and (max-aspect-ratio: 1 / 1) {
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid {
+    --vibe-col: calc((100% - 5 * 8px) / 6);
+    top: auto !important;
+    height: auto;
+    aspect-ratio: 1 / 0.8;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(n) {
+    top: auto;
+    right: auto;
+    bottom: auto;
+    height: calc(50% - 4px);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(1) {
+    top: 0;
+    left: 0;
+    width: var(--vibe-col);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(2) {
+    top: 0;
+    left: calc(var(--vibe-col) + 8px);
+    width: var(--vibe-col);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(3) {
+    top: 0;
+    left: calc(2 * (var(--vibe-col) + 8px));
+    width: calc(2 * var(--vibe-col) + 8px);
+    height: 100%;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(4) {
+    bottom: 0;
+    left: calc(4 * (var(--vibe-col) + 8px));
+    width: var(--vibe-col);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(5) {
+    bottom: 0;
+    left: calc(5 * (var(--vibe-col) + 8px));
+    width: var(--vibe-col);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(6) {
+    top: 0;
+    left: calc(4 * (var(--vibe-col) + 8px));
+    width: calc(2 * var(--vibe-col) + 8px);
+  }
+}
+
+/* Landscape tablets and short windows: the service tabs stack in a column
+   and EXPERTISE moves up to the top row, as on desktop, so the product
+   fits above the dots. */
+@media (min-width: 761px) and (max-width: 980px) and (min-height: 601px) and (min-aspect-ratio: 1 / 1) {
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tabs {
+    top: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tabs > * {
+    min-height: 0;
+    margin: 0;
+    padding-block: 0;
+    line-height: 16px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__brand {
+    top: -1px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__breadcrumb {
+    top: var(--deck-title) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product {
+    top: calc(var(--deck-title) + 56px) !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Phones
+   -------------------------------------------------------------------------- */
+/* "Independent creative studio · London / everywhere" floated over the
+   slide content (across the text on My vibe and the pictures on Thoughts).
+   Thoughts and Let's talk already carry the same line in their top row, so
+   the floating copy is hidden. */
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  html body.ll-deck-page.ll-pitch-page .ll-deck__mobile-meta {
+    display: none;
+  }
+}
+
+/* Phones held sideways are wider than 760px, so they picked up the desktop
+   rule that hides the chapter buttons until the side menu opens, and the
+   bottom bar showed up empty. */
+@media (min-width: 761px) and (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  html body.ll-deck-page.ll-pitch-page .ll-deck:not(.is-rail-open) .ll-deck__chapters button {
+    opacity: 1;
+    transform: none;
+  }
+}
