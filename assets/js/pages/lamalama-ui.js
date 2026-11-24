@@ -119,7 +119,9 @@
     function measureSections() {
       var scrollY = window.scrollY;
       sectionTops = sections.map(function (section) {
-        return section.getBoundingClientRect().top + scrollY;
+        // A section that is not shown at this screen size (display: none) never takes the note.
+        var rect = section.getBoundingClientRect();
+        return rect.width || rect.height ? rect.top + scrollY : Infinity;
       });
     }
     measureSections();

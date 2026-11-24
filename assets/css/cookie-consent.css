@@ -282,7 +282,9 @@
 .cookie-privacy-page__content {
   flex: 1 0 auto;
   box-sizing: border-box;
-  width: min(100%, calc(760px + 2 * var(--ll-page-gutter, 24px)));
+  /* One centred column as wide as the paragraphs (--ll-text-measure, 600px), so the text sits under the menu bar
+     instead of hanging to the left of a wider box. */
+  width: min(100%, calc(var(--ll-text-measure, 600px) + 2 * var(--ll-page-gutter, 24px)));
   margin: 0 auto;
   /* Clears the fixed nav dock; side padding is the site gutter. */
   padding: clamp(112px, 13vh, 152px) var(--ll-page-gutter, 24px) clamp(56px, 8vw, 96px);

@@ -1,6 +1,6 @@
 /*
- * Case-study layout: media tiles on the left, a sticky info panel on the right
- * (title, collapsible story rows, next project pinned at the bottom).
+ * Case-study layout: a sticky info panel on the left (title, collapsible story rows, next project pinned at
+ * the bottom) and the media tiles on the right.
  * Imported last by entries/case-study.css so it wins over the earlier case-study rules.
  */
 
@@ -23,7 +23,7 @@ html body.case-study .cs-split {
 
 html body.case-study .cs-split__media {
   display: grid;
-  grid-column: 1 / 9;
+  grid-column: 5 / 13;
   grid-row: 1;
   min-width: 0;
   gap: var(--cs-media-gap);
@@ -33,7 +33,7 @@ html body.case-study .cs-split__media {
 html body.case-study .cs-aside {
   position: sticky;
   top: 0;
-  grid-column: 9 / 13;
+  grid-column: 1 / 5;
   grid-row: 1;
   height: 100vh;
   height: 100svh;
@@ -51,6 +51,35 @@ html body.case-study .cs-aside__inner {
 
 html body.case-study .cs-aside__inner::-webkit-scrollbar {
   display: none;
+}
+
+/* Menu bar: centred on the window, as on every page, except on narrower desktop windows (under about 1360px)
+   where the centred bar would sit on the info panel's top row. There it slides right just far enough to keep
+   one gutter clear of the panel; the menu that opens under it follows. Panel right edge = 1/3 of the window
+   less a third of a gutter, so the shift = bar width / 2 + 2/3 gutter - window / 6, never below zero. */
+@media (min-width: 961px) {
+  html body.case-study {
+    --cs-menu-shift: max(0px, calc(var(--ll-menu-width) / 2 + var(--cs-gutter) * 2 / 3 - 100% / 6));
+  }
+
+  html body.case-study .ll-floating-header .ll-nav-dock {
+    left: calc(var(--cs-menu-shift) * 2) !important;
+  }
+
+  html[data-theme] body.case-study .ll-mobile-menu,
+  html body.case-study .ll-mobile-menu {
+    left: calc(50% + var(--cs-menu-shift)) !important;
+  }
+}
+
+/* The shift is rounded up to a whole pixel so the bar (logo, tagline, menu button) never sits between pixels,
+   which would soften every edge and letter in it. Older browsers without round() use the exact value. */
+@supports (left: round(1px, 1px)) {
+  @media (min-width: 961px) {
+    html body.case-study {
+      --cs-menu-shift: max(0px, round(up, calc(var(--ll-menu-width) / 2 + var(--cs-gutter) * 2 / 3 - 100% / 6), 1px));
+    }
+  }
 }
 
 /* ---------------------------------------------------------------- info block */

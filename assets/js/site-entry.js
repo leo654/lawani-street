@@ -77,7 +77,7 @@ async function initialize() {
     if (document.querySelector("[data-ll-sound-wave]")) await import("./modules/sound-wave.js?v=20261112-clean").catch((e) => console.warn("Sound wave failed to load:", e));
 
     if (page.caseStudy) {
-      await import("./pages/case-study-ui.js?v=20261112-clean").catch((e) => console.warn("Case study UI failed to load:", e));
+      await import("./pages/case-study-ui.js?v=20261124-bal1").catch((e) => console.warn("Case study UI failed to load:", e));
       if (body.classList.contains("case-study--kicksjoint")) {
         await import("./pages/kicksjoint-ui.js").catch((e) => console.warn("Kicksjoint UI failed to load:", e));
       }
@@ -96,7 +96,7 @@ async function initialize() {
       // Privacy and 404 carry the same nav dock + menu as the rest of the site, so they load the menu code too.
       if (inSiteShell || hasMenu) {
         await import("./modules/pitchdeck-overlay.js?v=20261118-smooth1").catch((e) => console.warn("Pitchdeck overlay failed to load:", e));
-        if (hasMenu) await import("./pages/lamalama-ui.js?v=20261117-note115").catch((e) => console.warn("Lamalama UI failed to load:", e));
+        if (hasMenu) await import("./pages/lamalama-ui.js?v=20261124-grid1").catch((e) => console.warn("Lamalama UI failed to load:", e));
       }
       // The 404 page fades its own content in with CSS, tied to the page intro, so only the privacy page needs this.
       if (page.privacy) {

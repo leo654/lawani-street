@@ -15,7 +15,7 @@
 @import "../index-about-clients.css?v=20261112-clean";
 @import "../index-polish.css?v=20261112-clean";
 @import "../site-font.css?v=20261118-smooth1";
-@import "../cookie-consent.css?v=20261112-clean";
+@import "../cookie-consent.css?v=20261124-bal1";
 @import "../home-scroll-reveals.css?v=20261112-clean";
 @import "../ui-polish.css?v=20261112-clean";
 @import "../work-archive-theme.css?v=20261112-clean";
@@ -30,6 +30,7 @@
 @import "../sound-wave.css?v=20261118-mute3";
 @import "../button-unified.css?v=20261118-smooth1";
 @import "../site-polish.css?v=20261118-grid4";
+@import "../type-grid.css?v=20261124-bal1";
 
 @media (min-width: 821px) {
   html body.home-index .ll-home-hero,

@@ -236,6 +236,78 @@
     });
   }
 
+  /* Tiles wipe in as they scroll into view: a cover in the page colour drops off each picture, top edge first
+     (styles in case-study-polish.css). Tiles already on screen wait for the page intro
+     (after the preloader or the page curtain) so they play in view, and nothing stays covered if that signal never
+     comes. Without IntersectionObserver, or with reduced motion, tiles are simply shown. */
+  function initTileReveals() {
+    if (reduceMotion || !("IntersectionObserver" in window)) return;
+    var tiles = Array.prototype.slice.call(document.querySelectorAll(".cs-gallery figure, .cs-next-panel__media"));
+    if (!tiles.length) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries
+        .filter(function (entry) { return entry.isIntersecting; })
+        .sort(function (a, b) {
+          return (a.boundingClientRect.top - b.boundingClientRect.top) || (a.boundingClientRect.left - b.boundingClientRect.left);
+        })
+        .forEach(function (entry, index) {
+          observer.unobserve(entry.target);
+          entry.target.style.setProperty("--cs-tile-delay", Math.min(index, 4) * 90 + "ms");
+          entry.target.classList.add("is-in");
+        });
+    }, { rootMargin: "0px 0px -4% 0px" });
+
+    tiles.forEach(function (tile) { tile.classList.add("cs-tile"); });
+    document.body.classList.add("cs-tiles-ready");
+
+    var started = false;
+    function start() {
+      if (started) return;
+      started = true;
+      tiles.forEach(function (tile) { observer.observe(tile); });
+    }
+
+    if (document.documentElement.classList.contains("mk-intro-pending")) {
+      window.addEventListener("mk:intro", start, { once: true });
+      window.setTimeout(start, 6000);
+    } else {
+      start();
+    }
+  }
+
+  /* While the end card is on screen, the panel's own next-project row steps back (body.cs-next-near) so the same
+     link never shows twice side by side. */
+  function initNextNear() {
+    var panel = document.querySelector(".cs-next-panel");
+    if (!panel || !("IntersectionObserver" in window)) return;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        document.body.classList.toggle("cs-next-near", entry.isIntersecting);
+      });
+    }, { rootMargin: "0px 0px -15% 0px" }).observe(panel);
+  }
+
+  /* The next project is fetched ahead once its end card comes within a screen or so, so the page curtain only
+     covers the move, not the download. */
+  function initNextPrefetch() {
+    var link = document.querySelector(".cs-next-panel__link[href]");
+    if (!link || !("IntersectionObserver" in window)) return;
+    var connection = window.navigator.connection;
+    if (connection && (connection.saveData || /(^|-)2g$/.test(connection.effectiveType || ""))) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      if (!entries.some(function (entry) { return entry.isIntersecting; })) return;
+      observer.disconnect();
+      var hint = document.createElement("link");
+      hint.rel = "prefetch";
+      hint.as = "document";
+      hint.href = link.href;
+      document.head.appendChild(hint);
+    }, { rootMargin: "0px 0px 100% 0px" });
+    observer.observe(link);
+  }
+
   function ready() {
     document.body.classList.add("cs-motion-ready", "cs-intro-complete");
     initCaseStudyEffects();
@@ -243,6 +315,9 @@
     initGalleryLayout();
     initVideoPlayback();
     initCaseReveals();
+    initTileReveals();
+    initNextNear();
+    initNextPrefetch();
   }
 
   if (document.readyState === "loading") {

@@ -1,0 +1,345 @@
+/*
+ * Case-study finish (loaded last on project pages)
+ *  1. Title block: the project name is the page's headline again (it was set at 12px, smaller than the story
+ *     text). 40px, or 30px on narrow laptop windows: whole multiples of 10px, so Gridlite's dots land on whole
+ *     pixels and print as clean squares on every screen (see type-grid.css). The tags, year and project mark
+ *     move to one line underneath.
+ *  2. Next project: after the last picture, a large cover of the next project with its name (Hayler-style end
+ *     card). The name rolls on hover; the cover eases in slightly. On phones and tablets it replaces the small
+ *     next-project row, so the page does not end with the same link twice.
+ *  3. Tiles wipe in as they scroll into view: a cover in the page colour drops off each picture, top edge first, so
+ *     the part already on screen shows first (classes set by case-study-ui.js; without JavaScript nothing is
+ *     covered).
+ */
+
+/* ----------------------------------------------------------------- 1. title */
+
+html body.case-study:not(#ll-cs) .cs-hero {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "title title title"
+    "mark tags date";
+  column-gap: 12px;
+  row-gap: 16px;
+  align-items: center;
+}
+
+html body.case-study:not(#ll-cs) .cs-hero .cs-tags:not(.cs-project-date) {
+  padding-left: 0;
+}
+
+html body.case-study:not(#ll-cs) .cs-hero__mark {
+  width: 20px;
+}
+
+/* The line box is trimmed to the capitals, so the top of the letters sits exactly on the 12px line where the
+   first picture starts. Browsers that support text-box trim by the font's own cap height; the others use margins
+   (Gridlite's capitals run from 0.1em to 0.8em of a 1em line in Chrome and Firefox). */
+html body.case-study:not(#ll-cs) h1.cs-title,
+html.js body.case-study:not(#ll-cs) .cs-hero .cs-title {
+  grid-area: title;
+  align-self: start;
+  margin: -0.1em 0 -0.2em;
+  font-size: 40px !important;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+@supports (text-box: trim-both cap alphabetic) {
+  html body.case-study:not(#ll-cs) h1.cs-title,
+  html.js body.case-study:not(#ll-cs) .cs-hero .cs-title {
+    margin: 0;
+    text-box: trim-both cap alphabetic;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1199px) {
+  html body.case-study:not(#ll-cs) h1.cs-title,
+  html.js body.case-study:not(#ll-cs) .cs-hero .cs-title {
+    font-size: 30px !important;
+  }
+}
+
+/* Wide screens: the picture column passes 1,000px, so the name steps up to 60px to keep the panel from reading
+   as a thin margin next to it. */
+@media (min-width: 1600px) {
+  html body.case-study:not(#ll-cs) h1.cs-title,
+  html.js body.case-study:not(#ll-cs) .cs-hero .cs-title {
+    font-size: 60px !important;
+  }
+}
+
+@media (max-width: 374px) {
+  html body.case-study:not(#ll-cs) h1.cs-title,
+  html.js body.case-study:not(#ll-cs) .cs-hero .cs-title {
+    font-size: 30px !important;
+  }
+}
+
+/* Whole-pixel columns. The 12-column grid put the picture column at a fraction of a pixel at most window widths
+   (434.66px at 1280 wide), leaving every letter in it between pixels. Same split (the panel spans 4 of the 12
+   columns), with the panel width rounded down to a whole pixel; pairs of pictures split the same way. */
+@supports (width: round(1px, 1px)) {
+  @media (min-width: 961px) {
+    html body.case-study:not(#ll-cs) .cs-split {
+      grid-template-columns: round(down, calc((100% - 11 * var(--cs-gutter)) / 3 + 3 * var(--cs-gutter)), 1px) minmax(0, 1fr);
+    }
+
+    html body.case-study:not(#ll-cs) .cs-aside {
+      grid-column: 1;
+    }
+
+    html body.case-study:not(#ll-cs) .cs-split__media {
+      grid-column: 2;
+    }
+
+    html body.case-study:not(#ll-cs) .cs-gallery__row--pair:not(.cs-gallery__row--feature-pair) {
+      grid-template-columns: round(down, calc((100% - var(--cs-media-gap)) / 2), 1px) minmax(0, 1fr);
+    }
+  }
+}
+
+/* ---------------------------------------------------------- 2. next project */
+
+html body.case-study .cs-next-panel {
+  min-width: 0;
+  margin-top: clamp(64px, 8vw, 120px);
+  padding-bottom: clamp(36px, 4vw, 72px);
+}
+
+html body.case-study .cs-next-panel__head {
+  display: flex;
+  min-height: var(--cs-row-height);
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-top: 1px solid var(--cs-line);
+  font-size: var(--ll-text-14);
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+
+html body.case-study .cs-next-panel__head p {
+  margin: 0;
+}
+
+html body.case-study .cs-next-panel__head a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cs-muted);
+  font-size: var(--ll-text-12);
+  transition: color var(--ll-dur-base) var(--ll-ease, ease);
+}
+
+html body.case-study .cs-next-panel__head a:is(:hover, :focus-visible) {
+  color: var(--cs-ink);
+}
+
+html body.case-study .cs-next-panel__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+html body.case-study .cs-next-panel__media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--ll-brand-black);
+  contain: paint;
+  isolation: isolate;
+}
+
+html body.case-study .cs-next-panel__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity var(--ll-dur-medium) ease, filter var(--ll-dur-medium) ease;
+}
+
+html body.case-study .cs-next-panel__foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas: "title tags arrow";
+  align-items: end;
+  align-items: last baseline;
+  column-gap: 24px;
+  padding-top: 20px;
+}
+
+/* Two stacked copies of the name in one cell: on hover the first rolls up and out, the second rolls in.
+   Works for names that wrap to two lines too. */
+html body.case-study .cs-next-panel__title {
+  display: grid;
+  grid-area: title;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: 0;
+  transition: color var(--ll-dur-medium) var(--ll-ease, ease);
+}
+
+html body.case-study .cs-next-panel__title > span {
+  display: block;
+  grid-area: 1 / 1;
+  transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+html body.case-study .cs-next-panel__title > span + span {
+  transform: translate3d(0, 105%, 0);
+}
+
+html body.case-study .cs-next-panel__tags {
+  grid-area: tags;
+  padding-bottom: 0.1em;
+  color: var(--cs-muted);
+  font-size: var(--ll-text-12);
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+html body.case-study .cs-next-panel__arrow {
+  display: inline-flex;
+  grid-area: arrow;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1), color var(--ll-dur-medium) var(--ll-ease, ease);
+}
+
+html body.case-study .cs-next-panel__arrow :is(.ll-arrow-glyph, .ll-icon) {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+}
+
+html body.case-study .cs-next-panel__link:focus-visible {
+  outline: 1px solid var(--cs-ink);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body.case-study .cs-next-panel__link:hover :is(.cs-next-panel__title, .cs-next-panel__arrow) {
+    color: var(--ll-orange);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html body.case-study .cs-next-panel__link:hover .cs-next-panel__media img {
+    transform: scale(1.04);
+  }
+
+  html body.case-study .cs-next-panel__link:hover .cs-next-panel__title > span:first-child {
+    transform: translate3d(0, -105%, 0);
+  }
+
+  html body.case-study .cs-next-panel__link:hover .cs-next-panel__title > span + span {
+    transform: none;
+  }
+
+  html body.case-study .cs-next-panel__link:hover .cs-next-panel__arrow {
+    transform: translate3d(4px, -4px, 0);
+  }
+}
+
+html body.case-study .cs-next-panel__link:focus-visible :is(.cs-next-panel__title, .cs-next-panel__arrow) {
+  color: var(--ll-orange);
+}
+
+@media (min-width: 961px) and (max-width: 1199px) {
+  html body.case-study .cs-next-panel__title {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 1600px) {
+  html body.case-study .cs-next-panel__title {
+    font-size: 60px;
+  }
+}
+
+/* Once the end card is on screen the panel's own next-project row steps back, so the two never sit side by side
+   saying the same thing (class set by case-study-ui.js). */
+@media (min-width: 961px) {
+  html body.case-study .cs-aside .cs-next {
+    transition: opacity var(--ll-dur-medium) var(--ll-ease, ease), visibility 0s linear 0s;
+  }
+
+  html body.case-study.cs-next-near .cs-aside .cs-next {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--ll-dur-medium) var(--ll-ease, ease), visibility 0s linear var(--ll-dur-medium);
+  }
+}
+
+@media (max-width: 960px) {
+  html body.case-study:has(.cs-next-panel) .cs-next {
+    display: none;
+  }
+
+  html body.case-study .cs-next-panel {
+    padding-bottom: clamp(48px, 8vw, 80px);
+  }
+}
+
+@media (max-width: 560px) {
+  html body.case-study .cs-next-panel__foot {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title arrow"
+      "tags tags";
+    row-gap: 12px;
+  }
+
+  html body.case-study .cs-next-panel__tags {
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 374px) {
+  html body.case-study .cs-next-panel__title {
+    font-size: 30px;
+  }
+}
+
+/* ------------------------------------------------------------- 3. tile wipe */
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js body.case-study.cs-tiles-ready .cs-tile::before {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: var(--cs-bg);
+    content: "";
+    pointer-events: none;
+    transform-origin: 50% 100%;
+    transition: transform 0.95s cubic-bezier(0.19, 1, 0.22, 1) var(--cs-tile-delay, 0ms);
+  }
+
+  html.js body.case-study.cs-tiles-ready .cs-tile.is-in::before {
+    transform: scaleY(0);
+  }
+}
+
+@media print {
+  html body.case-study .cs-tile::before {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body.case-study :is(.cs-next-panel__media img, .cs-next-panel__title, .cs-next-panel__title > span, .cs-next-panel__arrow, .cs-next-panel__head a) {
+    transition: none;
+  }
+
+  html body.case-study .cs-next-panel__title > span + span {
+    display: none;
+  }
+}
