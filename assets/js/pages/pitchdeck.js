@@ -364,6 +364,26 @@
         button.addEventListener("click", function () { selectService(selectedService + 1, false); });
       });
 
+      /* "Add to brief" carries the chosen engagement to the contact form, which opens with the
+         project type set and the engagement named in the message prompt. */
+      servicePanels.forEach(function (panel) {
+        var engagement = panel.querySelector("[data-service-engagement]");
+        var brief = panel.querySelector("[data-service-brief]");
+        if (!engagement || !brief) return;
+
+        function updateBrief() {
+          var option = engagement.options[engagement.selectedIndex];
+          if (!option) return;
+          var params = new URLSearchParams();
+          params.set("reason", option.getAttribute("data-reason") || "Something else");
+          params.set("brief", option.textContent.trim());
+          brief.setAttribute("href", "contact.html?" + params.toString());
+        }
+
+        engagement.addEventListener("change", updateBrief);
+        updateBrief();
+      });
+
       serviceTabs.concat(serviceDots, servicePrevious, serviceNext).forEach(enhanceControl);
       selectService(0, false);
     }

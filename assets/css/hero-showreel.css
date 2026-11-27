@@ -165,3 +165,25 @@ html[data-theme="light"] body.home-index .ll-work .lwa-project__tags > span {
       );
   } */
 }
+
+/* Laptops and desktops: the hero stops at 73% of the window (was the full
+   height), so "Featured work" and the first project row are on screen on
+   arrival. Rounded to a whole pixel, and never under 480px so the caption,
+   play button and bottom line always fit. Phones keep the full-height hero. */
+@media (min-width: 821px) {
+  body.home-index {
+    --ll-home-hero-height: max(480px, 73vh);
+  }
+
+  @supports (height: 100svh) {
+    body.home-index {
+      --ll-home-hero-height: max(480px, 73svh);
+    }
+  }
+
+  @supports (height: round(73svh, 1px)) {
+    body.home-index {
+      --ll-home-hero-height: max(480px, round(73svh, 1px));
+    }
+  }
+}

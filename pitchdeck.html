@@ -30,8 +30,8 @@
         document.documentElement.classList.add("ll-deck-embedded");
       }
     </script>
-    <script type="module" src="./assets/js/site-entry.js?v=20261124-bal1"></script>
-    <link rel="stylesheet" crossorigin href="./assets/css/entries/pitchdeck.css?v=20261112-clean">
+    <script type="module" src="./assets/js/site-entry.js?v=20261127-pol1"></script>
+    <link rel="stylesheet" crossorigin href="./assets/css/entries/pitchdeck.css?v=20261127-pol1">
   
     <link rel="apple-touch-icon" href="./assets/site/shared/images/apple-touch-icon-CO_I9BEC.png" sizes="60x60">
     <link rel="icon" href="./assets/site/shared/images/favicon-16x16-CEw2wVgT.png" type="image/png" sizes="16x16">
@@ -137,25 +137,18 @@
           </article>
 
           <article class="ll-deck-slide ll-deck-slide--services" data-deck-slide data-service-shop id="what-i-do" aria-labelledby="deck-title-02" aria-hidden="true">
+            <header class="ll-deck-frame__top" aria-hidden="true"><span>Lawani St.</span><span>Independent creative studio</span></header>
+
             <header class="ll-service-shop__header">
-              <nav class="ll-service-shop__tabs ll-deck-kicker" role="tablist" aria-label="Service categories" aria-orientation="vertical">
-                <span>Shop</span>
-                <button class="is-active" id="service-tab-branding" type="button" role="tab" aria-selected="true" aria-controls="service-branding" data-service-tab="0" data-service-name="Branding">Branding</button>
-                <button id="service-tab-digital" type="button" role="tab" aria-selected="false" aria-controls="service-digital" data-service-tab="1" data-service-name="Digital Design" tabindex="-1">Digital Design</button>
-                <button id="service-tab-marketing" type="button" role="tab" aria-selected="false" aria-controls="service-marketing" data-service-tab="2" data-service-name="Marketing" tabindex="-1">Marketing</button>
-              </nav>
               <div class="ll-service-shop__brand">
                 <h2 id="deck-title-02">Expertise</h2>
-                <!-- <p>Services</p> -->
               </div>
-              <div class="ll-service-shop__meta ll-deck-kicker">
-                <a href="contact.html">Start a brief</a>
-                <span>Selected service</span>
-                <output data-service-current aria-live="polite">01 / 03</output>
-              </div>
+              <nav class="ll-service-shop__tabs ll-deck-kicker" role="tablist" aria-label="Service categories">
+                <button class="is-active" id="service-tab-branding" type="button" role="tab" aria-selected="true" aria-controls="service-branding" data-service-tab="0" data-service-name="Branding"><span class="ll-service-shop__tab-no" aria-hidden="true">01</span>Branding</button>
+                <button id="service-tab-digital" type="button" role="tab" aria-selected="false" aria-controls="service-digital" data-service-tab="1" data-service-name="Digital Design" tabindex="-1"><span class="ll-service-shop__tab-no" aria-hidden="true">02</span>Digital Design</button>
+                <button id="service-tab-marketing" type="button" role="tab" aria-selected="false" aria-controls="service-marketing" data-service-tab="2" data-service-name="Marketing" tabindex="-1"><span class="ll-service-shop__tab-no" aria-hidden="true">03</span>Marketing</button>
+              </nav>
             </header>
-
-            <p class="ll-service-shop__breadcrumb ll-deck-kicker">Home / Services / <span data-service-current-name>Branding</span></p>
 
             <div class="ll-service-shop__panels">
               <section class="ll-service-product is-active" id="service-branding" role="tabpanel" aria-labelledby="service-tab-branding" data-service-panel="0">
@@ -163,18 +156,12 @@
                   <p class="ll-deck-kicker">[ Brand identity ]</p>
                   <h3>Branding</h3>
                   <p class="ll-service-product__line">Strategy, identity and systems</p>
-                  <p class="ll-service-product__scope">Bespoke / Project</p>
                   <p class="ll-service-product__description">Distinctive brand foundations made to clarify what you stand for, sharpen how you show up and keep every touchpoint working as one.</p>
                 </div>
-                <figure class="ll-service-product__visual"><img src="./assets/site/pitchdeck/images/brand-C4k3QnUC.png" alt="Ademi brand identity product" width="1127" height="1396" loading="lazy" decoding="async"></figure>
+                <figure class="ll-service-product__visual"><img src="./assets/site/pitchdeck/images/brand-C4k3QnUC.png" alt="White ceramic bottle with a blank label" width="1127" height="1396" loading="lazy" decoding="async"><figcaption aria-hidden="true">01 / 03</figcaption></figure>
                 <aside class="ll-service-product__buy">
-                  <div class="ll-service-product__stepper" aria-label="Browse services">
-                    <button type="button" data-service-previous aria-label="Previous service">−</button>
-                    <output data-service-position>01</output>
-                    <button type="button" data-service-next aria-label="Next service">+</button>
-                  </div>
-                  <label class="ll-service-product__select"><span>Engagement</span><span class="ll-service-product__select-control"><select aria-label="Branding engagement"><option>Brand launch</option><option>Identity refresh</option><option>Campaign system</option></select><svg class="ll-icon ll-icon--sm ll-service-product__select-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 12l6 7 6-7"></path></svg></span></label>
-                  <a class="ll-service-product__cta" href="contact.html">Add to brief <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>
+                  <label class="ll-service-product__select"><span>Engagement</span><span class="ll-service-product__select-control"><select aria-label="Branding engagement" data-service-engagement><option data-reason="Brand identity">Brand launch</option><option data-reason="Brand identity">Identity refresh</option><option data-reason="Campaign">Campaign system</option></select><svg class="ll-icon ll-icon--sm ll-service-product__select-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 12l6 7 6-7"></path></svg></span></label>
+                  <a class="ll-service-product__cta" href="contact.html?reason=Brand%20identity&amp;brief=Brand%20launch" data-service-brief>Add to brief <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>
                   <div class="ll-service-product__details">
                     <details><summary>What’s included</summary><p>Brand identity, logo design, campaign systems, motion, photo and video direction, and 3D.</p></details>
                     <details><summary>How it works</summary><p>Discovery and strategy lead into a focused identity system, production toolkit and practical rollout guidance.</p></details>
@@ -188,18 +175,12 @@
                   <p class="ll-deck-kicker">[ Digital design ]</p>
                   <h3>Digital Design</h3>
                   <p class="ll-service-product__line">Products, platforms and commerce</p>
-                  <p class="ll-service-product__scope">Bespoke / Product</p>
                   <p class="ll-service-product__description">Clear digital experiences that turn complex journeys into useful, intuitive products people understand and want to use.</p>
                 </div>
-                <figure class="ll-service-product__visual"><img src="./assets/site/pitchdeck/images/markt-BNYhO1Dd.webp" alt="The Yellow of Lagos mobile experience" width="2000" height="2666" loading="lazy" decoding="async"></figure>
+                <figure class="ll-service-product__visual"><img src="./assets/site/pitchdeck/images/markt-BNYhO1Dd.webp" alt="Ceramic burger sculpture" width="1254" height="1254" loading="lazy" decoding="async"><figcaption aria-hidden="true">02 / 03</figcaption></figure>
                 <aside class="ll-service-product__buy">
-                  <div class="ll-service-product__stepper" aria-label="Browse services">
-                    <button type="button" data-service-previous aria-label="Previous service">−</button>
-                    <output data-service-position>02</output>
-                    <button type="button" data-service-next aria-label="Next service">+</button>
-                  </div>
-                  <label class="ll-service-product__select"><span>Engagement</span><span class="ll-service-product__select-control"><select aria-label="Digital engagement"><option>Website experience</option><option>Digital product</option><option>E-commerce platform</option></select><svg class="ll-icon ll-icon--sm ll-service-product__select-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 12l6 7 6-7"></path></svg></span></label>
-                  <a class="ll-service-product__cta" href="contact.html">Add to brief <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>
+                  <label class="ll-service-product__select"><span>Engagement</span><span class="ll-service-product__select-control"><select aria-label="Digital engagement" data-service-engagement><option data-reason="Website">Website experience</option><option data-reason="Digital product">Digital product</option><option data-reason="Website">E-commerce platform</option></select><svg class="ll-icon ll-icon--sm ll-service-product__select-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 12l6 7 6-7"></path></svg></span></label>
+                  <a class="ll-service-product__cta" href="contact.html?reason=Website&amp;brief=Website%20experience" data-service-brief>Add to brief <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>
                   <div class="ll-service-product__details">
                     <details><summary>What’s included</summary><p>Digital strategy, content UI/UX, product design, art direction, visual design and e-commerce.</p></details>
                     <details><summary>How it works</summary><p>Journeys and requirements are shaped into prototypes, a scalable interface system and production-ready design.</p></details>
@@ -213,18 +194,12 @@
                   <p class="ll-deck-kicker">[ Growth systems ]</p>
                   <h3>Marketing</h3>
                   <p class="ll-service-product__line">Campaigns, content and demand</p>
-                  <p class="ll-service-product__scope">Bespoke / Campaign</p>
                   <p class="ll-service-product__description">Joined-up marketing systems that translate a strong proposition into campaigns, content and demand people can act on.</p>
                 </div>
-                <figure class="ll-service-product__visual"><img src="./assets/site/pitchdeck/images/bgu-Dk8qzQzh.webp" alt="Chess queen representing focused marketing strategy" width="5367" height="2795" loading="lazy" decoding="async"></figure>
+                <figure class="ll-service-product__visual"><img src="./assets/site/pitchdeck/images/bgu-Dk8qzQzh.webp" alt="Ceramic tote bag" width="1186" height="1327" loading="lazy" decoding="async"><figcaption aria-hidden="true">03 / 03</figcaption></figure>
                 <aside class="ll-service-product__buy">
-                  <div class="ll-service-product__stepper" aria-label="Browse services">
-                    <button type="button" data-service-previous aria-label="Previous service">−</button>
-                    <output data-service-position>03</output>
-                    <button type="button" data-service-next aria-label="Next service">+</button>
-                  </div>
-                  <label class="ll-service-product__select"><span>Engagement</span><span class="ll-service-product__select-control"><select aria-label="Marketing engagement"><option>Growth campaign</option><option>B2B demand engine</option><option>Always-on content</option></select><svg class="ll-icon ll-icon--sm ll-service-product__select-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 12l6 7 6-7"></path></svg></span></label>
-                  <a class="ll-service-product__cta" href="contact.html">Add to brief <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>
+                  <label class="ll-service-product__select"><span>Engagement</span><span class="ll-service-product__select-control"><select aria-label="Marketing engagement" data-service-engagement><option data-reason="Campaign">Growth campaign</option><option data-reason="Campaign">B2B demand engine</option><option data-reason="Campaign">Always-on content</option></select><svg class="ll-icon ll-icon--sm ll-service-product__select-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 12l6 7 6-7"></path></svg></span></label>
+                  <a class="ll-service-product__cta" href="contact.html?reason=Campaign&amp;brief=Growth%20campaign" data-service-brief>Add to brief <svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>
                   <div class="ll-service-product__details">
                     <details><summary>What’s included</summary><p>Growth strategy, B2B lead generation, paid media, inbound marketing, content activation, email and AI optimisation.</p></details>
                     <details><summary>How it works</summary><p>A clear audience and offer become a connected campaign system with focused creative, channels and measurement.</p></details>
@@ -236,27 +211,21 @@
 
             <button class="ll-service-shop__arrow ll-service-shop__arrow--previous" type="button" data-service-previous aria-label="Previous service"><svg class="ll-icon ll-icon--arrow-left" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m0 0 7-7m-7 7 7 7"></path></svg></button>
             <button class="ll-service-shop__arrow ll-service-shop__arrow--next" type="button" data-service-next aria-label="Next service"><svg class="ll-icon ll-icon--arrow-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m0 0-7-7m7 7-7 7"></path></svg></button>
-            <div class="ll-service-shop__pagination" aria-label="Choose a service">
-              <button class="is-active" type="button" data-service-dot="0" aria-label="Show Branding" aria-current="true"></button>
-              <button type="button" data-service-dot="1" aria-label="Show Digital"></button>
-              <button type="button" data-service-dot="2" aria-label="Show Marketing"></button>
-            </div>
+
+            <nav class="ll-deck-frame__foot" aria-label="Chapters">
+              <a href="#resume"><span aria-hidden="true">←</span> Prev</a>
+              <span class="ll-deck-frame__count"><b>02</b> / 05</span>
+              <a href="#my-vibe">Next <span aria-hidden="true">→</span></a>
+            </nav>
           </article>
 
           <article class="ll-deck-slide ll-deck-slide--vibe" data-deck-slide id="my-vibe" aria-labelledby="deck-title-03" aria-hidden="true">
-            <div class="ll-deck-vibe-subject ll-deck-kicker">
-              <span>Context:</span>
-              <span class="ll-deck-vibe-value">My vibe</span>
-            </div>
+            <header class="ll-deck-frame__top" aria-hidden="true"><span>Lawani St.</span><span>Independent creative studio</span></header>
             <div class="ll-deck-slide__vibe-copy">
               <h2 id="deck-title-03">My Vibe</h2>
               <p>Big ambition without the agency theatre. I stay close, move quickly and care about the details that make the whole thing click. The mix below captures that balance: bold ideas, disciplined systems and visual craft with a human edge.</p>
             </div>
-            <div class="ll-deck-vibe-number ll-deck-kicker" aria-label="Slide 3 of 5">
-              <span>No. 03</span>
-              <span class="ll-deck-vibe-value">/05</span>
-            </div>
-            <div class="ll-deck-vibe-grid" aria-label="Visual moodboard">
+            <div class="ll-deck-vibe-grid" role="group" aria-label="Visual moodboard">
               <figure><figcaption>01</figcaption><img src="./assets/projects/bpm/images/dj1-feJlXmXt.webp" alt="Monochrome crowd and Beat Per Minute identity" width="1834" height="1037" loading="lazy" decoding="async"></figure>
               <figure><figcaption>02</figcaption><img src="./assets/site/shared/images/1-BLCKCObR.jpg" alt="Kicksjoint identity composition" width="2309" height="3464" loading="lazy" decoding="async"></figure>
               <figure><figcaption>03</figcaption><img src="./assets/site/pitchdeck/images/car-Caqa8aJY.jpg" alt="The Yellow of Lagos digital experience" width="3464" height="2309" loading="lazy" decoding="async"></figure>
@@ -268,24 +237,19 @@
                 </video>
               </figure>
             </div>
+            <nav class="ll-deck-frame__foot" aria-label="Chapters">
+              <a href="#what-i-do"><span aria-hidden="true">←</span> Prev</a>
+              <span class="ll-deck-frame__count"><b>03</b> / 05</span>
+              <a href="#the-work">Next <span aria-hidden="true">→</span></a>
+            </nav>
           </article>
 
           <article class="ll-deck-slide ll-deck-slide--work" data-deck-slide id="the-work" aria-labelledby="deck-title-04" aria-hidden="true">
+            <header class="ll-deck-frame__top" aria-hidden="true"><span>Lawani St.</span><span>Independent creative studio</span></header>
             <section class="ll-culture-board" aria-labelledby="deck-title-04">
-              <header class="ll-culture-board__topline">
-                <a class="ll-culture-board__brand" href="#resume">Lawani St.</a>
-                <span>Independent creative studio</span>
-              </header>
-
               <div class="ll-culture-board__heading">
                 <h2 id="deck-title-04">Thoughts</h2>
-                <nav aria-label="Project categories">
-                  <span>Brand</span>
-                  <span>Creativity</span>
-                  <span>Digital</span>
-                  <span>Culture</span>
-                  <span>Strategy</span>
-                </nav>
+                <p class="ll-culture-board__topics"><span>Brand</span><span>Creativity</span><span>Digital</span><span>Culture</span><span>Strategy</span></p>
               </div>
 
               <div class="ll-culture-board__projects" data-deck-load-images>
@@ -332,29 +296,35 @@
                 </article>
               </div>
               <span class="ll-culture-board__share-status ll-visually-hidden" aria-live="polite" data-culture-share-status></span>
-
-              <footer class="ll-culture-board__navigation" aria-label="Resume slide navigation">
-                <a href="#resume"><span aria-hidden="true">←</span> Home</a>
-                <span class="ll-culture-board__count"><b>04</b> / 05</span>
-                <div>
-                  <a href="#my-vibe"><span aria-hidden="true">←</span> Prev</a>
-                  <a href="#lets-talk">Next <span aria-hidden="true">→</span></a>
-                </div>
-              </footer>
             </section>
+            <nav class="ll-deck-frame__foot" aria-label="Chapters">
+              <a href="#my-vibe"><span aria-hidden="true">←</span> Prev</a>
+              <span class="ll-deck-frame__count"><b>04</b> / 05</span>
+              <a href="#lets-talk">Next <span aria-hidden="true">→</span></a>
+            </nav>
           </article>
 
           <article class="ll-deck-slide ll-deck-slide--contact" data-deck-slide id="lets-talk" aria-labelledby="deck-title-05" aria-hidden="true">
+            <header class="ll-deck-frame__top" aria-hidden="true"><span>Lawani St.</span><span>Independent creative studio</span></header>
             <section class="ll-world-clock" data-world-clock>
+              <div class="ll-talk">
+                <h2 id="deck-title-05">Let’s talk</h2>
+                <p class="ll-talk__lead">Brand, digital and campaign work for startups and growing teams. Based in London, working across time zones.</p>
+              </div>
+
+              <div class="ll-talk__cta">
+                <a class="ll-talk__email" href="mailto:leonardlawani@gmail.com">leonardlawani@<wbr>gmail.com</a>
+                <div class="ll-talk__actions">
+                  <a class="ll-button ll-talk__primary" href="contact.html"><span>Start a brief</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>
+                  <a class="ll-button" href="https://www.linkedin.com/in/leonardlawani/" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><svg class="ll-icon ll-icon--sm ll-icon--arrow-up-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a>
+                </div>
+              </div>
+
               <div class="ll-world-clock__hero">
-                <p class="ll-world-clock__eyebrow">Lawani St. <span>Independent creative studio</span></p>
                 <span class="ll-world-clock__time" data-clock-main aria-label="Current time in London"></span>
+                <p class="ll-world-clock__label">London · Now</p>
                 <div class="ll-world-clock__meta">
-                  <span>Current · London</span>
-                  <div class="ll-world-clock__date">
-                    <span data-clock-date></span>
-                    <span>London / Everywhere</span>
-                  </div>
+                  <span data-clock-date></span>
                   <div class="ll-world-clock__format" role="group" aria-label="Clock format">
                     <button type="button" data-clock-format="12" aria-pressed="false">12h</button>
                     <button type="button" data-clock-format="24" aria-pressed="true">24h</button>
@@ -362,35 +332,26 @@
                 </div>
               </div>
 
-              <div class="ll-world-clock__rule" aria-hidden="true"></div>
-
-              <div class="ll-world-clock__locations">
-                <header class="ll-world-clock__heading">
-                  <h2 id="deck-title-05">London,<br>United Kingdom</h2>
-                  <p>Life moves fast.<br>Stay in sync wherever you are.</p>
-                  <span>Studio base · Europe/London</span>
-                </header>
-
-                <div class="ll-world-clock__cities" aria-label="Current local times">
-                  <article class="ll-world-clock__city" data-clock-city data-time-zone="America/Los_Angeles">
-                    <div><h3>Los Angeles</h3><span data-clock-offset></span></div>
-                    <div><time data-clock-time></time><span class="ll-world-clock__daypart"><span data-clock-icon aria-hidden="true"></span><span data-clock-period></span></span></div>
-                  </article>
-                  <article class="ll-world-clock__city" data-clock-city data-time-zone="America/New_York">
-                    <div><h3>New York</h3><span data-clock-offset></span></div>
-                    <div><time data-clock-time></time><span class="ll-world-clock__daypart"><span data-clock-icon aria-hidden="true"></span><span data-clock-period></span></span></div>
-                  </article>
-                  <article class="ll-world-clock__city is-home" data-clock-city data-time-zone="Europe/London">
-                    <div><h3>London</h3><span data-clock-offset></span></div>
-                    <div><time data-clock-time></time><span class="ll-world-clock__daypart"><span data-clock-icon aria-hidden="true"></span><span data-clock-period></span></span></div>
-                  </article>
-                  <article class="ll-world-clock__city" data-clock-city data-time-zone="Europe/Paris">
-                    <div><h3>Paris</h3><span data-clock-offset></span></div>
-                    <div><time data-clock-time></time><span class="ll-world-clock__daypart"><span data-clock-icon aria-hidden="true"></span><span data-clock-period></span></span></div>
-                  </article>
-                </div>
+              <div class="ll-world-clock__cities" aria-label="Current local times">
+                <article class="ll-world-clock__city" data-clock-city data-time-zone="America/Los_Angeles">
+                  <div><h3>Los Angeles</h3><span data-clock-offset></span></div>
+                  <div><time data-clock-time></time><span class="ll-world-clock__daypart"><span data-clock-icon aria-hidden="true"></span><span data-clock-period></span></span></div>
+                </article>
+                <article class="ll-world-clock__city" data-clock-city data-time-zone="America/New_York">
+                  <div><h3>New York</h3><span data-clock-offset></span></div>
+                  <div><time data-clock-time></time><span class="ll-world-clock__daypart"><span data-clock-icon aria-hidden="true"></span><span data-clock-period></span></span></div>
+                </article>
+                <article class="ll-world-clock__city" data-clock-city data-time-zone="Europe/Paris">
+                  <div><h3>Paris</h3><span data-clock-offset></span></div>
+                  <div><time data-clock-time></time><span class="ll-world-clock__daypart"><span data-clock-icon aria-hidden="true"></span><span data-clock-period></span></span></div>
+                </article>
               </div>
             </section>
+            <nav class="ll-deck-frame__foot" aria-label="Chapters">
+              <a href="#the-work"><span aria-hidden="true">←</span> Prev</a>
+              <span class="ll-deck-frame__count"><b>05</b> / 05</span>
+              <a href="#resume">Start again <span aria-hidden="true">↺</span></a>
+            </nav>
           </article>
         </div>
 

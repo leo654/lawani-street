@@ -101,6 +101,31 @@
     });
   }
 
+  /* Arriving from the résumé deck's "Add to brief" (?reason=…&brief=…): the project type is
+     already chosen and the message prompt names the engagement. Nothing is typed for the
+     visitor, so the form still asks for their own words. */
+  (function prefillFromBrief() {
+    var params;
+    try { params = new URLSearchParams(window.location.search); } catch (error) { return; }
+
+    var reason = params.get("reason");
+    var known = reason && selectOptions.some(function (option) {
+      return option.getAttribute("data-select-option") === reason;
+    });
+    if (known && reasonSelect && selectValue) {
+      reasonSelect.value = reason;
+      selectValue.textContent = reason;
+      selectValue.removeAttribute("data-empty");
+      selectOptions.forEach(function (option) {
+        option.setAttribute("aria-selected", String(option.getAttribute("data-select-option") === reason));
+      });
+    }
+
+    var brief = (params.get("brief") || "").trim().slice(0, 60);
+    var message = form.querySelector('textarea[name="message"]');
+    if (brief && message) message.setAttribute("placeholder", "A few words about the " + brief.toLowerCase());
+  })();
+
   form.addEventListener("submit", function (event) {
     event.preventDefault();
     if (!form.reportValidity()) return;

@@ -1,0 +1,1385 @@
+/* ==========================================================================
+   Résumé deck, chapters 02–05 (pitchdeck.html). Loaded last on the deck.
+
+   One frame for every chapter after the CV, so the deck reads as one piece:
+     top row      "Lawani St." and "Independent creative studio"
+     title row    the chapter title, 60px, at the same height on every chapter
+     sub row      tabs (02) or topics (04) on one ruled line under the title
+     content      a 12-column grid between the side margins
+     bottom row   ← Prev · 02 / 05 · Next →  (replaces the one-off counters,
+                  dots and nav each chapter had)
+
+   Type sits on the Gridlite dot grid (see type-grid.css): titles 60px, card
+   and city names 20px, small labels 10px with 1px tracking, so every dot
+   lands on a whole pixel. Body text is 15px (sharp on Retina screens).
+
+   Layout only: slide transitions, tab switching, the clock, sharing and the
+   button hovers are the same code as before.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Frame: shared by every size
+   -------------------------------------------------------------------------- */
+html body.ll-deck-page.ll-pitch-page .ll-deck {
+  --ds-ink: currentColor;
+  --ds-muted: color-mix(in srgb, currentColor 58%, transparent);
+  --ds-faint: color-mix(in srgb, currentColor 40%, transparent);
+  --ds-rule: color-mix(in srgb, currentColor 16%, transparent);
+  --ds-tile: color-mix(in srgb, currentColor 5%, transparent);
+  --ds-orange: var(--ll-brand-orange, #ff4f12);
+  --ds-label: 10px;
+  --ds-label-track: 1px;
+  --ds-body: 15px;
+  --ds-title: 60px;
+  --ds-gap: 24px;
+}
+
+/* One paper colour for the light chapters (Thoughts was white, Let's talk grey). */
+html body.ll-deck-page.ll-pitch-page :is(#what-i-do, #the-work, #lets-talk),
+html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board,
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock {
+  background-color: var(--deck-paper, #f4f2ec) !important;
+  color: var(--deck-ink, #20221f);
+}
+
+html body.ll-deck-page.ll-pitch-page .ll-deck-frame__top,
+html body.ll-deck-page.ll-pitch-page .ll-deck-frame__foot {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  height: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  font-size: var(--ds-label);
+  letter-spacing: var(--ds-label-track);
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+html body.ll-deck-page.ll-pitch-page .ll-deck-frame__top {
+  color: var(--ds-muted);
+  pointer-events: none;
+}
+
+html body.ll-deck-page.ll-pitch-page .ll-deck-frame__foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+}
+
+html body.ll-deck-page.ll-pitch-page .ll-deck-frame__foot a {
+  justify-self: start;
+  color: var(--ds-muted);
+  text-decoration: none;
+  transition: color var(--ll-dur-base, 0.24s) var(--ll-ease, ease);
+}
+
+html body.ll-deck-page.ll-pitch-page .ll-deck-frame__foot a:last-child {
+  justify-self: end;
+}
+
+html body.ll-deck-page.ll-pitch-page .ll-deck-frame__foot a:is(:hover, :focus-visible) {
+  color: var(--ds-orange);
+}
+
+html body.ll-deck-page.ll-pitch-page .ll-deck-frame__count {
+  color: var(--ds-muted);
+}
+
+html body.ll-deck-page.ll-pitch-page .ll-deck-frame__count b {
+  color: var(--ds-orange);
+  font-weight: 400;
+}
+
+/* Short paragraphs end on a full line, not a single word. */
+html body.ll-deck-page.ll-pitch-page :is(#what-i-do, #my-vibe, #the-work, #lets-talk) p {
+  text-wrap: pretty;
+}
+
+/* Chapter titles: one size and tracking everywhere (they were 64px with
+   three different letter spacings). */
+html body.ll-deck-page.ll-pitch-page :is(#what-i-do, #my-vibe, #the-work, #lets-talk) h2 {
+  margin: 0;
+  font-size: var(--ds-title) !important;
+  letter-spacing: -2px !important;
+  line-height: 1 !important;
+  text-align: left;
+}
+
+/* --------------------------------------------------------------------------
+   Desktop, laptop and tablet: the framed layout
+   -------------------------------------------------------------------------- */
+@media (min-width: 761px) and (min-height: 601px), (min-width: 981px) and (min-height: 481px) and (hover: hover) {
+  html body.ll-deck-page.ll-pitch-page .ll-deck {
+    --ds-x: var(--deck-page-x, 108px);
+    --ds-top: var(--deck-row, 25px);
+    --ds-title-y: var(--deck-title, 100px);
+    --ds-bottom: var(--deck-row-bottom, 31px);
+    --ds-s1: 24px;
+    --ds-s2: 32px;
+    /* Content ends one step (32px) above the bottom row. */
+    --ds-end: calc(var(--ds-bottom) + 16px + var(--ds-s2));
+    /* Sub row: 24px under the title, 16px of text, 14px to its rule. */
+    --ds-sub-y: calc(var(--ds-title-y) + var(--ds-title) + var(--ds-s1));
+    --ds-body-y: calc(var(--ds-sub-y) + 16px + 14px + 1px + var(--ds-s2));
+    --ds-xr: var(--ds-x);
+  }
+
+  html body.ll-deck-page.ll-pitch-page .ll-deck-frame__top {
+    top: var(--ds-top);
+    right: var(--ds-xr);
+    left: var(--ds-x);
+  }
+
+  html body.ll-deck-page.ll-pitch-page .ll-deck-frame__foot {
+    right: var(--ds-xr);
+    bottom: var(--ds-bottom);
+    left: var(--ds-x);
+  }
+
+  /* ---------------------------------------------------------- 02 Expertise */
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__header {
+    position: absolute !important;
+    top: var(--ds-title-y) !important;
+    right: var(--ds-xr) !important;
+    bottom: auto !important;
+    left: var(--ds-x) !important;
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__brand {
+    position: static !important;
+    inset: auto !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+    transform: none !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tabs {
+    position: static !important;
+    inset: auto !important;
+    display: flex !important;
+    width: auto !important;
+    height: auto !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 40px !important;
+    margin: 24px 0 0 !important;
+    padding: 0 0 14px !important;
+    border-bottom: 1px solid var(--ds-rule);
+    transform: none !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tabs button {
+    position: relative;
+    display: inline-flex;
+    min-height: 16px !important;
+    align-items: center;
+    gap: 10px;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: none !important;
+    color: var(--ds-muted) !important;
+    font-size: var(--ds-label) !important;
+    letter-spacing: var(--ds-label-track) !important;
+    line-height: 16px !important;
+    text-decoration: none !important;
+    transition: color var(--ll-dur-base, 0.24s) var(--ll-ease, ease);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tabs button::after {
+    position: absolute;
+    right: 0;
+    bottom: -15px;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    content: "";
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform var(--ll-dur-medium, 0.4s) var(--ll-ease, ease);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tabs button:is(.is-active, :hover, :focus-visible) {
+    color: var(--deck-ink, #20221f) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tabs button.is-active::after {
+    transform: scaleX(1);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tab-no {
+    color: var(--ds-faint);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tabs button.is-active .ll-service-shop__tab-no {
+    color: var(--ds-orange);
+  }
+
+  /* The two service arrows sit at the end of the tab line, not in the margins. */
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__arrow {
+    position: absolute !important;
+    top: calc(var(--ds-sub-y) - 8px) !important;
+    bottom: auto !important;
+    left: auto !important;
+    display: grid !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    place-items: center;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 1px solid var(--ds-rule) !important;
+    background: transparent !important;
+    font-size: 16px !important;
+    transform: none !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__arrow--next {
+    right: var(--ds-xr) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__arrow--previous {
+    right: calc(var(--ds-xr) + 40px) !important;
+  }
+
+  /* The arrow glyphs at 20px, so their dots sit 2px apart on whole pixels (at
+     16px they fell between pixels and printed uneven). The 14px arrow is
+     centred in the 32px square; Gridlite draws → 1px below the middle of its
+     line and ← is the same glyph turned round (1px above), so each gets its
+     own whole-pixel nudge, measured. The old -4px lift was for 60px buttons. */
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__arrow :is(svg, .ll-arrow-glyph) {
+    display: grid !important;
+    width: 20px !important;
+    height: 20px !important;
+    place-items: center !important;
+    margin: 0 !important;
+    font-size: 20px !important;
+    line-height: 20px !important;
+    transform: none !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__arrow .ll-arrow-glyph__character {
+    display: block !important;
+    font-size: 20px !important;
+    line-height: 20px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__arrow--next .ll-arrow-glyph {
+    transform: translateY(-1px) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__arrow--previous .ll-arrow-glyph {
+    transform: translateY(1px) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__arrow:is(:hover, :focus-visible) {
+    border-color: var(--ds-orange) !important;
+    background: var(--ds-orange) !important;
+    color: var(--deck-ink, #20221f) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__panels {
+    position: absolute !important;
+    top: var(--ds-body-y) !important;
+    right: var(--ds-xr) !important;
+    bottom: var(--ds-end) !important;
+    left: var(--ds-x) !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product {
+    position: absolute !important;
+    inset: 0 !important;
+    display: grid !important;
+    width: auto !important;
+    height: auto !important;
+    grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+    grid-template-rows: minmax(0, 1fr) !important;
+    column-gap: var(--ds-gap) !important;
+    row-gap: 0 !important;
+    align-content: stretch !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product[hidden] {
+    display: none !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do :is(.ll-service-product__copy, .ll-service-product__visual, .ll-service-product__buy) {
+    position: relative !important;
+    inset: auto !important;
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    grid-row: 1 !important;
+    transform: none;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__copy {
+    display: flex !important;
+    grid-column: 1 / span 4 !important;
+    flex-direction: column;
+    align-self: stretch !important;
+    text-align: left !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__copy > * {
+    max-width: 34ch;
+    margin: 0 !important;
+    text-align: left !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__copy .ll-deck-kicker {
+    color: var(--ds-muted);
+    font-size: var(--ds-label) !important;
+    letter-spacing: var(--ds-label-track) !important;
+    line-height: 16px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__copy h3 {
+    margin-top: 20px !important;
+    font-size: 40px !important;
+    letter-spacing: -1px !important;
+    line-height: 1 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__line {
+    margin-top: 16px !important;
+    font-size: var(--ds-body) !important;
+    line-height: 22px !important;
+  }
+
+  /* The description sits at the foot of the column, level with the bottom of
+     the picture. */
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__description {
+    margin-top: auto !important;
+    padding-top: 24px;
+    color: var(--ds-muted);
+    font-size: var(--ds-body) !important;
+    line-height: 22px !important;
+    hyphens: manual;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__visual {
+    display: grid !important;
+    overflow: hidden;
+    grid-column: 5 / span 4 !important;
+    align-self: stretch !important;
+    place-items: center;
+    background: var(--ds-tile) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__visual img {
+    position: static !important;
+    display: block;
+    width: 78% !important;
+    max-width: none !important;
+    height: 78% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    object-fit: contain !important;
+    object-position: 50% 50% !important;
+    filter: drop-shadow(0 18px 24px rgba(20, 22, 20, 0.12));
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__visual figcaption {
+    position: absolute;
+    bottom: 14px;
+    left: 16px;
+    color: var(--ds-muted);
+    font-size: var(--ds-label);
+    letter-spacing: var(--ds-label-track);
+    line-height: 16px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__buy {
+    display: flex !important;
+    grid-column: 9 / span 4 !important;
+    flex-direction: column;
+    align-self: start !important;
+    justify-self: stretch !important;
+    gap: 16px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__select {
+    display: grid !important;
+    gap: 8px;
+    width: auto !important;
+    margin: 0 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__select > span:first-child {
+    color: var(--ds-muted) !important;
+    font-size: var(--ds-label) !important;
+    letter-spacing: var(--ds-label-track) !important;
+    line-height: 16px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__select-control {
+    position: relative;
+    display: block;
+    width: 100% !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__select select {
+    width: 100% !important;
+    height: 50px !important;
+    padding: 0 44px 0 16px !important;
+    border: 1px solid var(--ds-rule) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: inherit !important;
+    font-size: var(--ds-label) !important;
+    letter-spacing: var(--ds-label-track) !important;
+    text-overflow: ellipsis;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__select select:is(:hover, :focus-visible) {
+    border-color: currentColor !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__cta {
+    width: 100% !important;
+    height: 50px !important;
+    margin: 0 !important;
+    background: var(--deck-ink, #20221f) !important;
+    color: var(--deck-paper, #f4f2ec) !important;
+    font-size: var(--ds-label) !important;
+    letter-spacing: var(--ds-label-track) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__cta:is(:hover, :focus-visible) {
+    background: var(--ds-orange) !important;
+    color: var(--deck-ink, #20221f) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__details {
+    margin: 8px 0 0 !important;
+    border-top: 1px solid var(--ds-rule);
+    border-bottom: 0 !important;
+  }
+
+  /* The + sits on the label's centre line (it hung 8px low; the glyph sits
+     high in its line, hence the 2px). */
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__details summary::after {
+    top: calc(50% - 2px) !important;
+    bottom: auto !important;
+    font-size: var(--ds-label) !important;
+    line-height: 16px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__details details {
+    border-bottom: 1px solid var(--ds-rule) !important;
+    border-top: 0 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__details summary {
+    min-height: 44px !important;
+    font-size: var(--ds-label) !important;
+    letter-spacing: var(--ds-label-track) !important;
+    line-height: 16px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__details p {
+    margin: 0 !important;
+    padding: 0 0 16px !important;
+    color: var(--ds-muted);
+    font-size: 13px !important;
+    line-height: 20px !important;
+  }
+
+  /* ------------------------------------------------------------ 03 My vibe */
+  /* Title on the left, the paragraph beside it on the same line, so the
+     moodboard gets the full height below. */
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-slide__vibe-copy {
+    position: absolute !important;
+    top: var(--ds-title-y) !important;
+    right: var(--ds-xr) !important;
+    bottom: auto !important;
+    left: var(--ds-x) !important;
+    display: grid !important;
+    width: auto !important;
+    max-width: none !important;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--ds-gap);
+    align-items: start;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-slide__vibe-copy h2 {
+    grid-column: 1 / span 5;
+    width: auto !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-slide__vibe-copy > p {
+    grid-column: 7 / span 6;
+    max-width: 62ch !important;
+    margin: 0 !important;
+    color: var(--ds-muted) !important;
+    font-size: var(--ds-body) !important;
+    letter-spacing: 0 !important;
+    line-height: 22px !important;
+  }
+
+  /* The moodboard fills a two-row grid edge to edge (it had a hole in the
+     middle and empty corners): the car anchors the left, the DJ and the
+     London skyline run along the top, three portraits and details below. */
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid {
+    position: absolute !important;
+    top: var(--ds-body-y) !important;
+    right: var(--ds-xr) !important;
+    bottom: var(--ds-end) !important;
+    left: var(--ds-x) !important;
+    display: grid !important;
+    width: auto !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(n) {
+    position: relative !important;
+    inset: auto !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0;
+    margin: 0 !important;
+    overflow: hidden;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(1) { grid-area: 1 / 6 / 2 / 10; }
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(2) { grid-area: 2 / 6 / 3 / 8; }
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(3) { grid-area: 1 / 1 / 3 / 6; }
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(4) { grid-area: 2 / 8 / 3 / 10; }
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(5) { grid-area: 2 / 10 / 3 / 13; }
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(6) { grid-area: 1 / 10 / 2 / 13; }
+}
+
+/* Whole pixels: the side margin and the title row are rounded, and the right
+   margin gives up the odd pixels (at most 11) so the 12 columns and their
+   24px gutters all land on whole pixels; images and text in the grid stay
+   sharp instead of sitting between pixels. */
+@supports (width: round(1px, 1px)) and (width: mod(3px, 2px)) {
+  @media (min-width: 761px) and (min-height: 601px), (min-width: 981px) and (min-height: 481px) and (hover: hover) {
+    html body.ll-deck-page.ll-pitch-page .ll-deck {
+      --ds-x: round(var(--deck-page-x, 108px), 1px);
+      --ds-title-y: round(var(--deck-title, 100px), 1px);
+      --ds-xr: calc(var(--ds-x) + mod(100% - 2 * var(--ds-x), 12px));
+    }
+
+    html body.ll-deck-page.ll-pitch-page:not(#ll-x) #what-i-do .ll-service-product__visual img {
+      width: round(78%, 2px) !important;
+      height: round(78%, 2px) !important;
+    }
+
+    /* Let's talk centres the email and buttons in the free space; an even
+       height keeps that centre on a whole pixel. */
+    html body.ll-deck-page.ll-pitch-page:not(#ll-x) #lets-talk .ll-world-clock {
+      bottom: calc(var(--ds-end) + mod(100% - var(--ds-title-y) - var(--ds-end), 2px)) !important;
+    }
+
+  }
+
+  @media (min-width: 981px) and (min-height: 481px) {
+    html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid {
+      grid-template-rows: round(down, calc((100% - 12px) / 2), 1px) minmax(0, 1fr);
+    }
+  }
+}
+
+/* Laptops under 1280px and tablets: the paragraph is too long to sit beside
+   the title, so it runs under it (up to five lines) and the moodboard starts
+   below it. */
+@media (min-width: 761px) and (max-width: 1279px) and (min-height: 601px), (min-width: 981px) and (max-width: 1279px) and (min-height: 481px) and (hover: hover) {
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-slide__vibe-copy h2 {
+    grid-column: 1 / -1;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-slide__vibe-copy > p {
+    grid-column: 1 / span 10;
+    margin-top: 24px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid {
+    top: calc(var(--ds-title-y) + var(--ds-title) + 24px + 5 * 22px + 32px) !important;
+  }
+}
+
+/* Moodboard tiles and captions at every size. */
+html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid :is(img, video) {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figcaption {
+  position: absolute !important;
+  z-index: 1;
+  top: 10px !important;
+  left: 12px !important;
+  margin: 0 !important;
+  padding: 0 5px;
+  background: rgba(10, 11, 10, 0.72);
+  color: #f4f2ec !important;
+  font-size: var(--ds-label) !important;
+  letter-spacing: var(--ds-label-track) !important;
+  line-height: 16px !important;
+}
+
+@media (min-width: 761px) and (min-height: 601px), (min-width: 981px) and (min-height: 481px) and (hover: hover) {
+  /* ------------------------------------------------------------ 04 Thoughts */
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board {
+    position: absolute !important;
+    top: var(--ds-title-y) !important;
+    right: var(--ds-xr) !important;
+    bottom: var(--ds-end) !important;
+    left: var(--ds-x) !important;
+    display: grid !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    row-gap: 32px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board__heading {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board__topics {
+    display: flex;
+    width: 100%;
+    max-width: none;
+    gap: 40px;
+    margin: 24px 0 0;
+    padding: 0 0 14px;
+    border-bottom: 1px solid var(--ds-rule);
+    color: var(--ds-muted);
+    font-size: var(--ds-label);
+    letter-spacing: var(--ds-label-track);
+    line-height: 16px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board__projects {
+    display: grid !important;
+    min-height: 0 !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-rows: minmax(0, 1fr) !important;
+    gap: var(--ds-gap) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Pictures take the free height, so the cards fill the chapter instead of
+     stopping halfway down it. */
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card {
+    display: grid !important;
+    min-height: 0 !important;
+    grid-template-rows: minmax(0, 1fr) auto auto auto !important;
+    align-content: stretch !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Titles, copy and links line up across the three cards whatever the
+     length of each description. */
+  @supports (grid-template-rows: subgrid) {
+    html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board__projects {
+      grid-template-rows: minmax(0, 1fr) auto auto auto !important;
+      row-gap: 0 !important;
+    }
+
+    html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card {
+      grid-row: span 4;
+      grid-template-rows: subgrid !important;
+    }
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card__image {
+    position: relative !important;
+    display: block !important;
+    height: auto !important;
+    min-height: 0 !important;
+    align-self: stretch !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    aspect-ratio: auto !important;
+    overflow: hidden;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card__image img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card h3 {
+    margin: 20px 0 0 !important;
+    font-size: 20px !important;
+    letter-spacing: -0.5px !important;
+    line-height: 1.2 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card__copy {
+    max-width: 40ch;
+    margin: 12px 0 0 !important;
+    color: var(--ds-muted) !important;
+    font-size: var(--ds-body) !important;
+    line-height: 22px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card__actions {
+    display: flex !important;
+    min-height: 45px;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin: 20px 0 0 !important;
+    padding: 0 !important;
+    border-top: 1px solid var(--ds-rule) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card__read {
+    font-size: var(--ds-label) !important;
+    letter-spacing: var(--ds-label-track) !important;
+    line-height: 16px !important;
+  }
+
+  /* ------------------------------------------------------------ 05 Let's talk */
+  /* The close of the deck leads with the invitation and the email; London's
+     time sits level with the title, the other cities in a row underneath. */
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock {
+    position: absolute !important;
+    top: var(--ds-title-y) !important;
+    right: var(--ds-xr) !important;
+    bottom: var(--ds-end) !important;
+    left: var(--ds-x) !important;
+    display: grid !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+    grid-template-rows: auto minmax(0, 1fr) auto !important;
+    column-gap: var(--ds-gap) !important;
+    row-gap: 32px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk {
+    grid-column: 1 / span 7;
+    grid-row: 1;
+    align-self: start;
+  }
+
+  /* The email and the two buttons sit in the middle of the free space, the
+     slide's call to action, between the title line and the city clocks. */
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__cta {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    align-self: center;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__hero {
+    position: static !important;
+    display: flex !important;
+    width: auto !important;
+    min-height: 0 !important;
+    grid-column: 9 / span 4;
+    grid-row: 1;
+    flex-direction: column;
+    align-items: flex-end;
+    align-self: start;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: right;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__cities {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Let's talk: content blocks (every size)
+   -------------------------------------------------------------------------- */
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__lead {
+  max-width: 44ch;
+  margin: 24px 0 0;
+  color: var(--ds-muted);
+  font-size: var(--ds-body);
+  line-height: 22px;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__email {
+  display: inline-block;
+  margin-top: 0;
+  color: inherit;
+  font-size: 30px;
+  letter-spacing: -1px;
+  line-height: 1;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  padding-bottom: 6px;
+  transition: color var(--ll-dur-base, 0.24s) var(--ll-ease, ease);
+}
+
+@media (min-width: 981px) and (min-height: 641px) {
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__email {
+    font-size: 40px;
+  }
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__email:is(:hover, :focus-visible) {
+  color: var(--ds-orange);
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* The primary button is filled ink on the light paper; hover is the shared
+   orange fill from the button system. */
+/* Two buttons of one whole-pixel width, so their edges stay sharp. */
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__actions .ll-button {
+  width: 200px;
+  justify-content: center;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__primary:not(:hover, :focus-visible) {
+  border-color: var(--deck-ink, #20221f) !important;
+  background: var(--deck-ink, #20221f) !important;
+  color: var(--deck-paper, #f4f2ec) !important;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__time {
+  display: block;
+  margin: 0 !important;
+  font-size: var(--ds-title) !important;
+  letter-spacing: -2px !important;
+  line-height: 1 !important;
+  white-space: nowrap;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__label {
+  margin: 16px 0 0;
+  color: var(--deck-ink, #20221f);
+  font-size: var(--ds-label);
+  letter-spacing: var(--ds-label-track);
+  line-height: 16px;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__meta {
+  display: flex !important;
+  flex-direction: column;
+  align-items: inherit;
+  gap: 16px;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--ds-muted);
+  font-size: var(--ds-label);
+  letter-spacing: var(--ds-label-track);
+  line-height: 16px;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__format {
+  display: inline-flex !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid var(--ds-rule) !important;
+  background: transparent !important;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__format button {
+  width: 44px !important;
+  min-width: 0 !important;
+  height: 30px !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--ds-muted) !important;
+  font-size: var(--ds-label) !important;
+  letter-spacing: var(--ds-label-track) !important;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__format button[aria-pressed="true"] {
+  background: var(--deck-ink, #20221f) !important;
+  color: var(--deck-paper, #f4f2ec) !important;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__format button:not([aria-pressed="true"]):is(:hover, :focus-visible) {
+  color: var(--deck-ink, #20221f) !important;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__cities {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: var(--ds-gap) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city {
+  display: flex !important;
+  min-height: 0 !important;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 0 !important;
+  padding: 20px !important;
+  border: 1px solid var(--ds-rule) !important;
+  background: transparent !important;
+  color: inherit !important;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city > div {
+  display: flex !important;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city h3 {
+  margin: 0 !important;
+  font-size: 20px !important;
+  letter-spacing: -0.5px !important;
+  line-height: 1.2 !important;
+  white-space: nowrap;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city time {
+  font-size: 40px !important;
+  letter-spacing: -1px !important;
+  line-height: 1 !important;
+}
+
+html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city :is([data-clock-offset], .ll-world-clock__daypart) {
+  color: var(--ds-muted) !important;
+  font-size: var(--ds-label) !important;
+  letter-spacing: var(--ds-label-track) !important;
+  line-height: 16px !important;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Short windows (640px tall or less): titles 40px and tighter steps, so every
+   chapter still fits without scrolling.
+   -------------------------------------------------------------------------- */
+@media (min-width: 761px) and (min-height: 601px) and (max-height: 640px), (min-width: 981px) and (min-height: 481px) and (max-height: 640px) and (hover: hover) {
+  html body.ll-deck-page.ll-pitch-page .ll-deck {
+    --ds-title: 40px;
+    --ds-s1: 16px;
+    --ds-s2: 24px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page :is(#what-i-do, #my-vibe, #the-work, #lets-talk) h2 {
+    letter-spacing: -1px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__copy h3 {
+    margin-top: 12px !important;
+    font-size: 30px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__buy {
+    gap: 10px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do :is(.ll-service-product__select select, .ll-service-product__cta) {
+    height: 40px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__details summary {
+    min-height: 34px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board {
+    row-gap: 24px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card h3 {
+    margin-top: 12px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card__copy {
+    min-height: 0;
+    margin-top: 6px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card__actions {
+    min-height: 36px;
+    margin-top: 10px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock {
+    row-gap: 20px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__lead {
+    margin-top: 12px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__email {
+    font-size: 30px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__actions {
+    margin-top: 16px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city {
+    gap: 10px;
+    padding: 12px 16px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city time {
+    font-size: 30px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__label {
+    margin-top: 8px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__meta {
+    gap: 8px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tablets held upright (761–1199px wide, taller than wide): the same frame,
+   with the expertise columns stacked two up and the moodboard on 6 columns.
+   -------------------------------------------------------------------------- */
+@media (min-width: 761px) and (max-width: 1199px) and (min-height: 601px) and (max-aspect-ratio: 1 / 1) {
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    row-gap: 32px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__copy {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__buy {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__visual {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__description {
+    margin-top: 0 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-slide__vibe-copy > p { grid-column: 1 / -1; }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(3) { grid-area: 1 / 1 / 3 / 4; }
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(1) { grid-area: 1 / 4 / 2 / 7; }
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(2) { grid-area: 2 / 4 / 3 / 5; }
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(4) { grid-area: 2 / 5 / 3 / 7; }
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(5) { grid-area: 3 / 1 / 4 / 3; }
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(6) { grid-area: 3 / 3 / 4 / 7; }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board__projects {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board__projects {
+    row-gap: var(--ds-gap) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card {
+    grid-row: auto !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    grid-template-rows: auto auto minmax(0, 1fr) !important;
+    column-gap: var(--ds-gap) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card__image { grid-column: 1; grid-row: 1 / -1; }
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card > :not(.ll-culture-card__image) { grid-column: 2; }
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card h3 { margin-top: 0 !important; }
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-card__actions { align-self: end; }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk { grid-column: 1 / -1; }
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__hero {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    align-items: flex-start;
+    text-align: left;
+  }
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock { grid-template-rows: auto auto minmax(0, 1fr) auto !important; }
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__cta { grid-row: 3; }
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__cities {
+    grid-row: 4;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 8px !important;
+    align-self: end;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city {
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 20px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city > div:first-child {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Phones (and phones held sideways): chapters scroll; the frame rows give
+   way to the bottom chapter bar.
+   -------------------------------------------------------------------------- */
+@media (max-width: 760px), (hover: none) and (pointer: coarse) and (max-height: 560px) {
+  html body.ll-deck-page.ll-pitch-page .ll-deck {
+    --ds-title: 40px;
+    --ds-body: 15px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page :is(.ll-deck-frame__top, .ll-deck-frame__foot) {
+    display: none;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__header {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__brand {
+    order: -1;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tabs button {
+    gap: 8px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tab-no {
+    display: none;
+  }
+
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__copy h3 {
+    font-size: 40px !important;
+    letter-spacing: -1px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__visual figcaption {
+    display: none;
+  }
+
+  /* The whole object on its tinted tile, as on desktop (it was cropped to
+     the neck of the bottle). */
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__visual {
+    position: relative !important;
+    display: block !important;
+    height: auto !important;
+    aspect-ratio: 4 / 3 !important;
+    overflow: hidden;
+    background: var(--ds-tile) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__visual img {
+    position: absolute !important;
+    inset: 8% 10% !important;
+    width: 80% !important;
+    height: 84% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 12px 18px rgba(20, 22, 20, 0.12));
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__buy {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__buy > * {
+    grid-column: 1 / -1 !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__select,
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__select-control,
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__select select {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-product__cta {
+    background: var(--deck-ink, #20221f) !important;
+    color: var(--deck-paper, #f4f2ec) !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-slide__vibe-copy > p {
+    color: var(--ds-muted) !important;
+    letter-spacing: 0 !important;
+  }
+
+  /* Moodboard: two columns, no gaps. */
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid {
+    position: relative !important;
+    inset: auto !important;
+    display: grid !important;
+    width: auto !important;
+    height: auto !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 150px;
+    gap: 6px;
+    aspect-ratio: auto !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(n) {
+    position: relative !important;
+    inset: auto !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    overflow: hidden;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(3) { grid-column: 1 / -1; grid-row: span 2; order: -1; }
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(1) { grid-column: 1 / -1; }
+  html body.ll-deck-page.ll-pitch-page #my-vibe .ll-deck-vibe-grid figure:nth-child(6) { grid-column: 1 / -1; }
+
+  html body.ll-deck-page.ll-pitch-page #the-work .ll-culture-board__topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin: 16px 0 0;
+    color: var(--ds-muted);
+    font-size: var(--ds-label);
+    letter-spacing: var(--ds-label-track);
+    line-height: 16px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock {
+    display: flex !important;
+    flex-direction: column;
+    gap: 32px;
+    padding-bottom: 24px !important;
+  }
+
+  /* -1px tracking keeps the address on one line on a 390px phone (294px of text in a 302px column); at -0.5px it
+     broke after the @. Narrower phones still break there. */
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-talk__email {
+    font-size: 20px;
+    letter-spacing: -1px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__hero {
+    display: flex !important;
+    min-height: 0 !important;
+    height: auto !important;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+    padding: 24px 0 0 !important;
+    border-top: 1px solid var(--ds-rule);
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__meta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 16px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__cities {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city {
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 16px !important;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city > div:first-child {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  html body.ll-deck-page.ll-pitch-page #lets-talk .ll-world-clock__city time {
+    font-size: 30px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body.ll-deck-page.ll-pitch-page #what-i-do .ll-service-shop__tabs button::after {
+    transition: none;
+  }
+}
+
+/* Copy is justified across the deck, as on the rest of the site: each
+   paragraph an even block, last line flush left. */
+html body.ll-deck-page.ll-pitch-page :is(
+  #resume .ll-deck-cv__intro p,
+  #what-i-do .ll-service-product__description,
+  #what-i-do .ll-service-product__details p,
+  #my-vibe .ll-deck-slide__vibe-copy > p,
+  #the-work .ll-culture-card__copy,
+  #lets-talk .ll-talk__lead,
+  #cookie-consent .cookie-consent__text
+) {
+  text-align: justify !important;
+  text-align-last: left !important;
+}

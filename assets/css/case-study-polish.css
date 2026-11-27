@@ -343,3 +343,11 @@ html body.case-study .cs-next-panel__link:focus-visible :is(.cs-next-panel__titl
     display: none;
   }
 }
+
+/* ------------------------------------------------------- 4. secondary text */
+/* Tags, the year, the story text and the next-project labels were charcoal at 60% on the #e8e7e1 page, a 4.0:1
+   contrast, under the 4.5:1 that small text needs (and Gridlite's thin dots read lighter still). 68% gives 5.0:1
+   and keeps them clearly secondary to the headings. */
+html[data-theme="light"] body.case-study:not(#ll-cs) {
+  --cs-muted: rgba(var(--ll-brand-charcoal-rgb), 0.68);
+}

@@ -91,3 +91,36 @@ html body.cookie-privacy-page:not(#ll-grid) .cookie-privacy-page__content h2 {
   font-size: 30px !important;
   line-height: 1.1;
 }
+
+/* Privacy page: a 680px column (about 61 characters of the 16px text) instead of 600px. The paragraphs are
+   justified, and at 54 characters the long words in this notice left wide gaps between words. */
+html body.cookie-privacy-page .cookie-privacy-page__content {
+  --ll-text-measure: 680px;
+}
+
+/* Copy is justified: every multi-line paragraph sets as an even block with
+   its last line flush left (centred where the block itself is centred, as
+   under the Work title). text-wrap: pretty stops a paragraph ending on one
+   word. One-line labels and buttons are unaffected. */
+html body:not(#ll-grid) :is(
+  .cs-story__lead,
+  .cs-acc__text,
+  .cs-footer__copy,
+  #cookie-consent .cookie-consent__text,
+  .ll-manifesto__copy > p,
+  #services.ll-skill-sets .ll-skill-sets__copy,
+  .lwa-project__summary-copy,
+  .contact-form__privacy,
+  .cookie-privacy-page__content p,
+  .cookie-privacy-page__content li
+) {
+  text-align: justify !important;
+  text-align-last: left !important;
+  text-wrap: pretty;
+}
+
+html body:not(#ll-grid) .lwa-hero__intro {
+  text-align: justify !important;
+  text-align-last: center !important;
+  text-wrap: pretty;
+}

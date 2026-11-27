@@ -414,8 +414,9 @@ html body.ll-contact-page .contact-form__field :is(input, select, textarea) {
   transition: border-color var(--ll-dur-fast) ease;
 }
 
+/* Placeholders (and the empty project-type select) at 56% cream: 5.9:1 on the black card. At 46% they were 4.3:1. */
 html body.ll-contact-page .contact-form__field :is(input, select, textarea)::placeholder {
-  color: rgba(var(--ll-brand-cream-rgb), 0.46);
+  color: rgba(var(--ll-brand-cream-rgb), 0.56);
   opacity: 1;
 }
 
@@ -481,7 +482,7 @@ html body.ll-contact-page .contact-form__select-trigger[aria-expanded="true"] {
 }
 
 html body.ll-contact-page .contact-form__select-trigger [data-empty="true"] {
-  color: rgba(var(--ll-brand-cream-rgb), 0.46);
+  color: rgba(var(--ll-brand-cream-rgb), 0.56);
 }
 
 html body.ll-contact-page .contact-form__select-trigger[data-invalid="true"] {

@@ -18,6 +18,84 @@ const usesGsap = page.home || page.work || page.caseStudy || page.contact || pag
 
 document.documentElement.classList.replace("no-js", "js");
 
+/* Justified copy only where the line is long enough to carry it. The face is monospaced and set in capitals, which
+   browsers will not hyphenate, so a justified line of fewer than ~45 characters opens wide gaps between words.
+   Paragraphs narrower than that (phones, slim columns, small deck panels) set flush left instead, and the centred
+   intro under the Work title stays centred. Alignment never moves a line break, so this is safe after text has been
+   split for its reveal. Each paragraph is checked again whenever its width changes. */
+const JUSTIFIED_COPY = [
+  ".cs-story__lead", ".cs-acc__text", ".cs-footer__copy", "#cookie-consent .cookie-consent__text",
+  ".ll-manifesto__copy > p", "#services.ll-skill-sets .ll-skill-sets__copy", ".lwa-project__summary-copy",
+  ".contact-form__privacy", ".cookie-privacy-page__content p", ".cookie-privacy-page__content li", ".lwa-hero__intro",
+  "#resume .ll-deck-cv__intro p", "#what-i-do .ll-service-product__description", "#what-i-do .ll-service-product__details p",
+  "#my-vibe .ll-deck-slide__vibe-copy > p", "#the-work .ll-culture-card__copy", "#lets-talk .ll-talk__lead",
+].join(",");
+const JUSTIFY_MIN_CHARACTERS = 45;
+const justifiedBlocks = new Set();
+const characterWidths = new Map();
+
+function characterWidth(style) {
+  const key = `${style.fontFamily}|${style.fontSize}|${style.fontWeight}|${style.letterSpacing}|${style.textTransform}`;
+  if (!characterWidths.has(key)) {
+    const probe = document.createElement("span");
+    probe.setAttribute("aria-hidden", "true");
+    probe.style.cssText = "position:absolute;top:0;left:-9999px;visibility:hidden;white-space:pre;pointer-events:none";
+    Object.assign(probe.style, {
+      fontFamily: style.fontFamily, fontSize: style.fontSize, fontWeight: style.fontWeight,
+      letterSpacing: style.letterSpacing, textTransform: style.textTransform,
+    });
+    probe.textContent = "0000000000";
+    body.append(probe);
+    characterWidths.set(key, probe.getBoundingClientRect().width / 10 || 1);
+    probe.remove();
+  }
+  return characterWidths.get(key);
+}
+
+function alignJustifiedBlock(block) {
+  const style = getComputedStyle(block);
+  const width = block.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+  if (!(width > 0)) return; // hidden (an inactive deck chapter): checked again when it appears
+  const ragged = width / characterWidth(style) < JUSTIFY_MIN_CHARACTERS;
+  if (ragged === block.hasAttribute("data-ragged")) return;
+  if (ragged) {
+    const alignment = block.matches(".lwa-hero__intro") ? "center" : "left";
+    block.setAttribute("data-ragged", "");
+    block.style.setProperty("text-align", alignment, "important");
+    block.style.setProperty("text-align-last", alignment, "important");
+  } else {
+    block.removeAttribute("data-ragged");
+    block.style.removeProperty("text-align");
+    block.style.removeProperty("text-align-last");
+  }
+}
+
+const justifiedResize = "ResizeObserver" in window
+  ? new ResizeObserver((entries) => entries.forEach((entry) => alignJustifiedBlock(entry.target)))
+  : null;
+
+function watchJustifiedCopy(root) {
+  const blocks = root.matches?.(JUSTIFIED_COPY) ? [root] : [];
+  blocks.push(...root.querySelectorAll(JUSTIFIED_COPY));
+  blocks.forEach((block) => {
+    if (justifiedBlocks.has(block)) return;
+    justifiedBlocks.add(block);
+    if (justifiedResize) justifiedResize.observe(block);
+    else alignJustifiedBlock(block);
+  });
+}
+
+watchJustifiedCopy(document);
+// The cookie banner is added to the page later.
+new MutationObserver((records) => records.forEach((record) => record.addedNodes.forEach((node) => {
+  if (node.nodeType === 1) watchJustifiedCopy(node);
+}))).observe(body, { childList: true });
+// Measured again once the webfont is in, in case the first measure used a fallback font.
+document.fonts?.ready.then(() => {
+  characterWidths.clear();
+  justifiedBlocks.forEach(alignJustifiedBlock);
+});
+
 document.querySelectorAll('[data-work-detail][aria-hidden="true"]').forEach((detail) => {
   detail.inert = true;
 });
@@ -117,8 +195,8 @@ async function initialize() {
       await import("./pages/home-footer-webgl.js?v=20261112-clean").catch((e) => console.warn("Footer WebGL failed to load:", e));
     }
     if (hasWorkItems) await import("./pages/work-lama.js?v=20261112-clean").catch((e) => console.warn("Work lama failed to load:", e));
-    if (page.contact) await import("./pages/contact-form.js").catch((e) => console.warn("Contact form failed to load:", e));
-    if (page.pitchdeck) await import("./pages/pitchdeck.js?v=20261112-clean").catch((e) => console.warn("Pitchdeck failed to load:", e));
+    if (page.contact) await import("./pages/contact-form.js?v=20261126-deck3").catch((e) => console.warn("Contact form failed to load:", e));
+    if (page.pitchdeck) await import("./pages/pitchdeck.js?v=20261126-deck3").catch((e) => console.warn("Pitchdeck failed to load:", e));
   } catch (error) {
     console.error("Site features could not be initialized.", error);
     document.body.classList.add("ll-js-error");

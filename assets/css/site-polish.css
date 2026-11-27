@@ -250,3 +250,18 @@ html body:not(#ll-polish) :is(.ll-footer, .cs-footer, .lwa-footer)::after {
     left: var(--ll-gutter);
   }
 }
+
+/* --------------------------------------------------------------------------
+   11. Footer wordmark passes behind the "Let's talk" block while scrolling.
+   The wordmark is fixed to the screen and revealed by the footer, so while
+   the footer scrolls in it slides past "Let's talk", "Send direct mail" and
+   the two buttons, and its outlined squares showed through them. The block
+   now has the footer's black behind it, carried out to both screen edges
+   and up to the top of the footer, so the wordmark rises from underneath it
+   and is only seen in its own band below. Nothing changes once the page
+   is scrolled to the end.
+   -------------------------------------------------------------------------- */
+html body:not(#ll-polish) .cs-footer .cs-footer__main {
+  background-color: var(--ll-brand-black, #070807);
+  border-image: linear-gradient(var(--ll-brand-black, #070807), var(--ll-brand-black, #070807)) fill 0 / 0 / 100vh 100vw 0;
+}
